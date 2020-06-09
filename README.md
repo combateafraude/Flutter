@@ -148,7 +148,7 @@ For example, if you start with the CNH DocumentCaptureType, the DocumentDetector
 
 ```dart
 
-clss DocumentDetectorResult extends SDKResult {
+class DocumentDetectorResult extends SDKResult {
   final Capture captureFront;
   final Capture captureBack;
   final SDKFailure sdkFailure;
