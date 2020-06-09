@@ -1,11 +1,4 @@
 #=== Flutter Wrapper ===#
--keep class io.flutter.app.** { *; }
--keep class io.flutter.plugin.**  { *; }
--keep class io.flutter.util.**  { *; }
--keep class io.flutter.view.**  { *; }
--keep class io.flutter.**  { *; }
--keep class io.flutter.plugins.**  { *; }
-
 # Keep the classes that are deserialized by GSON
 -keep class com.combateafraude.demo.report.model.** { <fields>; }
 -keep class com.combateafraude.helpers.server.api.** { <fields>; }

@@ -1,5 +1,7 @@
+# 0.3.0
+Updated DocumentDetector Android SDK version
 # 0.2.0
-Updated DocumentDetector Android SDK
+Updated DocumentDetector Android SDK version
 Minor fix
 Removed methods:
 - setMaxDimensionPhoto

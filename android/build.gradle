@@ -16,7 +16,7 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
-        maven { url "https://raw.githubusercontent.com/combateafraude/Mobile/android-releases" }
+        maven { url "https://repo.combateafraude.com/android/release"}
     }
 }
 
@@ -45,7 +45,8 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:document-detector:1.0.0-beta+'
+        implementation 'com.combateafraude.sdk:document-detector:1.+'
+        implementation 'com.combateafraude.sdk:helpers:1.0.0'
         //implementation 'androidx.appcompat:appcompat:1.0.2'
     }
 }
