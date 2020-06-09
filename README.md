@@ -17,8 +17,8 @@ To install, either add to your pubspec.yaml
 dependencies:  
   name: document_detector_sdk:
     git:
-      url: https://github.com/combateafraude/ActiveFaceLivenessFlutter.git
-      ref: v.0.2.0       
+      url: https://github.com/combateafraude/Flutter.git
+      ref: document-detector-v.0.2.0
 ```
 
 ## Configure Platform Project
