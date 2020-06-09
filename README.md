@@ -17,8 +17,8 @@ To install, either add to your pubspec.yaml
 dependencies:  
   activeface_liveness_sdk:
     git:
-      url: https://github.com/combateafraude/ActiveFaceLivenessFlutter.git
-      ref: v.0.3.0       
+      url: https://github.com/combateafraude/Flutter.git
+      ref: active-face-liveness-v.0.3.0
 ```
 
 ## Configure Platform Project
