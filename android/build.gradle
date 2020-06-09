@@ -16,7 +16,7 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
-        maven { url "https://raw.githubusercontent.com/combateafraude/Mobile/android-releases" }
+        maven { url "https://repo.combateafraude.com/android/release" }
     }
 }
 
@@ -48,8 +48,9 @@ android {
     }
 
     dependencies {
-        implementation ('com.combateafraude.sdk:active-face-liveness:1.0.0-beta+') {
+        implementation ('com.combateafraude.sdk:active-face-liveness:1.+') {
             exclude group: 'com.google.android.gms', module:'play-services-vision'
         }
+        implementation 'com.combateafraude.sdk:helpers:1.0.0'
     }
 }

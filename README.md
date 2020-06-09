@@ -116,7 +116,7 @@ dependencies:
   activeface_liveness_sdk:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: active-face-liveness-v.0.3.0       
+      ref: active-face-liveness-v.0.4.0       
 ```
 
 ## Usage

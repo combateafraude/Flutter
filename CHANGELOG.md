@@ -1,3 +1,5 @@
+# 0.4.0
+Updated ActiveFaceLiveness Android SDK version
 # 0.3.0
 Updated ActiveFaceLiveness iOS SDK
 # 0.2.1
