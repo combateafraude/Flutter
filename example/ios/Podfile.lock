@@ -1,0 +1,35 @@
+PODS:
+  - activeface_liveness_sdk (0.2.0):
+    - ActiveFaceLiveness (~> 1.0.0)
+    - Flutter
+  - ActiveFaceLiveness (1.0.0)
+  - Flutter (1.0.0)
+  - "permission_handler (5.0.0+hotfix.6)":
+    - Flutter
+
+DEPENDENCIES:
+  - activeface_liveness_sdk (from `.symlinks/plugins/activeface_liveness_sdk/ios`)
+  - Flutter (from `Flutter`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+
+SPEC REPOS:
+  https://github.com/combateafraude/Mobile.git:
+    - ActiveFaceLiveness
+
+EXTERNAL SOURCES:
+  activeface_liveness_sdk:
+    :path: ".symlinks/plugins/activeface_liveness_sdk/ios"
+  Flutter:
+    :path: Flutter
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
+
+SPEC CHECKSUMS:
+  activeface_liveness_sdk: cc36b30dacae8fbb568e23262d7d826817283198
+  ActiveFaceLiveness: 182daa9ac7c4fc058b3d6dfb375c45b405f0feca
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  permission_handler: b7a0953389e699927c6217933754cdcd0fa2c5a7
+
+PODFILE CHECKSUM: 121cd6ed011b38fff514f4d3c43efa6bcb032bc2
+
+COCOAPODS: 1.9.1

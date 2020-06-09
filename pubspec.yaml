@@ -1,0 +1,25 @@
+name: activeface_liveness_sdk
+description: Flutter plugin for ActiveFaceLiveness of Combate a Fraudes (https://github.com/combateafraude). This plugin provides a cross-platform (iOS, Android).
+version: 0.3.0
+homepage: https://github.com/combateafraude
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.combateafraude.activeface_liveness_sdk
+        pluginClass: ActivefaceLivenessSdkPlugin
+      ios:
+        pluginClass: ActivefaceLivenessSdkPlugin
