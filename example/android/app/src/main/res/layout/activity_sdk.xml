@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:keepScreenOn="true" android:tag="layout/activity_sdk_0">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.75" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <androidx.camera.view.PreviewView
+            android:id="@id/cameraImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/photo_mask"
+            android:scaleType="fitXY"
+            android:tag="binding_1"                                    />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/close"
+            android:tag="binding_2"                      
+            android:src="@drawable/ic_close"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toTopOf="@id/guidelineTop" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:tag="binding_3"                                                  
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/sound"
+                                                                                               
+                                                         
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintTop_toTopOf="@id/guidelineTop" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:tag="binding_4"                                                      
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintTop_toTopOf="@id/guidelineStatus">
+
+            <TextView
+                android:id="@+id/statusMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_radius"
+                android:gravity="center_horizontal"
+                android:lineSpacingExtra="7sp"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:textColor="#606060"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:tag="binding_5"                  
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/triangle"
+                android:rotation="270"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/nothing"
+                app:layout_constraintEnd_toEndOf="@id/statusMessage"
+                app:layout_constraintStart_toStartOf="@id/statusMessage"
+                app:layout_constraintTop_toTopOf="@id/statusMessage"
+                app:layout_constraintBottom_toTopOf="@id/statusMessage" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvCurrentStepName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/tvPreviousStepName"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            android:layout_marginBottom="8dp"
+            android:textSize="18sp"
+            android:textColor="#ffffff"
+            android:letterSpacing="0.06"
+            android:tag="binding_6"                    
+            android:gravity="center_horizontal" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:tag="binding_7"                                                     
+            android:contentDescription="@string/check"
+            app:layout_constraintTop_toTopOf="@id/tvCurrentStepName"
+            app:layout_constraintBottom_toBottomOf="@id/tvCurrentStepName"
+            app:layout_constraintEnd_toStartOf="@id/tvCurrentStepName"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_check" />
+
+        <TextView
+            android:id="@+id/tvPreviousStepName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintBottom_toBottomOf="@id/guidelineBottom"
+            android:textSize="16sp"
+            android:textColor="#66FFFFFF"
+            android:letterSpacing="0.06"
+            android:tag="binding_8"                     
+            android:gravity="center_horizontal" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:tag="binding_9"                                                      
+            android:contentDescription="@string/check"
+            app:layout_constraintTop_toTopOf="@id/tvPreviousStepName"
+            app:layout_constraintBottom_toBottomOf="@id/tvPreviousStepName"
+            app:layout_constraintEnd_toStartOf="@id/tvPreviousStepName"
+            android:layout_marginEnd="8dp"
+            android:alpha="0.4"
+            android:src="@drawable/ic_check" />
+
+        <ProgressBar
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:indeterminate="true"
+            android:indeterminateTint="?attr/colorPrimary"
+            android:indeterminateTintMode="src_atop"
+            android:tag="binding_10"                                                     
+            app:layout_constraintVertical_bias="0.45"
+            app:layout_constraintBottom_toBottomOf="@id/guidelineBottom"
+            app:layout_constraintTop_toTopOf="@id/guidelineTop"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+         

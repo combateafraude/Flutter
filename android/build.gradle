@@ -1,0 +1,51 @@
+group 'com.combateafraude.document_detector_sdk'
+version '1.0'
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://raw.githubusercontent.com/combateafraude/Mobile/android-releases" }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+
+    dataBinding.enabled = true
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    aaptOptions {
+        noCompress "tflite"
+    }
+
+    dependencies {
+        implementation 'com.combateafraude.sdk:document-detector:1.0.0-beta+'
+        //implementation 'androidx.appcompat:appcompat:1.0.2'
+    }
+}
