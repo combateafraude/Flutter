@@ -10,6 +10,17 @@ Supports both Android and iOS.
 * Get a valid Combate a Fraude Mobile token. Please, send mail to [Frederico Gassen](mailto:frederico.gassen@combateafraude.com)
 * A physical device (how to scan a real document with a simulator?)
 
+## Instalation
+To install, either add to your pubspec.yaml
+
+```yml
+dependencies:  
+  name: document_detector_sdk:
+    git:
+      url: https://github.com/combateafraude/ActiveFaceLivenessFlutter.git
+      ref: v.0.2.0       
+```
+
 ## Configure Platform Project
 ### Android
 
