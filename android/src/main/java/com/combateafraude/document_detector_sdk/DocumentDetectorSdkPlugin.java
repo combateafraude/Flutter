@@ -3,6 +3,7 @@ package com.combateafraude.document_detector_sdk;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -48,10 +49,11 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
 
     private static final String MESSAGE_CHANNEL = "com.combateafraude.document_detector_sdk/message";
 
-    private static final int REQUEST_CODE = 990;
+    private static final int REQUEST_CODE = 20990;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+        Log.d(DEBUG_NAME, "onAttachedToEngine");
         setupChannels(binding.getFlutterEngine().getDartExecutor(), binding.getApplicationContext());
     }
 
@@ -65,6 +67,7 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
     // depending on the user's project. onAttachedToEngine or registerWith must both be defined
     // in the same class.
     public static void registerWith(Registrar registrar) {
+        Log.d(DEBUG_NAME, "registerWith");
         if (registrar.activity() == null) {
             // When a background flutter view tries to register the plugin, the registrar has no activity.
             // We stop the registration process as this plugin is foreground only.
@@ -77,7 +80,14 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
         registrar.addActivityResultListener(plugin);
     }
 
+    @Override
+    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        Log.d(DEBUG_NAME, "onDetachedFromEngine");
+        teardownChannels();
+    }
+
     private void setupChannels(BinaryMessenger messenger, Context context) {
+        Log.d(DEBUG_NAME, "setupChannels");
         this.context = context;
         methodChannel = new MethodChannel(messenger, MESSAGE_CHANNEL);
         methodChannel.setMethodCallHandler(this);
@@ -85,6 +95,40 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
 
     private void setActivity(Activity activity) {
         this.activity = activity;
+    }
+
+    private void teardownChannels() {
+        Log.d(DEBUG_NAME, "teardownChannels");
+        this.activity = null;
+        this.activityBinding.removeActivityResultListener(this);
+        this.activityBinding = null;
+        this.context = null;
+    }
+
+    @Override
+    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+        Log.d(DEBUG_NAME, "onAttachedToActivity");
+        this.activityBinding = binding;
+        setActivity(binding.getActivity());
+        this.activityBinding.addActivityResultListener(this);
+    }
+
+    @Override
+    public void onDetachedFromActivity() {
+        Log.d(DEBUG_NAME, "onDetachedFromActivity");
+        teardownChannels();
+    }
+
+    @Override
+    public void onDetachedFromActivityForConfigChanges() {
+        Log.d(DEBUG_NAME, "onDetachedFromActivityForConfigChanges");
+        onDetachedFromActivity();
+    }
+
+    @Override
+    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+        Log.d(DEBUG_NAME, "onReattachedToActivityForConfigChanges");
+        onAttachedToActivity(binding);
     }
 
     @Override
@@ -173,40 +217,6 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
     }
 
     @Override
-    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-        teardownChannels();
-    }
-
-    private void teardownChannels() {
-        this.activity = null;
-        this.context = null;
-    }
-
-    @Override
-    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
-        setActivity(binding.getActivity());
-        activityBinding = binding;
-        activityBinding.addActivityResultListener(this);
-    }
-
-    @Override
-    public void onDetachedFromActivityForConfigChanges() {
-        this.activity = null;
-        activityBinding.removeActivityResultListener(this);
-        activityBinding = null;
-    }
-
-    @Override
-    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
-        onDetachedFromActivity();
-    }
-
-    @Override
-    public void onDetachedFromActivity() {
-        this.activity = null;
-    }
-
-    @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         final Map<String, Object> response = new HashMap<>();
         if (requestCode == REQUEST_CODE) {
@@ -259,4 +269,5 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
         pendingResult.success(response);
         return true;
     }
+
 }

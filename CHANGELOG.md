@@ -1,3 +1,5 @@
+# 0.4.0
+Bugfix in DocumentDetector Java code
 # 0.3.0
 Updated DocumentDetector Android SDK version
 # 0.2.0
