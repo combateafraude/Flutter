@@ -28,9 +28,6 @@ android {
     defaultConfig {
         minSdkVersion 21
     }
-    lintOptions {
-        disable 'InvalidPackage'
-    }
 
     dataBinding.enabled = true
 
@@ -39,18 +36,17 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    lintOptions {
-        disable 'InvalidPackage'
-    }
-
     aaptOptions {
         noCompress "tflite"
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
     }
 
     dependencies {
         implementation ('com.combateafraude.sdk:active-face-liveness:1.+') {
             exclude group: 'com.google.android.gms', module:'play-services-vision'
         }
-        implementation 'com.combateafraude.sdk:helpers:1.0.0'
     }
 }

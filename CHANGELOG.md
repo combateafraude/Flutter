@@ -1,3 +1,6 @@
+# 0.5.0
+Bugfix in Java code  
+Documentation updated
 # 0.4.0
 Updated ActiveFaceLiveness Android SDK version
 # 0.3.0

@@ -16,9 +16,6 @@ import com.combateafraude.helpers.sdk.failure.NetworkReason;
 import com.combateafraude.helpers.sdk.failure.PermissionReason;
 import com.combateafraude.helpers.sdk.failure.ServerReason;
 import com.combateafraude.helpers.sdk.failure.StorageReason;
-import com.combateafraude.helpers.sdk.parameter.callback.AudioCallback;
-import com.combateafraude.helpers.sdk.parameter.callback.StatusCallback;
-import com.combateafraude.helpers.sdk.parameter.callback.StepCallback;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +47,7 @@ public class ActivefaceLivenessSdkPlugin implements FlutterPlugin, MethodCallHan
 
     private static final String MESSAGE_CHANNEL = "com.combateafraude.activeface_liveness_sdk/message";
 
-    private static final int REQUEST_CODE = 990;
+    private static final int REQUEST_CODE_ACTIVEFACE_LIVENESS = 20980;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
@@ -79,8 +76,14 @@ public class ActivefaceLivenessSdkPlugin implements FlutterPlugin, MethodCallHan
         registrar.addActivityResultListener(plugin);
     }
 
+    @Override
+    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        Log.d(DEBUG_NAME, "onDetachedFromEngine");
+        teardownChannels();
+    }
 
     private void setupChannels(BinaryMessenger messenger, Context context) {
+        Log.d(DEBUG_NAME, "setupChannels");
         this.context = context;
         methodChannel = new MethodChannel(messenger, MESSAGE_CHANNEL);
         methodChannel.setMethodCallHandler(this);
@@ -90,6 +93,39 @@ public class ActivefaceLivenessSdkPlugin implements FlutterPlugin, MethodCallHan
         this.activity = activity;
     }
 
+    private void teardownChannels() {
+        Log.d(DEBUG_NAME, "teardownChannels");
+        this.activity = null;
+        this.activityBinding.removeActivityResultListener(this);
+        this.activityBinding = null;
+        this.context = null;
+    }
+
+    @Override
+    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+        Log.d(DEBUG_NAME, "onAttachedToActivity");
+        this.activityBinding = binding;
+        setActivity(binding.getActivity());
+        this.activityBinding.addActivityResultListener(this);
+    }
+
+    @Override
+    public void onDetachedFromActivity() {
+        Log.d(DEBUG_NAME, "onDetachedFromActivity");
+        teardownChannels();
+    }
+
+    @Override
+    public void onDetachedFromActivityForConfigChanges() {
+        Log.d(DEBUG_NAME, "onDetachedFromActivityForConfigChanges");
+        onDetachedFromActivity();
+    }
+
+    @Override
+    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+        Log.d(DEBUG_NAME, "onReattachedToActivityForConfigChanges");
+        onAttachedToActivity(binding);
+    }
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
@@ -111,7 +147,6 @@ public class ActivefaceLivenessSdkPlugin implements FlutterPlugin, MethodCallHan
         }
 
         String mobileToken = (String) argsMap.get("mobileToken");
-        Integer maxDimensionPhoto = (Integer) argsMap.get("maxDimensionPhoto");
         Boolean hasSound = (Boolean) argsMap.get("hasSound");
         Integer requestTimeout = (Integer) argsMap.get("requestTimeout");
         Integer numberOfSteps = (Integer) argsMap.get("numberOfSteps");
@@ -164,48 +199,13 @@ public class ActivefaceLivenessSdkPlugin implements FlutterPlugin, MethodCallHan
 
         Intent mIntent = new Intent(context, ActiveFaceLivenessActivity.class);
         mIntent.putExtra(ActiveFaceLiveness.PARAMETER_NAME, mActiveFaceLiveness);
-        activity.startActivityForResult(mIntent, REQUEST_CODE);
-    }
-
-    @Override
-    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-        teardownChannels();
-    }
-
-    private void teardownChannels() {
-        this.activity = null;
-        this.context = null;
-    }
-
-
-    @Override
-    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
-        setActivity(binding.getActivity());
-        activityBinding = binding;
-        activityBinding.addActivityResultListener(this);
-    }
-
-    @Override
-    public void onDetachedFromActivityForConfigChanges() {
-        this.activity = null;
-        activityBinding.removeActivityResultListener(this);
-        activityBinding = null;
-    }
-
-    @Override
-    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
-        onDetachedFromActivity();
-    }
-
-    @Override
-    public void onDetachedFromActivity() {
-        this.activity = null;
+        activity.startActivityForResult(mIntent, REQUEST_CODE_ACTIVEFACE_LIVENESS);
     }
 
     @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         final Map<String, Object> response = new HashMap<>();
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == REQUEST_CODE_ACTIVEFACE_LIVENESS) {
             if (resultCode == RESULT_OK && data != null) {
                 ActiveFaceLivenessResult mActiveFaceLivenessResult = (ActiveFaceLivenessResult) data.getSerializableExtra(ActiveFaceLivenessResult.PARAMETER_NAME);
                 if (mActiveFaceLivenessResult.wasSuccessful()) {
@@ -248,9 +248,6 @@ public class ActivefaceLivenessSdkPlugin implements FlutterPlugin, MethodCallHan
                 return false;
             }
         }
-        response.put("success", Boolean.valueOf(false));
-        response.put("cancel", Boolean.valueOf(true));
-        pendingResult.success(response);
         return true;
     }
 }

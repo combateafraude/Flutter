@@ -104,7 +104,7 @@ Add `ActiveFaceLivenessActivity` into your `AndroidManifest.xml`
 In `/ios` directory of your project, add the following to the end of `Podfile`(before any post_install logic):
 
 ```swift
-source 'https://github.com/combateafraude/Mobile.git'
+source 'https://github.com/combateafraude/iOS.git'
 source 'https://cdn.cocoapods.org/'
 ```
 
@@ -115,8 +115,8 @@ Add this to your `pubspec.yaml`:
 dependencies:  
   activeface_liveness_sdk:
     git:
-      url: https://github.com/combateafraude/iOS.git
-      ref: active-face-liveness-v.0.4.0       
+      url: https://github.com/combateafraude/Flutter.git
+      ref: active-face-liveness-v.0.5.0       
 ```
 
 ## Usage
