@@ -105,7 +105,7 @@ Add `DocumentDetectorActivity` into your `AndroidManifest.xml`
 In `/ios` directory of your project, add the following to the end of `Podfile`(before any post_install logic):
 
 ```swift
-source 'https://github.com/combateafraude/Mobile.git'
+source 'https://github.com/combateafraude/iOS.git'
 source 'https://cdn.cocoapods.org/'
 ```
 

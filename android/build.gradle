@@ -36,16 +36,16 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    lintOptions {
-        disable 'InvalidPackage'
-    }
-
     aaptOptions {
         noCompress "tflite"
     }
 
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+
     dependencies {
         implementation 'com.combateafraude.sdk:document-detector:1.+'
-        implementation 'com.combateafraude.sdk:helpers:1.0.0'
     }
 }

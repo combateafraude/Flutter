@@ -1,3 +1,6 @@
+# 0.5.0
+Bugfix in DocumentDetector Java code
+Documentation update
 # 0.4.0
 Bugfix in DocumentDetector Java code
 # 0.3.0

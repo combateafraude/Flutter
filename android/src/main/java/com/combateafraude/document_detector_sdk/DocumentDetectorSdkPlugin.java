@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import com.combateafraude.documentdetector.DocumentDetector;
 import com.combateafraude.documentdetector.DocumentDetectorActivity;
 import com.combateafraude.documentdetector.DocumentDetectorResult;
-import com.combateafraude.documentdetector.controller.Capture;
 import com.combateafraude.helpers.sdk.failure.InvalidTokenReason;
 import com.combateafraude.helpers.sdk.failure.LibraryReason;
 import com.combateafraude.helpers.sdk.failure.NetworkReason;
@@ -49,7 +48,7 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
 
     private static final String MESSAGE_CHANNEL = "com.combateafraude.document_detector_sdk/message";
 
-    private static final int REQUEST_CODE = 20990;
+    private static final int REQUEST_CODE_DOCUMENT_DETECTOR = 20990;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
@@ -213,13 +212,13 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
 
         Intent mIntent = new Intent(context, DocumentDetectorActivity.class);
         mIntent.putExtra(DocumentDetector.PARAMETER_NAME, mDocumentDetector);
-        activity.startActivityForResult(mIntent, REQUEST_CODE);
+        activity.startActivityForResult(mIntent, REQUEST_CODE_DOCUMENT_DETECTOR);
     }
 
     @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         final Map<String, Object> response = new HashMap<>();
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == REQUEST_CODE_DOCUMENT_DETECTOR) {
             if (resultCode == RESULT_OK && data != null) {
                 DocumentDetectorResult documentDetectorResult = (DocumentDetectorResult) data.getSerializableExtra(DocumentDetectorResult.PARAMETER_NAME);
                 if (documentDetectorResult.wasSuccessful()) {
@@ -264,10 +263,6 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
                 return false;
             }
         }
-        response.put("success", Boolean.valueOf(false));
-        response.put("cancel", Boolean.valueOf(true));
-        pendingResult.success(response);
         return true;
     }
-
 }
