@@ -115,7 +115,7 @@ Add this to your `pubspec.yaml`:
 dependencies:  
   activeface_liveness_sdk:
     git:
-      url: https://github.com/combateafraude/Flutter.git
+      url: https://github.com/combateafraude/iOS.git
       ref: active-face-liveness-v.0.4.0       
 ```
 
