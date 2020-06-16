@@ -48,7 +48,7 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
 
     private static final String MESSAGE_CHANNEL = "com.combateafraude.document_detector_sdk/message";
 
-    private static final int REQUEST_CODE_DOCUMENT_DETECTOR = 20990;
+    private static final int REQUEST_CODE_DOCUMENT_DETECTOR = 20981;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
@@ -143,6 +143,7 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
     }
 
     private void getDocuments(MethodCall call, final Result result) {
+        Log.d(DEBUG_NAME, "getDocuments");
         HashMap<String, Object> argsMap = (HashMap<String, Object>) call.arguments;
 
         if (!(call.arguments instanceof Map)) {
@@ -209,7 +210,7 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
                     .setRequestTimeout(requestTimeout)
                     .build();
         }
-
+        Log.d(DEBUG_NAME, "DocumentDetectorActivity");
         Intent mIntent = new Intent(context, DocumentDetectorActivity.class);
         mIntent.putExtra(DocumentDetector.PARAMETER_NAME, mDocumentDetector);
         activity.startActivityForResult(mIntent, REQUEST_CODE_DOCUMENT_DETECTOR);
@@ -217,17 +218,23 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
 
     @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(DEBUG_NAME, "onActivityResult");
         final Map<String, Object> response = new HashMap<>();
         if (requestCode == REQUEST_CODE_DOCUMENT_DETECTOR) {
+            Log.d(DEBUG_NAME, "onActivityResult: REQUEST_CODE_DOCUMENT_DETECTOR");
             if (resultCode == RESULT_OK && data != null) {
+                Log.d(DEBUG_NAME, "onActivityResult: RESULT_OK");
                 DocumentDetectorResult documentDetectorResult = (DocumentDetectorResult) data.getSerializableExtra(DocumentDetectorResult.PARAMETER_NAME);
                 if (documentDetectorResult.wasSuccessful()) {
+                    Log.d(DEBUG_NAME, "onActivityResult: wasSuccessful");
                     response.put("success", Boolean.valueOf(true));
                     response.put("captureFront_imagePath", documentDetectorResult.getCaptures()[0].getImagePath());
                     response.put("captureFront_missedAttemps", documentDetectorResult.getCaptures()[0].getMissedAttemps());
                     response.put("captureBack_imagePath", documentDetectorResult.getCaptures()[1].getImagePath());
                     response.put("captureBack_missedAttemps", documentDetectorResult.getCaptures()[1].getMissedAttemps());
                 } else {
+                    Log.d(DEBUG_NAME, "onActivityResult: not Successful");
+                    Log.d(DEBUG_NAME, documentDetectorResult.getSdkFailure().toString());
                     response.put("success", Boolean.valueOf(false));
                     if (documentDetectorResult.getSdkFailure() instanceof InvalidTokenReason) {
                         response.put("errorType", "InvalidTokenReason");
@@ -257,12 +264,14 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
                 return true;
             } else {
                 // the user closes the activity
+                Log.d(DEBUG_NAME, "onActivityResult cancel");
                 response.put("success", Boolean.valueOf(false));
                 response.put("cancel", Boolean.valueOf(true));
                 pendingResult.success(response);
                 return false;
             }
         }
+        Log.d(DEBUG_NAME, "onActivityResult: not REQUEST_CODE_DOCUMENT_DETECTOR");
         return true;
     }
 }

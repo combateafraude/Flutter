@@ -47,8 +47,11 @@ class DocumentDetector {
   }
 
   Future<DocumentDetectorResult> build() async {
+    debugPrint("DocumentDetectorSdk - call PlatformChannel");
     final response = await DocumentDetectorSdk._messageChannel
         .invokeMethod('getDocuments', _params);
+    debugPrint("DocumentDetectorSdk - return PlatformChannel");
+    debugPrint("DocumentDetectorSdk - ${response.toString()}");
     if (response.containsKey('success') && response['success']) {
       return DocumentDetectorResult(
           captureFront: Capture(
