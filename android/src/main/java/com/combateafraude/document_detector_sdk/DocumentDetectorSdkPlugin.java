@@ -260,6 +260,7 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
                         response.put("errorMessage", documentDetectorResult.getSdkFailure().getMessage());
                     }
                 }
+                Log.d(DEBUG_NAME, "onActivityResult - successs:" + response.toString());
                 pendingResult.success(response);
                 return true;
             } else {
@@ -267,6 +268,7 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
                 Log.d(DEBUG_NAME, "onActivityResult cancel");
                 response.put("success", Boolean.valueOf(false));
                 response.put("cancel", Boolean.valueOf(true));
+                Log.d(DEBUG_NAME, "onActivityResult - cancel:" + response.toString());
                 pendingResult.success(response);
                 return false;
             }
