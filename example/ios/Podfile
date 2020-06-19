@@ -86,5 +86,5 @@ post_install do |installer|
   end
 end
 
-source 'https://github.com/combateafraude/Mobile.git'
+source 'https://github.com/combateafraude/iOS.git'
 source 'https://cdn.cocoapods.org/'

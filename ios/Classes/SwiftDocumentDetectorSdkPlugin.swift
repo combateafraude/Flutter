@@ -50,20 +50,19 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
         if let argTimeout = args["requestTimeout"] as? Int {
             requestTimeout = argTimeout
         }
-
+        
         if let argColorTheme = args["colorTheme"] as? String {
             colorTheme = UIColor.init(hexString: argColorTheme)
         }
-        
+
         let documentDetectorConfiguration = DocumentDetectorBuilder(apiToken: mobileToken)
-            .setDocumentType(documentType: convertToDocumentType(documentType: documentType)!)
+            .setDocumentDetectorFlow(flow: convertToDocumentFlow(documentType: documentType)!)
             .setRequestTimeout(seconds: TimeInterval(requestTimeout))
             .setColorTheme(color: colorTheme)
             .build()
         
-        let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
-        
         let scannerVC = DocumentDetectorController(documentDetectorConfiguration: documentDetectorConfiguration)
+        let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
         scannerVC.documentDetectorDelegate = self
         controller.present(scannerVC, animated: true, completion: nil)
     }
@@ -74,15 +73,15 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
     
     public func documentDetectionController(_ scanner: DocumentDetectorController, didFinishWithResults results: DocumentDetectorResult) {
         
-        let captureFront_imagePath = saveImageToDocumentsDirectory(image: results.captureFront.image, withName: "documentFront.jpg")
-        let captureBack_imagePath = saveImageToDocumentsDirectory(image: results.captureBack.image, withName: "documentBack.jpg")
+        let captureFront_imagePath = saveImageToDocumentsDirectory(image: results.captures[0].image, withName: "documentFront.jpg")
+        let captureBack_imagePath = saveImageToDocumentsDirectory(image: results.captures[1].image, withName: "documentBack.jpg")
         
         let response : NSMutableDictionary! = [:]
         response["success"] = NSNumber(value: true)
-        response["captureFront_confidence"] = results.captureFront.confidence
+        response["captureFront_missedAttemps"] = results.captures[0].missedAttemps
         response["captureFront_imagePath"] = captureFront_imagePath
         
-        response["captureBack_confidence"] = results.captureBack.confidence
+        response["captureBack_missedAttemps"] = results.captures[1].missedAttemps
         response["captureBack_imagePath"] = captureBack_imagePath
         flutterResult!(response)
     }
@@ -122,12 +121,12 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
     // Functions
     // --------------------------------------------------------------------------------------------
     
-    func convertToDocumentType(documentType: String) -> DocumentDetectorType? {
+    func convertToDocumentFlow(documentType: String) -> [DocumentDetectorStep]? {
         switch documentType {
         case "RG":
-            return DocumentDetectorType.RG;
+            return DocumentDetectorBuilder.RG_FLOW;
         default:
-            return DocumentDetectorType.CNH;
+            return DocumentDetectorBuilder.CNH_FLOW;
         }
     }
     

@@ -104,7 +104,7 @@ class _MyAppState extends State<MyApp> {
                 height: 4,
               ),
               Text(
-                'Image Back: ${captureFront.imagePath ?? ''}',
+                'Image Back: ${captureBack.imagePath ?? ''}',
                 style: TextStyle(color: Colors.black),
               ),
               SizedBox(

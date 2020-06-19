@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import com.combateafraude.documentdetector.DocumentDetector;
 import com.combateafraude.documentdetector.DocumentDetectorActivity;
 import com.combateafraude.documentdetector.DocumentDetectorResult;
+import com.combateafraude.documentdetector.configuration.DocumentDetectorStep;
 import com.combateafraude.helpers.sdk.failure.InvalidTokenReason;
 import com.combateafraude.helpers.sdk.failure.LibraryReason;
 import com.combateafraude.helpers.sdk.failure.NetworkReason;
@@ -52,7 +53,6 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-        Log.d(DEBUG_NAME, "onAttachedToEngine");
         setupChannels(binding.getFlutterEngine().getDartExecutor(), binding.getApplicationContext());
     }
 
@@ -66,7 +66,6 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
     // depending on the user's project. onAttachedToEngine or registerWith must both be defined
     // in the same class.
     public static void registerWith(Registrar registrar) {
-        Log.d(DEBUG_NAME, "registerWith");
         if (registrar.activity() == null) {
             // When a background flutter view tries to register the plugin, the registrar has no activity.
             // We stop the registration process as this plugin is foreground only.
@@ -81,12 +80,10 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-        Log.d(DEBUG_NAME, "onDetachedFromEngine");
         teardownChannels();
     }
 
     private void setupChannels(BinaryMessenger messenger, Context context) {
-        Log.d(DEBUG_NAME, "setupChannels");
         this.context = context;
         methodChannel = new MethodChannel(messenger, MESSAGE_CHANNEL);
         methodChannel.setMethodCallHandler(this);
@@ -97,16 +94,16 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
     }
 
     private void teardownChannels() {
-        Log.d(DEBUG_NAME, "teardownChannels");
         this.activity = null;
-        this.activityBinding.removeActivityResultListener(this);
+        if (this.activityBinding != null) {
+            this.activityBinding.removeActivityResultListener(this);
+        }
         this.activityBinding = null;
         this.context = null;
     }
 
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
-        Log.d(DEBUG_NAME, "onAttachedToActivity");
         this.activityBinding = binding;
         setActivity(binding.getActivity());
         this.activityBinding.addActivityResultListener(this);
@@ -114,19 +111,16 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
 
     @Override
     public void onDetachedFromActivity() {
-        Log.d(DEBUG_NAME, "onDetachedFromActivity");
         teardownChannels();
     }
 
     @Override
     public void onDetachedFromActivityForConfigChanges() {
-        Log.d(DEBUG_NAME, "onDetachedFromActivityForConfigChanges");
         onDetachedFromActivity();
     }
 
     @Override
     public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
-        Log.d(DEBUG_NAME, "onReattachedToActivityForConfigChanges");
         onAttachedToActivity(binding);
     }
 
@@ -143,7 +137,6 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
     }
 
     private void getDocuments(MethodCall call, final Result result) {
-        Log.d(DEBUG_NAME, "getDocuments");
         HashMap<String, Object> argsMap = (HashMap<String, Object>) call.arguments;
 
         if (!(call.arguments instanceof Map)) {
@@ -190,27 +183,14 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
             if (idStyle == 0) throw new IllegalArgumentException("Invalid Style name");
         }
 
-        DocumentDetector mDocumentDetector;
-        if (documentType == "RG") {
-            mDocumentDetector = new DocumentDetector.Builder(mobileToken)
-                    .setDocumentDetectorFlow(DocumentDetector.RG_FLOW)
-                    .setMask(idGreenMask, idWhiteMask, idRedMask)
-                    .setLayout(idLayout)
-                    .hasSound(hasSound)
-                    .setStyle(idStyle)
-                    .setRequestTimeout(requestTimeout)
-                    .build();
-        } else {
-            mDocumentDetector = new DocumentDetector.Builder(mobileToken)
-                    .setDocumentDetectorFlow(DocumentDetector.CNH_FLOW)
-                    .setMask(idGreenMask, idWhiteMask, idRedMask)
-                    .setLayout(idLayout)
-                    .hasSound(hasSound)
-                    .setStyle(idStyle)
-                    .setRequestTimeout(requestTimeout)
-                    .build();
-        }
-        Log.d(DEBUG_NAME, "DocumentDetectorActivity");
+        DocumentDetector mDocumentDetector = new DocumentDetector.Builder(mobileToken)
+                .setDocumentDetectorFlow(getDocumentType(documentType))
+                .setMask(idGreenMask, idWhiteMask, idRedMask)
+                .setLayout(idLayout)
+                .hasSound(hasSound)
+                .setStyle(idStyle)
+                .setRequestTimeout(requestTimeout)
+                .build();
         Intent mIntent = new Intent(context, DocumentDetectorActivity.class);
         mIntent.putExtra(DocumentDetector.PARAMETER_NAME, mDocumentDetector);
         activity.startActivityForResult(mIntent, REQUEST_CODE_DOCUMENT_DETECTOR);
@@ -218,23 +198,17 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
 
     @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(DEBUG_NAME, "onActivityResult");
         final Map<String, Object> response = new HashMap<>();
         if (requestCode == REQUEST_CODE_DOCUMENT_DETECTOR) {
-            Log.d(DEBUG_NAME, "onActivityResult: REQUEST_CODE_DOCUMENT_DETECTOR");
             if (resultCode == RESULT_OK && data != null) {
-                Log.d(DEBUG_NAME, "onActivityResult: RESULT_OK");
                 DocumentDetectorResult documentDetectorResult = (DocumentDetectorResult) data.getSerializableExtra(DocumentDetectorResult.PARAMETER_NAME);
                 if (documentDetectorResult.wasSuccessful()) {
-                    Log.d(DEBUG_NAME, "onActivityResult: wasSuccessful");
                     response.put("success", Boolean.valueOf(true));
                     response.put("captureFront_imagePath", documentDetectorResult.getCaptures()[0].getImagePath());
                     response.put("captureFront_missedAttemps", documentDetectorResult.getCaptures()[0].getMissedAttemps());
                     response.put("captureBack_imagePath", documentDetectorResult.getCaptures()[1].getImagePath());
                     response.put("captureBack_missedAttemps", documentDetectorResult.getCaptures()[1].getMissedAttemps());
                 } else {
-                    Log.d(DEBUG_NAME, "onActivityResult: not Successful");
-                    Log.d(DEBUG_NAME, documentDetectorResult.getSdkFailure().toString());
                     response.put("success", Boolean.valueOf(false));
                     if (documentDetectorResult.getSdkFailure() instanceof InvalidTokenReason) {
                         response.put("errorType", "InvalidTokenReason");
@@ -260,20 +234,25 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
                         response.put("errorMessage", documentDetectorResult.getSdkFailure().getMessage());
                     }
                 }
-                Log.d(DEBUG_NAME, "onActivityResult - successs:" + response.toString());
                 pendingResult.success(response);
                 return true;
             } else {
                 // the user closes the activity
-                Log.d(DEBUG_NAME, "onActivityResult cancel");
                 response.put("success", Boolean.valueOf(false));
                 response.put("cancel", Boolean.valueOf(true));
-                Log.d(DEBUG_NAME, "onActivityResult - cancel:" + response.toString());
                 pendingResult.success(response);
                 return false;
             }
         }
-        Log.d(DEBUG_NAME, "onActivityResult: not REQUEST_CODE_DOCUMENT_DETECTOR");
         return true;
+    }
+
+    private DocumentDetectorStep[] getDocumentType(String type) {
+        switch (type) {
+            case "RG":
+                return DocumentDetector.RG_FLOW;
+            default:
+                return DocumentDetector.CNH_FLOW;
+        }
     }
 }

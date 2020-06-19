@@ -15,7 +15,7 @@ Flutter plugin for DocumentDetector of Combate a Fraudes
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'DocumentDetector', '~> 1.0.0'
+  s.dependency 'DocumentDetector', '1.0.2'
   s.platform = :ios, '12.0'
   s.static_framework = true
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
