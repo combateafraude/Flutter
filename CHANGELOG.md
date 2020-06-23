@@ -1,6 +1,7 @@
+# 0.8.0
+Bugfix in DocumentDetector iOS SDK
 # 0.7.0
 Bugfix in DocumentDetector iOS code
-
 # 0.6.0
 Bugfix in DocumentDetector Java code
 # 0.5.0
