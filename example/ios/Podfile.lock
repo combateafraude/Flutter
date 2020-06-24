@@ -1,8 +1,8 @@
 PODS:
-  - document_detector_sdk (0.1.0):
-    - DocumentDetector (= 1.0.2)
+  - document_detector_sdk (0.3.0):
+    - DocumentDetector (~> 1.1.0)
     - Flutter
-  - DocumentDetector (1.0.2):
+  - DocumentDetector (1.1.0):
     - TensorFlowLiteSwift (~> 2.1.0)
   - Flutter (1.0.0)
   - "permission_handler (5.0.0+hotfix.6)":
@@ -32,8 +32,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  document_detector_sdk: 33e6424d6186dcfdc6489a118537fbb16157067f
-  DocumentDetector: d992d9908c19725010196fac53bfe101c7d63329
+  document_detector_sdk: 7b76e12ac16adf34e099d35f8fbd7a2a1b62bd81
+  DocumentDetector: 200a98ee9dab40e6d4472290e071e4419b6df7b3
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   permission_handler: b7a0953389e699927c6217933754cdcd0fa2c5a7
   TensorFlowLiteC: 215603d4426d93810eace5947e317389554a4b66
@@ -41,4 +41,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 83fe6da8e980d97262e355f7c48ec6e3f5d79c8b
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

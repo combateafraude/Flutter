@@ -1,3 +1,5 @@
+# 0.9.0
+Add field `type` in DocumentDetectorResult
 # 0.8.0
 Bugfix in DocumentDetector iOS SDK
 # 0.7.0

@@ -13,6 +13,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String result = '';
+  String type = '';
   Capture captureFront = Capture(imagePath: null, missedAttemps: null);
   Capture captureBack = Capture(imagePath: null, missedAttemps: null);
   SDKFailure sdkFailure = SDKFailure('');
@@ -68,18 +69,27 @@ class _MyAppState extends State<MyApp> {
                       final documentResult = await documentDetector.build();
 
                       if (documentResult.sdkFailure == null) {
+                        print('success: ${documentResult.toString()}');
+
                         print(
                             'success: ${documentResult.captureFront.toString()}');
                         print(
                             'success: ${documentResult.captureBack.toString()}');
                         setState(() {
+                          type = documentResult.type;
                           captureFront = documentResult.captureFront;
                           captureBack = documentResult.captureBack;
+                          sdkFailure = null;
                         });
                       } else {
                         print(
                             'failed: ${documentResult.sdkFailure.toString()}');
                         setState(() {
+                          type = null;
+                          captureFront =
+                              Capture(imagePath: null, missedAttemps: null);
+                          captureBack =
+                              Capture(imagePath: null, missedAttemps: null);
                           sdkFailure = documentResult.sdkFailure;
                         });
                       }
@@ -97,6 +107,13 @@ class _MyAppState extends State<MyApp> {
                 height: 20,
               ),
               Text(
+                'Type: ${type ?? ''}',
+                style: TextStyle(color: Colors.black),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              Text(
                 'Image Front: ${captureFront.imagePath ?? ''}',
                 style: TextStyle(color: Colors.black),
               ),
@@ -111,7 +128,7 @@ class _MyAppState extends State<MyApp> {
                 height: 4,
               ),
               Text(
-                'Error: ${sdkFailure.toString() ?? ''}',
+                'Error: ${sdkFailure ?? ''}',
                 style: TextStyle(color: Colors.black),
               ),
               SizedBox(

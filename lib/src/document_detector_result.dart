@@ -1,16 +1,18 @@
 part of document_detector_sdk;
 
 class DocumentDetectorResult extends SDKResult {
+  final String type;
   final Capture captureFront;
   final Capture captureBack;
   final SDKFailure sdkFailure;
 
-  DocumentDetectorResult({this.sdkFailure, this.captureFront, this.captureBack})
+  DocumentDetectorResult(
+      {this.type, this.sdkFailure, this.captureFront, this.captureBack})
       : super(sdkFailure);
 
   @override
   String toString() {
-    return ('$captureFront, $captureBack, $sdkFailure');
+    return ('$type, $captureFront, $captureBack, $sdkFailure');
   }
 }
 

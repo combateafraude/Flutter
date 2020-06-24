@@ -204,6 +204,7 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
                 DocumentDetectorResult documentDetectorResult = (DocumentDetectorResult) data.getSerializableExtra(DocumentDetectorResult.PARAMETER_NAME);
                 if (documentDetectorResult.wasSuccessful()) {
                     response.put("success", Boolean.valueOf(true));
+                    response.put("capture_type", documentDetectorResult.getType());
                     response.put("captureFront_imagePath", documentDetectorResult.getCaptures()[0].getImagePath());
                     response.put("captureFront_missedAttemps", documentDetectorResult.getCaptures()[0].getMissedAttemps());
                     response.put("captureBack_imagePath", documentDetectorResult.getCaptures()[1].getImagePath());

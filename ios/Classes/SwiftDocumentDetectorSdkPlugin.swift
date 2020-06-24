@@ -78,6 +78,7 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
         
         let response : NSMutableDictionary! = [:]
         response["success"] = NSNumber(value: true)
+        response["capture_type"] = results.type
         response["captureFront_missedAttemps"] = results.captures[0].missedAttemps
         response["captureFront_imagePath"] = captureFront_imagePath
         

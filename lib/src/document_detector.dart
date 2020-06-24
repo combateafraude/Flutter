@@ -51,6 +51,7 @@ class DocumentDetector {
         .invokeMethod('getDocuments', _params);
     if (response.containsKey('success') && response['success']) {
       return DocumentDetectorResult(
+          type: response['capture_type'],
           captureFront: Capture(
               imagePath: response['captureFront_imagePath'],
               missedAttemps: response['captureFront_missedAttemps']),
