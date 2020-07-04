@@ -37,7 +37,7 @@ import static android.app.Activity.RESULT_OK;
  * ActivefaceLivenessSdkPlugin
  */
 public class ActivefaceLivenessSdkPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
-    private static final String DEBUG_NAME = "DocumentDetectorSdk";
+    private static final String DEBUG_NAME = "ActiveFaceSdk";
     private Activity activity;
     private Context context;
     private ActivityPluginBinding activityBinding;
