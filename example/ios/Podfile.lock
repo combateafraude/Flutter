@@ -1,0 +1,65 @@
+PODS:
+  - BlueCryptor (1.0.32)
+  - BlueECC (1.2.5)
+  - BlueRSA (1.0.34)
+  - Flutter (1.0.0)
+  - KituraContracts (1.2.1):
+    - LoggerAPI (~> 1.7)
+  - LoggerAPI (1.9.0):
+    - Logging (~> 1.1)
+  - Logging (1.2.0)
+  - passiveface_liveness_sdk (0.0.1):
+    - Flutter
+    - PassiveFaceLiveness (~> 1.2.0)
+  - PassiveFaceLiveness (1.2.0):
+    - SwiftJWT (~> 3.5.3)
+  - "permission_handler (5.0.1+1)":
+    - Flutter
+  - SwiftJWT (3.5.3):
+    - BlueCryptor (~> 1.0)
+    - BlueECC (~> 1.1)
+    - BlueRSA (~> 1.0)
+    - KituraContracts (~> 1.1)
+    - LoggerAPI (~> 1.7)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - passiveface_liveness_sdk (from `.symlinks/plugins/passiveface_liveness_sdk/ios`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+
+SPEC REPOS:
+  https://github.com/combateafraude/iOS.git:
+    - PassiveFaceLiveness
+  trunk:
+    - BlueCryptor
+    - BlueECC
+    - BlueRSA
+    - KituraContracts
+    - LoggerAPI
+    - Logging
+    - SwiftJWT
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  passiveface_liveness_sdk:
+    :path: ".symlinks/plugins/passiveface_liveness_sdk/ios"
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
+
+SPEC CHECKSUMS:
+  BlueCryptor: b0aee3d9b8f367b49b30de11cda90e1735571c24
+  BlueECC: 0d18e93347d3ec6d41416de21c1ffa4d4cd3c2cc
+  BlueRSA: 6f9776d62d9773502415a7db3bcbb2bbb3f71fc3
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  KituraContracts: e845e60dc8627ad0a76fa55ef20a45451d8f830b
+  LoggerAPI: fb78461eedac5316b290f2404d88b9d614d96c57
+  Logging: 7838d379d234d7e5ae1265fa02804a9084caf04c
+  passiveface_liveness_sdk: bb352fdc030e0ad0e842d5c2cdfc2641876f72dd
+  PassiveFaceLiveness: 26a104f72714c2fa98ab52f14a213c6bea9eb096
+  permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
+  SwiftJWT: 9a47a71090cae25767078756b5810e3b630aa9a7
+
+PODFILE CHECKSUM: 7055c0df88d307cdbc8365d2617147782986f679
+
+COCOAPODS: 1.9.3

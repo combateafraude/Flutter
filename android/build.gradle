@@ -1,0 +1,51 @@
+group 'com.combateafraude.passiveface_liveness_sdk'
+version '1.0'
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://repo.combateafraude.com/android/release" }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+
+    dataBinding.enabled = true
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    aaptOptions {
+        noCompress "tflite"
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    dependencies {
+        implementation 'com.combateafraude.sdk:passive-face-liveness:1.+' 
+    }
+
+}

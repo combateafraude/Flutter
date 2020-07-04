@@ -1,0 +1,26 @@
+name: passiveface_liveness_sdk
+description: Flutter plugin for PassiveFaceLiveness of Combate a Fraudes (https://github.com/combateafraude). This plugin provides a cross-platform (iOS, Android).
+version: 0.0.1
+author:
+homepage:
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.combateafraude.passiveface_liveness_sdk
+        pluginClass: PassivefaceLivenessSdkPlugin
+      ios:
+        pluginClass: PassivefaceLivenessSdkPlugin
