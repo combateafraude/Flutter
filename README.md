@@ -6,7 +6,6 @@
 
 #### Prerequisites
 
-| ActiveFaceLiveness      | Camera that capture a reliable selfie using facial movements | <img src="/resources/ActiveFaceLiveness.gif"> | [Documentation](https://github.com/combateafraude/Flutter/tree/active-face-liveness) |
 | Setting            | Version |
 |--------------------|---------|
 | `minSdkVersion`    | 21      |
