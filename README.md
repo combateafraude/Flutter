@@ -13,3 +13,4 @@ This repository contains Flutter [releases](https://github.com/combateafraude/Fl
 | :--: | :--: | :--: | :--: |
 | DocumentDetector        | Capture RG and CNH assurance and great quality for OCR | <img src="/resources/DocumentDetector.gif"> | [Documentation](https://github.com/combateafraude/Flutter/tree/document-detector) |
 | ActiveFaceLiveness      | Camera that capture a reliable selfie using facial movements | <img src="/resources/ActiveFaceLiveness.gif"> | [Documentation](https://github.com/combateafraude/Flutter/tree/active-face-liveness) |
+| PassiveFaceLiveness     | Camera that capture a reliable selfie using AI | <img src="/resources/PassiveFaceLiveness.gif"> | [Documentation](https://github.com/combateafraude/Flutter/tree/passive-face-liveness) |
