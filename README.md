@@ -61,7 +61,7 @@ When working on Android API 23+, you'll have to request the runtime permissions 
 
 #### Proguard rules
 
-As the Flutter plugins aren't compiled, you need to add this rules in your Proguard/R8 file:
+You need to add this rules in your Proguard/R8 file. If not exits, it's necessary create:
 
 ```java
 # Keep the classes that are deserialized by GSON
@@ -134,6 +134,8 @@ dependencies:
 * `setAndroidStyle(String styleName)` -  set the SDK color style in Android. [Template](https://github.com/combateafraude/Mobile/wiki/Common#styles)
 
 * `setIOSColorTheme(Color color)` - set the SDK color style for iOS.
+* `setIOSShowStepLabel(bool show)` - Show/hides the step label in iOS.
+* `setIOSShowStatusLabel(bool show)` - Show/hides the status label.
 * `setIOSSLayout(PassiveFaceLivenessLayout layout)` - Sets some layout options to customize the screen on iOS.
 Example:
 ```dart
@@ -148,9 +150,6 @@ Example:
   );
 ```
 - Note: Necessary add images in Assets Catalog Document on Xcode project
-
-* `setIOSShowStepLabel(bool show)` - Show/hides the step label in iOS.
-* `setIOSShowStatusLabel(bool show)` - Show/hides the status label.
 
 * `hasSound(bool hasSound)` - enable/disable the SDK sound
 * `setRequestTimeout(int requestTimeout)` - set the server calls request timeout

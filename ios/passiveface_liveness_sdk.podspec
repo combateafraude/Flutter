@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'passiveface_liveness_sdk'
-  s.version          = '0.0.1'
+  s.version          = '0.1.0'
   s.summary          = 'Flutter plugin for PassiveFaceLiveness of Combate a Fraudes'
   s.description      = <<-DESC
 Flutter plugin for PassiveFaceLiveness of Combate a Fraudes
@@ -15,7 +15,7 @@ Flutter plugin for PassiveFaceLiveness of Combate a Fraudes
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'PassiveFaceLiveness', '~> 1.2.0'
+  s.dependency 'PassiveFaceLiveness', '1.2.0'
   s.platform = :ios, '12.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
