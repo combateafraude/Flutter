@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 part 'src/passiveface_liveness.dart';
+part 'src/passiveface_liveness_layout.dart';
 part 'src/passiveface_liveness_result.dart';
 part 'src/passiveface_liveness_sdk.dart';
 part 'src/sdk_result.dart';

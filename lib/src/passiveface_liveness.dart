@@ -23,7 +23,7 @@ class PassiveFaceLiveness {
     _params['setLayout'] = layoutName;
   }
 
-  /// enable/disable the SDK sound
+  /// Enables/disables the sound and sound icon
   void hasSound(bool hasSound) {
     _params['hasSound'] = hasSound;
   }
@@ -33,19 +33,29 @@ class PassiveFaceLiveness {
     _params['setStyle'] = styleName;
   }
 
-  /// set the server calls request timeout. The default is 30 seconds
+  /// Sets the server request timeout. The default is 15 seconds
   void setRequestTimeout(int requestTimeout) {
     _params['requestTimeout'] = requestTimeout;
   }
 
+  /// set the SDK color style for iOS
+  void setIOSColorTheme(Color color) {
+    _params['colorTheme'] = '#${color.value.toRadixString(16)}';
+  }
+
   /// Show/hides the step label
-  void setShowStepLabel(bool show) {
+  void setIOSShowStepLabel(bool show) {
     _params['showStepLabel'] = show;
   }
 
   /// Show/hides the status label
-  void setShowStatusLabel(bool show) {
+  void setIOSShowStatusLabel(bool show) {
     _params['showStatusLabel'] = show;
+  }
+
+  /// Sets some layout options to customize the screen.
+  void setIOSSLayout(PassiveFaceLivenessLayout layout) {
+    _params['layout'] = layout.toMap();
   }
 
   Future<PassiveFaceLivenessResult> build() async {
@@ -92,6 +102,9 @@ class PassiveFaceLiveness {
           return PassiveFaceLivenessResult(
               sdkFailure: (SDKFailure(response['errorMessage'])));
       }
+    } else {
+      return PassiveFaceLivenessResult(
+          sdkFailure: (SDKFailure('Resultado não encontrado')));
     }
   }
 }

@@ -2,6 +2,13 @@
 
 ## Configurations
 
+### Flutter environment
+
+#### Prerequisites
+
+- Flutter minimum version: 1.12
+- Old project (before version 1.12) migrated to API 2.0 (Android) - [Check the instructions here](https://flutter.dev/docs/development/packages-and-plugins/plugin-api-migration)
+
 ### Android environment
 
 #### Prerequisites
@@ -90,6 +97,7 @@ Add `PassiveFaceLivenessActivity` into your `AndroidManifest.xml`
 ### iOS environment
 
 #### Prerequisites
+- Xcode minimum version:  11.4 (Swift 5.2)
 
 | Deployment Info |  iOS Version |
 |-----------------|--------------|
@@ -143,6 +151,8 @@ The `PassiveFaceLivenessResult` class, which extends `SDKResult`, has two parame
 
 class PassiveFaceLivenessResult extends SDKResult {
   final String imagePath;
+  final String imageUrl;
+  final String signedResponse;
   final double missedAttemps;
   final SDKFailure sdkFailure;
 }

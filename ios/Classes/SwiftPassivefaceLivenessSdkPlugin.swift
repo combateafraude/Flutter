@@ -38,6 +38,7 @@ public class SwiftPassivefaceLivenessSdkPlugin: NSObject, FlutterPlugin, Passive
         var showStatusLabel : Bool = true;
         var hasSound : Bool = true;
         var colorTheme = UIColor.init(hexString: "#4CD964")
+        let layout = PassiveFaceLivenessLayout()
         
         self.flutterResult = result
         let args = call.arguments as! [String: Any?]
@@ -62,6 +63,66 @@ public class SwiftPassivefaceLivenessSdkPlugin: NSObject, FlutterPlugin, Passive
         
         if let argColorTheme = args["colorTheme"] as? String {
             colorTheme = UIColor.init(hexString: argColorTheme)
+        }
+        
+        if let argShowStepLabel = args["showStepLabel"] as? Bool {
+            showStepLabel = argShowStepLabel
+        }
+        
+        if let argShowStatusLabel = args["showStatusLabel"] as? Bool {
+            showStatusLabel = argShowStatusLabel
+        }
+        
+        if let layoutData = args["contentMetadata"] as? [String: Any] {
+            var greenMask : UIImage?
+            var whiteMask : UIImage?
+            var redMask : UIImage?
+            var soundOn : UIImage?
+            var soundOff : UIImage?
+            
+            if let closeImageName = layoutData["closeImageName"] as? String {
+                if let image = UIImage(named: closeImageName) {
+                    layout.closeImage = image
+                }
+            }
+            
+            if let greenMaskImageName = layoutData["greenMaskImageName"] as? String {
+                if let image = UIImage(named: greenMaskImageName) {
+                    greenMask = image
+                }
+            }
+            
+            if let whiteMaskImageName = layoutData["whiteMaskImageName"] as? String {
+                if let image = UIImage(named: whiteMaskImageName) {
+                    whiteMask = image
+                }
+            }
+            
+            if let redMaskImageName = layoutData["redMaskImageName"] as? String {
+                if let image = UIImage(named: redMaskImageName) {
+                    redMask = image
+                }
+            }
+            
+            if let soundOnImageName = layoutData["soundOnImageName"] as? String {
+                if let image = UIImage(named: soundOnImageName) {
+                    soundOn = image
+                }
+            }
+            
+            if let soundOffImageName = layoutData["soundOffImageName"] as? String {
+                if let image = UIImage(named: soundOffImageName) {
+                    soundOff = image
+                }
+            }
+            
+            layout.changeMaskImages(
+                greenMask: greenMask,
+                whiteMask: whiteMask,
+                redMask: redMask)
+            
+            layout.changeSoundImages(soundOn: soundOn,
+                                     soundOff: soundOff)
         }
         
         let passiveFacelivenessConfiguration = PassiveFaceLivenessBuilder(apiToken: mobileToken)

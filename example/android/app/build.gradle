@@ -47,6 +47,22 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    //ADD opções abaixo no projto nativo
+    dataBinding.enabled = true
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    aaptOptions {
+        noCompress "tflite"
+    }
 }
 
 flutter {

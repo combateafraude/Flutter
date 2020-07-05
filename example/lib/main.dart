@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void requestPermissions() async {
-    Map<Permission, PermissionStatus> statuses = await [
+    await [
       Permission.camera,
       Permission.storage,
     ].request();
