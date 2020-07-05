@@ -64,14 +64,6 @@ public class SwiftPassivefaceLivenessSdkPlugin: NSObject, FlutterPlugin, Passive
             colorTheme = UIColor.init(hexString: argColorTheme)
         }
         
-        if let argShowStepLabel = args["showStepLabel"] as? Bool {
-            showStepLabel = argShowStepLabel
-        }
-        
-        if let argShowStatusLabel = args["showStatusLabel"] as? Bool {
-            showStatusLabel = argShowStatusLabel
-        }
-        
         if let layoutData = args["layout"] as? [String: Any] {
             var greenMask : UIImage?
             var whiteMask : UIImage?
