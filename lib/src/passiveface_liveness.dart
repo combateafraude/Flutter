@@ -23,19 +23,9 @@ class PassiveFaceLiveness {
     _params['setLayout'] = layoutName;
   }
 
-  /// Enables/disables the sound and sound icon
-  void hasSound(bool hasSound) {
-    _params['hasSound'] = hasSound;
-  }
-
   /// set the SDK color style for Android
   void setAndroidStyle(String styleName) {
     _params['setStyle'] = styleName;
-  }
-
-  /// Sets the server request timeout. The default is 15 seconds
-  void setRequestTimeout(int requestTimeout) {
-    _params['requestTimeout'] = requestTimeout;
   }
 
   /// set the SDK color style for iOS
@@ -56,6 +46,16 @@ class PassiveFaceLiveness {
   /// Sets some layout options to customize the screen.
   void setIOSSLayout(PassiveFaceLivenessLayout layout) {
     _params['layout'] = layout.toMap();
+  }
+
+  /// Enables/disables the sound and sound icon
+  void hasSound(bool hasSound) {
+    _params['hasSound'] = hasSound;
+  }
+
+  /// Sets the server request timeout. The default is 15 seconds
+  void setRequestTimeout(int requestTimeout) {
+    _params['requestTimeout'] = requestTimeout;
   }
 
   Future<PassiveFaceLivenessResult> build() async {

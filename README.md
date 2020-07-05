@@ -85,15 +85,6 @@ As the Flutter plugins aren't compiled, you need to add this rules in your Progu
 }
 ```
 
-Add `PassiveFaceLivenessActivity` into your `AndroidManifest.xml`
-
-```xml
-<activity
-      android:name="com.combateafraude.passivefaceliveness.PassiveFaceLivenessActivity"
-      android:screenOrientation="portrait"
-      android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-```
-
 ### iOS environment
 
 #### Prerequisites
@@ -140,8 +131,28 @@ dependencies:
 
 * `setAndroidMask(String drawableGreenName, String drawableWhiteName, String drawableRedName)` - replace the default SDK's masks in Android. Enter the name of the drawable to be used
 * `setAndroidLayout(String layoutName)` - replace the SDK layout in Android with yours with the respectively [template](https://gist.github.com/kikogassen/62068b6e5bc7988d28594d833b125519)
-* `hasSound(bool hasSound)` - enable/disable the SDK sound
 * `setAndroidStyle(String styleName)` -  set the SDK color style in Android. [Template](https://github.com/combateafraude/Mobile/wiki/Common#styles)
+
+* `setIOSColorTheme(Color color)` - set the SDK color style for iOS.
+* `setIOSSLayout(PassiveFaceLivenessLayout layout)` - Sets some layout options to customize the screen on iOS.
+Example:
+```dart
+  passiveFaceLiveness.setIOSSLayout(
+    PassiveFaceLivenessLayout(
+        closeImageName: "close",
+        soundOnImageName: "sound_on",
+        soundOffImageName: "sound_off",
+        greenMaskImageName: "green_mask",
+        redMaskImageName: "red_mask",
+        whiteMaskImageName: "white_mask"),
+  );
+```
+- Note: Necessary add images in Assets Catalog Document on Xcode project
+
+* `setIOSShowStepLabel(bool show)` - Show/hides the step label in iOS.
+* `setIOSShowStatusLabel(bool show)` - Show/hides the status label.
+
+* `hasSound(bool hasSound)` - enable/disable the SDK sound
 * `setRequestTimeout(int requestTimeout)` - set the server calls request timeout
 
 ### SDK Result

@@ -44,7 +44,6 @@ public class SwiftPassivefaceLivenessSdkPlugin: NSObject, FlutterPlugin, Passive
         let args = call.arguments as! [String: Any?]
         let mobileToken = args["mobileToken"] as! String
         
-        
         if let argTimeout = args["requestTimeout"] as? Int {
             requestTimeout = argTimeout
         }
@@ -73,7 +72,7 @@ public class SwiftPassivefaceLivenessSdkPlugin: NSObject, FlutterPlugin, Passive
             showStatusLabel = argShowStatusLabel
         }
         
-        if let layoutData = args["contentMetadata"] as? [String: Any] {
+        if let layoutData = args["layout"] as? [String: Any] {
             var greenMask : UIImage?
             var whiteMask : UIImage?
             var redMask : UIImage?
@@ -131,6 +130,7 @@ public class SwiftPassivefaceLivenessSdkPlugin: NSObject, FlutterPlugin, Passive
             .showStepLabel(show: showStepLabel)
             .showStatusLabel(show: showStatusLabel)
             .setColorTheme(color: colorTheme)
+            .setLayout(layout: layout)
             .build()
         
         let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController

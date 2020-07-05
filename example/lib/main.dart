@@ -16,8 +16,7 @@ class _MyAppState extends State<MyApp> {
   PassiveFaceLivenessResult passiveFaceLivenessResult =
       PassiveFaceLivenessResult();
 
-  final mobileToken =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1ZTg2MjAxNGVjMjFjNDAwMDgxYjY2NmQifQ.9bf3VPzAwHd7IMS9ZzAUaguhe0OKu2mHxCjddQgboVE';
+  final mobileToken = 'mobileToken';
 
   @override
   void initState() {
@@ -53,7 +52,9 @@ class _MyAppState extends State<MyApp> {
                     onPressed: () async {
                       PassiveFaceLiveness passiveFaceLiveness =
                           PassiveFaceLiveness.builder(mobileToken: mobileToken);
+
                       /*
+                      //Opcional parameters:
                       passiveFaceLiveness.setAndroidMask(
                           drawableGreenName: "ic_mask_document",
                           drawableWhiteName: "ic_mask_document",
@@ -62,6 +63,19 @@ class _MyAppState extends State<MyApp> {
                       passiveFaceLiveness.hasSound(true);
                       passiveFaceLiveness.setAndroidStyle("baseOneColor");
                       passiveFaceLiveness.setRequestTimeout(30);
+                      passiveFaceLiveness.setIOSColorTheme(Color(0xc22a1e));
+                      passiveFaceLiveness.setIOSSLayout(
+                        PassiveFaceLivenessLayout(
+                            closeImageName: "close",
+                            soundOnImageName: "sound_on",
+                            soundOffImageName: "sound_off",
+                            greenMaskImageName: "green_mask",
+                            redMaskImageName: "red_mask",
+                            whiteMaskImageName: "white_mask"),
+                      );
+                      passiveFaceLiveness.hasSound(false);
+                      passiveFaceLiveness.setIOSShowStatusLabel(false);
+                      passiveFaceLiveness.setIOSShowStepLabel(false);
                        */
 
                       passiveFaceLivenessResult =
