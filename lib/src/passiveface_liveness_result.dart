@@ -15,6 +15,8 @@ class PassiveFaceLivenessResult extends SDKResult {
       this.missedAttemps})
       : super(sdkFailure);
 
+  bool get wasSuccessful => this.sdkFailure == null;
+
   @override
   String toString() {
     return ('$imagePath, $missedAttemps, $imageUrl, $signedResponse, $sdkFailure');
