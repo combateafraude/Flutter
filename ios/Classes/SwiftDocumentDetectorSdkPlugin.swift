@@ -40,7 +40,11 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
     private func getDocuments(call: FlutterMethodCall, result: @escaping FlutterResult) {
         
         var requestTimeout = 15
+        var showStepLabel : Bool = true;
+        var showStatusLabel : Bool = true;
+        var hasSound : Bool = true;
         var colorTheme = UIColor.init(hexString: "#4CD964")
+        let layout = DocumentDetectorLayout()
         
         self.flutterResult = result
         let args = call.arguments as! [String: Any?]
@@ -51,18 +55,88 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
             requestTimeout = argTimeout
         }
         
+        if let argHasSound = args["hasSound"] as? Bool {
+            hasSound = argHasSound
+        }
+        
+        if let argShowStepLabel = args["showStepLabel"] as? Bool {
+            showStepLabel = argShowStepLabel
+        }
+        
+        if let argShowStatusLabel = args["ShowStatusLabel"] as? Bool {
+            showStatusLabel = argShowStatusLabel
+        }
+        
         if let argColorTheme = args["colorTheme"] as? String {
             colorTheme = UIColor.init(hexString: argColorTheme)
         }
+        
+        if let layoutData = args["layout"] as? [String: Any] {
+            var greenMask : UIImage?
+            var whiteMask : UIImage?
+            var redMask : UIImage?
+            var soundOn : UIImage?
+            var soundOff : UIImage?
+            
+            if let closeImageName = layoutData["closeImageName"] as? String {
+                if let image = UIImage(named: closeImageName) {
+                    layout.closeImage = image
+                }
+            }
+            
+            if let greenMaskImageName = layoutData["greenMaskImageName"] as? String {
+                if let image = UIImage(named: greenMaskImageName) {
+                    greenMask = image
+                }
+            }
+            
+            if let whiteMaskImageName = layoutData["whiteMaskImageName"] as? String {
+                if let image = UIImage(named: whiteMaskImageName) {
+                    whiteMask = image
+                }
+            }
+            
+            if let redMaskImageName = layoutData["redMaskImageName"] as? String {
+                if let image = UIImage(named: redMaskImageName) {
+                    redMask = image
+                }
+            }
+            
+            if let soundOnImageName = layoutData["soundOnImageName"] as? String {
+                if let image = UIImage(named: soundOnImageName) {
+                    soundOn = image
+                }
+            }
+            
+            if let soundOffImageName = layoutData["soundOffImageName"] as? String {
+                if let image = UIImage(named: soundOffImageName) {
+                    soundOff = image
+                }
+            }
+            
+            layout.changeMaskImages(
+                greenMask: greenMask,
+                whiteMask: whiteMask,
+                redMask: redMask)
+            
+            layout.changeSoundImages(soundOn: soundOn,
+                                     soundOff: soundOff)
+        }
+
 
         let documentDetectorConfiguration = DocumentDetectorBuilder(apiToken: mobileToken)
             .setDocumentDetectorFlow(flow: convertToDocumentFlow(documentType: documentType)!)
             .setRequestTimeout(seconds: TimeInterval(requestTimeout))
+            .setHasSound(hasSound: hasSound)
+            .showStepLabel(show: showStepLabel)
+            .showStatusLabel(show: showStatusLabel)
             .setColorTheme(color: colorTheme)
+            .setLayout(layout: layout)
             .build()
         
-        let scannerVC = DocumentDetectorController(documentDetectorConfiguration: documentDetectorConfiguration)
         let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
+        
+        let scannerVC = DocumentDetectorController(documentDetectorConfiguration: documentDetectorConfiguration)
         scannerVC.documentDetectorDelegate = self
         controller.present(scannerVC, animated: true, completion: nil)
     }

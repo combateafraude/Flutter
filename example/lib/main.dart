@@ -17,7 +17,7 @@ class _MyAppState extends State<MyApp> {
   Capture captureFront = Capture(imagePath: null, missedAttemps: null);
   Capture captureBack = Capture(imagePath: null, missedAttemps: null);
   SDKFailure sdkFailure = SDKFailure('');
-  final mobileToken = 'mobileToken_here';
+  final mobileToken = 'mobileToken';
 
   @override
   void initState() {
@@ -42,8 +42,8 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: ListView(
+            //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Container(
                 height: 50,
@@ -53,22 +53,36 @@ class _MyAppState extends State<MyApp> {
                       DocumentDetector documentDetector =
                           DocumentDetector.builder(
                               mobileToken: mobileToken,
-                              documentType: DocumentType.CNH);
+                              documentType: DocumentType.CNH,
+                              uploadImages: true);
 
+                      //Opcional parameters:
                       /*
-                      documentDetector.setRequestTimeout(30);
-                      documentDetector.setIOSColorTheme(Colors.blue);
-                      documentDetector.setAndroidStyle("baseOneColor");
-                      documentDetector.setAndroidLayout("activity_sdk");
                       documentDetector.setAndroidMask(
                           drawableGreenName: "ic_mask_document",
-                          drawableRedName: "ic_mask_document",
-                          drawableWhiteName: "ic_mask_document");
-                      */
+                          drawableWhiteName: "ic_mask_document",
+                          drawableRedName: "ic_mask_document");
+                      documentDetector.setAndroidLayout("activity_sdk");
+                      documentDetector.hasSound(true);
+                      documentDetector.setAndroidStyle("baseOneColor");
+                      documentDetector.setRequestTimeout(30);
+                      documentDetector.setIOSColorTheme(Color(0xc22a1e));
+                      documentDetector.setIOSShowStepLabel(false);
+                      documentDetector.setIOSShowStatusLabel(false);
+                      documentDetector.setIOSSLayout(
+                        DocumentDetectorLayout(
+                            closeImageName: "close",
+                            soundOnImageName: "sound_on",
+                            soundOffImageName: "sound_off",
+                            greenMaskImageName: "green_mask",
+                            redMaskImageName: "red_mask",
+                            whiteMaskImageName: "white_mask"),
+                      );
+                       */
 
                       final documentResult = await documentDetector.build();
 
-                      if (documentResult.sdkFailure == null) {
+                      if (documentResult.wasSuccessful) {
                         print('success: ${documentResult.toString()}');
 
                         print(
@@ -114,14 +128,28 @@ class _MyAppState extends State<MyApp> {
                 height: 4,
               ),
               Text(
-                'Image Front: ${captureFront.imagePath ?? ''}',
+                'Image Front - imagePath: ${captureFront.imagePath ?? ''}',
                 style: TextStyle(color: Colors.black),
               ),
               SizedBox(
                 height: 4,
               ),
               Text(
-                'Image Back: ${captureBack.imagePath ?? ''}',
+                'Image Front - imageUrl: ${captureFront.imageUrl ?? ''}',
+                style: TextStyle(color: Colors.black),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              Text(
+                'Image Back - imagePath: ${captureBack.imagePath ?? ''}',
+                style: TextStyle(color: Colors.black),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              Text(
+                'Image Back - imageUrl: ${captureBack.imageUrl ?? ''}',
                 style: TextStyle(color: Colors.black),
               ),
               SizedBox(

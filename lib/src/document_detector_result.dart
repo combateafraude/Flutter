@@ -10,6 +10,8 @@ class DocumentDetectorResult extends SDKResult {
       {this.type, this.sdkFailure, this.captureFront, this.captureBack})
       : super(sdkFailure);
 
+  bool get wasSuccessful => this.sdkFailure == null;
+
   @override
   String toString() {
     return ('$type, $captureFront, $captureBack, $sdkFailure');
@@ -18,12 +20,16 @@ class DocumentDetectorResult extends SDKResult {
 
 class Capture {
   String imagePath;
+  String imageUrl;
   int missedAttemps;
 
-  Capture({@required this.imagePath, @required this.missedAttemps});
+  Capture(
+      {@required this.imagePath,
+      @required this.missedAttemps,
+      this.imageUrl = ''});
 
   @override
   String toString() {
-    return ('$imagePath, $missedAttemps');
+    return ('$imagePath, $missedAttemps, $imageUrl');
   }
 }

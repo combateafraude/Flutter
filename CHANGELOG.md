@@ -1,3 +1,11 @@
+# 0.10.0
+Add new methods for layout in iOS:
+- setIOSShowStepLabel
+- setIOSShowStatusLabel
+- setIOSSLayout
+Added new parameter opcional on build():
+- uploadImages
+
 # 0.9.0
 Add field `type` in DocumentDetectorResult
 # 0.8.0

@@ -4,18 +4,18 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'document_detector_sdk'
-  s.version          = '0.3.0'
+  s.version          = '0.4.0'
   s.summary          = 'Flutter plugin for DocumentDetector of Combate a Fraudes'
   s.description      = <<-DESC
 Flutter plugin for DocumentDetector of Combate a Fraudes
                        DESC
   s.homepage         = 'https://github.com/combateafraude'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'frederico.gassen@combateafraude.com' => 'frederico.gassen@combateafraude.com' }
+  s.author           = {'ti@combateafraude.com' => 'ti@combateafraude.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'DocumentDetector', '~> 1.1.0'
+  s.dependency 'DocumentDetector', '1.1.0'
   s.platform = :ios, '12.0'
   s.static_framework = true
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
