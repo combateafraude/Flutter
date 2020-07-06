@@ -9,8 +9,8 @@
 
 This repository contains Flutter [releases](https://github.com/combateafraude/Flutter/branches) and [documentation](https://github.com/combateafraude/Flutter/branches) of Combate à Fraude's SDKs.
 
-| SDK | Goal | Example | Integrating |
-| :--: | :--: | :--: | :--: |
-| DocumentDetector        | Capture RG and CNH assurance and great quality for OCR | <img src="/resources/DocumentDetector.gif"> | [Documentation](https://github.com/combateafraude/Flutter/tree/document-detector) |
-| ActiveFaceLiveness      | Camera that capture a reliable selfie using facial movements | <img src="/resources/ActiveFaceLiveness.gif"> | [Documentation](https://github.com/combateafraude/Flutter/tree/active-face-liveness) |
-| PassiveFaceLiveness     | Camera that capture a reliable selfie using AI | <img src="/resources/PassiveFaceLiveness.gif"> | [Documentation](https://github.com/combateafraude/Flutter/tree/passive-face-liveness) |
+| SDK | Goal | Example |
+| :--: | :--: | :--: |
+| [DocumentDetector](https://github.com/combateafraude/Flutter/tree/document-detector)        | Capture RG and CNH assurance and great quality for OCR | <img src="/resources/DocumentDetector.gif"> |
+| [ActiveFaceLiveness](https://github.com/combateafraude/Flutter/tree/active-face-liveness)      | Camera that capture a reliable selfie using facial movements | <img src="/resources/ActiveFaceLiveness.gif"> |
+| [PassiveFaceLiveness](https://github.com/combateafraude/Flutter/tree/passive-face-liveness)     | Camera that capture a reliable selfie using AI | <img src="/resources/PassiveFaceLiveness.gif"> |
