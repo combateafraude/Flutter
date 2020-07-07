@@ -167,6 +167,7 @@ For example, if you start with the CNH DocumentCaptureType, the DocumentDetector
 ```dart
 
 class DocumentDetectorResult extends SDKResult {
+  final String type; // The scanned document type ("rg", "rg_new", "cnh", "rne") that needs to be send on OCR route
   final Capture captureFront;
   final Capture captureBack;
   final SDKFailure sdkFailure;
