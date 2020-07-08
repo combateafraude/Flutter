@@ -13,19 +13,19 @@ class PassiveFaceLiveness {
       {String drawableGreenName,
       String drawableWhiteName,
       String drawableRedName}) {
-    if (drawableGreenName != null) _params['setGreenMask'] = drawableGreenName;
-    if (drawableWhiteName != null) _params['setWhiteMask'] = drawableWhiteName;
-    if (drawableRedName != null) _params['setRedMask'] = drawableRedName;
+    if (drawableGreenName != null) _params['nameGreenMask'] = drawableGreenName;
+    if (drawableWhiteName != null) _params['nameWhiteMask'] = drawableWhiteName;
+    if (drawableRedName != null) _params['nameRedMask'] = drawableRedName;
   }
 
   /// replace the SDK layout with yours with the respectively template : https://gist.github.com/kikogassen/62068b6e5bc7988d28594d833b125519
   void setAndroidLayout(String layoutName) {
-    _params['setLayout'] = layoutName;
+    _params['nameLayout'] = layoutName;
   }
 
   /// set the SDK color style for Android
   void setAndroidStyle(String styleName) {
-    _params['setStyle'] = styleName;
+    _params['nameStyle'] = styleName;
   }
 
   /// set the SDK color style for iOS
