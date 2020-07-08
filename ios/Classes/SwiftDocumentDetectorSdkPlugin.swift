@@ -44,6 +44,10 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
         var showStatusLabel : Bool = true;
         var hasSound : Bool = true;
         var colorTheme = UIColor.init(hexString: "#4CD964")
+        var showPopup : Bool = false;
+        var upload : Bool = false;
+        var imageQuality = 1.0
+        
         let layout = DocumentDetectorLayout()
         
         self.flutterResult = result
@@ -65,6 +69,17 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
         
         if let argShowStatusLabel = args["ShowStatusLabel"] as? Bool {
             showStatusLabel = argShowStatusLabel
+        }
+        
+        if let argShowPopup = args["showPopup"] as? Bool {
+            showPopup = argShowPopup
+        }
+
+        if let argUpload = args["upload"] as? Bool {
+            upload = argUpload
+            if let argImageQuality = args["imageQuality"] as? Int {
+                imageQuality = Double(argImageQuality / 100)
+            }
         }
         
         if let argColorTheme = args["colorTheme"] as? String {
@@ -126,12 +141,14 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
 
         let documentDetectorConfiguration = DocumentDetectorBuilder(apiToken: mobileToken)
             .setDocumentDetectorFlow(flow: convertToDocumentFlow(documentType: documentType)!)
+            .showPopup(show : showPopup)
             .setRequestTimeout(seconds: TimeInterval(requestTimeout))
             .setHasSound(hasSound: hasSound)
             .showStepLabel(show: showStepLabel)
             .showStatusLabel(show: showStatusLabel)
             .setColorTheme(color: colorTheme)
             .setLayout(layout: layout)
+            .uploadImages(upload : upload, imageQuality : CGFloat(imageQuality))
             .build()
         
         let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
@@ -153,11 +170,14 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
         let response : NSMutableDictionary! = [:]
         response["success"] = NSNumber(value: true)
         response["capture_type"] = results.type
-        response["captureFront_missedAttemps"] = results.captures[0].missedAttemps
+
         response["captureFront_imagePath"] = captureFront_imagePath
+        response["captureFront_imageUrl"] = results.captures[0].imageUrl
+                response["captureFront_missedAttemps"] = results.captures[0].missedAttemps
         
-        response["captureBack_missedAttemps"] = results.captures[1].missedAttemps
         response["captureBack_imagePath"] = captureBack_imagePath
+        response["captureBack_imageUrl"] = results.captures[1].imageUrl
+        response["captureBack_missedAttemps"] = results.captures[1].missedAttemps
         flutterResult!(response)
     }
     

@@ -147,6 +147,9 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
         String documentType = (String) argsMap.get("documentType");
         Boolean hasSound = (Boolean) argsMap.get("hasSound");
         Integer requestTimeout = (Integer) argsMap.get("requestTimeout");
+        Boolean upload = (Boolean) argsMap.get("upload");
+        Integer imageQuality = (Integer) argsMap.get("imageQuality");
+        Boolean showPopup = (Boolean) argsMap.get("showPopup");
 
         Integer idRedMask = null;
         if (argsMap.containsKey("nameRedMask")) {
@@ -185,6 +188,8 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
 
         DocumentDetector mDocumentDetector = new DocumentDetector.Builder(mobileToken)
                 .setDocumentDetectorFlow(getDocumentType(documentType))
+                .showPopup(showPopup)
+                .uploadImages(upload, imageQuality)
                 .setMask(idGreenMask, idWhiteMask, idRedMask)
                 .setLayout(idLayout)
                 .hasSound(hasSound)
@@ -205,9 +210,13 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
                 if (documentDetectorResult.wasSuccessful()) {
                     response.put("success", Boolean.valueOf(true));
                     response.put("capture_type", documentDetectorResult.getType());
+
                     response.put("captureFront_imagePath", documentDetectorResult.getCaptures()[0].getImagePath());
+                    response.put("captureFront_imageUrl", documentDetectorResult.getCaptures()[0].getImageUrl());
                     response.put("captureFront_missedAttemps", documentDetectorResult.getCaptures()[0].getMissedAttemps());
+
                     response.put("captureBack_imagePath", documentDetectorResult.getCaptures()[1].getImagePath());
+                    response.put("captureBack_imageUrl", documentDetectorResult.getCaptures()[1].getImageUrl());
                     response.put("captureBack_missedAttemps", documentDetectorResult.getCaptures()[1].getMissedAttemps());
                 } else {
                     response.put("success", Boolean.valueOf(false));

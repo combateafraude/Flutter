@@ -133,7 +133,6 @@ dependencies:
 ```
 
 ### Optional parameters
-* `uploadImages(bool upload)` - allows upload the image into a server bucket and return its URL in DocumentDetectorResult.Capture.ImageUrl
 * `setAndroidMask(String drawableGreenName, String drawableWhiteName, String drawableRedName)` - replace the default SDK's masks in Android. Enter the name of the drawable to be used
 * `setAndroidLayout(String layoutName)` - replace the SDK layout in Android with yours with the respectively [template](https://gist.github.com/kikogassen/62068b6e5bc7988d28594d833b125519)
 * `setAndroidStyle(String styleName)` -  set the SDK color style in Android. [Template](https://github.com/combateafraude/Mobile/wiki/Common#styles)
@@ -158,6 +157,8 @@ Example:
 
 * `hasSound(bool hasSound)` - enable/disable the SDK sound
 * `setRequestTimeout(int requestTimeout)` - set the server calls request timeout
+* `uploadImages(bool upload, int imageQuality)` - Enable the uploads of the document images, returning its URLs in DocumentDetectorResult.Capture.ImageUrl
+* `showPopup(bool show)` - Shows/hides the document popup that helps the client
 
 ### SDK Result
 The `DocumentDetectorResult` class, which extends `SDKResult`, has the a Capture for documentFront and other for documentBack, where each Capture has the full image path of the document, the float confidence value of the detected image for the image detector and the missedAttemps count, which is increased for each wrong document, beyond `SDKFailure` for the operation.

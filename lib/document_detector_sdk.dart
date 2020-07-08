@@ -1,10 +1,7 @@
 library document_detector_sdk;
 
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';

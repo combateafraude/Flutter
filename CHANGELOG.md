@@ -1,3 +1,9 @@
+# 0.11.0
+Removed parameter `uploadImages` on build():
+Added new methods:
+- showPopup
+- uploadImages
+
 # 0.10.0
 Add new methods for layout in iOS:
 - setIOSShowStepLabel

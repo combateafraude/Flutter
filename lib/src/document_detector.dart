@@ -2,12 +2,9 @@ part of document_detector_sdk;
 
 class DocumentDetector {
   static Map<String, dynamic> _params = {};
-  final bool uploadImages;
 
   DocumentDetector.builder(
-      {@required String mobileToken,
-      @required DocumentType documentType,
-      this.uploadImages = false})
+      {@required String mobileToken, @required DocumentType documentType})
       : assert(mobileToken != null),
         assert(documentType != null) {
     _params['mobileToken'] = mobileToken;
@@ -64,60 +61,31 @@ class DocumentDetector {
     _params['requestTimeout'] = requestTimeout;
   }
 
+  /// Shows/hides the document popup that helps the client
+  void showPopup(bool showPopup) {
+    _params['showPopup'] = showPopup;
+  }
+
+  /// Enable the uploads of the document images, returning its URLs in DocumentDetectorResult.Capture.ImageUrl
+  void uploadImages({@required bool upload, @required int imageQuality}) {
+    _params['upload'] = upload;
+    _params['imageQuality'] = imageQuality;
+  }
+
   Future<DocumentDetectorResult> build() async {
     final response = await DocumentDetectorSdk._messageChannel
         .invokeMethod('getDocuments', _params);
     if (response.containsKey('success') && response['success']) {
-      if (!uploadImages) {
-        return DocumentDetectorResult(
-            type: response['capture_type'],
-            captureFront: Capture(
-                imagePath: response['captureFront_imagePath'],
-                missedAttemps: response['captureFront_missedAttemps']),
-            captureBack: Capture(
-                imagePath: response['captureBack_imagePath'],
-                missedAttemps: response['captureBack_missedAttemps']));
-      } else {
-        try {
-          print('${DateTime.now().toLocal()} - Obtendo url Front');
-          final ImageResponse urlFront = await getUrlImage();
-          print(urlFront.toString());
-
-          final captureFront = Capture(
+      return DocumentDetectorResult(
+          type: response['capture_type'],
+          captureFront: Capture(
               imagePath: response['captureFront_imagePath'],
-              imageUrl: urlFront.getUrl,
-              missedAttemps: response['captureFront_missedAttemps']);
-
-          print('${DateTime.now().toLocal()} - Enviando imagens Front');
-          await sendImageToAPI(
-              imageResponse: urlFront,
-              imagePath: response['captureFront_imagePath']);
-          print('${DateTime.now().toLocal()} - Front enviado com sucesso');
-
-          print('${DateTime.now().toLocal()} - Obtendo url Back');
-          final ImageResponse urlBack = await getUrlImage();
-          print(urlBack.toString());
-
-          final captureBack = Capture(
+              imageUrl: response['captureFront_imageUrl'],
+              missedAttemps: response['captureFront_missedAttemps']),
+          captureBack: Capture(
               imagePath: response['captureBack_imagePath'],
-              imageUrl: urlBack.getUrl,
-              missedAttemps: response['captureBack_missedAttemps']);
-          print('${DateTime.now().toLocal()} - Enviando imagens Back');
-          await sendImageToAPI(
-              imageResponse: urlBack,
-              imagePath: response['captureBack_imagePath']);
-          print('${DateTime.now().toLocal()} - Back enviado com sucesso');
-
-          return DocumentDetectorResult(
-              type: response['capture_type'],
-              captureFront: captureFront,
-              captureBack: captureBack);
-        } catch (error) {
-          return DocumentDetectorResult(
-              sdkFailure: (SDKFailure(
-                  'Falha ao realizar upload das imagens: ${error.toString()}')));
-        }
-      }
+              imageUrl: response['captureBack_imageUrl'],
+              missedAttemps: response['captureBack_missedAttemps']));
     } else if (response.containsKey('success') && !response['success']) {
       if (response.containsKey('cancel')) {
         return DocumentDetectorResult(
@@ -153,44 +121,9 @@ class DocumentDetector {
           return DocumentDetectorResult(
               sdkFailure: (SDKFailure(response['errorMessage'])));
       }
-    }
-  }
-
-  Future<ImageResponse> getUrlImage() async {
-    final endpointURL = 'https://api.combateafraude.com/image-upload';
-    try {
-      Response response = await Dio().post(endpointURL);
-
-      if (response.statusCode != 200) {
-        throw ("Erro ao chamar image-upload: ${response.statusMessage}");
-      }
-
-      return ImageResponse(
-        getUrl: response.data["body"]["getUrl"],
-        uploadUrl: response.data["body"]["uploadUrl"],
-      );
-    } catch (e) {
-      throw ("Erro ao chamar image-upload: ${e.toString()}");
-    }
-  }
-
-  Future<void> sendImageToAPI(
-      {@required ImageResponse imageResponse, String imagePath}) async {
-    try {
-      // read image bytes from disk as a list
-      List<int> imageBytes = File(imagePath).readAsBytesSync();
-      String imageString = base64Encode(imageBytes);
-
-      Response response = await Dio()
-          .put(imageResponse.uploadUrl, data: {"image": imageString});
-
-      if (response.statusCode != 200) {
-        throw ("Erro ao enviar para image-upload: ${response.statusMessage}");
-      }
-
-      return;
-    } catch (error) {
-      throw ("Erro ao enviar para image-upload: ${error.toString()}");
+    } else {
+      return DocumentDetectorResult(
+          sdkFailure: (SDKFailure('Cancelado pelo usuário')));
     }
   }
 }

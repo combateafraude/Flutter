@@ -17,7 +17,8 @@ class _MyAppState extends State<MyApp> {
   Capture captureFront = Capture(imagePath: null, missedAttemps: null);
   Capture captureBack = Capture(imagePath: null, missedAttemps: null);
   SDKFailure sdkFailure = SDKFailure('');
-  final mobileToken = 'mobileToken';
+  final mobileToken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1ZTg2MjAxNGVjMjFjNDAwMDgxYjY2NmQifQ.9bf3VPzAwHd7IMS9ZzAUaguhe0OKu2mHxCjddQgboVE';
 
   @override
   void initState() {
@@ -53,8 +54,7 @@ class _MyAppState extends State<MyApp> {
                       DocumentDetector documentDetector =
                           DocumentDetector.builder(
                               mobileToken: mobileToken,
-                              documentType: DocumentType.CNH,
-                              uploadImages: true);
+                              documentType: DocumentType.CNH);
 
                       //Opcional parameters:
                       /*
@@ -77,9 +77,12 @@ class _MyAppState extends State<MyApp> {
                             greenMaskImageName: "green_mask",
                             redMaskImageName: "red_mask",
                             whiteMaskImageName: "white_mask"),
+                      documentDetector.uploadImages(
+                          upload: true, imageQuality: 50);
+
                       );
                        */
-
+                      documentDetector.showPopup(false);
                       final documentResult = await documentDetector.build();
 
                       if (documentResult.wasSuccessful) {
