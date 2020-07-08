@@ -1,3 +1,5 @@
+# 0.12.0
+New release from version 0.11.0
 # 0.11.0
 Removed parameter `uploadImages` on build():
 Added new methods:
