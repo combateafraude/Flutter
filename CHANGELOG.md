@@ -1,3 +1,5 @@
+# 0.13.0
+Bugfix Android Layout methods
 # 0.12.0
 New release from version 0.11.0
 # 0.11.0
