@@ -78,10 +78,9 @@ class _MyAppState extends State<MyApp> {
                             whiteMaskImageName: "white_mask"),
                       documentDetector.uploadImages(
                           upload: true, imageQuality: 50);
-
+                      documentDetector.showPopup(false);
                       );
                        */
-                      documentDetector.showPopup(false);
                       final documentResult = await documentDetector.build();
 
                       if (documentResult.wasSuccessful) {
