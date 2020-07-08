@@ -115,7 +115,7 @@ dependencies:
   name: document_detector_sdk:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v.0.10.0
+      ref: document-detector-v.0.11.0
 ```
 
 ## Usage
