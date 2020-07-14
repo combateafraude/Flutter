@@ -64,8 +64,13 @@ When working on Android API 23+, you'll have to request the runtime permissions 
 You need to add this rules in your Proguard/R8 file. If not exits, it's necessary create:
 
 ```java
+# OkHttp safe warning
+-dontwarn okhttp3.internal.platform.ConscryptPlatform
+-dontwarn org.conscrypt.ConscryptHostnameVerifier
+-dontwarn androidx.paging.PositionalDataSource
+
 # Keep the classes that are deserialized by GSON
--keep class com.combateafraude.helpers.server.api.** { <fields>; }
+-keep class com.combateafraude.helpers.server.model.** { <fields>; }
 
 # Keep - Library. Keep all public and protected classes, fields, and methods.
 -keep public class * {
@@ -75,6 +80,7 @@ You need to add this rules in your Proguard/R8 file. If not exits, it's necessar
 
 # Keep all enums. Removing this causes a crash in the Document enum
 -keepclassmembers enum * {
+    <fields>;
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
@@ -83,6 +89,35 @@ You need to add this rules in your Proguard/R8 file. If not exits, it's necessar
 -keepclasseswithmembernames,includedescriptorclasses class * {
     native <methods>;
 }
+
+# Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
+# EnclosingMethod is required to use InnerClasses. Exceptions is to keep the throws sentences
+-keepattributes Signature, InnerClasses, EnclosingMethod, Exceptions, MethodParameters
+
+# Retrofit does reflection on method and parameter annotations.
+-keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
+
+# Retain service method parameters when optimizing.
+-keepclassmembers,allowshrinking,allowobfuscation interface * {
+    @retrofit2.http.* <methods>;
+}
+
+# Ignore annotation used for build tooling.
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+
+# Ignore JSR 305 annotations for embedding nullability information.
+-dontwarn javax.annotation.**
+
+# Guarded by a NoClassDefFoundError try/catch and only used when on the classpath.
+-dontwarn kotlin.Unit
+
+# Top-level functions that can only be used by Kotlin.
+-dontwarn retrofit2.KotlinExtensions
+
+# With R8 full mode, it sees no subtypes of Retrofit interfaces since they are created with a Proxy
+# and replaces all potential values with null. Explicitly keeping the interfaces prevents this.
+-if interface * { @retrofit2.http.* <methods>; }
+-keep,allowobfuscation interface <1>
 ```
 
 ### iOS environment
@@ -115,21 +150,36 @@ dependencies:
   name: document_detector_sdk:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v.0.13.0
+      ref: document-detector-v.1.0.0
 ```
 
 ## Usage
+
+**BREAKING CHANGES**  
+Warning: Changes on document-detector-v.0.13.0 to document-detector-v.1.0.0
+- Changed: constructor of DocumentDetector
+    - removed parameters: documentType and uploadImages
+    -  add parameters: flow
 
 ```dart
   DocumentDetector documentDetector =
       DocumentDetector.builder(
           mobileToken: mobileToken,
-          documentType: DocumentType.CNH or DocumentType.RG,
-          uploadImages: false //Opcional: Default = false
+          flow: DocumentDetector.RG_FLOW or DocumentDetector.CNH_FLOW or
+          [DocumentDetectorStep(document: DocumentType.CNH_FRONT)] or
+          [any custom flow with DocumentDetectorStep]
           );
 
   final DocumentDetectorResult = await documentDetector.build();
+```
 
+You can capture only the front or back of a document using:
+```dart
+ flow: [DocumentDetectorStep(document: DocumentType.CNH_FRONT)]
+```
+or
+```dart
+ flow: [DocumentDetectorStep(document: DocumentType.CNH_BACK)]
 ```
 
 ### Optional parameters
@@ -160,17 +210,53 @@ Example:
 * `uploadImages(bool upload, int imageQuality)` - Enable the uploads of the document images, returning its URLs in DocumentDetectorResult.Capture.ImageUrl
 * `showPopup(bool show)` - Shows/hides the document popup that helps the client
 
-### SDK Result
-The `DocumentDetectorResult` class, which extends `SDKResult`, has the a Capture for documentFront and other for documentBack, where each Capture has the full image path of the document, the float confidence value of the detected image for the image detector and the missedAttemps count, which is increased for each wrong document, beyond `SDKFailure` for the operation.
 
-For example, if you start with the CNH DocumentCaptureType, the DocumentDetectorResult object will contains the the front CNH imagePath and the confidence for that capture, the back CNH imagePath and confidence and the CNH DocumentDetectorType.
+### DocumentDetectorStep
+
+The DocumentDetectorStep constructor has the following structure:
+
+```dart
+DocumentDetectorStep(
+      {@required this.document,
+      this.androidStepLabelName,
+      this.iosStepLabel,
+      this.androidIllustrationName,
+      this.iosIllustrationName,
+      this.androidAudioName,
+      this.iosAudioName,
+      this.androidNotFoundMsgName,
+      this.iosNotFoundMessage});
+```
+
+| **Parameter**           |  **Required** | **Description** |
+|-------------------------|---------------|-----------------|
+| document:DocumentType   | Yes           | Sets which document will be scanned in the correspondent step |
+| androidStepLabelName    | No            | Sets name String on string.xml that will be shown in the bottom of screen on Android |
+| iosStepLabel            | No            | Sets the String label that will be shown in the bottom of screen on iOS |
+| androidIllustrationName | No            | Sets the illustration name in drawable folder that will be shown in the popup on Android |
+| iosIllustrationName     | No            | Sets the UIImage name that will be shown in the popup on iOS |
+| androidAudioName        | No            | Sets the file name in raw folder that will be played in the start of step on Android |
+| iosAudioName            | No            | Sets the file name that will be played in the start of step on iOS |
+| androidNotFoundMsgName  | No            | Sets name String on string.xml that will be shown when the user aim the camera to anything except any document on Android |
+| iosNotFoundMessage      | No            | Sets the String label that will be shown when the user aim the camera to anything except any document on iOS |
+
+
+### SDK Result
+The `DocumentDetectorResult` class, which extends `SDKResult`, has array of document captures. It will be the same length of flow passed by parameter flow. RG_FLOW = 2, CNH_FLOW = 2.
+It will be the same length of flow passed by parameter flow.
+
+Example:
+- DocumentDetector.CNH_FLOW = 2
+- DocumentDetector.RG_FLOW = 2.
+- [DocumentDetectorStep(document: DocumentType.CNH_FRONT)] = 1
 
 ```dart
 
 class DocumentDetectorResult extends SDKResult {
   final String type; // The scanned document type ("rg", "rg_new", "cnh", "rne") that needs to be send on OCR route
-  final Capture captureFront;
-  final Capture captureBack;
+  final List<Capture> capture; //The array of document captures. It will be the same length of flow passed by parameter flow. RG_FLOW = 2, CNH_FLOW = 2
+  final Capture captureFront; //Valid only RG_FLOW or CNH_FLOW
+  final Capture captureBack;  //Valid only RG_FLOW or CNH_FLOW
   final SDKFailure sdkFailure;
 }
 ```
@@ -180,6 +266,7 @@ class Capture {
   String imagePath;
   String imageUrl;
   int missedAttemps;
+  String scannedLabel;
 }
 ```
 

@@ -40,20 +40,33 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
     private func getDocuments(call: FlutterMethodCall, result: @escaping FlutterResult) {
         
         var requestTimeout = 15
-        var showStepLabel : Bool = true;
-        var showStatusLabel : Bool = true;
-        var hasSound : Bool = true;
+        var showStepLabel : Bool = true
+        var showStatusLabel : Bool = true
+        var hasSound : Bool = true
         var colorTheme = UIColor.init(hexString: "#4CD964")
-        var showPopup : Bool = false;
-        var upload : Bool = false;
+        var showPopup : Bool = true
+        var upload : Bool = false
         var imageQuality = 1.0
         
         let layout = DocumentDetectorLayout()
         
+        var documentDetectorSteps : [DocumentDetectorStep] = []
+        
         self.flutterResult = result
         let args = call.arguments as! [String: Any?]
         let mobileToken = args["mobileToken"] as! String
-        let documentType = args["documentType"] as! String
+        
+        if let flowData = args["flow"] as? [[String: Any]] {
+            for (index, docStep) in flowData.enumerated() {
+                print("Item \(index + 1): \(docStep)")
+                let documentString = docStep["document"] as! String
+                if (documentString != "GENERIC") {
+                    documentDetectorSteps.append(convertToDocumentStep(documentType: documentString))
+                } else {
+                    
+                }
+            }
+        }
         
         if let argTimeout = args["requestTimeout"] as? Int {
             requestTimeout = argTimeout
@@ -74,7 +87,7 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
         if let argShowPopup = args["showPopup"] as? Bool {
             showPopup = argShowPopup
         }
-
+        
         if let argUpload = args["upload"] as? Bool {
             upload = argUpload
             if let argImageQuality = args["imageQuality"] as? Int {
@@ -137,10 +150,9 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
             layout.changeSoundImages(soundOn: soundOn,
                                      soundOff: soundOff)
         }
-
-
+        
         let documentDetectorConfiguration = DocumentDetectorBuilder(apiToken: mobileToken)
-            .setDocumentDetectorFlow(flow: convertToDocumentFlow(documentType: documentType)!)
+            .setDocumentDetectorFlow(flow: documentDetectorSteps)
             .showPopup(show : showPopup)
             .setRequestTimeout(seconds: TimeInterval(requestTimeout))
             .setHasSound(hasSound: hasSound)
@@ -164,20 +176,26 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
     
     public func documentDetectionController(_ scanner: DocumentDetectorController, didFinishWithResults results: DocumentDetectorResult) {
         
-        let captureFront_imagePath = saveImageToDocumentsDirectory(image: results.captures[0].image, withName: "documentFront.jpg")
-        let captureBack_imagePath = saveImageToDocumentsDirectory(image: results.captures[1].image, withName: "documentBack.jpg")
+        var captureMap : [NSMutableDictionary?]  = []
+        for index in (0 ... results.captures.count - 1) {
+            let capture : NSMutableDictionary! = [:]
+            let capture_imagePath = saveImageToDocumentsDirectory(image: results.captures[index].image, withName: "document\(index).jpg")
+            capture["imagePath"] = capture_imagePath
+            if let imageUrl = results.captures[index].imageUrl {
+                capture["imageUrl"] = imageUrl
+            } else {
+                capture["imageUrl"] = ""
+            }
+            capture["missedAttemps"] = results.captures[index].missedAttemps
+            capture["scannedLabel"] = results.captures[index].scannedLabel
+            captureMap.append(capture)
+        }
         
         let response : NSMutableDictionary! = [:]
         response["success"] = NSNumber(value: true)
         response["capture_type"] = results.type
-
-        response["captureFront_imagePath"] = captureFront_imagePath
-        response["captureFront_imageUrl"] = results.captures[0].imageUrl
-                response["captureFront_missedAttemps"] = results.captures[0].missedAttemps
+        response["capture"] = captureMap
         
-        response["captureBack_imagePath"] = captureBack_imagePath
-        response["captureBack_imageUrl"] = results.captures[1].imageUrl
-        response["captureBack_missedAttemps"] = results.captures[1].missedAttemps
         flutterResult!(response)
     }
     
@@ -225,6 +243,47 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
         }
     }
     
+    func convertToDocumentStep(documentType: String) -> DocumentDetectorStep {
+        let bundle = Bundle(for: DocumentDetector.DocumentDetectorController.self)
+        switch documentType {
+        case "CNH_FRONT":
+            let audioURL = URL(fileURLWithPath: bundle.path(forResource: "frentedacnh", ofType: "mp3")!)
+            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "cnh_frente", ofType: "png")!)
+            let image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
+            return DocumentDetectorStep(document: Document.CNH_FRONT, stepLabel: "Frente da CNH", illustration: image, audio: audioURL, notFoundMessage: "Frente da CNH não encontrada")
+        case "CNH_BACK":
+            let audioURL = URL(fileURLWithPath: bundle.path(forResource: "versodacnh", ofType: "mp3")!)
+            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "cnh_verso", ofType: "png")!)
+            let image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
+            return DocumentDetectorStep(document: Document.CNH_BACK, stepLabel: "Verso da CNH", illustration: image, audio: audioURL, notFoundMessage: "Verso da CNH não encontrada")
+        case "CNH_FULL":
+            let audioURL = URL(fileURLWithPath: bundle.path(forResource: "generic", ofType: "mp3")!)
+            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "generic_front", ofType: "png")!)
+            let image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
+            return DocumentDetectorStep(document: Document.CNH_FULL, stepLabel: "CNH", illustration: image, audio: audioURL, notFoundMessage: "CNH não encontrada")
+        case "RG_FRONT":
+            let audioURL = URL(fileURLWithPath: bundle.path(forResource: "frentedorg", ofType: "mp3")!)
+            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "rg_frente", ofType: "png")!)
+            let image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
+            return DocumentDetectorStep(document: Document.RG_FRONT, stepLabel: "Frente do RG", illustration: image, audio: audioURL, notFoundMessage: "Frente do RG não encontrado")
+        case "RG_BACK":
+            let audioURL = URL(fileURLWithPath: bundle.path(forResource: "versodorg", ofType: "mp3")!)
+            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "rg-verso", ofType: "png")!)
+            let image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
+           return DocumentDetectorStep(document: Document.RG_BACK, stepLabel: "Verso do RG", illustration: image, audio: audioURL, notFoundMessage: "Verso do RG não encontrado")
+        case "RG_FULL":
+            let audioURL = URL(fileURLWithPath: bundle.path(forResource: "generic", ofType: "mp3")!)
+            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "generic_front", ofType: "png")!)
+            let image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
+            return DocumentDetectorStep(document: Document.RG_FULL, stepLabel: "RG", illustration: image, audio: audioURL, notFoundMessage: "RG não encontrado")
+        default:
+            let audioURL = URL(fileURLWithPath: bundle.path(forResource: "generic", ofType: "mp3")!)
+            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "generic_front", ofType: "png")!)
+            let image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
+            return DocumentDetectorStep(document: Document.GENERIC, stepLabel: "Documento", illustration: image, audio: audioURL, notFoundMessage: "Documento não encontrado")
+        }
+    }
+    
     func saveImageToDocumentsDirectory(image: UIImage, withName: String) -> String? {
         if let data = image.jpegData(compressionQuality: 0.8) {
             let dirPath = getDocumentsDirectory()
@@ -241,7 +300,7 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
     }
     
     func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
 }

@@ -1,14 +1,31 @@
 part of document_detector_sdk;
 
 class DocumentDetector {
-  static Map<String, dynamic> _params = {};
+  // ignore: non_constant_identifier_names
+  static final CNH_FLOW = [
+    DocumentDetectorStep(document: DocumentType.CNH_FRONT),
+    DocumentDetectorStep(document: DocumentType.CNH_BACK),
+  ];
+
+  // ignore: non_constant_identifier_names
+  static final RG_FLOW = [
+    DocumentDetectorStep(document: DocumentType.RG_FRONT),
+    DocumentDetectorStep(document: DocumentType.RG_BACK)
+  ];
+
+  Map<String, dynamic> _params = {};
 
   DocumentDetector.builder(
-      {@required String mobileToken, @required DocumentType documentType})
+      {@required String mobileToken, List<DocumentDetectorStep> flow})
       : assert(mobileToken != null),
-        assert(documentType != null) {
+        assert(flow != null) {
     _params['mobileToken'] = mobileToken;
-    _params['documentType'] = documentType.code;
+
+    List<Map<String, dynamic>> flowMap = [];
+    for (var step in flow) {
+      flowMap.add(step.toMap());
+    }
+    _params['flow'] = flowMap;
   }
 
   /// replace default SDK Mask
@@ -76,16 +93,17 @@ class DocumentDetector {
     final response = await DocumentDetectorSdk._messageChannel
         .invokeMethod('getDocuments', _params);
     if (response.containsKey('success') && response['success']) {
+      List<Capture> captureList = [];
+      final capture = response['capture'];
+      capture.forEach((c) {
+        captureList.add(Capture(
+            imagePath: c['imagePath'] as String,
+            imageUrl: c['imageUrl'] as String,
+            missedAttemps: c['missedAttemps'] as int,
+            scannedLabel: c['scannedLabel'] as String));
+      });
       return DocumentDetectorResult(
-          type: response['capture_type'],
-          captureFront: Capture(
-              imagePath: response['captureFront_imagePath'],
-              imageUrl: response['captureFront_imageUrl'],
-              missedAttemps: response['captureFront_missedAttemps']),
-          captureBack: Capture(
-              imagePath: response['captureBack_imagePath'],
-              imageUrl: response['captureBack_imageUrl'],
-              missedAttemps: response['captureBack_missedAttemps']));
+          type: response['capture_type'], capture: captureList);
     } else if (response.containsKey('success') && !response['success']) {
       if (response.containsKey('cancel')) {
         return DocumentDetectorResult(

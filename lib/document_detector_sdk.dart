@@ -10,6 +10,6 @@ part 'src/document_detector.dart';
 part 'src/document_detector_layout.dart';
 part 'src/document_detector_result.dart';
 part 'src/document_detector_sdk.dart';
+part 'src/document_detector_step.dart';
 part 'src/document_type.dart';
-part 'src/image_response.dart';
 part 'src/sdk_result.dart';

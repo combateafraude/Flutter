@@ -1,7 +1,19 @@
+# 1.0.0
+__Android Native SDK Update to 2.1.0__
+
+__iOS Native SDK Update to 1.2.0__
+- Added: support to other documents in Document Detector, like Registro Nacional de Estrangeiros (RNE), Carteira de Identidade de Advogado (OAB) and Identidade Militar.
+
+*BREAKING CHANGES*
+- Changed: constructor of DocumentDetector. Now you can start it with your own flow!
+- Changed (Android): possibility to customize what kind of parameters you want in ´DocumentDetectorStep´ object. If you want to change only the stepLabel, pass it by parameter and send null in others.
+
 # 0.13.0
 Bugfix Android Layout methods
+
 # 0.12.0
 New release from version 0.11.0
+
 # 0.11.0
 Removed parameter `uploadImages` on build():
 Added new methods:
@@ -18,19 +30,26 @@ Added new parameter opcional on build():
 
 # 0.9.0
 Add field `type` in DocumentDetectorResult
+
 # 0.8.0
 Bugfix in DocumentDetector iOS SDK
+
 # 0.7.0
 Bugfix in DocumentDetector iOS code
+
 # 0.6.0
 Bugfix in DocumentDetector Java code
+
 # 0.5.0
 Bugfix in DocumentDetector Java code
 Documentation update
+
 # 0.4.0
 Bugfix in DocumentDetector Java code
+
 # 0.3.0
 Updated DocumentDetector Android SDK version
+
 # 0.2.0
 Updated DocumentDetector Android SDK version
 Minor fix
@@ -41,5 +60,6 @@ Removed methods:
 - setGreenMask
 Updated method:
 - setMask
+
 ## 0.1.0
 Initial version

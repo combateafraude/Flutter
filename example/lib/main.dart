@@ -14,8 +14,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String result = '';
   String type = '';
-  Capture captureFront = Capture(imagePath: null, missedAttemps: null);
-  Capture captureBack = Capture(imagePath: null, missedAttemps: null);
+  List<Capture> capture = [];
+  Capture captureFront =
+      Capture(imagePath: null, missedAttemps: null, scannedLabel: null);
+  Capture captureBack =
+      Capture(imagePath: null, missedAttemps: null, scannedLabel: null);
   SDKFailure sdkFailure = SDKFailure('');
   final mobileToken = 'mobileToken';
 
@@ -53,7 +56,38 @@ class _MyAppState extends State<MyApp> {
                       DocumentDetector documentDetector =
                           DocumentDetector.builder(
                               mobileToken: mobileToken,
-                              documentType: DocumentType.CNH);
+                              flow: DocumentDetector.CNH_FLOW
+                              //flow: [
+                              //DocumentDetectorStep(
+                              //    document: DocumentType.CNH_FRONT)]
+                              );
+                      // Custom flow
+                      /*
+                      DocumentDetector documentDetector = DocumentDetector
+                          .builder(mobileToken: mobileToken, flow: [
+                        DocumentDetectorStep(document: DocumentType.CNH_FRONT)
+                      ]);
+
+                      DocumentDetector documentDetector =
+                          DocumentDetector.builder(
+                              mobileToken: mobileToken,
+                              flow: [
+                            DocumentDetectorStep(
+                              document: DocumentType.CNH_FULL,
+                              //androidStepLabelName: 'stepLabel',
+                              //androidNotFoundMsgName: 'notFoundMessage',
+                              //androidIllustrationName: "generic",
+                              //androidAudioName: "generic"
+                            ),
+                            DocumentDetectorStep(
+                              document: DocumentType.RG_FULL,
+                              //androidStepLabelName: 'stepLabel',
+                              //androidNotFoundMsgName: 'notFoundMessage',
+                              //androidIllustrationName: "generic",
+                              //androidAudioName: "generic"
+                            )
+                          ]);
+                       */
 
                       //Opcional parameters:
                       /*
@@ -81,30 +115,53 @@ class _MyAppState extends State<MyApp> {
                       documentDetector.showPopup(false);
                       );
                        */
+                      //documentDetector.uploadImages(
+                      //    upload: true, imageQuality: 50);
+
                       final documentResult = await documentDetector.build();
 
                       if (documentResult.wasSuccessful) {
-                        print('success: ${documentResult.toString()}');
+                        if (documentResult.capture.length == 2) {
+                          print('success: ${documentResult.toString()}');
 
-                        print(
-                            'success: ${documentResult.captureFront.toString()}');
-                        print(
-                            'success: ${documentResult.captureBack.toString()}');
-                        setState(() {
-                          type = documentResult.type;
-                          captureFront = documentResult.captureFront;
-                          captureBack = documentResult.captureBack;
-                          sdkFailure = null;
-                        });
+                          print(
+                              'success: ${documentResult.captureFront.toString()}');
+                          print(
+                              'success: ${documentResult.captureBack.toString()}');
+                          setState(() {
+                            type = documentResult.type;
+                            captureFront = documentResult.captureFront;
+                            captureBack = documentResult.captureBack;
+                            capture = documentResult.capture;
+                            sdkFailure = null;
+                          });
+                        } else {
+                          setState(() {
+                            captureFront = Capture(
+                                imagePath: null,
+                                missedAttemps: null,
+                                scannedLabel: null);
+                            captureBack = Capture(
+                                imagePath: null,
+                                missedAttemps: null,
+                                scannedLabel: null);
+                            capture = documentResult.capture;
+                            sdkFailure = null;
+                          });
+                        }
                       } else {
                         print(
                             'failed: ${documentResult.sdkFailure.toString()}');
                         setState(() {
                           type = null;
-                          captureFront =
-                              Capture(imagePath: null, missedAttemps: null);
-                          captureBack =
-                              Capture(imagePath: null, missedAttemps: null);
+                          captureFront = Capture(
+                              imagePath: null,
+                              missedAttemps: null,
+                              scannedLabel: null);
+                          captureBack = Capture(
+                              imagePath: null,
+                              missedAttemps: null,
+                              scannedLabel: null);
                           sdkFailure = documentResult.sdkFailure;
                         });
                       }
@@ -114,7 +171,7 @@ class _MyAppState extends State<MyApp> {
                 height: 20,
               ),
               Text(
-                'Results',
+                'Results : ${capture.length} ',
                 style:
                     TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
               ),
@@ -127,6 +184,28 @@ class _MyAppState extends State<MyApp> {
               ),
               SizedBox(
                 height: 4,
+              ),
+              Divider(),
+              Text(
+                'List<Capture>',
+                style:
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              for (var i = 0; i < capture.length; ++i)
+                Text(
+                  'Capture $i: imagePath: ${capture[i].imagePath ?? ''}',
+                  style: TextStyle(color: Colors.black),
+                ),
+              Divider(),
+              SizedBox(
+                height: 4,
+              ),
+              Text(
+                'Only CNH_FLOW / RG_FLOW',
+                style:
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
               ),
               Text(
                 'Image Front - imagePath: ${captureFront.imagePath ?? ''}',
@@ -142,6 +221,7 @@ class _MyAppState extends State<MyApp> {
               SizedBox(
                 height: 4,
               ),
+              Divider(),
               Text(
                 'Image Back - imagePath: ${captureBack.imagePath ?? ''}',
                 style: TextStyle(color: Colors.black),

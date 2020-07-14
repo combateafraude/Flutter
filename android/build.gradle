@@ -44,8 +44,7 @@ android {
         disable 'InvalidPackage'
     }
 
-
     dependencies {
-        implementation 'com.combateafraude.sdk:document-detector:1.+'
+        implementation 'com.combateafraude.sdk:document-detector:2.+'
     }
 }

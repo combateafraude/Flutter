@@ -3,13 +3,13 @@ package com.combateafraude.document_detector_sdk;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.combateafraude.documentdetector.DocumentDetector;
 import com.combateafraude.documentdetector.DocumentDetectorActivity;
 import com.combateafraude.documentdetector.DocumentDetectorResult;
+import com.combateafraude.documentdetector.configuration.Document;
 import com.combateafraude.documentdetector.configuration.DocumentDetectorStep;
 import com.combateafraude.helpers.sdk.failure.InvalidTokenReason;
 import com.combateafraude.helpers.sdk.failure.LibraryReason;
@@ -18,7 +18,9 @@ import com.combateafraude.helpers.sdk.failure.PermissionReason;
 import com.combateafraude.helpers.sdk.failure.ServerReason;
 import com.combateafraude.helpers.sdk.failure.StorageReason;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -33,6 +35,13 @@ import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 import static android.app.Activity.RESULT_OK;
+import static com.combateafraude.documentdetector.configuration.Document.CNH_BACK;
+import static com.combateafraude.documentdetector.configuration.Document.CNH_FRONT;
+import static com.combateafraude.documentdetector.configuration.Document.CNH_FULL;
+import static com.combateafraude.documentdetector.configuration.Document.GENERIC;
+import static com.combateafraude.documentdetector.configuration.Document.RG_BACK;
+import static com.combateafraude.documentdetector.configuration.Document.RG_FRONT;
+import static com.combateafraude.documentdetector.configuration.Document.RG_FULL;
 
 /**
  * DocumentDetectorSdkPlugin
@@ -143,51 +152,86 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
             throw new IllegalArgumentException("Map argument expected");
         }
 
-        String mobileToken = (String) argsMap.get("mobileToken");
-        String documentType = (String) argsMap.get("documentType");
-        Boolean hasSound = (Boolean) argsMap.get("hasSound");
-        Integer requestTimeout = (Integer) argsMap.get("requestTimeout");
-        Boolean upload = (Boolean) argsMap.get("upload");
-        Integer imageQuality = (Integer) argsMap.get("imageQuality");
-        Boolean showPopup = (Boolean) argsMap.get("showPopup");
+        final String mobileToken = (String) argsMap.get("mobileToken");
+        final List<Map<String, Object>> flow = (List<Map<String, Object>>) argsMap.get("flow");
+        final Boolean hasSound = (Boolean) argsMap.get("hasSound");
+        final Integer requestTimeout = (Integer) argsMap.get("requestTimeout");
+        final Boolean upload = (Boolean) argsMap.get("upload");
+        final Integer imageQuality = (Integer) argsMap.get("imageQuality");
+        final Boolean showPopup = (Boolean) argsMap.get("showPopup");
+
+        DocumentDetectorStep[] documentDetectorSteps = new DocumentDetectorStep[flow.size()];
+
+        int count = 0;
+        for (Map<String, Object> docStep : flow) {
+            final Document document = getDocumentType((String) docStep.get("document"));
+
+            Integer idStepLabel = null;
+            Integer idIllustration = null;
+            Integer idAudio = null;
+            Integer idNotFoundMessageName = null;
+
+            if (docStep.containsKey("androidStepLabelName")) {
+                idStepLabel = activity.getResources().getIdentifier((String) docStep.get("androidStepLabelName"), "string", activity.getPackageName());
+                if (idStepLabel == 0)
+                    throw new IllegalArgumentException("Invalid 'Step Label Name in strings.xml");
+            }
+
+            if (docStep.containsKey("androidIllustrationName")) {
+                idIllustration = activity.getResources().getIdentifier((String) docStep.get("androidIllustrationName"), "drawable", activity.getPackageName());
+                if (idIllustration == 0)
+                    throw new IllegalArgumentException("Invalid 'Illustration Name' in drawable folder");
+            }
+
+            if (docStep.containsKey("androidAudioName")) {
+                idAudio = activity.getResources().getIdentifier((String) docStep.get("androidAudioName"), "raw", activity.getPackageName());
+                if (idAudio == 0)
+                    throw new IllegalArgumentException("Invalid 'Audio Name' in raw folder");
+            }
+
+            if (docStep.containsKey("androidNotFoundMsgName")) {
+                idNotFoundMessageName = activity.getResources().getIdentifier((String) docStep.get("androidNotFoundMsgName"), "string", activity.getPackageName());
+                if (idNotFoundMessageName == 0)
+                    throw new IllegalArgumentException("Invalid Not Found Message Name in strings.xml");
+            }
+
+            documentDetectorSteps[count] = new DocumentDetectorStep(document, idStepLabel, idIllustration, idAudio, idNotFoundMessageName);
+            count++;
+        }
 
         Integer idRedMask = null;
+        Integer idWhiteMask = null;
+        Integer idGreenMask = null;
+        Integer idLayout = null;
+        Integer idStyle = null;
+
         if (argsMap.containsKey("nameRedMask")) {
             idRedMask = activity.getResources().getIdentifier((String) argsMap.get("nameRedMask"), "drawable", activity.getPackageName());
 
-            if (idRedMask == 0) throw new IllegalArgumentException("Invalid RedMask name");
+            if (idRedMask == 0) throw new IllegalArgumentException("Invalid RedMask name in drawable folder");
         }
-
-        Integer idWhiteMask = null;
         if (argsMap.containsKey("nameWhiteMask")) {
             idWhiteMask = activity.getResources().getIdentifier((String) argsMap.get("nameWhiteMask"), "drawable", activity.getPackageName());
 
-            if (idWhiteMask == 0) throw new IllegalArgumentException("Invalid WhiteMask name");
+            if (idWhiteMask == 0) throw new IllegalArgumentException("Invalid WhiteMask name in drawable folder");
         }
-
-        Integer idGreenMask = null;
         if (argsMap.containsKey("nameGreenMask")) {
             idGreenMask = activity.getResources().getIdentifier((String) argsMap.get("nameGreenMask"), "drawable", activity.getPackageName());
 
-            if (idGreenMask == 0) throw new IllegalArgumentException("Invalid GreenMask name");
+            if (idGreenMask == 0) throw new IllegalArgumentException("Invalid GreenMask name in drawable folder");
         }
-
-        Integer idLayout = null;
         if (argsMap.containsKey("nameLayout")) {
             idLayout = activity.getResources().getIdentifier((String) argsMap.get("nameLayout"), "layout", activity.getPackageName());
 
-            if (idLayout == 0) throw new IllegalArgumentException("Invalid Layout name");
+            if (idLayout == 0) throw new IllegalArgumentException("Invalid Layout name in layout folder");
         }
-
-        Integer idStyle = null;
         if (argsMap.containsKey("nameStyle")) {
             idStyle = activity.getResources().getIdentifier((String) argsMap.get("nameStyle"), "style", activity.getPackageName());
 
-            if (idStyle == 0) throw new IllegalArgumentException("Invalid Style name");
+            if (idStyle == 0) throw new IllegalArgumentException("Invalid Style in style.xml");
         }
-
-        DocumentDetector mDocumentDetector = new DocumentDetector.Builder(mobileToken)
-                .setDocumentDetectorFlow(getDocumentType(documentType))
+        final DocumentDetector mDocumentDetector = new DocumentDetector.Builder(mobileToken)
+                .setDocumentDetectorFlow(documentDetectorSteps)
                 .showPopup(showPopup)
                 .uploadImages(upload, imageQuality)
                 .setMask(idGreenMask, idWhiteMask, idRedMask)
@@ -196,6 +240,7 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
                 .setStyle(idStyle)
                 .setRequestTimeout(requestTimeout)
                 .build();
+
         Intent mIntent = new Intent(context, DocumentDetectorActivity.class);
         mIntent.putExtra(DocumentDetector.PARAMETER_NAME, mDocumentDetector);
         activity.startActivityForResult(mIntent, REQUEST_CODE_DOCUMENT_DETECTOR);
@@ -211,13 +256,21 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
                     response.put("success", Boolean.valueOf(true));
                     response.put("capture_type", documentDetectorResult.getType());
 
-                    response.put("captureFront_imagePath", documentDetectorResult.getCaptures()[0].getImagePath());
-                    response.put("captureFront_imageUrl", documentDetectorResult.getCaptures()[0].getImageUrl());
-                    response.put("captureFront_missedAttemps", documentDetectorResult.getCaptures()[0].getMissedAttemps());
+                    List<Map<String , Object>> captureList  = new ArrayList<>();
 
-                    response.put("captureBack_imagePath", documentDetectorResult.getCaptures()[1].getImagePath());
-                    response.put("captureBack_imageUrl", documentDetectorResult.getCaptures()[1].getImageUrl());
-                    response.put("captureBack_missedAttemps", documentDetectorResult.getCaptures()[1].getMissedAttemps());
+                    for (int i = 0; i < documentDetectorResult.getCaptures().length; i++) {
+                        final Map<String, Object> capture = new HashMap<>();
+                        capture.put("imagePath", documentDetectorResult.getCaptures()[i].getImagePath());
+                        if (documentDetectorResult.getCaptures()[i].getImageUrl() != null) {
+                            capture.put("imageUrl", documentDetectorResult.getCaptures()[i].getImageUrl());
+                        } else {
+                            capture.put("imageUrl", "");
+                        }
+                        capture.put("missedAttemps", documentDetectorResult.getCaptures()[i].getMissedAttemps());
+                        capture.put("scannedLabel", documentDetectorResult.getCaptures()[i].getScannedLabel());
+                        captureList.add(capture);
+                    }
+                    response.put("capture", captureList);
                 } else {
                     response.put("success", Boolean.valueOf(false));
                     if (documentDetectorResult.getSdkFailure() instanceof InvalidTokenReason) {
@@ -257,12 +310,22 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
         return true;
     }
 
-    private DocumentDetectorStep[] getDocumentType(String type) {
+    private Document getDocumentType(String type) {
         switch (type) {
-            case "RG":
-                return DocumentDetector.RG_FLOW;
+            case "CNH_FRONT":
+                return CNH_FRONT;
+            case "CNH_BACK":
+                return CNH_BACK;
+            case "CNH_FULL":
+                return CNH_FULL;
+            case "RG_FRONT":
+                return RG_FRONT;
+            case "RG_BACK":
+                return RG_BACK;
+            case "RG_FULL":
+                return RG_FULL;
             default:
-                return DocumentDetector.CNH_FLOW;
+                return GENERIC;
         }
     }
 }
