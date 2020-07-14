@@ -63,7 +63,22 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
                 if (documentString != "GENERIC") {
                     documentDetectorSteps.append(convertToDocumentStep(documentType: documentString))
                 } else {
+                    let bundle = Bundle.init(for: type(of: self))
+                    var audioURL = URL(fileURLWithPath: bundle.path(forResource: "generic", ofType: "mp3")!)
+                    var image : UIImage?
+
+                    let argStepLabel = docStep["iosStepLabel"] as? String
+                    let argNotFoundMessage = docStep["iosNotFoundMessage"] as? String
                     
+                    if let argIllustration = docStep["iosIllustrationName"] as? String {
+                        let imageURL = URL(fileURLWithPath: bundle.path(forResource: argIllustration, ofType: "png")!)
+                        image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
+                    }
+                    
+                    if let argAudioName = docStep["iosAudioName"] as? String {
+                        audioURL = URL(fileURLWithPath: bundle.path(forResource: argAudioName, ofType: "mp3")!)
+                    }
+                    documentDetectorSteps.append(DocumentDetectorStep(document: Document.GENERIC, stepLabel: argStepLabel, illustration: image, audio: audioURL, notFoundMessage: argNotFoundMessage))
                 }
             }
         }
