@@ -59,7 +59,7 @@ This says to builder to not compress the .tflite files. If you don't set this yo
 
 When working on Android API 23+, you'll have to request the runtime permissions for our SDKs. Use the [permission_handler](https://pub.dev/packages/permission_handler) plugin to request the SDK specific runtime permissions.
 
-#### Proguard rules
+#### Proguard/R8 rules
 
 You need to add this rules in your Proguard/R8 file. If not exits, it's necessary create:
 

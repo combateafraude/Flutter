@@ -7,6 +7,7 @@ __iOS Native SDK Update to 1.2.0__
 *BREAKING CHANGES*
 - Changed: constructor of DocumentDetector. Now you can start it with your own flow!
 - Changed (Android): possibility to customize what kind of parameters you want in ´DocumentDetectorStep´ object. If you want to change only the stepLabel, pass it by parameter and send null in others.
+- Updated: Proguard/R8 rules
 
 # 0.13.0
 Bugfix Android Layout methods
