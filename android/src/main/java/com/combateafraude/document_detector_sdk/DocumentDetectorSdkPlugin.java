@@ -166,79 +166,106 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
         for (Map<String, Object> docStep : flow) {
             final Document document = getDocumentType((String) docStep.get("document"));
 
-            Integer idStepLabel = null;
-            Integer idIllustration = null;
-            Integer idAudio = null;
-            Integer idNotFoundMessageName = null;
+            Integer stepLabelId = null;
+            Integer illustrationId = null;
+            Integer audioId = null;
+            Integer notFoundMessageId = null;
 
             if (docStep.containsKey("androidStepLabelName")) {
-                idStepLabel = activity.getResources().getIdentifier((String) docStep.get("androidStepLabelName"), "string", activity.getPackageName());
-                if (idStepLabel == 0)
+                stepLabelId = activity.getResources().getIdentifier((String) docStep.get("androidStepLabelName"), "string", activity.getPackageName());
+                if (stepLabelId == 0)
                     throw new IllegalArgumentException("Invalid 'Step Label Name in strings.xml");
             }
 
             if (docStep.containsKey("androidIllustrationName")) {
-                idIllustration = activity.getResources().getIdentifier((String) docStep.get("androidIllustrationName"), "drawable", activity.getPackageName());
-                if (idIllustration == 0)
+                illustrationId = activity.getResources().getIdentifier((String) docStep.get("androidIllustrationName"), "drawable", activity.getPackageName());
+                if (illustrationId == 0)
                     throw new IllegalArgumentException("Invalid 'Illustration Name' in drawable folder");
             }
 
             if (docStep.containsKey("androidAudioName")) {
-                idAudio = activity.getResources().getIdentifier((String) docStep.get("androidAudioName"), "raw", activity.getPackageName());
-                if (idAudio == 0)
+                audioId = activity.getResources().getIdentifier((String) docStep.get("androidAudioName"), "raw", activity.getPackageName());
+                if (audioId == 0)
                     throw new IllegalArgumentException("Invalid 'Audio Name' in raw folder");
             }
 
             if (docStep.containsKey("androidNotFoundMsgName")) {
-                idNotFoundMessageName = activity.getResources().getIdentifier((String) docStep.get("androidNotFoundMsgName"), "string", activity.getPackageName());
-                if (idNotFoundMessageName == 0)
+                notFoundMessageId = activity.getResources().getIdentifier((String) docStep.get("androidNotFoundMsgName"), "string", activity.getPackageName());
+                if (notFoundMessageId == 0)
                     throw new IllegalArgumentException("Invalid Not Found Message Name in strings.xml");
             }
 
-            documentDetectorSteps[count] = new DocumentDetectorStep(document, idStepLabel, idIllustration, idAudio, idNotFoundMessageName);
+            documentDetectorSteps[count] = new DocumentDetectorStep(document, stepLabelId, illustrationId, audioId, notFoundMessageId);
             count++;
         }
 
-        Integer idRedMask = null;
-        Integer idWhiteMask = null;
-        Integer idGreenMask = null;
-        Integer idLayout = null;
-        Integer idStyle = null;
+        Integer redMaskId = null;
+        Integer whiteMaskId = null;
+        Integer greenMaskId = null;
+        Integer layoutId = null;
+        Integer styleResourceId = null;
 
         if (argsMap.containsKey("nameRedMask")) {
-            idRedMask = activity.getResources().getIdentifier((String) argsMap.get("nameRedMask"), "drawable", activity.getPackageName());
+            redMaskId = activity.getResources().getIdentifier((String) argsMap.get("nameRedMask"), "drawable", activity.getPackageName());
 
-            if (idRedMask == 0) throw new IllegalArgumentException("Invalid RedMask name in drawable folder");
+            if (redMaskId == 0) throw new IllegalArgumentException("Invalid RedMask name in drawable folder");
         }
         if (argsMap.containsKey("nameWhiteMask")) {
-            idWhiteMask = activity.getResources().getIdentifier((String) argsMap.get("nameWhiteMask"), "drawable", activity.getPackageName());
+            whiteMaskId = activity.getResources().getIdentifier((String) argsMap.get("nameWhiteMask"), "drawable", activity.getPackageName());
 
-            if (idWhiteMask == 0) throw new IllegalArgumentException("Invalid WhiteMask name in drawable folder");
+            if (whiteMaskId == 0) throw new IllegalArgumentException("Invalid WhiteMask name in drawable folder");
         }
         if (argsMap.containsKey("nameGreenMask")) {
-            idGreenMask = activity.getResources().getIdentifier((String) argsMap.get("nameGreenMask"), "drawable", activity.getPackageName());
+            greenMaskId = activity.getResources().getIdentifier((String) argsMap.get("nameGreenMask"), "drawable", activity.getPackageName());
 
-            if (idGreenMask == 0) throw new IllegalArgumentException("Invalid GreenMask name in drawable folder");
+            if (greenMaskId == 0) throw new IllegalArgumentException("Invalid GreenMask name in drawable folder");
         }
         if (argsMap.containsKey("nameLayout")) {
-            idLayout = activity.getResources().getIdentifier((String) argsMap.get("nameLayout"), "layout", activity.getPackageName());
+            layoutId = activity.getResources().getIdentifier((String) argsMap.get("nameLayout"), "layout", activity.getPackageName());
 
-            if (idLayout == 0) throw new IllegalArgumentException("Invalid Layout name in layout folder");
+            if (layoutId == 0) throw new IllegalArgumentException("Invalid Layout name in layout folder");
         }
         if (argsMap.containsKey("nameStyle")) {
-            idStyle = activity.getResources().getIdentifier((String) argsMap.get("nameStyle"), "style", activity.getPackageName());
+            styleResourceId = activity.getResources().getIdentifier((String) argsMap.get("nameStyle"), "style", activity.getPackageName());
 
-            if (idStyle == 0) throw new IllegalArgumentException("Invalid Style in style.xml");
+            if (styleResourceId == 0) throw new IllegalArgumentException("Invalid Style in style.xml");
         }
+
+        Integer sensorLuminosityMessageId = null;
+        Integer sensorOrientationMessageId = null;
+        Integer sensorStabilityMessageId = null;
+
+        if (argsMap.containsKey("aLuminosityMessage")) {
+            sensorLuminosityMessageId = activity.getResources().getIdentifier((String) argsMap.get("aLuminosityMessage"), "string", activity.getPackageName());
+
+            if (sensorLuminosityMessageId == 0) throw new IllegalArgumentException("Invalid SensorLuminosityMessage name in strings.xml file");
+        }
+
+        if (argsMap.containsKey("aOrientationMessage")) {
+            sensorOrientationMessageId = activity.getResources().getIdentifier((String) argsMap.get("aOrientationMessage"), "string", activity.getPackageName());
+
+            if (sensorOrientationMessageId == 0) throw new IllegalArgumentException("Invalid SensorOrientationMessage name in strings.xml file");
+        }
+
+        if (argsMap.containsKey("aStabilityMessage")) {
+            sensorStabilityMessageId = activity.getResources().getIdentifier((String) argsMap.get("aStabilityMessage"), "string", activity.getPackageName());
+
+            if (sensorStabilityMessageId == 0) throw new IllegalArgumentException("Invalid SensorStabilityMessage name in strings.xml file");
+        }
+
+
         final DocumentDetector mDocumentDetector = new DocumentDetector.Builder(mobileToken)
                 .setDocumentDetectorFlow(documentDetectorSteps)
                 .showPopup(showPopup)
                 .uploadImages(upload, imageQuality)
-                .setMask(idGreenMask, idWhiteMask, idRedMask)
-                .setLayout(idLayout)
+                .setMask(greenMaskId, whiteMaskId, redMaskId)
+                .setLayout(layoutId)
                 .hasSound(hasSound)
-                .setStyle(idStyle)
+                .setStyle(styleResourceId)
                 .setRequestTimeout(requestTimeout)
+                .setSensorLuminosityMessage(sensorLuminosityMessageId)
+                .setSensorOrientationMessage(sensorOrientationMessageId)
+                .setSensorStabilityMessage(sensorStabilityMessageId)
                 .build();
 
         Intent mIntent = new Intent(context, DocumentDetectorActivity.class);

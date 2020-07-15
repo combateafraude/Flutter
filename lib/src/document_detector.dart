@@ -48,6 +48,19 @@ class DocumentDetector {
     _params['nameStyle'] = styleName;
   }
 
+  /// Set messages related to sensors on Android
+  void setAndroidSensorSettings(
+      {String luminosityMessageName,
+      String orientationMessageName,
+      String stabilityMessageName}) {
+    if (luminosityMessageName != null)
+      _params['aLuminosityMessage'] = luminosityMessageName;
+    if (orientationMessageName != null)
+      _params['aOrientationMessage'] = orientationMessageName;
+    if (stabilityMessageName != null)
+      _params['aStabilityMessage'] = stabilityMessageName;
+  }
+
   /// set the SDK color style for iOS
   void setIOSColorTheme(Color color) {
     _params['colorTheme'] = '#${color.value.toRadixString(16)}';
@@ -66,6 +79,19 @@ class DocumentDetector {
   /// Sets some layout options to customize the screen.
   void setIOSSLayout(DocumentDetectorLayout layout) {
     _params['layout'] = layout.toMap();
+  }
+
+  /// Set messages related to sensors on Android
+  void setIOSSensorSettings(
+      {String luminosityMessage,
+      String orientationMessage,
+      String stabilityMessage}) {
+    if (luminosityMessage != null)
+      _params['iLuminosityMessage'] = luminosityMessage;
+    if (orientationMessage != null)
+      _params['iOrientationMessage'] = orientationMessage;
+    if (stabilityMessage != null)
+      _params['iStabilityMessage'] = stabilityMessage;
   }
 
   /// Enables/disables the sound and sound icon

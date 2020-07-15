@@ -186,11 +186,14 @@ or
 * `setAndroidMask(String drawableGreenName, String drawableWhiteName, String drawableRedName)` - replace the default SDK's masks in Android. Enter the name of the drawable to be used
 * `setAndroidLayout(String layoutName)` - replace the SDK layout in Android with yours with the respectively [template](https://gist.github.com/kikogassen/62068b6e5bc7988d28594d833b125519)
 * `setAndroidStyle(String styleName)` -  set the SDK color style in Android. [Template](https://github.com/combateafraude/Mobile/wiki/Common#styles)
-
+* `setAndroidSensorSettings(String luminosityMessageName, String orientationMessageName, String stabilityMessageName)` - replace the default SDK's sensor messages. Enter the name value in string.xml
+* 
 * `setIOSColorTheme(Color color)` - set the SDK color style for iOS.
 * `setIOSShowStepLabel(bool show)` - Show/hides the step label in iOS.
 * `setIOSShowStatusLabel(bool show)` - Show/hides the status label.
 * `setIOSSLayout(DocumentDetectorLayout layout)` - Sets some layout options to customize the screen on iOS.
+* `setIOSSensorSettings(String luminosityMessage, String orientationMessage, String stabilityMessage)` - replace the default SDK's sensor messages. Set label for sensor messages
+
 Example:
 ```dart
   documentDetector.setIOSSLayout(

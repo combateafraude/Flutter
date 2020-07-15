@@ -1,3 +1,8 @@
+# 1.1.0
+__Android Native SDK Update to 2.2.0__
+__iOS Native SDK Update to 1.3.1__
+- Added: parameters to configure sensor messages
+
 # 1.0.0
 __Android Native SDK Update to 2.1.0__
 

@@ -59,7 +59,8 @@ class _MyAppState extends State<MyApp> {
                               flow: DocumentDetector.CNH_FLOW
                               //flow: [
                               //DocumentDetectorStep(
-                              //    document: DocumentType.CNH_FRONT)]
+                              //    document: DocumentType.CNH_FRONT,
+                              //    iosAudioName: "generic")]
                               );
                       // Custom flow
                       /*
@@ -91,6 +92,7 @@ class _MyAppState extends State<MyApp> {
 
                       //Opcional parameters:
                       /*
+
                       documentDetector.setAndroidMask(
                           drawableGreenName: "ic_mask_document",
                           drawableWhiteName: "ic_mask_document",
@@ -102,22 +104,32 @@ class _MyAppState extends State<MyApp> {
                       documentDetector.setIOSColorTheme(Color(0xc22a1e));
                       documentDetector.setIOSShowStepLabel(false);
                       documentDetector.setIOSShowStatusLabel(false);
-                      documentDetector.setIOSSLayout(
-                        DocumentDetectorLayout(
-                            closeImageName: "close",
-                            soundOnImageName: "sound_on",
-                            soundOffImageName: "sound_off",
-                            greenMaskImageName: "green_mask",
-                            redMaskImageName: "red_mask",
-                            whiteMaskImageName: "white_mask"),
+                      documentDetector.setIOSSLayout(DocumentDetectorLayout(
+                          closeImageName: "close",
+                          soundOnImageName: "sound_on",
+                          soundOffImageName: "sound_off",
+                          greenMaskImageName: "green_mask",
+                          redMaskImageName: "red_mask",
+                          whiteMaskImageName: "white_mask"));
                       documentDetector.uploadImages(
                           upload: true, imageQuality: 50);
                       documentDetector.showPopup(false);
-                      );
-                       */
-                      //documentDetector.uploadImages(
-                      //    upload: true, imageQuality: 50);
 
+                      documentDetector.uploadImages(
+                          upload: true, imageQuality: 50);
+
+                      documentDetector.setAndroidSensorSettings(
+                          luminosityMessageName: 'luminosityMessage',
+                          orientationMessageName: 'orientationMessage',
+                          stabilityMessageName: 'stabilityMessage');
+
+                      documentDetector.setIOSSensorSettings(
+                          luminosityMessage: 'luminosityMessage',
+                          orientationMessage: 'orientationMessage',
+                          stabilityMessage: 'stabilityMessage');
+                       */
+
+                      documentDetector.setIOSColorTheme(Colors.blue);
                       final documentResult = await documentDetector.build();
 
                       if (documentResult.wasSuccessful) {

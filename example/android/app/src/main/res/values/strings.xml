@@ -2,4 +2,7 @@
 <resources>
     <string name="stepLabel">stepLabel</string>
     <string name="notFoundMessage">notFoundMessage</string>
+    <string name="luminosityMessage">luminosityMessage</string>
+    <string name="orientationMessage">orientationMessage</string>
+    <string name="stabilityMessage">stabilityMessage</string>
 </resources>

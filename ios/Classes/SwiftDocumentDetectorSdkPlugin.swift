@@ -39,15 +39,6 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
     
     private func getDocuments(call: FlutterMethodCall, result: @escaping FlutterResult) {
         
-        var requestTimeout = 15
-        var showStepLabel : Bool = true
-        var showStatusLabel : Bool = true
-        var hasSound : Bool = true
-        var colorTheme = UIColor.init(hexString: "#4CD964")
-        var showPopup : Bool = true
-        var upload : Bool = false
-        var imageQuality = 1.0
-        
         let layout = DocumentDetectorLayout()
         
         var documentDetectorSteps : [DocumentDetectorStep] = []
@@ -56,62 +47,52 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
         let args = call.arguments as! [String: Any?]
         let mobileToken = args["mobileToken"] as! String
         
-        if let flowData = args["flow"] as? [[String: Any]] {
-            for (index, docStep) in flowData.enumerated() {
-                print("Item \(index + 1): \(docStep)")
-                let documentString = docStep["document"] as! String
-                if (documentString != "GENERIC") {
-                    documentDetectorSteps.append(convertToDocumentStep(documentType: documentString))
-                } else {
-                    let bundle = Bundle.init(for: type(of: self))
-                    var audioURL = URL(fileURLWithPath: bundle.path(forResource: "generic", ofType: "mp3")!)
-                    var image : UIImage?
-
-                    let argStepLabel = docStep["iosStepLabel"] as? String
-                    let argNotFoundMessage = docStep["iosNotFoundMessage"] as? String
-                    
-                    if let argIllustration = docStep["iosIllustrationName"] as? String {
-                        let imageURL = URL(fileURLWithPath: bundle.path(forResource: argIllustration, ofType: "png")!)
-                        image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
-                    }
-                    
-                    if let argAudioName = docStep["iosAudioName"] as? String {
-                        audioURL = URL(fileURLWithPath: bundle.path(forResource: argAudioName, ofType: "mp3")!)
-                    }
-                    documentDetectorSteps.append(DocumentDetectorStep(document: Document.GENERIC, stepLabel: argStepLabel, illustration: image, audio: audioURL, notFoundMessage: argNotFoundMessage))
-                }
-            }
-        }
+        let requestTimeout = args["requestTimeout"] as? Int ?? 15
+        let showStepLabel = args["showStepLabel"] as? Bool ?? true
+        let showStatusLabel = args["ShowStatusLabel"] as? Bool ?? true
+        let hasSound = args["hasSound"] as? Bool ?? true
+        let showPopup = args["showPopup"] as? Bool ?? true
+        let upload = args["upload"] as? Bool ?? false
         
-        if let argTimeout = args["requestTimeout"] as? Int {
-            requestTimeout = argTimeout
+        var imageQuality = 1.0
+        if let argImageQuality = args["imageQuality"] as? Int {
+            imageQuality = Double(argImageQuality / 100)
         }
-        
-        if let argHasSound = args["hasSound"] as? Bool {
-            hasSound = argHasSound
-        }
-        
-        if let argShowStepLabel = args["showStepLabel"] as? Bool {
-            showStepLabel = argShowStepLabel
-        }
-        
-        if let argShowStatusLabel = args["ShowStatusLabel"] as? Bool {
-            showStatusLabel = argShowStatusLabel
-        }
-        
-        if let argShowPopup = args["showPopup"] as? Bool {
-            showPopup = argShowPopup
-        }
-        
-        if let argUpload = args["upload"] as? Bool {
-            upload = argUpload
-            if let argImageQuality = args["imageQuality"] as? Int {
-                imageQuality = Double(argImageQuality / 100)
-            }
-        }
-        
+               
+        var colorTheme = UIColor.init(hexString: "#4CD964")
         if let argColorTheme = args["colorTheme"] as? String {
             colorTheme = UIColor.init(hexString: argColorTheme)
+        }
+       
+        let sensorLuminosityMessage = args["iLuminosityMessage"] as? String ?? "Ambiente muito escuro"
+        let sensorOrientationMessage = args["iOrientationMessage"] as? String ?? "Celular não está na horizontal"
+        let sensorStabilityMessage = args["iStabilityMessage"] as? String ?? "Matenha o celular parado"
+        
+        if let flowData = args["flow"] as? [[String: Any]] {
+            let bundle = Bundle.init(for: type(of: self))
+            for (_, docStep) in flowData.enumerated() {
+                let document = convertToDocument(documentType: docStep["document"] as! String)
+                var audioURL : URL?
+                var image : UIImage?
+                
+                let argStepLabel = docStep["iosStepLabel"] as? String
+                let argNotFoundMessage = docStep["iosNotFoundMessage"] as? String
+                
+                if let argIllustration = docStep["iosIllustrationName"] as? String {
+                    let imageURL = URL(fileURLWithPath: bundle.path(forResource: argIllustration, ofType: "png")!)
+                    image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
+                } else {
+                    image = getImageDocument(documentType: docStep["document"] as! String)
+                }
+                
+                if let argAudioName = docStep["iosAudioName"] as? String {
+                    audioURL = URL(fileURLWithPath: bundle.path(forResource: argAudioName, ofType: "mp3")!)
+                } else {
+                    audioURL = getAudioDocument(documentType: docStep["document"] as! String)
+                }
+                
+                documentDetectorSteps.append(DocumentDetectorStep(document: document, stepLabel: argStepLabel, illustration: image, audio: audioURL, notFoundMessage: argNotFoundMessage))
+            }
         }
         
         if let layoutData = args["layout"] as? [String: Any] {
@@ -175,6 +156,9 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
             .showStatusLabel(show: showStatusLabel)
             .setColorTheme(color: colorTheme)
             .setLayout(layout: layout)
+            .setSensorStabilityMessage(message: sensorStabilityMessage)
+            .setSensorLuminosityMessage(message: sensorLuminosityMessage)
+            .setSensorOrientationMessage(message: sensorOrientationMessage)
             .uploadImages(upload : upload, imageQuality : CGFloat(imageQuality))
             .build()
         
@@ -258,6 +242,73 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
         }
     }
     
+    func convertToDocument (documentType: String) -> Document {
+        switch documentType {
+        case "CNH_FRONT":
+            return Document.CNH_FRONT
+        case "CNH_BACK":
+            return Document.CNH_BACK
+        case "CNH_FULL":
+            return Document.CNH_FULL
+        case "RG_FRONT":
+            return Document.RG_FRONT
+        case "RG_BACK":
+            return Document.RG_BACK
+        case "RG_FULL":
+            return Document.RG_FULL
+        default:
+            return Document.GENERIC
+        }
+    }
+    
+    func getAudioDocument(documentType: String) -> URL {
+        let bundle = Bundle(for: DocumentDetector.DocumentDetectorController.self)
+        switch documentType {
+        case "CNH_FRONT":
+            return URL(fileURLWithPath: bundle.path(forResource: "frentedacnh", ofType: "mp3")!)
+        case "CNH_BACK":
+            return URL(fileURLWithPath: bundle.path(forResource: "versodacnh", ofType: "mp3")!)
+        case "CNH_FULL":
+            return URL(fileURLWithPath: bundle.path(forResource: "generic", ofType: "mp3")!)
+        case "RG_FRONT":
+            return URL(fileURLWithPath: bundle.path(forResource: "frentedorg", ofType: "mp3")!)
+        case "RG_BACK":
+            return URL(fileURLWithPath: bundle.path(forResource: "versodorg", ofType: "mp3")!)
+        case "RG_FULL":
+            return URL(fileURLWithPath: bundle.path(forResource: "generic", ofType: "mp3")!)
+        default:
+            return URL(fileURLWithPath: bundle.path(forResource: "generic", ofType: "mp3")!)
+        }
+    }
+    
+    func getImageDocument(documentType: String) -> UIImage {
+        let bundle = Bundle(for: DocumentDetector.DocumentDetectorController.self)
+        switch documentType {
+        case "CNH_FRONT":
+            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "cnh_frente", ofType: "png")!)
+            return UIImage(data: NSData(contentsOf: imageURL)! as Data)!
+        case "CNH_BACK":
+            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "cnh_verso", ofType: "png")!)
+            return UIImage(data: NSData(contentsOf: imageURL)! as Data)!
+        case "CNH_FULL":
+            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "generic_front", ofType: "png")!)
+            return UIImage(data: NSData(contentsOf: imageURL)! as Data)!
+        case "RG_FRONT":
+            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "rg_frente", ofType: "png")!)
+            return UIImage(data: NSData(contentsOf: imageURL)! as Data)!
+        case "RG_BACK":
+            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "rg-verso", ofType: "png")!)
+            return UIImage(data: NSData(contentsOf: imageURL)! as Data)!
+        case "RG_FULL":
+            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "generic_front", ofType: "png")!)
+            return UIImage(data: NSData(contentsOf: imageURL)! as Data)!
+        default:
+            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "generic_front", ofType: "png")!)
+            return UIImage(data: NSData(contentsOf: imageURL)! as Data)!
+        }
+    }
+
+    
     func convertToDocumentStep(documentType: String) -> DocumentDetectorStep {
         let bundle = Bundle(for: DocumentDetector.DocumentDetectorController.self)
         switch documentType {
@@ -285,7 +336,7 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
             let audioURL = URL(fileURLWithPath: bundle.path(forResource: "versodorg", ofType: "mp3")!)
             let imageURL = URL(fileURLWithPath: bundle.path(forResource: "rg-verso", ofType: "png")!)
             let image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
-           return DocumentDetectorStep(document: Document.RG_BACK, stepLabel: "Verso do RG", illustration: image, audio: audioURL, notFoundMessage: "Verso do RG não encontrado")
+            return DocumentDetectorStep(document: Document.RG_BACK, stepLabel: "Verso do RG", illustration: image, audio: audioURL, notFoundMessage: "Verso do RG não encontrado")
         case "RG_FULL":
             let audioURL = URL(fileURLWithPath: bundle.path(forResource: "generic", ofType: "mp3")!)
             let imageURL = URL(fileURLWithPath: bundle.path(forResource: "generic_front", ofType: "png")!)
