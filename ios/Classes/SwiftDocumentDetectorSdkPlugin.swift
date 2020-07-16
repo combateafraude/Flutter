@@ -232,16 +232,6 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
     //---------------------------------------------------------------------------------------------
     // Functions
     // --------------------------------------------------------------------------------------------
-    
-    func convertToDocumentFlow(documentType: String) -> [DocumentDetectorStep]? {
-        switch documentType {
-        case "RG":
-            return DocumentDetectorBuilder.RG_FLOW;
-        default:
-            return DocumentDetectorBuilder.CNH_FLOW;
-        }
-    }
-    
     func convertToDocument (documentType: String) -> Document {
         switch documentType {
         case "CNH_FRONT":
@@ -305,48 +295,6 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
         default:
             let imageURL = URL(fileURLWithPath: bundle.path(forResource: "generic_front", ofType: "png")!)
             return UIImage(data: NSData(contentsOf: imageURL)! as Data)!
-        }
-    }
-
-    
-    func convertToDocumentStep(documentType: String) -> DocumentDetectorStep {
-        let bundle = Bundle(for: DocumentDetector.DocumentDetectorController.self)
-        switch documentType {
-        case "CNH_FRONT":
-            let audioURL = URL(fileURLWithPath: bundle.path(forResource: "frentedacnh", ofType: "mp3")!)
-            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "cnh_frente", ofType: "png")!)
-            let image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
-            return DocumentDetectorStep(document: Document.CNH_FRONT, stepLabel: "Frente da CNH", illustration: image, audio: audioURL, notFoundMessage: "Frente da CNH não encontrada")
-        case "CNH_BACK":
-            let audioURL = URL(fileURLWithPath: bundle.path(forResource: "versodacnh", ofType: "mp3")!)
-            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "cnh_verso", ofType: "png")!)
-            let image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
-            return DocumentDetectorStep(document: Document.CNH_BACK, stepLabel: "Verso da CNH", illustration: image, audio: audioURL, notFoundMessage: "Verso da CNH não encontrada")
-        case "CNH_FULL":
-            let audioURL = URL(fileURLWithPath: bundle.path(forResource: "generic", ofType: "mp3")!)
-            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "generic_front", ofType: "png")!)
-            let image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
-            return DocumentDetectorStep(document: Document.CNH_FULL, stepLabel: "CNH", illustration: image, audio: audioURL, notFoundMessage: "CNH não encontrada")
-        case "RG_FRONT":
-            let audioURL = URL(fileURLWithPath: bundle.path(forResource: "frentedorg", ofType: "mp3")!)
-            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "rg_frente", ofType: "png")!)
-            let image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
-            return DocumentDetectorStep(document: Document.RG_FRONT, stepLabel: "Frente do RG", illustration: image, audio: audioURL, notFoundMessage: "Frente do RG não encontrado")
-        case "RG_BACK":
-            let audioURL = URL(fileURLWithPath: bundle.path(forResource: "versodorg", ofType: "mp3")!)
-            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "rg-verso", ofType: "png")!)
-            let image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
-            return DocumentDetectorStep(document: Document.RG_BACK, stepLabel: "Verso do RG", illustration: image, audio: audioURL, notFoundMessage: "Verso do RG não encontrado")
-        case "RG_FULL":
-            let audioURL = URL(fileURLWithPath: bundle.path(forResource: "generic", ofType: "mp3")!)
-            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "generic_front", ofType: "png")!)
-            let image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
-            return DocumentDetectorStep(document: Document.RG_FULL, stepLabel: "RG", illustration: image, audio: audioURL, notFoundMessage: "RG não encontrado")
-        default:
-            let audioURL = URL(fileURLWithPath: bundle.path(forResource: "generic", ofType: "mp3")!)
-            let imageURL = URL(fileURLWithPath: bundle.path(forResource: "generic_front", ofType: "png")!)
-            let image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
-            return DocumentDetectorStep(document: Document.GENERIC, stepLabel: "Documento", illustration: image, audio: audioURL, notFoundMessage: "Documento não encontrado")
         }
     }
     
