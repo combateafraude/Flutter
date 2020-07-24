@@ -8,9 +8,9 @@ PODS:
   - LoggerAPI (1.9.0):
     - Logging (~> 1.1)
   - Logging (1.2.0)
-  - passiveface_liveness_sdk (0.0.1):
+  - passiveface_liveness_sdk (0.1.0):
     - Flutter
-    - PassiveFaceLiveness (~> 1.2.0)
+    - PassiveFaceLiveness (= 1.2.0)
   - PassiveFaceLiveness (1.2.0):
     - SwiftJWT (~> 3.5.3)
   - "permission_handler (5.0.1+1)":
@@ -55,7 +55,7 @@ SPEC CHECKSUMS:
   KituraContracts: e845e60dc8627ad0a76fa55ef20a45451d8f830b
   LoggerAPI: fb78461eedac5316b290f2404d88b9d614d96c57
   Logging: 7838d379d234d7e5ae1265fa02804a9084caf04c
-  passiveface_liveness_sdk: bb352fdc030e0ad0e842d5c2cdfc2641876f72dd
+  passiveface_liveness_sdk: afdc43e31a16bdb2466ab9730203ed0a7b5a8528
   PassiveFaceLiveness: 26a104f72714c2fa98ab52f14a213c6bea9eb096
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
   SwiftJWT: 9a47a71090cae25767078756b5810e3b630aa9a7

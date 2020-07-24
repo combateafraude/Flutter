@@ -97,8 +97,10 @@ public class PassivefaceLivenessSdkPlugin implements FlutterPlugin, MethodCallHa
   private void teardownChannels() {
     Log.d(DEBUG_NAME, "teardownChannels");
     this.activity = null;
-    this.activityBinding.removeActivityResultListener(this);
-    this.activityBinding = null;
+    if (this.activityBinding != null) {
+      this.activityBinding.removeActivityResultListener(this);
+      this.activityBinding = null;
+    }
     this.context = null;
   }
 
