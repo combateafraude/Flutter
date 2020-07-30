@@ -1,6 +1,6 @@
-name: activeface_liveness_sdk
-description: Flutter plugin for ActiveFaceLiveness of Combate a Fraudes (https://github.com/combateafraude). This plugin provides a cross-platform (iOS, Android).
-version: 0.5.0
+name: face_authenticator
+description: Flutter plugin cross-platform (iOS, Android) for Combate à Fraude's FaceAuthenticator (https://github.com/combateafraude).
+version: 0.1.0
 homepage: https://github.com/combateafraude
 
 environment:
@@ -19,7 +19,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.combateafraude.activeface_liveness_sdk
-        pluginClass: ActivefaceLivenessSdkPlugin
+        package: com.combateafraude.face_authenticator
+        pluginClass: FaceAuthenticatorPlugin
       ios:
-        pluginClass: ActivefaceLivenessSdkPlugin
+        pluginClass: FaceAuthenticatorPlugin

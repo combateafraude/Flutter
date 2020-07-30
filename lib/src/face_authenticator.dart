@@ -1,21 +1,16 @@
-part of activeface_liveness_sdk;
+part of face_authenticator;
 
-class ActivefaceLiveness {
+class FaceAuthenticator {
   static Map<String, dynamic> _params = {};
 
-  ActivefaceLiveness.builder({@required String mobileToken})
+  FaceAuthenticator.builder({@required String mobileToken})
       : assert(mobileToken != null) {
     _params['mobileToken'] = mobileToken;
   }
 
-  /// set how many steps do you want to your client do
-  void setNumberOfSteps(int numberOfSteps) {
-    _params['numberOfSteps'] = numberOfSteps;
-  }
-
-  /// set timeout your client has to act each step
-  void setActionTimeout(int actionTimeout) {
-    _params['actionTimeout'] = actionTimeout;
+  /// set the user CPF
+  void setCpf(String cpf) {
+    _params['cpf'] = cpf;
   }
 
   /// replace default SDK Mask
@@ -53,46 +48,45 @@ class ActivefaceLiveness {
     _params['colorTheme'] = '#${color.value.toRadixString(16)}';
   }
 
-  Future<ActiveFaceLivenessResult> build() async {
-    final response = await ActivefaceLivenessSdk._messageChannel
-        .invokeMethod('getDocuments', _params);
+  Future<FaceAuthenticatorResult> build() async {
+    final response = await FaceAuthenticatorMessenger._messageChannel.invokeMethod('getDocuments', _params);
     if (response.containsKey('success') && response['success']) {
-      return ActiveFaceLivenessResult(
-          imagePath: response['imagePath'] as String,
-          missedAttemps: response['missedAttemps'] as int);
+      return FaceAuthenticatorResult(
+          authenticated: response['authenticated'] as bool,
+          signedResponse: response['signedResponse'] as String);
     } else if (response.containsKey('success') && !response['success']) {
       if (response.containsKey('cancel')) {
-        return ActiveFaceLivenessResult(
+        return FaceAuthenticatorResult(
             sdkFailure: (SDKFailure('Cancelado pelo usuário')));
       }
       switch (response['errorType']) {
         case 'InvalidTokenReason':
-          return ActiveFaceLivenessResult(
+          return FaceAuthenticatorResult(
               sdkFailure: InvalidTokenReason(response['errorMessage']));
           break;
         case 'PermissionReason':
-          return ActiveFaceLivenessResult(
+          return FaceAuthenticatorResult(
               sdkFailure: PermissionReason(response['errorMessage']));
           break;
         case 'NetworkReason':
-          return ActiveFaceLivenessResult(
+          return FaceAuthenticatorResult(
               sdkFailure: NetworkReason(response['errorMessage']));
           break;
         case 'ServerReason':
-          return ActiveFaceLivenessResult(
+          return FaceAuthenticatorResult(
               sdkFailure: ServerReason(
                   response['errorMessage'], response['errorCode']));
           break;
         case 'StorageReason':
-          return ActiveFaceLivenessResult(
+          return FaceAuthenticatorResult(
               sdkFailure: StorageReason(response['errorMessage']));
           break;
         case 'LibraryReason':
-          return ActiveFaceLivenessResult(
+          return FaceAuthenticatorResult(
               sdkFailure: LibraryReason(response['errorMessage']));
           break;
         default:
-          return ActiveFaceLivenessResult(
+          return FaceAuthenticatorResult(
               sdkFailure: (SDKFailure(response['errorMessage'])));
       }
     }

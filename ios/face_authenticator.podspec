@@ -1,13 +1,13 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint activeface_liveness_sdk.podspec' to validate before publishing.
+# Run `pod lib lint face_authenticator.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'activeface_liveness_sdk'
+  s.name             = 'face_authenticator'
   s.version          = '0.2.0'
-  s.summary          = 'Flutter plugin for ActiveFaceLiveness of Combate a Fraudes'
+  s.summary          = 'Flutter plugin for Combate à Fraude's FaceAuthenticator'
   s.description      = <<-DESC
-Flutter plugin for ActiveFaceLiveness of Combate a Fraudes
+Flutter plugin for Combate à Fraude's FaceAuthenticator
                        DESC
   s.homepage         = 'https://github.com/combateafraude'
   s.license          = { :file => '../LICENSE' }
@@ -15,7 +15,7 @@ Flutter plugin for ActiveFaceLiveness of Combate a Fraudes
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'ActiveFaceLiveness', '~> 1.0.0'
+  s.dependency 'FaceAuthenticator', '~> 1.2.1'
   s.platform = :ios, '12.0'
   s.static_framework = true
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.

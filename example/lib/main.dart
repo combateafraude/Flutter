@@ -1,4 +1,4 @@
-import 'package:activeface_liveness_sdk/activeface_liveness_sdk.dart';
+import 'package:face_authenticator/face_authenticator.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -13,8 +13,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String result = '';
-  ActiveFaceLivenessResult activeFaceLivenessResult =
-      ActiveFaceLivenessResult();
+  FaceAuthenticatorResult faceAuthenticatorResult =
+  FaceAuthenticatorResult();
   final mobileToken =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1ZTg2MjAxNGVjMjFjNDAwMDgxYjY2NmQifQ.9bf3VPzAwHd7IMS9ZzAUaguhe0OKu2mHxCjddQgboVE';
 
@@ -28,7 +28,6 @@ class _MyAppState extends State<MyApp> {
   void requestPermissions() async {
     Map<Permission, PermissionStatus> statuses = await [
       Permission.camera,
-      Permission.storage,
     ].request();
   }
 
@@ -37,7 +36,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Sample ActiveFaceLiveness Plugin'),
+          title: const Text('Sample FaceAuthenticator Plugin'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -48,36 +47,32 @@ class _MyAppState extends State<MyApp> {
               Container(
                 height: 50,
                 child: RaisedButton(
-                    child: Text('ActiveFaceLiveness'),
+                    child: Text('FaceAuthenticator'),
                     onPressed: () async {
-                      ActivefaceLiveness activeFaceLiveness =
-                          ActivefaceLiveness.builder(mobileToken: mobileToken);
+                      FaceAuthenticator faceAuthenticator = FaceAuthenticator.builder(mobileToken: mobileToken);
+                      faceAuthenticator.setCpf("03073736069");
                       /*
-                      activeFaceLiveness.setNumberOfSteps(3);
-                      activeFaceLiveness.setActionTimeout(10);
-                      activeFaceLiveness.setRequestTimeout(30);
+                      faceAuthenticator.setRequestTimeout(30);
 
-                      activeFaceLiveness.setIOSColorTheme(Colors.blue);
-                      activeFaceLiveness.setAndroidStyle("baseOneColor");
-                      activeFaceLiveness.setAndroidLayout("activity_sdk");
-                      activeFaceLiveness.setAndroidMask(
+                      faceAuthenticator.setIOSColorTheme(Colors.blue);
+                      faceAuthenticator.setAndroidStyle("baseOneColor");
+                      faceAuthenticator.setAndroidLayout("activity_sdk");
+                      faceAuthenticator.setAndroidMask(
                           drawableGreenName: "ic_mask_document",
                           drawableWhiteName: "ic_mask_document",
                           drawableRedName: "ic_mask_document");
                       */
-                      activeFaceLivenessResult =
-                          await activeFaceLiveness.build();
+                      faceAuthenticatorResult =
+                          await faceAuthenticator.build();
 
-                      if (activeFaceLivenessResult.sdkFailure == null) {
-                        print('success: ${activeFaceLivenessResult.imagePath}');
-                        print(
-                            'success: ${activeFaceLivenessResult.missedAttemps}');
+                      if (faceAuthenticatorResult.sdkFailure == null) {
+                        print('success: ${faceAuthenticatorResult.authenticated}');
+                        print('success: ${faceAuthenticatorResult.signedResponse}');
                       } else {
-                        print(
-                            'failed: ${activeFaceLivenessResult.sdkFailure.toString()}');
+                        print('failed: ${faceAuthenticatorResult.sdkFailure.toString()}');
                       }
                       setState(() {
-                        result = activeFaceLivenessResult.toString();
+                        result = faceAuthenticatorResult.toString();
                       });
                     }),
               ),
@@ -95,14 +90,14 @@ class _MyAppState extends State<MyApp> {
                 height: 20,
               ),
               Text(
-                'Image : ${activeFaceLivenessResult.imagePath ?? ''}',
+                'Authenticated: ${faceAuthenticatorResult.authenticated ?? ''}',
                 style: TextStyle(color: Colors.black),
               ),
               SizedBox(
                 height: 4,
               ),
               Text(
-                'Error: ${activeFaceLivenessResult.sdkFailure ?? ''}',
+                'Error: ${faceAuthenticatorResult.sdkFailure ?? ''}',
                 style: TextStyle(color: Colors.black),
               ),
               SizedBox(

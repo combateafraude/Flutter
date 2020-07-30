@@ -1,4 +1,4 @@
-package com.combateafraude.activeface_liveness_sdk;
+package com.combateafraude.face_authenticator;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,9 +7,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.combateafraude.activefaceliveness.ActiveFaceLiveness;
-import com.combateafraude.activefaceliveness.ActiveFaceLivenessActivity;
-import com.combateafraude.activefaceliveness.ActiveFaceLivenessResult;
+import com.combateafraude.faceauthenticator.FaceAuthenticator;
+import com.combateafraude.faceauthenticator.FaceAuthenticatorActivity;
+import com.combateafraude.faceauthenticator.FaceAuthenticatorResult;
 import com.combateafraude.helpers.sdk.failure.InvalidTokenReason;
 import com.combateafraude.helpers.sdk.failure.LibraryReason;
 import com.combateafraude.helpers.sdk.failure.NetworkReason;
@@ -36,7 +36,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * ActivefaceLivenessSdkPlugin
  */
-public class ActivefaceLivenessSdkPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
+public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
     private static final String DEBUG_NAME = "ActiveFaceSdk";
     private Activity activity;
     private Context context;
@@ -45,9 +45,9 @@ public class ActivefaceLivenessSdkPlugin implements FlutterPlugin, MethodCallHan
     private MethodChannel methodChannel;
     private MethodChannel.Result pendingResult;
 
-    private static final String MESSAGE_CHANNEL = "com.combateafraude.activeface_liveness_sdk/message";
+    private static final String MESSAGE_CHANNEL = "com.combateafraude.face_authenticator/message";
 
-    private static final int REQUEST_CODE_ACTIVEFACE_LIVENESS = 20980;
+    private static final int REQUEST_CODE_FACE_AUTHENTICATOR = 20981;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
@@ -70,7 +70,7 @@ public class ActivefaceLivenessSdkPlugin implements FlutterPlugin, MethodCallHan
             return;
         }
 
-        ActivefaceLivenessSdkPlugin plugin = new ActivefaceLivenessSdkPlugin();
+        FaceAuthenticatorPlugin plugin = new FaceAuthenticatorPlugin();
         plugin.setupChannels(registrar.messenger(), registrar.activity().getApplicationContext());
         plugin.setActivity(registrar.activity());
         registrar.addActivityResultListener(plugin);
@@ -149,8 +149,7 @@ public class ActivefaceLivenessSdkPlugin implements FlutterPlugin, MethodCallHan
         String mobileToken = (String) argsMap.get("mobileToken");
         Boolean hasSound = (Boolean) argsMap.get("hasSound");
         Integer requestTimeout = (Integer) argsMap.get("requestTimeout");
-        Integer numberOfSteps = (Integer) argsMap.get("numberOfSteps");
-        Integer actionTimeOut = (Integer) argsMap.get("actionTimeout");
+        String cpf = (String) argsMap.get("cpf");
 
         Integer idRedMask = null;
         if (argsMap.containsKey("nameRedMask")) {
@@ -187,55 +186,53 @@ public class ActivefaceLivenessSdkPlugin implements FlutterPlugin, MethodCallHan
             if (idStyle == 0) throw new IllegalArgumentException("Invalid Style name");
         }
 
-        ActiveFaceLiveness mActiveFaceLiveness = new ActiveFaceLiveness.Builder(mobileToken)
-                .setNumberOfSteps(numberOfSteps)
-                .setActionTimeout(actionTimeOut)
-                .setMask(idGreenMask, idWhiteMask, idRedMask)
-                .setLayout(idLayout)
-                .hasSound(hasSound)
+        FaceAuthenticator mFaceAuthenticator = new FaceAuthenticator.Builder(mobileToken)
+                .setCpf(cpf)
+                .setLayout(idLayout, idGreenMask, idWhiteMask, idRedMask)
+                .enableSound(hasSound)
                 .setStyle(idStyle)
                 .setRequestTimeout(requestTimeout)
                 .build();
 
-        Intent mIntent = new Intent(context, ActiveFaceLivenessActivity.class);
-        mIntent.putExtra(ActiveFaceLiveness.PARAMETER_NAME, mActiveFaceLiveness);
-        activity.startActivityForResult(mIntent, REQUEST_CODE_ACTIVEFACE_LIVENESS);
+        Intent mIntent = new Intent(context, FaceAuthenticatorActivity.class);
+        mIntent.putExtra(FaceAuthenticator.PARAMETER_NAME, mFaceAuthenticator);
+        activity.startActivityForResult(mIntent, REQUEST_CODE_FACE_AUTHENTICATOR);
     }
 
     @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         final Map<String, Object> response = new HashMap<>();
-        if (requestCode == REQUEST_CODE_ACTIVEFACE_LIVENESS) {
+        if (requestCode == REQUEST_CODE_FACE_AUTHENTICATOR) {
             if (resultCode == RESULT_OK && data != null) {
-                ActiveFaceLivenessResult mActiveFaceLivenessResult = (ActiveFaceLivenessResult) data.getSerializableExtra(ActiveFaceLivenessResult.PARAMETER_NAME);
-                if (mActiveFaceLivenessResult.wasSuccessful()) {
+                FaceAuthenticatorResult mFaceAuthenticatorResult = (FaceAuthenticatorResult) data.getSerializableExtra(FaceAuthenticatorResult.PARAMETER_NAME);
+                if (mFaceAuthenticatorResult.wasSuccessful()) {
                     response.put("success", Boolean.valueOf(true));
-                    response.put("imagePath", mActiveFaceLivenessResult.getImagePath());
-                    response.put("missedAttemps", mActiveFaceLivenessResult.getMissedAttemps());
+                    response.put("authenticated", mFaceAuthenticatorResult.isAuthenticated());
+                    response.put("signedResponse", mFaceAuthenticatorResult.getSignedResponse());
                 } else {
                     response.put("success", Boolean.valueOf(false));
-                    if (mActiveFaceLivenessResult.getSdkFailure() instanceof InvalidTokenReason) {
+                    if (mFaceAuthenticatorResult.getSdkFailure() instanceof InvalidTokenReason) {
                         response.put("errorType", "InvalidTokenReason");
-                        response.put("errorMessage", mActiveFaceLivenessResult.getSdkFailure().getMessage());
-                    } else if (mActiveFaceLivenessResult.getSdkFailure() instanceof PermissionReason) {
+                        response.put("errorMessage", mFaceAuthenticatorResult.getSdkFailure().getMessage());
+                    } else if (mFaceAuthenticatorResult.getSdkFailure() instanceof PermissionReason) {
                         response.put("errorType", "PermissionReason");
-                        response.put("errorMessage", mActiveFaceLivenessResult.getSdkFailure().getMessage());
-                    } else if (mActiveFaceLivenessResult.getSdkFailure() instanceof NetworkReason) {
+                        response.put("errorMessage", mFaceAuthenticatorResult.getSdkFailure().getMessage());
+                    } else if (mFaceAuthenticatorResult.getSdkFailure() instanceof NetworkReason) {
                         response.put("errorType", "NetworkReason");
-                        response.put("errorMessage", mActiveFaceLivenessResult.getSdkFailure().getMessage());
-                    } else if (mActiveFaceLivenessResult.getSdkFailure() instanceof ServerReason) {
+                        response.put("errorMessage", mFaceAuthenticatorResult.getSdkFailure().getMessage());
+                    } else if (mFaceAuthenticatorResult.getSdkFailure() instanceof ServerReason) {
                         response.put("errorType", "ServerReason");
-                        response.put("errorCode", ((ServerReason) mActiveFaceLivenessResult.getSdkFailure()).getCode());
-                        response.put("errorMessage", mActiveFaceLivenessResult.getSdkFailure().getMessage());
-                    } else if (mActiveFaceLivenessResult.getSdkFailure() instanceof StorageReason) {
+                        response.put("errorCode", ((ServerReason) mFaceAuthenticatorResult.getSdkFailure()).getCode());
+                        response.put("errorMessage", mFaceAuthenticatorResult.getSdkFailure().getMessage());
+                    } else if (mFaceAuthenticatorResult.getSdkFailure() instanceof StorageReason) {
                         response.put("errorType", "StorageReason");
-                        response.put("errorMessage", mActiveFaceLivenessResult.getSdkFailure().getMessage());
-                    } else if (mActiveFaceLivenessResult.getSdkFailure() instanceof LibraryReason) {
+                        response.put("errorMessage", mFaceAuthenticatorResult.getSdkFailure().getMessage());
+                    } else if (mFaceAuthenticatorResult.getSdkFailure() instanceof LibraryReason) {
                         response.put("errorType", "LibraryReason");
-                        response.put("errorMessage", mActiveFaceLivenessResult.getSdkFailure().getMessage());
+                        response.put("errorMessage", mFaceAuthenticatorResult.getSdkFailure().getMessage());
                     } else {
                         response.put("errorType", "SDKFailure");
-                        response.put("errorMessage", mActiveFaceLivenessResult.getSdkFailure().getMessage());
+                        response.put("errorMessage", mFaceAuthenticatorResult.getSdkFailure().getMessage());
                     }
                 }
                 pendingResult.success(response);

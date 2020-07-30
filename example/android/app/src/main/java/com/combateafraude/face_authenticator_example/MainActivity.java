@@ -1,4 +1,4 @@
-package com.combateafraude.activeface_liveness_sdk_example;
+package com.combateafraude.face_authenticator_example;
 
 import io.flutter.embedding.android.FlutterActivity;
 

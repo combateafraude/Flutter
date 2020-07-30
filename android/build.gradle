@@ -1,4 +1,4 @@
-group 'com.combateafraude.activeface_liveness_sdk'
+group 'com.combateafraude.face_authenticator'
 version '1.0'
 
 buildscript {
@@ -45,8 +45,6 @@ android {
     }
 
     dependencies {
-        implementation ('com.combateafraude.sdk:active-face-liveness:1.+') {
-            exclude group: 'com.google.android.gms', module:'play-services-vision'
-        }
+        implementation 'com.combateafraude.sdk:face-authenticator:3.+'
     }
 }

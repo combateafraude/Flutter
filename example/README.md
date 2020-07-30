@@ -1,6 +1,6 @@
-# activeface_liveness_sdk_example
+# face_authenticator_example
 
-Demonstrates how to use the activeface_liveness_sdk plugin.
+Demonstrates how to use the face_authenticator plugin.
 
 ## Getting Started
 

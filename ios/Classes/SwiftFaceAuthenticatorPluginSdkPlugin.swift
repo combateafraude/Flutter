@@ -1,11 +1,11 @@
 import Flutter
 import UIKit
-import ActiveFaceLiveness
+import FaceAuthenticator
 
-let MESSAGE_CHANNEL = "com.combateafraude.activeface_liveness_sdk/message"
-let ERROR_CODE = "ACTIVE_FACE_LIVENESS_SDK_ERROR"
+let MESSAGE_CHANNEL = "com.combateafraude.face_authenticator/message"
+let ERROR_CODE = "FACE_AUTHENTICATOR_SDK_ERROR"
 
-public class SwiftActivefaceLivenessSdkPlugin: NSObject, FlutterPlugin, ActiveFaceLivenessControllerDelegate {
+public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenticatorControllerDelegate {
     var methodChannel: FlutterMethodChannel?
     var flutterResult: FlutterResult?
     
@@ -15,7 +15,7 @@ public class SwiftActivefaceLivenessSdkPlugin: NSObject, FlutterPlugin, ActiveFa
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: MESSAGE_CHANNEL, binaryMessenger: registrar.messenger())
-        let instance = SwiftActivefaceLivenessSdkPlugin()
+        let instance = SwiftFaceAuthenticatorPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
     
@@ -33,13 +33,12 @@ public class SwiftActivefaceLivenessSdkPlugin: NSObject, FlutterPlugin, ActiveFa
     }
     
     //---------------------------------------------------------------------------------------------
-    // Combate a Fraudes Call Methods
+    // Combate a Fraude's Call Methods
     // --------------------------------------------------------------------------------------------
     private func getDocuments(call: FlutterMethodCall, result: @escaping FlutterResult) {
         
-        var actionTimeout = 10
+        var cpf = null
         var requestTimeout = 15
-        var numberOfSteps = 3
         var colorTheme = UIColor.init(hexString: "#4CD964")
         
         self.flutterResult = result
@@ -51,29 +50,24 @@ public class SwiftActivefaceLivenessSdkPlugin: NSObject, FlutterPlugin, ActiveFa
             requestTimeout = argTimeout
         }
         
-        if let argActionTimeout = args["actionTimeout"] as? Int {
-            actionTimeout = argActionTimeout
+        if let argCpf = args["cpf"] as? String {
+            cpf = argCpf
         }
         
         if let argColorTheme = args["colorTheme"] as? String {
             colorTheme = UIColor.init(hexString: argColorTheme)
         }
         
-        if let argnumberOfSteps = args["numberOfSteps"] as? Int {
-            numberOfSteps = argnumberOfSteps
-        }
-        
-        let activeFaceLivenessConfiguration = ActiveFaceLivenessBuilder(apiToken: mobileToken)
-            .setActionTimeOut(seconds: actionTimeout)
-            .setNumberOfSteps(numberOfSteps: numberOfSteps)
+        let faceAuthenticatorConfiguration = FaceAuthenticatorBuilder(apiToken: mobileToken)
+            .setCpf(cpf: cpf)
             .setRequestTimeout(seconds: TimeInterval(requestTimeout))
             .setColorTheme(color: colorTheme)
             .build()
         
         let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
         
-        let scannerVC = ActiveFaceLivenessController(activeFaceLivenessConfiguration: activeFaceLivenessConfiguration)
-        scannerVC.activeFaceLivenessDelegate = self
+        let scannerVC = FaceAuthenticatorController(faceAuthenticatorConfiguration: faceAuthenticatorConfiguration)
+        scannerVC.faceAuthenticatorDelegate = self
         controller.present(scannerVC, animated: true, completion: nil)
     }
     
@@ -81,26 +75,24 @@ public class SwiftActivefaceLivenessSdkPlugin: NSObject, FlutterPlugin, ActiveFa
     // Delegates
     // --------------------------------------------------------------------------------------------
     
-    // MARK: - ActiveFaceLiveness Delegates
-    public func activeFaceLivenessController(_ scanner: ActiveFaceLivenessController, didFinishWithResults results: ActiveFaceLivenessResult) {
-        
-        let imagePath = saveImageToDocumentsDirectory(image: results.image, withName: "selfie.jpg")
+    // MARK: - FaceAuthenticator Delegates
+    public func faceAuthenticatorController(_ scanner: FaceAuthenticatorController, didFinishWithResults results: FaceAuthenticatorResult) {
         
         let response : NSMutableDictionary! = [:]
         response["success"] = NSNumber(value: true)
-        response["imagePath"] = imagePath
-        response["missedAttemps"] = results.missedAttemps
+        response["authenticated"] = results.authenticated
+        response["signedResponse"] = results.signedResponse
         flutterResult!(response)
     }
     
-    public func activeFaceLivenessControllerDidCancel(_ scanner: ActiveFaceLivenessController) {
+    public func faceAuthenticatorControllerDidCancel(_ scanner: FaceAuthenticatorController) {
         let response : NSMutableDictionary! = [:]
         response["success"] = NSNumber(value: false)
         response["cancel"] = NSNumber(value: true)
         flutterResult!(response)
     }
     
-    public func activeFaceLivenessController(_ scanner: ActiveFaceLivenessController, didFailWithError error: ActiveFaceLiveness.SDKFailure) {
+    public func faceAuthenticatorController(_ scanner: FaceAuthenticatorController, didFailWithError error: FaceAuthenticator.SDKFailure) {
         let response : NSMutableDictionary! = [:]
         response["success"] = NSNumber(value: false)
         if (error is InvalidTokenReason) {
@@ -121,29 +113,6 @@ public class SwiftActivefaceLivenessSdkPlugin: NSObject, FlutterPlugin, ActiveFa
             response["errorMessage"] = error.message
         }
         flutterResult!(response)
-    }
-    
-    //---------------------------------------------------------------------------------------------
-    // Functions
-    // --------------------------------------------------------------------------------------------
-    func saveImageToDocumentsDirectory(image: UIImage, withName: String) -> String? {
-        if let data = image.jpegData(compressionQuality: 0.8) {
-            let dirPath = getDocumentsDirectory()
-            let filename = dirPath.appendingPathComponent(withName)
-            do {
-                try data.write(to: filename)
-                print("Successfully saved image at path: \(filename)")
-                return filename.path
-            } catch {
-                print("Error saving image: \(error)")
-            }
-        }
-        return nil
-    }
-    
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
-        return paths[0]
     }
 }
 

@@ -1,4 +1,4 @@
-part of activeface_liveness_sdk;
+part of face_authenticator;
 
 class SDKResult {
   final SDKFailure sdkFailure;
