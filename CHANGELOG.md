@@ -1,3 +1,11 @@
+# 2.0.0
+__Android Native SDK Update to 4.1.0__
+__iOS Native SDK Update to 2.1.0__
+*BREAKING CHANGES*
+- Removed: method uploadImages
+- Added: method verifyQuality
+- Changed: DocumentDetectorStep constructor: removed parameters, androidNotFoundMsgName and iosNotFoundMessage
+
 # 1.1.0
 __Android Native SDK Update to 2.2.0__
 __iOS Native SDK Update to 1.3.1__

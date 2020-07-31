@@ -109,10 +109,16 @@ class DocumentDetector {
     _params['showPopup'] = showPopup;
   }
 
-  /// Enable the uploads of the document images, returning its URLs in DocumentDetectorResult.Capture.ImageUrl
-  void uploadImages({@required bool upload, @required int imageQuality}) {
-    _params['upload'] = upload;
-    _params['imageQuality'] = imageQuality;
+  /// Checks the quality of the photos collected from the document
+  void verifyQuality(
+      {@required bool verify, @required double qualityThreshold}) {
+    if (!verify) return;
+    assert(
+        qualityThreshold >= 1, 'qualityThreshold should greater o equal to 1');
+    assert(qualityThreshold <= 5, 'qualityThreshold should less or equal to 5');
+
+    _params['verify'] = verify;
+    _params['qualityThreshold'] = qualityThreshold;
   }
 
   Future<DocumentDetectorResult> build() async {

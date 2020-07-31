@@ -8,8 +8,6 @@ class DocumentDetectorStep {
   final String iosIllustrationName;
   final String androidAudioName;
   final String iosAudioName;
-  final String androidNotFoundMsgName;
-  final String iosNotFoundMessage;
 
   DocumentDetectorStep(
       {@required this.document,
@@ -18,9 +16,7 @@ class DocumentDetectorStep {
       this.androidIllustrationName,
       this.iosIllustrationName,
       this.androidAudioName,
-      this.iosAudioName,
-      this.androidNotFoundMsgName,
-      this.iosNotFoundMessage});
+      this.iosAudioName});
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> ret = Map<String, dynamic>();
@@ -46,17 +42,11 @@ class DocumentDetectorStep {
     if (androidAudioName != null) {
       ret['iosAudioName'] = iosAudioName;
     }
-    if (androidNotFoundMsgName != null) {
-      ret['androidNotFoundMsgName'] = androidNotFoundMsgName;
-    }
-    if (iosNotFoundMessage != null) {
-      ret['iosNotFoundMessage'] = iosNotFoundMessage;
-    }
     return ret;
   }
 
   @override
   String toString() {
-    return '${document.code}, $androidStepLabelName, $androidIllustrationName, $androidAudioName, $androidNotFoundMsgName';
+    return '${document.code}, $androidStepLabelName, $androidIllustrationName, $androidAudioName';
   }
 }

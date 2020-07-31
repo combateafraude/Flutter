@@ -38,7 +38,7 @@ import static android.app.Activity.RESULT_OK;
 import static com.combateafraude.documentdetector.configuration.Document.CNH_BACK;
 import static com.combateafraude.documentdetector.configuration.Document.CNH_FRONT;
 import static com.combateafraude.documentdetector.configuration.Document.CNH_FULL;
-import static com.combateafraude.documentdetector.configuration.Document.GENERIC;
+import static com.combateafraude.documentdetector.configuration.Document.OTHERS;
 import static com.combateafraude.documentdetector.configuration.Document.RG_BACK;
 import static com.combateafraude.documentdetector.configuration.Document.RG_FRONT;
 import static com.combateafraude.documentdetector.configuration.Document.RG_FULL;
@@ -156,8 +156,8 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
         final List<Map<String, Object>> flow = (List<Map<String, Object>>) argsMap.get("flow");
         final Boolean hasSound = (Boolean) argsMap.get("hasSound");
         final Integer requestTimeout = (Integer) argsMap.get("requestTimeout");
-        final Boolean upload = (Boolean) argsMap.get("upload");
-        final Integer imageQuality = (Integer) argsMap.get("imageQuality");
+        final Boolean verify = (Boolean) argsMap.get("verify");
+        final Double qualityThreshold = (Double) argsMap.get("qualityThreshold");
         final Boolean showPopup = (Boolean) argsMap.get("showPopup");
 
         DocumentDetectorStep[] documentDetectorSteps = new DocumentDetectorStep[flow.size()];
@@ -169,7 +169,6 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
             Integer stepLabelId = null;
             Integer illustrationId = null;
             Integer audioId = null;
-            Integer notFoundMessageId = null;
 
             if (docStep.containsKey("androidStepLabelName")) {
                 stepLabelId = activity.getResources().getIdentifier((String) docStep.get("androidStepLabelName"), "string", activity.getPackageName());
@@ -189,13 +188,7 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
                     throw new IllegalArgumentException("Invalid 'Audio Name' in raw folder");
             }
 
-            if (docStep.containsKey("androidNotFoundMsgName")) {
-                notFoundMessageId = activity.getResources().getIdentifier((String) docStep.get("androidNotFoundMsgName"), "string", activity.getPackageName());
-                if (notFoundMessageId == 0)
-                    throw new IllegalArgumentException("Invalid Not Found Message Name in strings.xml");
-            }
-
-            documentDetectorSteps[count] = new DocumentDetectorStep(document, stepLabelId, illustrationId, audioId, notFoundMessageId);
+            documentDetectorSteps[count] = new DocumentDetectorStep(document, stepLabelId, illustrationId, audioId);
             count++;
         }
 
@@ -257,15 +250,12 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
         final DocumentDetector mDocumentDetector = new DocumentDetector.Builder(mobileToken)
                 .setDocumentDetectorFlow(documentDetectorSteps)
                 .showPopup(showPopup)
-                .uploadImages(upload, imageQuality)
-                .setMask(greenMaskId, whiteMaskId, redMaskId)
-                .setLayout(layoutId)
-                .hasSound(hasSound)
+                .setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId)
+                .enableSound(hasSound)
                 .setStyle(styleResourceId)
                 .setRequestTimeout(requestTimeout)
-                .setSensorLuminosityMessage(sensorLuminosityMessageId)
-                .setSensorOrientationMessage(sensorOrientationMessageId)
-                .setSensorStabilityMessage(sensorStabilityMessageId)
+                .setSensorMessages(sensorLuminosityMessageId, sensorOrientationMessageId, sensorStabilityMessageId)
+                .verifyQuality(verify, qualityThreshold)
                 .build();
 
         Intent mIntent = new Intent(context, DocumentDetectorActivity.class);
@@ -294,7 +284,7 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
                             capture.put("imageUrl", "");
                         }
                         capture.put("missedAttemps", documentDetectorResult.getCaptures()[i].getMissedAttemps());
-                        capture.put("scannedLabel", documentDetectorResult.getCaptures()[i].getScannedLabel());
+                        capture.put("scannedLabel", documentDetectorResult.getCaptures()[i].getLabel());
                         captureList.add(capture);
                     }
                     response.put("capture", captureList);
@@ -352,7 +342,7 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
             case "RG_FULL":
                 return RG_FULL;
             default:
-                return GENERIC;
+                return OTHERS;
         }
     }
 }

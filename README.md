@@ -150,7 +150,7 @@ dependencies:
   name: document_detector_sdk:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v.1.1.0
+      ref: document-detector-v.2.0.0
 ```
 
 ## Usage
@@ -160,6 +160,12 @@ Warning: Changes on document-detector-v.0.13.0 to document-detector-v.1.0.0
 - Changed: constructor of DocumentDetector
     - removed parameters: documentType and uploadImages
     -  add parameters: flow
+
+Warning: Changes on document-detector-v.1.1.0 to document-detector-v.2.0.0
+- Removed: method uploadImages
+- Added: method verifyQuality
+- Changed: DocumentDetectorStep constructor, removed parameters: androidNotFoundMsgName and iosNotFoundMessage
+
 
 ```dart
   DocumentDetector documentDetector =
@@ -210,9 +216,8 @@ Example:
 
 * `hasSound(bool hasSound)` - enable/disable the SDK sound
 * `setRequestTimeout(int requestTimeout)` - set the server calls request timeout
-* `uploadImages(bool upload, int imageQuality)` - Enable the uploads of the document images, returning its URLs in DocumentDetectorResult.Capture.ImageUrl
+* `verifyQuality(bool verifyQuality, double  qualityThreshold)` - Checks the quality of the photos collected from the document, returning its URLs in DocumentDetectorResult.Capture.ImageUrl
 * `showPopup(bool show)` - Shows/hides the document popup that helps the client
-
 
 ### DocumentDetectorStep
 
@@ -226,9 +231,7 @@ DocumentDetectorStep(
       this.androidIllustrationName,
       this.iosIllustrationName,
       this.androidAudioName,
-      this.iosAudioName,
-      this.androidNotFoundMsgName,
-      this.iosNotFoundMessage});
+      this.iosAudioName});
 ```
 
 | **Parameter**           |  **Required** | **Description** |
@@ -240,9 +243,6 @@ DocumentDetectorStep(
 | iosIllustrationName     | No            | Sets the UIImage name that will be shown in the popup on iOS |
 | androidAudioName        | No            | Sets the file name in raw folder that will be played in the start of step on Android |
 | iosAudioName            | No            | Sets the file name that will be played in the start of step on iOS |
-| androidNotFoundMsgName  | No            | Sets name String on string.xml that will be shown when the user aim the camera to anything except any document on Android |
-| iosNotFoundMessage      | No            | Sets the String label that will be shown when the user aim the camera to anything except any document on iOS |
-
 
 ### SDK Result
 The `DocumentDetectorResult` class, which extends `SDKResult`, has array of document captures. It will be the same length of flow passed by parameter flow. RG_FLOW = 2, CNH_FLOW = 2.

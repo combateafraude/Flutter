@@ -52,11 +52,11 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
         let showStatusLabel = args["ShowStatusLabel"] as? Bool ?? true
         let hasSound = args["hasSound"] as? Bool ?? true
         let showPopup = args["showPopup"] as? Bool ?? true
-        let upload = args["upload"] as? Bool ?? false
+        let verify = args["verify"] as? Bool ?? false
         
-        var imageQuality = 1.0
-        if let argImageQuality = args["imageQuality"] as? Int {
-            imageQuality = Double(argImageQuality / 100)
+        var qualityThreshold : Double = 1.8
+        if let argQualityThreshold = args["qualityThreshold"] as? Double {
+            qualityThreshold = argQualityThreshold
         }
                
         var colorTheme = UIColor.init(hexString: "#4CD964")
@@ -76,7 +76,6 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
                 var image : UIImage?
                 
                 let argStepLabel = docStep["iosStepLabel"] as? String
-                let argNotFoundMessage = docStep["iosNotFoundMessage"] as? String
                 
                 if let argIllustration = docStep["iosIllustrationName"] as? String {
                     let imageURL = URL(fileURLWithPath: bundle.path(forResource: argIllustration, ofType: "png")!)
@@ -91,7 +90,7 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
                     audioURL = getAudioDocument(documentType: docStep["document"] as! String)
                 }
                 
-                documentDetectorSteps.append(DocumentDetectorStep(document: document, stepLabel: argStepLabel, illustration: image, audio: audioURL, notFoundMessage: argNotFoundMessage))
+                documentDetectorSteps.append(DocumentDetectorStep(document: document, stepLabel: argStepLabel, illustration: image, audio: audioURL))
             }
         }
         
@@ -159,7 +158,7 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
             .setSensorStabilityMessage(message: sensorStabilityMessage)
             .setSensorLuminosityMessage(message: sensorLuminosityMessage)
             .setSensorOrientationMessage(message: sensorOrientationMessage)
-            .uploadImages(upload : upload, imageQuality : CGFloat(imageQuality))
+            .verifyQuality(verify: verify, qualityThreshold: qualityThreshold)
             .build()
         
         let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
@@ -247,7 +246,7 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
         case "RG_FULL":
             return Document.RG_FULL
         default:
-            return Document.GENERIC
+            return Document.OTHERS
         }
     }
     

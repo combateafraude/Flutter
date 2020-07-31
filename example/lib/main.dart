@@ -76,14 +76,12 @@ class _MyAppState extends State<MyApp> {
                             DocumentDetectorStep(
                               document: DocumentType.CNH_FULL,
                               //androidStepLabelName: 'stepLabel',
-                              //androidNotFoundMsgName: 'notFoundMessage',
                               //androidIllustrationName: "generic",
                               //androidAudioName: "generic"
                             ),
                             DocumentDetectorStep(
                               document: DocumentType.RG_FULL,
                               //androidStepLabelName: 'stepLabel',
-                              //androidNotFoundMsgName: 'notFoundMessage',
                               //androidIllustrationName: "generic",
                               //androidAudioName: "generic"
                             )
@@ -111,12 +109,9 @@ class _MyAppState extends State<MyApp> {
                           greenMaskImageName: "green_mask",
                           redMaskImageName: "red_mask",
                           whiteMaskImageName: "white_mask"));
-                      documentDetector.uploadImages(
-                          upload: true, imageQuality: 50);
+                      documentDetector.verifyQuality(
+                          verify: true, qualityThreshold: 1);
                       documentDetector.showPopup(false);
-
-                      documentDetector.uploadImages(
-                          upload: true, imageQuality: 50);
 
                       documentDetector.setAndroidSensorSettings(
                           luminosityMessageName: 'luminosityMessage',
@@ -129,7 +124,6 @@ class _MyAppState extends State<MyApp> {
                           stabilityMessage: 'stabilityMessage');
                        */
 
-                      documentDetector.setIOSColorTheme(Colors.blue);
                       final documentResult = await documentDetector.build();
 
                       if (documentResult.wasSuccessful) {

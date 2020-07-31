@@ -7,7 +7,7 @@ enum DocumentType {
   CNH_FRONT,
   CNH_BACK,
   CNH_FULL,
-  GENERIC
+  OTHERS
 }
 
 extension DocumentTypeExtension on DocumentType {
@@ -18,7 +18,7 @@ extension DocumentTypeExtension on DocumentType {
         DocumentType.RG_FRONT: 'RG_FRONT',
         DocumentType.RG_BACK: 'RG_BACK',
         DocumentType.RG_FULL: 'RG_FULL',
-        DocumentType.GENERIC: "GENERIC"
+        DocumentType.OTHERS: "OTHERS"
       }[this];
 
   DocumentType getByCode(String code) => const {
@@ -28,6 +28,6 @@ extension DocumentTypeExtension on DocumentType {
         'RG_FRONT': DocumentType.RG_FRONT,
         'RG_BACK': DocumentType.RG_BACK,
         'RG_FULL': DocumentType.RG_FULL,
-        "GENERIC": DocumentType.GENERIC
+        "OTHERS": DocumentType.OTHERS
       }[code];
 }
