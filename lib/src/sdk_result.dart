@@ -1,4 +1,4 @@
-part of document_detector_sdk;
+part of document_detector;
 
 class SDKResult {
   final SDKFailure sdkFailure;

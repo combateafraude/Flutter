@@ -1,5 +1,5 @@
-name: document_detector_sdk_example
-description: Demonstrates how to use the document_detector_sdk plugin.
+name: document_detector_example
+description: Demonstrates how to use the document_detector plugin.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  document_detector_sdk:
+  document_detector:
     # When depending on this package from a real application you should use:
     #   document_detector_sdk: ^x.y.z
     # See https://dart.dev/tools/pub/dependencies#version-constraints

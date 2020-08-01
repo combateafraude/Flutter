@@ -3,10 +3,10 @@ import UIKit
 import TensorFlowLite
 import DocumentDetector
 
-let MESSAGE_CHANNEL = "com.combateafraude.document_detector_sdk/message"
+let MESSAGE_CHANNEL = "com.combateafraude.document_detector/message"
 let ERROR_CODE = "DOCUMENT_DETECTOR_SDK_ERROR"
 
-public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDetectorControllerDelegate {
+public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetectorControllerDelegate {
     
     var methodChannel: FlutterMethodChannel?
     var flutterResult: FlutterResult?
@@ -50,7 +50,7 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
         let requestTimeout = args["requestTimeout"] as? Int ?? 15
         let showStepLabel = args["showStepLabel"] as? Bool ?? true
         let showStatusLabel = args["ShowStatusLabel"] as? Bool ?? true
-        let hasSound = args["hasSound"] as? Bool ?? true
+        let enableSound = args["enableSound"] as? Bool ?? true
         let showPopup = args["showPopup"] as? Bool ?? true
         let verify = args["verify"] as? Bool ?? false
         
@@ -150,7 +150,7 @@ public class SwiftDocumentDetectorSdkPlugin: NSObject, FlutterPlugin, DocumentDe
             .setDocumentDetectorFlow(flow: documentDetectorSteps)
             .showPopup(show : showPopup)
             .setRequestTimeout(seconds: TimeInterval(requestTimeout))
-            .setHasSound(hasSound: hasSound)
+            .setHasSound(hasSound: enableSound)
             .showStepLabel(show: showStepLabel)
             .showStatusLabel(show: showStatusLabel)
             .setColorTheme(color: colorTheme)

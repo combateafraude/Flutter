@@ -1,4 +1,4 @@
-package com.combateafraude.document_detector_sdk_example;
+package com.combateafraude.document_detector_example;
 
 import io.flutter.embedding.android.FlutterActivity;
 

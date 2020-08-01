@@ -1,4 +1,4 @@
-package com.combateafraude.document_detector_sdk;
+package com.combateafraude.document_detector;
 
 import android.app.Activity;
 import android.content.Context;
@@ -46,7 +46,7 @@ import static com.combateafraude.documentdetector.configuration.Document.RG_FULL
 /**
  * DocumentDetectorSdkPlugin
  */
-public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
+public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
 
     private static final String DEBUG_NAME = "DocumentDetectorSdk";
     private Activity activity;
@@ -56,7 +56,7 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
     private MethodChannel methodChannel;
     private MethodChannel.Result pendingResult;
 
-    private static final String MESSAGE_CHANNEL = "com.combateafraude.document_detector_sdk/message";
+    private static final String MESSAGE_CHANNEL = "com.combateafraude.document_detector/message";
 
     private static final int REQUEST_CODE_DOCUMENT_DETECTOR = 20981;
 
@@ -81,7 +81,7 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
             return;
         }
 
-        DocumentDetectorSdkPlugin plugin = new DocumentDetectorSdkPlugin();
+        DocumentDetectorPlugin plugin = new DocumentDetectorPlugin();
         plugin.setupChannels(registrar.messenger(), registrar.activity().getApplicationContext());
         plugin.setActivity(registrar.activity());
         registrar.addActivityResultListener(plugin);
@@ -154,7 +154,7 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
 
         final String mobileToken = (String) argsMap.get("mobileToken");
         final List<Map<String, Object>> flow = (List<Map<String, Object>>) argsMap.get("flow");
-        final Boolean hasSound = (Boolean) argsMap.get("hasSound");
+        final Boolean enableSound = (Boolean) argsMap.get("enableSound");
         final Integer requestTimeout = (Integer) argsMap.get("requestTimeout");
         final Boolean verify = (Boolean) argsMap.get("verify");
         final Double qualityThreshold = (Double) argsMap.get("qualityThreshold");
@@ -225,8 +225,12 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
         }
 
         Integer sensorLuminosityMessageId = null;
+        Integer sensorLuminosityThreshold = null;
         Integer sensorOrientationMessageId = null;
+        Double sensorOrientationThreshold = null;
         Integer sensorStabilityMessageId = null;
+        Long sensorStabilityStabledMillis = null;
+        Double sensorStabilityThreshold = null;
 
         if (argsMap.containsKey("aLuminosityMessage")) {
             sensorLuminosityMessageId = activity.getResources().getIdentifier((String) argsMap.get("aLuminosityMessage"), "string", activity.getPackageName());
@@ -234,11 +238,15 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
             if (sensorLuminosityMessageId == 0) throw new IllegalArgumentException("Invalid SensorLuminosityMessage name in strings.xml file");
         }
 
+        sensorLuminosityThreshold = (Integer) argsMap.get("luminosityThreshold");
+
         if (argsMap.containsKey("aOrientationMessage")) {
             sensorOrientationMessageId = activity.getResources().getIdentifier((String) argsMap.get("aOrientationMessage"), "string", activity.getPackageName());
 
             if (sensorOrientationMessageId == 0) throw new IllegalArgumentException("Invalid SensorOrientationMessage name in strings.xml file");
         }
+
+        sensorOrientationThreshold = (Double) argsMap.get("orientationThreshold");
 
         if (argsMap.containsKey("aStabilityMessage")) {
             sensorStabilityMessageId = activity.getResources().getIdentifier((String) argsMap.get("aStabilityMessage"), "string", activity.getPackageName());
@@ -246,15 +254,19 @@ public class DocumentDetectorSdkPlugin implements FlutterPlugin, MethodCallHandl
             if (sensorStabilityMessageId == 0) throw new IllegalArgumentException("Invalid SensorStabilityMessage name in strings.xml file");
         }
 
+        sensorStabilityStabledMillis = (Long) argsMap.get("stabilityStabledMillis");
+
+        sensorStabilityThreshold = (Double) argsMap.get("stabilityThreshold");
+
 
         final DocumentDetector mDocumentDetector = new DocumentDetector.Builder(mobileToken)
                 .setDocumentDetectorFlow(documentDetectorSteps)
                 .showPopup(showPopup)
                 .setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId)
-                .enableSound(hasSound)
+                .enableSound(enableSound)
                 .setStyle(styleResourceId)
                 .setRequestTimeout(requestTimeout)
-                .setSensorMessages(sensorLuminosityMessageId, sensorOrientationMessageId, sensorStabilityMessageId)
+                .setSensorConfiguration(sensorLuminosityMessageId, sensorLuminosityThreshold, sensorOrientationMessageId, sensorOrientationThreshold, sensorStabilityMessageId, sensorStabilityStabledMillis, sensorStabilityThreshold)
                 .verifyQuality(verify, qualityThreshold)
                 .build();
 

@@ -1,4 +1,4 @@
-part of document_detector_sdk;
+part of document_detector;
 
 class DocumentDetector {
   // ignore: non_constant_identifier_names
@@ -28,19 +28,16 @@ class DocumentDetector {
     _params['flow'] = flowMap;
   }
 
-  /// replace default SDK Mask
-  void setAndroidMask(
-      {String drawableGreenName,
+  /// replace the SDK layout with yours with the respectively template : https://gist.github.com/kikogassen/62068b6e5bc7988d28594d833b125519
+  void setAndroidLayout(
+      {String layoutName,
+      String drawableGreenName,
       String drawableWhiteName,
       String drawableRedName}) {
+    if (layoutName != null) _params['nameLayout'] = layoutName;
     if (drawableGreenName != null) _params['nameGreenMask'] = drawableGreenName;
     if (drawableWhiteName != null) _params['nameWhiteMask'] = drawableWhiteName;
     if (drawableRedName != null) _params['nameRedMask'] = drawableRedName;
-  }
-
-  /// replace the SDK layout with yours with the respectively template : https://gist.github.com/kikogassen/62068b6e5bc7988d28594d833b125519
-  void setAndroidLayout(String layoutName) {
-    _params['nameLayout'] = layoutName;
   }
 
   /// set the SDK color style for Android
@@ -48,17 +45,22 @@ class DocumentDetector {
     _params['nameStyle'] = styleName;
   }
 
-  /// Set messages related to sensors on Android
-  void setAndroidSensorSettings(
+  /// Set sensor configuration
+  void setAndroidSensorConfiguration(
       {String luminosityMessageName,
+      int luminosityThreshold,
       String orientationMessageName,
-      String stabilityMessageName}) {
-    if (luminosityMessageName != null)
-      _params['aLuminosityMessage'] = luminosityMessageName;
-    if (orientationMessageName != null)
-      _params['aOrientationMessage'] = orientationMessageName;
-    if (stabilityMessageName != null)
-      _params['aStabilityMessage'] = stabilityMessageName;
+      double orientationThreshold,
+      String stabilityMessageName,
+      int stabilityStabledMillis,
+      double stabilityThreshold}) {
+    if (luminosityMessageName != null) _params['aLuminosityMessage'] = luminosityMessageName;
+    if (luminosityThreshold != null) _params['luminosityThreshold'] = luminosityThreshold;
+    if (orientationMessageName != null) _params['aOrientationMessage'] = orientationMessageName;
+    if (orientationThreshold != null) _params['orientationThreshold'] = orientationThreshold;
+    if (stabilityMessageName != null) _params['aStabilityMessage'] = stabilityMessageName;
+    if (stabilityStabledMillis != null) _params['stabilityStabledMillis'] = stabilityStabledMillis;
+    if (stabilityThreshold != null) _params['stabilityThreshold'] = stabilityThreshold;
   }
 
   /// set the SDK color style for iOS
@@ -95,8 +97,8 @@ class DocumentDetector {
   }
 
   /// Enables/disables the sound and sound icon
-  void hasSound(bool hasSound) {
-    _params['hasSound'] = hasSound;
+  void enableSound(bool enableSound) {
+    _params['enableSound'] = enableSound;
   }
 
   /// Sets the server request timeout. The default is 15 seconds
@@ -113,16 +115,14 @@ class DocumentDetector {
   void verifyQuality(
       {@required bool verify, @required double qualityThreshold}) {
     if (!verify) return;
-    assert(
-        qualityThreshold >= 1, 'qualityThreshold should greater o equal to 1');
-    assert(qualityThreshold <= 5, 'qualityThreshold should less or equal to 5');
+    assert(qualityThreshold >= 1.0 && qualityThreshold <= 5, 'qualityThreshold should be a value between 1.0 and 5.0');
 
     _params['verify'] = verify;
     _params['qualityThreshold'] = qualityThreshold;
   }
 
   Future<DocumentDetectorResult> build() async {
-    final response = await DocumentDetectorSdk._messageChannel
+    final response = await DocumentDetectorMessenger._messageChannel
         .invokeMethod('getDocuments', _params);
     if (response.containsKey('success') && response['success']) {
       List<Capture> captureList = [];

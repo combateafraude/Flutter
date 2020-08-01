@@ -64,13 +64,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.3"
-  document_detector_sdk:
+  document_detector:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "2.0.0"
+    version: "2.1.0"
   flutter:
     dependency: "direct main"
     description: flutter

@@ -1,4 +1,4 @@
-group 'com.combateafraude.document_detector_sdk'
+group 'com.combateafraude.document_detector'
 version '1.0'
 
 buildscript {
@@ -45,6 +45,6 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:document-detector:4.1.0'
+        implementation 'com.combateafraude.sdk:document-detector:4.2.3'
     }
 }

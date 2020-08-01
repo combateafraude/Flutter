@@ -1,6 +1,6 @@
-name: document_detector_sdk
-description: Flutter plugin for DocumentDetector of Combate a Fraudes (https://github.com/combateafraude). This plugin provides a cross-platform (iOS, Android).
-version: 2.0.0
+name: document_detector
+description: Flutter plugin cross-platform (iOS, Android) for Combate à Fraude's DocumentDetector (https://github.com/combateafraude).
+version: 2.1.0
 homepage: https://github.com/combateafraude
 
 environment:
@@ -19,7 +19,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.combateafraude.document_detector_sdk
-        pluginClass: DocumentDetectorSdkPlugin
+        package: com.combateafraude.document_detector
+        pluginClass: DocumentDetectorPlugin
       ios:
-        pluginClass: DocumentDetectorSdkPlugin
+        pluginClass: DocumentDetectorPlugin

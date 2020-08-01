@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/photo_mask"
+            android:contentDescription="@string/photo_mask_caf"
             android:scaleType="fitXY"
             android:tag="binding_1"                                    />
 
@@ -59,9 +59,9 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/close"
+            android:contentDescription="@string/close_caf"
             android:tag="binding_2"                      
-            android:src="@drawable/ic_close"
+            android:src="@drawable/ic_close_caf"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toTopOf="@id/guidelineTop" />
 
@@ -71,7 +71,7 @@
             android:padding="10dp"
             android:tag="binding_3"                                                  
             android:adjustViewBounds="true"
-            android:contentDescription="@string/sound"
+            android:contentDescription="@string/sound_caf"
                                                                                                
                                                          
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
@@ -89,7 +89,7 @@
                 android:id="@+id/statusMessage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_radius"
+                android:background="@drawable/bg_radius_caf"
                 android:gravity="center_horizontal"
                 android:lineSpacingExtra="7sp"
                 android:padding="10dp"
@@ -106,10 +106,10 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/triangle"
+                android:background="@drawable/triangle_caf"
                 android:rotation="270"
                 android:adjustViewBounds="true"
-                android:contentDescription="@string/nothing"
+                android:contentDescription="@string/nothing_caf"
                 app:layout_constraintEnd_toEndOf="@id/statusMessage"
                 app:layout_constraintStart_toStartOf="@id/statusMessage"
                 app:layout_constraintTop_toTopOf="@id/statusMessage"
@@ -136,12 +136,12 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:tag="binding_7"                                                     
-            android:contentDescription="@string/check"
+            android:contentDescription="@string/check_caf"
             app:layout_constraintTop_toTopOf="@id/tvCurrentStepName"
             app:layout_constraintBottom_toBottomOf="@id/tvCurrentStepName"
             app:layout_constraintEnd_toStartOf="@id/tvCurrentStepName"
             android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_check" />
+            android:src="@drawable/ic_check_caf" />
 
         <TextView
             android:id="@+id/tvPreviousStepName"
@@ -161,13 +161,13 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:tag="binding_9"                                                      
-            android:contentDescription="@string/check"
+            android:contentDescription="@string/check_caf"
             app:layout_constraintTop_toTopOf="@id/tvPreviousStepName"
             app:layout_constraintBottom_toBottomOf="@id/tvPreviousStepName"
             app:layout_constraintEnd_toStartOf="@id/tvPreviousStepName"
             android:layout_marginEnd="8dp"
             android:alpha="0.4"
-            android:src="@drawable/ic_check" />
+            android:src="@drawable/ic_check_caf" />
 
         <ProgressBar
             android:layout_width="64dp"

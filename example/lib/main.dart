@@ -1,4 +1,4 @@
-import 'package:document_detector_sdk/document_detector_sdk.dart';
+import 'package:document_detector/document_detector.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -32,7 +32,6 @@ class _MyAppState extends State<MyApp> {
   void requestPermissions() async {
     await [
       Permission.camera,
-      Permission.storage,
     ].request();
   }
 
