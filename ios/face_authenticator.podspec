@@ -5,7 +5,7 @@
 Pod::Spec.new do |s|
   s.name             = 'face_authenticator'
   s.version          = '0.2.0'
-  s.summary          = 'Flutter plugin for Combate à Fraude's FaceAuthenticator'
+  s.summary          = 'Flutter plugin for Combate à Fraudes FaceAuthenticator'
   s.description      = <<-DESC
 Flutter plugin for Combate à Fraude's FaceAuthenticator
                        DESC
