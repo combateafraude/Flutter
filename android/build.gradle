@@ -1,4 +1,4 @@
-group 'com.combateafraude.passiveface_liveness_sdk'
+group 'com.combateafraude.passive_face_liveness'
 version '1.0'
 
 buildscript {
@@ -45,7 +45,7 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:passive-face-liveness:1.+' 
+        implementation 'com.combateafraude.sdk:passive-face-liveness:3.2.3'
     }
 
 }
