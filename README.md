@@ -126,8 +126,7 @@ or
 ```
 
 ### Optional parameters
-* `setAndroidMask(String drawableGreenName, String drawableWhiteName, String drawableRedName)` - replace the default SDK's masks in Android. Enter the name of the drawable to be used
-* `setAndroidLayout(String layoutName)` - replace the SDK layout in Android with yours with the respectively [template](https://gist.github.com/kikogassen/62068b6e5bc7988d28594d833b125519)
+* `setAndroidLayout(String layoutName, String drawableGreenName, String drawableWhiteName, String drawableRedName)` - replace the SDK layout and masks in Android with yours with the respectively [template](https://gist.github.com/kikogassen/62068b6e5bc7988d28594d833b125519)
 * `setAndroidStyle(String styleName)` -  set the SDK color style in Android. [Template](https://github.com/combateafraude/Mobile/wiki/Common#styles)
 * `setAndroidSensorConfiguration(String luminosityMessageName,
                                        int luminosityThreshold,
