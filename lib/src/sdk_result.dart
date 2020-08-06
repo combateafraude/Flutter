@@ -51,3 +51,7 @@ class StorageReason extends SDKFailure {
 class LibraryReason extends SDKFailure {
   LibraryReason(String libraryMessage) : super(libraryMessage);
 }
+
+class AvailabilityReason extends SDKFailure {
+  AvailabilityReason(String availabilityMessage) : super(availabilityMessage);
+}

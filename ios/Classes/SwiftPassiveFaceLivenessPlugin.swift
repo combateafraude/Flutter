@@ -117,8 +117,8 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         }
         
         let passiveFacelivenessConfiguration = PassiveFaceLivenessBuilder(apiToken: mobileToken)
-            .setRequestTimeout(seconds: TimeInterval(requestTimeout))
-            .setHasSound(hasSound: enableSound)
+            .setNetworkSettings(requestTimeout: TimeInterval(requestTimeout))
+            .enableSound(enableSound: enableSound)
             .showStepLabel(show: showStepLabel)
             .showStatusLabel(show: showStatusLabel)
             .setColorTheme(color: colorTheme)

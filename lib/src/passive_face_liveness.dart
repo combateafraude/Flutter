@@ -95,6 +95,10 @@ class PassiveFaceLiveness {
           return PassiveFaceLivenessResult(
               sdkFailure: LibraryReason(response['errorMessage']));
           break;
+        case 'AvailabilityReason':
+          return PassiveFaceLivenessResult(
+              sdkFailure: AvailabilityReason(response['errorMessage']));
+          break;
         default:
           return PassiveFaceLivenessResult(
               sdkFailure: (SDKFailure(response['errorMessage'])));

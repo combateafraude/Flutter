@@ -11,6 +11,7 @@ import com.combateafraude.helpers.sdk.failure.InvalidTokenReason;
 import com.combateafraude.helpers.sdk.failure.LibraryReason;
 import com.combateafraude.helpers.sdk.failure.NetworkReason;
 import com.combateafraude.helpers.sdk.failure.PermissionReason;
+import com.combateafraude.helpers.sdk.failure.AvailabilityReason;
 import com.combateafraude.helpers.sdk.failure.ServerReason;
 import com.combateafraude.helpers.sdk.failure.StorageReason;
 import com.combateafraude.passivefaceliveness.PassiveFaceLiveness;
@@ -187,15 +188,19 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
       if (idStyle == 0) throw new IllegalArgumentException("Invalid Style name");
     }
 
-    PassiveFaceLiveness mPassiveFaceLiveness = new PassiveFaceLiveness.Builder(mobileToken)
-            .setLayout(idLayout, idGreenMask, idWhiteMask, idRedMask)
-            .enableSound(enableSound)
-            .setStyle(idStyle)
-            .setRequestTimeout(requestTimeout)
-            .build();
+    PassiveFaceLiveness.Builder mPassiveFaceLivenessBuilder = new PassiveFaceLiveness.Builder(mobileToken)
+            .setLayout(idLayout, idGreenMask, idWhiteMask, idRedMask);
+
+    if (enableSound != null){
+      mPassiveFaceLivenessBuilder.enableSound(enableSound);
+    }
+
+    if (idStyle != null){
+      mPassiveFaceLivenessBuilder.setStyle(idStyle);
+    }
 
     Intent mIntent = new Intent(context, PassiveFaceLivenessActivity.class);
-    mIntent.putExtra(PassiveFaceLiveness.PARAMETER_NAME, (Serializable) mPassiveFaceLiveness);
+    mIntent.putExtra(PassiveFaceLiveness.PARAMETER_NAME, (Serializable) mPassiveFaceLivenessBuilder.build());
     activity.startActivityForResult(mIntent, REQUEST_CODE_PASSIVEFACE_LIVENESS);
   }
 
@@ -237,6 +242,9 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
             response.put("errorMessage", mPassiveFaceLivenessResult.getSdkFailure().getMessage());
           } else if (mPassiveFaceLivenessResult.getSdkFailure() instanceof LibraryReason) {
             response.put("errorType", "LibraryReason");
+            response.put("errorMessage", mPassiveFaceLivenessResult.getSdkFailure().getMessage());
+          } else if (mPassiveFaceLivenessResult.getSdkFailure() instanceof AvailabilityReason) {
+            response.put("errorType", "AvailabilityReason");
             response.put("errorMessage", mPassiveFaceLivenessResult.getSdkFailure().getMessage());
           } else {
             response.put("errorType", "SDKFailure");
