@@ -21,7 +21,6 @@
 
 * Internet connection
 * A valid [combateafraude](https://combateafraude.com) Mobile token. To get one, please mail to [Frederico Gassen](mailto:frederico.gassen@combateafraude.com)
-* A physical device (how to scan a real document with a simulator?)
 
 Add this configuration in your app-level `build.gradle`:
 
@@ -63,26 +62,9 @@ When working on Android API 23+, you'll have to request the runtime permissions 
 
 You need to add this rules in your Proguard/R8 file. If not exits, it's necessary create:
 
-```java
+``` pro
 # Keep the classes that are deserialized by GSON
--keep class com.combateafraude.helpers.server.api.** { <fields>; }
-
-# Keep - Library. Keep all public and protected classes, fields, and methods.
--keep public class * {
-    public protected <fields>;
-    public protected <methods>;
-}
-
-# Keep all enums. Removing this causes a crash in the Document enum
--keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
-
-# Keep native methos. Removing this causes a crash
--keepclasseswithmembernames,includedescriptorclasses class * {
-    native <methods>;
-}
+-keep class com.combateafraude.helpers.server.model.** { <fields>; }
 ```
 
 ### iOS environment
@@ -92,11 +74,10 @@ You need to add this rules in your Proguard/R8 file. If not exits, it's necessar
 
 | Deployment Info |  iOS Version |
 |-----------------|--------------|
-| `Target`        | iOS 12.0 +   |
+| `Target`        | iOS 11.0 +   |
 
 * Internet connection
 * A valid [combateafraude](https://combateafraude.com) Mobile token. To get one, please mail to [Frederico Gassen](mailto:frederico.gassen@combateafraude.com)
-* A physical device (how to scan a real document with a simulator?)
 
 #### Podfile
 
@@ -112,10 +93,10 @@ Add this to your `pubspec.yaml`:
 
 ```yml
 dependencies:  
-  passiveface_liveness_sdk:
+  passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-v.0.3.0       
+      ref: passive-face-liveness-v0.4.0       
 ```
 
 ## Usage
@@ -129,8 +110,7 @@ dependencies:
 
 ### Optional parameters
 
-* `setAndroidMask(String drawableGreenName, String drawableWhiteName, String drawableRedName)` - replace the default SDK's masks in Android. Enter the name of the drawable to be used
-* `setAndroidLayout(String layoutName)` - replace the SDK layout in Android with yours with the respectively [template](https://gist.github.com/kikogassen/62068b6e5bc7988d28594d833b125519)
+* `setAndroidLayout(String layoutName, String drawableGreenName, String drawableWhiteName, String drawableRedName)` - replace the SDK layout and masks in Android with yours with the respectively [template](https://gist.github.com/kikogassen/62068b6e5bc7988d28594d833b125519)
 * `setAndroidStyle(String styleName)` -  set the SDK color style in Android. [Template](https://github.com/combateafraude/Mobile/wiki/Common#styles)
 
 * `setIOSColorTheme(Color color)` - set the SDK color style for iOS.
@@ -151,7 +131,7 @@ Example:
 ```
 - Note: Necessary add images in Assets Catalog Document on Xcode project
 
-* `hasSound(bool hasSound)` - enable/disable the SDK sound
+* `enableSound(bool enableSound)` - enable/disable the SDK sound
 * `setRequestTimeout(int requestTimeout)` - set the server calls request timeout
 
 ### SDK Result

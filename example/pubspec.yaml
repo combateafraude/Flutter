@@ -1,5 +1,5 @@
-name: passiveface_liveness_example
-description: Demonstrates how to use the passiveface_liveness plugin.
+name: passive_face_liveness_example
+description: Demonstrates how to use the passive_face_liveness plugin.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  passiveface_liveness_sdk:
+  passive_face_liveness:
     # When depending on this package from a real application you should use:
     #   passiveface_liveness: ^x.y.z
     # See https://dart.dev/tools/pub/dependencies#version-constraints

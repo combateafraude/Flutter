@@ -2,16 +2,16 @@ import Flutter
 import UIKit
 import PassiveFaceLiveness
 
-let MESSAGE_CHANNEL = "com.combateafraude.passiveface_liveness_sdk/message"
+let MESSAGE_CHANNEL = "com.combateafraude.passive_face_liveness/message"
 let ERROR_CODE = "PASSIVE_FACE_LIVENESS_SDK_ERROR"
 
-public class SwiftPassivefaceLivenessSdkPlugin: NSObject, FlutterPlugin, PassiveFaceLivenessControllerDelegate {
+public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFaceLivenessControllerDelegate {
     var methodChannel: FlutterMethodChannel?
     var flutterResult: FlutterResult?
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: MESSAGE_CHANNEL, binaryMessenger: registrar.messenger())
-        let instance = SwiftPassivefaceLivenessSdkPlugin()
+        let instance = SwiftPassiveFaceLivenessPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
     
@@ -118,7 +118,7 @@ public class SwiftPassivefaceLivenessSdkPlugin: NSObject, FlutterPlugin, Passive
         
         let passiveFacelivenessConfiguration = PassiveFaceLivenessBuilder(apiToken: mobileToken)
             .setRequestTimeout(seconds: TimeInterval(requestTimeout))
-            .setHasSound(hasSound: hasSound)
+            .setHasSound(hasSound: enableSound)
             .showStepLabel(show: showStepLabel)
             .showStatusLabel(show: showStatusLabel)
             .setColorTheme(color: colorTheme)

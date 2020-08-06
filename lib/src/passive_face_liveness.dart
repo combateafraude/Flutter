@@ -1,4 +1,4 @@
-part of passiveface_liveness_sdk;
+part of passive_face_liveness;
 
 class PassiveFaceLiveness {
   static Map<String, dynamic> _params = {};
@@ -8,19 +8,16 @@ class PassiveFaceLiveness {
     _params['mobileToken'] = mobileToken;
   }
 
-  /// replace default SDK Mask
-  void setAndroidMask(
-      {String drawableGreenName,
+  /// replace the SDK layout with yours with the respectively template : https://gist.github.com/kikogassen/62068b6e5bc7988d28594d833b125519
+  void setAndroidLayout(
+      {String layoutName,
+      String drawableGreenName,
       String drawableWhiteName,
       String drawableRedName}) {
+    if (layoutName != null) _params['nameLayout'] = layoutName;
     if (drawableGreenName != null) _params['nameGreenMask'] = drawableGreenName;
     if (drawableWhiteName != null) _params['nameWhiteMask'] = drawableWhiteName;
     if (drawableRedName != null) _params['nameRedMask'] = drawableRedName;
-  }
-
-  /// replace the SDK layout with yours with the respectively template : https://gist.github.com/kikogassen/62068b6e5bc7988d28594d833b125519
-  void setAndroidLayout(String layoutName) {
-    _params['nameLayout'] = layoutName;
   }
 
   /// set the SDK color style for Android
@@ -49,8 +46,8 @@ class PassiveFaceLiveness {
   }
 
   /// Enables/disables the sound and sound icon
-  void hasSound(bool hasSound) {
-    _params['hasSound'] = hasSound;
+  void enableSound(bool enableSound) {
+    _params['enableSound'] = enableSound;
   }
 
   /// Sets the server request timeout. The default is 15 seconds
@@ -59,7 +56,7 @@ class PassiveFaceLiveness {
   }
 
   Future<PassiveFaceLivenessResult> build() async {
-    final response = await PassiveFaceLivenessSdk._messageChannel
+    final response = await PassiveFaceLivenessMessenger._messageChannel
         .invokeMethod('getDocuments', _params);
     if (response.containsKey('success') && response['success']) {
       return PassiveFaceLivenessResult(
