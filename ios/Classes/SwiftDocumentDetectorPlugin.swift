@@ -16,7 +16,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
     // --------------------------------------------------------------------------------------------
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: MESSAGE_CHANNEL, binaryMessenger: registrar.messenger())
-        let instance = SwiftDocumentDetectorSdkPlugin()
+        let instance = SwiftDocumentDetectorPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
     
