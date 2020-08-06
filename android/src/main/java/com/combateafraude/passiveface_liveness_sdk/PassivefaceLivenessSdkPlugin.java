@@ -1,4 +1,4 @@
-package com.combateafraude.passive_face_liveness;
+package com.combateafraude.passiveface_liveness_sdk;
 
 import android.app.Activity;
 import android.content.Context;
@@ -35,9 +35,9 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 import static android.app.Activity.RESULT_OK;
 
 /**
- * PassiveFaceLivenessPlugin
+ * PassivefaceLivenessSdkPlugin
  */
-public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
+public class PassivefaceLivenessSdkPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
   private static final String DEBUG_NAME = "PassiveFaceSdk";
   private Activity activity;
   private Context context;
@@ -46,7 +46,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
   private MethodChannel methodChannel;
   private MethodChannel.Result pendingResult;
 
-  private static final String MESSAGE_CHANNEL = "com.combateafraude.passive_face_liveness/message";
+  private static final String MESSAGE_CHANNEL = "com.combateafraude.passiveface_liveness_sdk/message";
 
   private static final int REQUEST_CODE_PASSIVEFACE_LIVENESS = 20950;
 
@@ -71,7 +71,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
       return;
     }
 
-    PassiveFaceLivenessPlugin plugin = new PassiveFaceLivenessPlugin();
+    PassivefaceLivenessSdkPlugin plugin = new PassivefaceLivenessSdkPlugin();
     plugin.setupChannels(registrar.messenger(), registrar.activity().getApplicationContext());
     plugin.setActivity(registrar.activity());
     registrar.addActivityResultListener(plugin);
@@ -149,7 +149,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
     }
 
     String mobileToken = (String) argsMap.get("mobileToken");
-    Boolean enableSound = (Boolean) argsMap.get("enableSound");
+    Boolean hasSound = (Boolean) argsMap.get("hasSound");
     Integer requestTimeout = (Integer) argsMap.get("requestTimeout");
 
     Integer idRedMask = null;
@@ -188,8 +188,9 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
     }
 
     PassiveFaceLiveness mPassiveFaceLiveness = new PassiveFaceLiveness.Builder(mobileToken)
-            .setLayout(idLayout, idGreenMask, idWhiteMask, idRedMask)
-            .enableSound(enableSound)
+            .setMask(idGreenMask, idWhiteMask, idRedMask)
+            .setLayout(idLayout)
+            .hasSound(hasSound)
             .setStyle(idStyle)
             .setRequestTimeout(requestTimeout)
             .build();

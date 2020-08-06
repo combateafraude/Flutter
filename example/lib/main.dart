@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:passive_face_liveness/passive_face_liveness.dart';
+import 'package:passiveface_liveness_sdk/passiveface_liveness_sdk.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class _MyAppState extends State<MyApp> {
   PassiveFaceLivenessResult passiveFaceLivenessResult =
       PassiveFaceLivenessResult();
 
-  final mobileToken = '';
+  final mobileToken = 'mobileToken';
 
   @override
   void initState() {
@@ -28,6 +28,7 @@ class _MyAppState extends State<MyApp> {
   void requestPermissions() async {
     await [
       Permission.camera,
+      Permission.storage,
     ].request();
   }
 

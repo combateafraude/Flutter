@@ -95,13 +95,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.8"
-  passive_face_liveness:
+  passiveface_liveness_sdk:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "0.4.0"
+    version: "0.3.0"
   path:
     dependency: transitive
     description:

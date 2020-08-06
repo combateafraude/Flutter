@@ -1,4 +1,4 @@
-part of passive_face_liveness;
+part of passiveface_liveness_sdk;
 
 class SDKResult {
   final SDKFailure sdkFailure;
