@@ -259,19 +259,17 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
         sensorStabilityThreshold = (Double) argsMap.get("stabilityThreshold");
 
 
-        final DocumentDetector mDocumentDetector = new DocumentDetector.Builder(mobileToken)
+        final DocumentDetector.Builder mDocumentDetectorBuilder = new DocumentDetector.Builder(mobileToken)
                 .setDocumentDetectorFlow(documentDetectorSteps)
-                .showPopup(showPopup)
-                .setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId)
-                .enableSound(enableSound)
-                .setStyle(styleResourceId)
-                .setRequestTimeout(requestTimeout)
-                .setSensorConfiguration(sensorLuminosityMessageId, sensorLuminosityThreshold, sensorOrientationMessageId, sensorOrientationThreshold, sensorStabilityMessageId, sensorStabilityStabledMillis, sensorStabilityThreshold)
-                .verifyQuality(verify, qualityThreshold)
-                .build();
+                .setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId);
+
+        if (showPopup != null) mDocumentDetectorBuilder.setPopupSettings(showPopup);
+        if (enableSound != null) mDocumentDetectorBuilder.enableSound(enableSound);
+        if (styleResourceId != null) mDocumentDetectorBuilder.setStyle(styleResourceId);
+        if (requestTimeout != null) mDocumentDetectorBuilder.setNetworkSettings(requestTimeout);
 
         Intent mIntent = new Intent(context, DocumentDetectorActivity.class);
-        mIntent.putExtra(DocumentDetector.PARAMETER_NAME, mDocumentDetector);
+        mIntent.putExtra(DocumentDetector.PARAMETER_NAME, mDocumentDetectorBuilder.build());
         activity.startActivityForResult(mIntent, REQUEST_CODE_DOCUMENT_DETECTOR);
     }
 
@@ -295,7 +293,7 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
                         } else {
                             capture.put("imageUrl", "");
                         }
-                        capture.put("missedAttemps", documentDetectorResult.getCaptures()[i].getMissedAttemps());
+                        capture.put("missedAttemps", documentDetectorResult.getCaptures()[i].getMissedAttempts());
                         capture.put("scannedLabel", documentDetectorResult.getCaptures()[i].getLabel());
                         captureList.add(capture);
                     }

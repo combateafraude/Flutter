@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
   Capture captureBack =
       Capture(imagePath: null, missedAttemps: null, scannedLabel: null);
   SDKFailure sdkFailure = SDKFailure('');
-  final mobileToken = 'mobileToken';
+  final mobileToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1ZTg2MjAxNGVjMjFjNDAwMDgxYjY2NmQifQ.9bf3VPzAwHd7IMS9ZzAUaguhe0OKu2mHxCjddQgboVE';
 
   @override
   void initState() {
