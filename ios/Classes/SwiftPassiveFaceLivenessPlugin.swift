@@ -36,7 +36,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         var requestTimeout = 15
         var showStepLabel : Bool = true;
         var showStatusLabel : Bool = true;
-        var hasSound : Bool = true;
+        var enableSound : Bool = true;
         var colorTheme = UIColor.init(hexString: "#4CD964")
         let layout = PassiveFaceLivenessLayout()
         
@@ -49,7 +49,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         }
         
         if let argHasSound = args["hasSound"] as? Bool {
-            hasSound = argHasSound
+            enableSound = argHasSound
         }
         
         if let argShowStepLabel = args["showStepLabel"] as? Bool {
