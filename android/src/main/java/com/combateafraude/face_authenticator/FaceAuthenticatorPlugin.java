@@ -47,7 +47,7 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
 
     private static final String MESSAGE_CHANNEL = "com.combateafraude.face_authenticator/message";
 
-    private static final int REQUEST_CODE_FACE_AUTHENTICATOR = 20981;
+    private static final int REQUEST_CODE_FACE_AUTHENTICATOR = 20991;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
@@ -186,16 +186,15 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
             if (idStyle == 0) throw new IllegalArgumentException("Invalid Style name");
         }
 
-        FaceAuthenticator mFaceAuthenticator = new FaceAuthenticator.Builder(mobileToken)
-                .setCpf(cpf)
+        FaceAuthenticator.Builder mFaceAuthenticatorBuilder = new FaceAuthenticator.Builder(mobileToken)
                 .setLayout(idLayout, idGreenMask, idWhiteMask, idRedMask)
-                .enableSound(hasSound)
-                .setStyle(idStyle)
-                .setRequestTimeout(requestTimeout)
-                .build();
+                .setPeopleId(cpf);
+        if (hasSound != null) mFaceAuthenticatorBuilder.enableSound(hasSound);
+        if (idStyle != null) mFaceAuthenticatorBuilder.setStyle(idStyle);
+        if (requestTimeout != null) mFaceAuthenticatorBuilder.setNetworkSettings(requestTimeout);
 
         Intent mIntent = new Intent(context, FaceAuthenticatorActivity.class);
-        mIntent.putExtra(FaceAuthenticator.PARAMETER_NAME, mFaceAuthenticator);
+        mIntent.putExtra(FaceAuthenticator.PARAMETER_NAME, mFaceAuthenticatorBuilder.build());
         activity.startActivityForResult(mIntent, REQUEST_CODE_FACE_AUTHENTICATOR);
     }
 

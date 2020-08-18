@@ -2,37 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="89622f5b-4648-4e6e-9076-93cb3b350d8a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/src/face_authenticator_messenger.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/activeface_liveness_sdk.iml" beforeDir="false" afterPath="$PROJECT_DIR$/face_authenticator.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/combateafraude/activeface_liveness_sdk/ActivefaceLivenessSdkPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/combateafraude/face_authenticator/FaceAuthenticatorPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/example/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/debug/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/debug/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/java/com/combateafraude/activeface_liveness_sdk_example/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/main/java/com/combateafraude/face_authenticator_example/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/profile/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/profile/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/combateafraude/face_authenticator/FaceAuthenticatorPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/combateafraude/face_authenticator/FaceAuthenticatorPlugin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/ActivefaceLivenessSdkPlugin.h" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/FaceAuthenticatorPlugin.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/ActivefaceLivenessSdkPlugin.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/FaceAuthenticatorPlugin.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/SwiftActivefaceLivenessSdkPlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/SwiftFaceAuthenticatorPluginSdkPlugin.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/activeface_liveness_sdk.podspec" beforeDir="false" afterPath="$PROJECT_DIR$/ios/face_authenticator.podspec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/activeface_liveness_sdk.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/face_authenticator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/activeface_liveness.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/face_authenticator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/activeface_liveness_result.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/face_authenticator_result.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/activeface_liveness_sdk.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/sdk_result.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/sdk_result.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +33,9 @@
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
@@ -83,26 +59,38 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="679" y="409" width="433" height="222" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1596118363081">
+    <state x="679" y="409" width="433" height="222" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1597781506182">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="679" y="409" width="433" height="222" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596118363081" />
-    <state width="1877" height="279" key="GridCell.Tab.0.bottom" timestamp="1596125238589">
+    <state x="679" y="409" width="433" height="222" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1597781506182" />
+    <state x="476" y="175" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor" timestamp="1597781504176">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1596125238589" />
-    <state width="1877" height="279" key="GridCell.Tab.0.center" timestamp="1596125238589">
+    <state x="476" y="175" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1597781504176" />
+    <state x="595" y="114" key="CommitChangelistDialog2" timestamp="1597782129483">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1596125238589" />
-    <state width="1877" height="279" key="GridCell.Tab.0.left" timestamp="1596125238589">
+    <state x="595" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1597782129483" />
+    <state width="1877" height="280" key="GridCell.Tab.0.bottom" timestamp="1597781968680">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1596125238589" />
-    <state width="1877" height="279" key="GridCell.Tab.0.right" timestamp="1596125238589">
+    <state width="1877" height="280" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1597781968680" />
+    <state width="1877" height="280" key="GridCell.Tab.0.center" timestamp="1597781968679">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="279" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1596125238589" />
+    <state width="1877" height="280" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1597781968679" />
+    <state width="1877" height="280" key="GridCell.Tab.0.left" timestamp="1597781968679">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="280" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1597781968679" />
+    <state width="1877" height="280" key="GridCell.Tab.0.right" timestamp="1597781968680">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="280" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1597781968680" />
+    <state x="440" y="94" key="SettingsEditor" timestamp="1597781522343">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1597781522343" />
     <state width="435" height="109" key="javadoc.popup.new" timestamp="1596119568536">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
