@@ -1,15 +1,86 @@
-library document_detector;
-
 import 'dart:async';
 
+import 'package:document_detector/android/android_settings.dart';
+import 'package:document_detector/android/sensor_settings.dart';
+import 'package:document_detector/document_detector_step.dart';
+import 'package:document_detector/result/capture.dart';
+import 'package:document_detector/result/document_detector_closed.dart';
+import 'package:document_detector/result/document_detector_failure.dart';
+import 'package:document_detector/result/document_detector_result.dart';
+import 'package:document_detector/result/document_detector_success.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 
-part 'src/document_detector.dart';
-part 'src/document_detector_layout.dart';
-part 'src/document_detector_result.dart';
-part 'src/document_detector_messenger.dart';
-part 'src/document_detector_step.dart';
-part 'src/document_type.dart';
-part 'src/sdk_result.dart';
+import 'android/document_detector_customization.dart';
+
+class DocumentDetector {
+  static const MethodChannel _channel =
+      const MethodChannel('document_detector');
+
+  String mobileToken;
+  List<DocumentDetectorStep> documentDetectorSteps;
+  bool popup;
+  bool sound;
+  int requestTimeout;
+  DocumentDetectorAndroidSettings androidSettings;
+
+  DocumentDetector({@required this.mobileToken});
+
+  void setDocumentFlow(List<DocumentDetectorStep> documentDetectorSteps) {
+    this.documentDetectorSteps = documentDetectorSteps;
+  }
+
+  void setPopupSettings(bool show) {
+    this.popup = show;
+  }
+
+  void enableSound(bool enable) {
+    this.sound = enable;
+  }
+
+  void setNetworkSettings(int requestTimeout){
+    this.requestTimeout = requestTimeout;
+  }
+
+  void setAndroidSettings(DocumentDetectorAndroidSettings androidSettings){
+    this.androidSettings = androidSettings;
+  }
+
+  Future<DocumentDetectorResult> start() async {
+    Map<String, dynamic> params = new Map();
+
+    params["mobileToken"] = mobileToken;
+    params["popup"] = popup;
+    params["sound"] = sound;
+    params["requestTimeout"] = requestTimeout;
+    params["androidSettings"] = androidSettings?.asMap();
+
+    List<Map<String, dynamic>> stepsMap = [];
+    for (var step in documentDetectorSteps) {
+      stepsMap.add(step.asMap());
+    }
+    params["documentSteps"] = stepsMap;
+
+    Map<dynamic, dynamic> resultMap =
+        await _channel.invokeMethod('start', params);
+
+    bool success = resultMap["success"];
+    if (success == null) {
+      return new DocumentDetectorClosed();
+    } else if (success == true) {
+      List<dynamic> capturesRaw = resultMap["captures"];
+      List<Capture> captureList = new List();
+      for (dynamic captureRaw in capturesRaw) {
+        captureList.add(new Capture(
+            captureRaw["imagePath"],
+            captureRaw["imageUrl"],
+            captureRaw["label"],
+            captureRaw["quality"]));
+      }
+      return new DocumentDetectorSuccess(captureList, resultMap["type"]);
+    } else if (success == false) {
+      return new DocumentDetectorFailure(
+          resultMap["message"], resultMap["type"]);
+    }
+  }
+}

@@ -3,30 +3,37 @@ package com.combateafraude.document_detector;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.combateafraude.documentdetector.DocumentDetector;
 import com.combateafraude.documentdetector.DocumentDetectorActivity;
 import com.combateafraude.documentdetector.DocumentDetectorResult;
+import com.combateafraude.documentdetector.configuration.CaptureMode;
+import com.combateafraude.documentdetector.configuration.CaptureStage;
+import com.combateafraude.documentdetector.configuration.DetectionSettings;
 import com.combateafraude.documentdetector.configuration.Document;
 import com.combateafraude.documentdetector.configuration.DocumentDetectorStep;
+import com.combateafraude.documentdetector.configuration.QualitySettings;
+import com.combateafraude.documentdetector.controller.Capture;
+import com.combateafraude.helpers.sdk.failure.AvailabilityReason;
 import com.combateafraude.helpers.sdk.failure.InvalidTokenReason;
 import com.combateafraude.helpers.sdk.failure.LibraryReason;
 import com.combateafraude.helpers.sdk.failure.NetworkReason;
 import com.combateafraude.helpers.sdk.failure.PermissionReason;
+import com.combateafraude.helpers.sdk.failure.SDKFailure;
+import com.combateafraude.helpers.sdk.failure.SecurityReason;
 import com.combateafraude.helpers.sdk.failure.ServerReason;
 import com.combateafraude.helpers.sdk.failure.StorageReason;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.combateafraude.helpers.sensors.SensorLuminositySettings;
+import com.combateafraude.helpers.sensors.SensorOrientationSettings;
+import com.combateafraude.helpers.sensors.SensorStabilitySettings;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
-import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -34,325 +41,264 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
-import static android.app.Activity.RESULT_OK;
-import static com.combateafraude.documentdetector.configuration.Document.CNH_BACK;
-import static com.combateafraude.documentdetector.configuration.Document.CNH_FRONT;
-import static com.combateafraude.documentdetector.configuration.Document.CNH_FULL;
-import static com.combateafraude.documentdetector.configuration.Document.OTHERS;
-import static com.combateafraude.documentdetector.configuration.Document.RG_BACK;
-import static com.combateafraude.documentdetector.configuration.Document.RG_FRONT;
-import static com.combateafraude.documentdetector.configuration.Document.RG_FULL;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-/**
- * DocumentDetectorSdkPlugin
- */
+@SuppressWarnings("unchecked")
 public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
 
-    private static final String DEBUG_NAME = "DocumentDetectorSdk";
+    private static final int REQUEST_CODE = 1001;
+
+    private static final String DRAWABLE_RES = "drawable";
+    private static final String STYLE_RES = "style";
+    private static final String STRING_RES = "string";
+    private static final String RAW_RES = "raw";
+    private static final String LAYOUT_RES = "layout";
+
+    private MethodChannel channel;
+    private Result result;
     private Activity activity;
-    private Context context;
     private ActivityPluginBinding activityBinding;
-
-    private MethodChannel methodChannel;
-    private MethodChannel.Result pendingResult;
-
-    private static final String MESSAGE_CHANNEL = "com.combateafraude.document_detector/message";
-
-    private static final int REQUEST_CODE_DOCUMENT_DETECTOR = 20981;
+    private Context context;
 
     @Override
-    public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-        setupChannels(binding.getFlutterEngine().getDartExecutor(), binding.getApplicationContext());
-    }
-
-    // This static function is optional and equivalent to onAttachedToEngine. It supports the old
-    // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
-    // plugin registration via this function while apps migrate to use the new Android APIs
-    // post-flutter-1.12 via https://flutter.dev/go/android-project-migration.
-    //
-    // It is encouraged to share logic between onAttachedToEngine and registerWith to keep
-    // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
-    // depending on the user's project. onAttachedToEngine or registerWith must both be defined
-    // in the same class.
-    public static void registerWith(Registrar registrar) {
-        if (registrar.activity() == null) {
-            // When a background flutter view tries to register the plugin, the registrar has no activity.
-            // We stop the registration process as this plugin is foreground only.
-            return;
-        }
-
-        DocumentDetectorPlugin plugin = new DocumentDetectorPlugin();
-        plugin.setupChannels(registrar.messenger(), registrar.activity().getApplicationContext());
-        plugin.setActivity(registrar.activity());
-        registrar.addActivityResultListener(plugin);
-    }
-
-    @Override
-    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-        teardownChannels();
-    }
-
-    private void setupChannels(BinaryMessenger messenger, Context context) {
-        this.context = context;
-        methodChannel = new MethodChannel(messenger, MESSAGE_CHANNEL);
-        methodChannel.setMethodCallHandler(this);
-    }
-
-    private void setActivity(Activity activity) {
-        this.activity = activity;
-    }
-
-    private void teardownChannels() {
-        this.activity = null;
-        if (this.activityBinding != null) {
-            this.activityBinding.removeActivityResultListener(this);
-        }
-        this.activityBinding = null;
-        this.context = null;
-    }
-
-    @Override
-    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
-        this.activityBinding = binding;
-        setActivity(binding.getActivity());
-        this.activityBinding.addActivityResultListener(this);
-    }
-
-    @Override
-    public void onDetachedFromActivity() {
-        teardownChannels();
-    }
-
-    @Override
-    public void onDetachedFromActivityForConfigChanges() {
-        onDetachedFromActivity();
-    }
-
-    @Override
-    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
-        onAttachedToActivity(binding);
-    }
-
-    @Override
-    public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-        this.pendingResult = result;
-        switch (call.method) {
-            case "getDocuments":
-                getDocuments(call, result);
-                break;
-            default:
-                result.notImplemented();
+    public synchronized void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+        if (call.method.equals("start")) {
+            this.result = result;
+            start(call);
+        } else {
+            result.notImplemented();
         }
     }
 
-    private void getDocuments(MethodCall call, final Result result) {
-        HashMap<String, Object> argsMap = (HashMap<String, Object>) call.arguments;
+    private synchronized void start(@NonNull MethodCall call) {
+        HashMap<String, Object> argumentsMap = (HashMap<String, Object>) call.arguments;
 
-        if (!(call.arguments instanceof Map)) {
-            throw new IllegalArgumentException("Map argument expected");
+        // Mobile token
+        String mobileToken = (String) argumentsMap.get("mobileToken");
+
+        DocumentDetector.Builder mDocumentDetectorBuilder = new DocumentDetector.Builder(mobileToken);
+
+        // Document steps
+        ArrayList<HashMap<String, Object>> paramSteps = (ArrayList<HashMap<String, Object>>) argumentsMap.get("documentSteps");
+        DocumentDetectorStep[] documentDetectorSteps = new DocumentDetectorStep[paramSteps.size()];
+        for (int i = 0; i < paramSteps.size(); i++) {
+            HashMap<String, Object> step = paramSteps.get(i);
+
+            Document document = Document.valueOf((String) step.get("document"));
+
+            HashMap<String, Object> stepCustomization = (HashMap<String, Object>) step.get("android");
+            if (stepCustomization != null) {
+                Integer stepLabelId = getResourceId((String) stepCustomization.get("stepLabelStringResName"), STRING_RES);
+                Integer illustrationId = getResourceId((String) stepCustomization.get("illustrationDrawableResName"), DRAWABLE_RES);
+                Integer audioId = getResourceId((String) stepCustomization.get("audioRawResName"), RAW_RES);
+
+                documentDetectorSteps[i] = new DocumentDetectorStep(document, stepLabelId, illustrationId, audioId);
+            } else {
+                documentDetectorSteps[i] = new DocumentDetectorStep(document, null, null, null);
+            }
         }
+        mDocumentDetectorBuilder.setDocumentSteps(documentDetectorSteps);
 
-        final String mobileToken = (String) argsMap.get("mobileToken");
-        final List<Map<String, Object>> flow = (List<Map<String, Object>>) argsMap.get("flow");
-        final Boolean enableSound = (Boolean) argsMap.get("enableSound");
-        final Integer requestTimeout = (Integer) argsMap.get("requestTimeout");
-        final Boolean verify = (Boolean) argsMap.get("verify");
-        final Double qualityThreshold = (Double) argsMap.get("qualityThreshold");
-        final Boolean showPopup = (Boolean) argsMap.get("showPopup");
 
-        DocumentDetectorStep[] documentDetectorSteps = new DocumentDetectorStep[flow.size()];
+        // Android specific settings
+        HashMap<String, Object> androidSettings = (HashMap<String, Object>) argumentsMap.get("androidSettings");
+        if (androidSettings != null) {
 
-        int count = 0;
-        for (Map<String, Object> docStep : flow) {
-            final Document document = getDocumentType((String) docStep.get("document"));
+            // Capture stages
+            ArrayList<HashMap<String, Object>> paramStages = (ArrayList<HashMap<String, Object>>) androidSettings.get("captureStages");
+            if (paramStages != null) {
+                CaptureStage[] captureStages = new CaptureStage[paramStages.size()];
+                for (int i = 0; i < paramStages.size(); i++) {
+                    HashMap<String, Object> stage = paramStages.get(i);
 
-            Integer stepLabelId = null;
-            Integer illustrationId = null;
-            Integer audioId = null;
+                    Long durationMillis = (Long) stage.get("durationMillis");
+                    Boolean wantSensorCheck = (Boolean) stage.get("wantSensorCheck");
+                    if (wantSensorCheck == null) wantSensorCheck = false;
 
-            if (docStep.containsKey("androidStepLabelName")) {
-                stepLabelId = activity.getResources().getIdentifier((String) docStep.get("androidStepLabelName"), "string", activity.getPackageName());
-                if (stepLabelId == 0)
-                    throw new IllegalArgumentException("Invalid 'Step Label Name in strings.xml");
+                    QualitySettings qualitySettings = null;
+                    HashMap<String, Object> qualitySettingsParam = (HashMap<String, Object>) stage.get("qualitySettings");
+                    if (qualitySettingsParam != null) {
+                        Double threshold = (Double) qualitySettingsParam.get("threshold");
+                        if (threshold == null) threshold = QualitySettings.RECOMMENDED_THRESHOLD;
+                        qualitySettings = new QualitySettings(threshold);
+                    }
+
+                    DetectionSettings detectionSettings = null;
+                    HashMap<String, Object> detectionSettingsParam = (HashMap<String, Object>) stage.get("detectionSettings");
+                    if (detectionSettingsParam != null) {
+                        Double threshold = (Double) detectionSettingsParam.get("threshold");
+                        if (threshold == null) threshold = DetectionSettings.RECOMMENDED_THRESHOLD;
+                        Integer consecutiveFrames = (Integer) detectionSettingsParam.get("consecutiveFrames");
+                        if (consecutiveFrames == null) consecutiveFrames = 5;
+                        detectionSettings = new DetectionSettings(threshold, consecutiveFrames);
+                    }
+                    CaptureMode captureMode = CaptureMode.valueOf((String) stage.get("captureMode"));
+
+                    captureStages[i] = new CaptureStage(durationMillis, wantSensorCheck, qualitySettings, detectionSettings, captureMode);
+                }
+                mDocumentDetectorBuilder.setCaptureStages(captureStages);
             }
 
-            if (docStep.containsKey("androidIllustrationName")) {
-                illustrationId = activity.getResources().getIdentifier((String) docStep.get("androidIllustrationName"), "drawable", activity.getPackageName());
-                if (illustrationId == 0)
-                    throw new IllegalArgumentException("Invalid 'Illustration Name' in drawable folder");
+            // Layout customization
+            HashMap<String, Object> customizationAndroid = (HashMap<String, Object>) androidSettings.get("customization");
+            if (customizationAndroid != null) {
+                Integer styleId = getResourceId((String) customizationAndroid.get("styleResIdName"), STYLE_RES);
+                if (styleId != null) mDocumentDetectorBuilder.setStyle(styleId);
+
+                Integer layoutId = getResourceId((String) customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
+                Integer greenMaskId = getResourceId((String) customizationAndroid.get("greenMaskResIdName"), DRAWABLE_RES);
+                Integer whiteMaskId = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"), DRAWABLE_RES);
+                Integer redMaskId = getResourceId((String) customizationAndroid.get("redMaskResIdName"), DRAWABLE_RES);
+                mDocumentDetectorBuilder.setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId);
             }
 
-            if (docStep.containsKey("androidAudioName")) {
-                audioId = activity.getResources().getIdentifier((String) docStep.get("androidAudioName"), "raw", activity.getPackageName());
-                if (audioId == 0)
-                    throw new IllegalArgumentException("Invalid 'Audio Name' in raw folder");
+            // Sensor settings
+            HashMap<String, Object> sensorSettings = (HashMap<String, Object>) argumentsMap.get("sensorSettings");
+            if (sensorSettings != null) {
+                HashMap<String, Object> sensorLuminosity = (HashMap<String, Object>) sensorSettings.get("sensorLuminositySettings");
+                if (sensorLuminosity != null) {
+                    Integer sensorMessageId = getResourceId((String) sensorLuminosity.get("messageResourceIdName"), STRING_RES);
+                    Integer luminosityThreshold = (Integer) sensorLuminosity.get("luminosityThreshold");
+                    if (sensorMessageId != null && luminosityThreshold != null) {
+                        mDocumentDetectorBuilder.setLuminositySensorSettings(new SensorLuminositySettings(sensorMessageId, luminosityThreshold));
+                    }
+                } else {
+                    mDocumentDetectorBuilder.setLuminositySensorSettings(null);
+                }
+
+                HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) sensorSettings.get("sensorOrientationSettings");
+                if (sensorOrientation != null) {
+                    Integer sensorMessageId = getResourceId((String) sensorOrientation.get("messageResourceIdName"), STRING_RES);
+                    Double orientationThreshold = (Double) sensorOrientation.get("orientationThreshold");
+                    if (sensorMessageId != null && orientationThreshold != null) {
+                        mDocumentDetectorBuilder.setOrientationSensorSettings(new SensorOrientationSettings(sensorMessageId, orientationThreshold));
+                    }
+                } else {
+                    mDocumentDetectorBuilder.setOrientationSensorSettings(null);
+                }
+
+                HashMap<String, Object> sensorStability = (HashMap<String, Object>) sensorSettings.get("sensorStabilitySettings");
+                if (sensorStability != null) {
+                    Integer sensorMessageId = getResourceId((String) sensorStability.get("messageResourceIdName"), STRING_RES);
+                    Integer stabilityStabledMillis = (Integer) sensorStability.get("stabilityStabledMillis");
+                    Double stabilityThreshold = (Double) sensorStability.get("stabilityThreshold");
+                    if (sensorMessageId != null && stabilityStabledMillis != null && stabilityThreshold != null) {
+                        mDocumentDetectorBuilder.setStabilitySensorSettings(new SensorStabilitySettings(sensorMessageId, stabilityStabledMillis, stabilityThreshold));
+                    }
+                } else {
+                    mDocumentDetectorBuilder.setStabilitySensorSettings(null);
+                }
             }
-
-            documentDetectorSteps[count] = new DocumentDetectorStep(document, stepLabelId, illustrationId, audioId);
-            count++;
         }
 
-        Integer redMaskId = null;
-        Integer whiteMaskId = null;
-        Integer greenMaskId = null;
-        Integer layoutId = null;
-        Integer styleResourceId = null;
-
-        if (argsMap.containsKey("nameRedMask")) {
-            redMaskId = activity.getResources().getIdentifier((String) argsMap.get("nameRedMask"), "drawable", activity.getPackageName());
-
-            if (redMaskId == 0) throw new IllegalArgumentException("Invalid RedMask name in drawable folder");
-        }
-        if (argsMap.containsKey("nameWhiteMask")) {
-            whiteMaskId = activity.getResources().getIdentifier((String) argsMap.get("nameWhiteMask"), "drawable", activity.getPackageName());
-
-            if (whiteMaskId == 0) throw new IllegalArgumentException("Invalid WhiteMask name in drawable folder");
-        }
-        if (argsMap.containsKey("nameGreenMask")) {
-            greenMaskId = activity.getResources().getIdentifier((String) argsMap.get("nameGreenMask"), "drawable", activity.getPackageName());
-
-            if (greenMaskId == 0) throw new IllegalArgumentException("Invalid GreenMask name in drawable folder");
-        }
-        if (argsMap.containsKey("nameLayout")) {
-            layoutId = activity.getResources().getIdentifier((String) argsMap.get("nameLayout"), "layout", activity.getPackageName());
-
-            if (layoutId == 0) throw new IllegalArgumentException("Invalid Layout name in layout folder");
-        }
-        if (argsMap.containsKey("nameStyle")) {
-            styleResourceId = activity.getResources().getIdentifier((String) argsMap.get("nameStyle"), "style", activity.getPackageName());
-
-            if (styleResourceId == 0) throw new IllegalArgumentException("Invalid Style in style.xml");
-        }
-
-        Integer sensorLuminosityMessageId = null;
-        Integer sensorLuminosityThreshold = null;
-        Integer sensorOrientationMessageId = null;
-        Double sensorOrientationThreshold = null;
-        Integer sensorStabilityMessageId = null;
-        Long sensorStabilityStabledMillis = null;
-        Double sensorStabilityThreshold = null;
-
-        if (argsMap.containsKey("aLuminosityMessage")) {
-            sensorLuminosityMessageId = activity.getResources().getIdentifier((String) argsMap.get("aLuminosityMessage"), "string", activity.getPackageName());
-
-            if (sensorLuminosityMessageId == 0) throw new IllegalArgumentException("Invalid SensorLuminosityMessage name in strings.xml file");
-        }
-
-        sensorLuminosityThreshold = (Integer) argsMap.get("luminosityThreshold");
-
-        if (argsMap.containsKey("aOrientationMessage")) {
-            sensorOrientationMessageId = activity.getResources().getIdentifier((String) argsMap.get("aOrientationMessage"), "string", activity.getPackageName());
-
-            if (sensorOrientationMessageId == 0) throw new IllegalArgumentException("Invalid SensorOrientationMessage name in strings.xml file");
-        }
-
-        sensorOrientationThreshold = (Double) argsMap.get("orientationThreshold");
-
-        if (argsMap.containsKey("aStabilityMessage")) {
-            sensorStabilityMessageId = activity.getResources().getIdentifier((String) argsMap.get("aStabilityMessage"), "string", activity.getPackageName());
-
-            if (sensorStabilityMessageId == 0) throw new IllegalArgumentException("Invalid SensorStabilityMessage name in strings.xml file");
-        }
-
-        sensorStabilityStabledMillis = (Long) argsMap.get("stabilityStabledMillis");
-
-        sensorStabilityThreshold = (Double) argsMap.get("stabilityThreshold");
-
-
-        final DocumentDetector.Builder mDocumentDetectorBuilder = new DocumentDetector.Builder(mobileToken)
-                .setDocumentDetectorFlow(documentDetectorSteps)
-                .setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId);
-
+        // Popup settings
+        Boolean showPopup = (Boolean) argumentsMap.get("popup");
         if (showPopup != null) mDocumentDetectorBuilder.setPopupSettings(showPopup);
+
+        // Sound settings
+        Boolean enableSound = (Boolean) argumentsMap.get("sound");
         if (enableSound != null) mDocumentDetectorBuilder.enableSound(enableSound);
-        if (styleResourceId != null) mDocumentDetectorBuilder.setStyle(styleResourceId);
+
+        // Network settings
+        Integer requestTimeout = (Integer) argumentsMap.get("requestTimeout");
         if (requestTimeout != null) mDocumentDetectorBuilder.setNetworkSettings(requestTimeout);
 
         Intent mIntent = new Intent(context, DocumentDetectorActivity.class);
         mIntent.putExtra(DocumentDetector.PARAMETER_NAME, mDocumentDetectorBuilder.build());
-        activity.startActivityForResult(mIntent, REQUEST_CODE_DOCUMENT_DETECTOR);
+        activity.startActivityForResult(mIntent, REQUEST_CODE);
+    }
+
+    private Integer getResourceId(@Nullable String resourceName, String resourceType) {
+        if (resourceName == null || activity == null) return null;
+        int resId = activity.getResources().getIdentifier(resourceName, resourceType, activity.getPackageName());
+        return resId == 0 ? null : resId;
+    }
+
+    private HashMap<String, Object> getSucessResponseMap(DocumentDetectorResult mDocumentDetectorResult) {
+        HashMap<String, Object> responseMap = new HashMap<>();
+        responseMap.put("success", Boolean.TRUE);
+        ArrayList<HashMap<String, Object>> captures = new ArrayList<>();
+        for (Capture capture : mDocumentDetectorResult.getCaptures()) {
+            HashMap<String, Object> captureResponse = new HashMap<>();
+            captureResponse.put("imagePath", capture.getImagePath());
+            captureResponse.put("imageUrl", capture.getImageUrl());
+            captureResponse.put("label", capture.getLabel());
+            captureResponse.put("quality", capture.getQuality());
+            captures.add(captureResponse);
+        }
+        responseMap.put("captures", captures);
+        responseMap.put("type", mDocumentDetectorResult.getType());
+        return responseMap;
+    }
+
+    private HashMap<String, Object> getFailureResponseMap(SDKFailure sdkFailure) {
+        HashMap<String, Object> responseMap = new HashMap<>();
+        responseMap.put("success", Boolean.FALSE);
+        responseMap.put("message", sdkFailure.getMessage());
+        responseMap.put("type", sdkFailure.getClass().getSimpleName());
+        return responseMap;
+    }
+
+    private HashMap<String, Object> getClosedResponseMap() {
+        HashMap<String, Object> responseMap = new HashMap<>();
+        responseMap.put("success", null);
+        return responseMap;
     }
 
     @Override
-    public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-        final Map<String, Object> response = new HashMap<>();
-        if (requestCode == REQUEST_CODE_DOCUMENT_DETECTOR) {
-            if (resultCode == RESULT_OK && data != null) {
-                DocumentDetectorResult documentDetectorResult = (DocumentDetectorResult) data.getSerializableExtra(DocumentDetectorResult.PARAMETER_NAME);
-                if (documentDetectorResult.wasSuccessful()) {
-                    response.put("success", Boolean.valueOf(true));
-                    response.put("capture_type", documentDetectorResult.getType());
-
-                    List<Map<String , Object>> captureList  = new ArrayList<>();
-
-                    for (int i = 0; i < documentDetectorResult.getCaptures().length; i++) {
-                        final Map<String, Object> capture = new HashMap<>();
-                        capture.put("imagePath", documentDetectorResult.getCaptures()[i].getImagePath());
-                        if (documentDetectorResult.getCaptures()[i].getImageUrl() != null) {
-                            capture.put("imageUrl", documentDetectorResult.getCaptures()[i].getImageUrl());
-                        } else {
-                            capture.put("imageUrl", "");
-                        }
-                        capture.put("missedAttemps", documentDetectorResult.getCaptures()[i].getMissedAttempts());
-                        capture.put("scannedLabel", documentDetectorResult.getCaptures()[i].getLabel());
-                        captureList.add(capture);
-                    }
-                    response.put("capture", captureList);
+    public synchronized boolean onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                DocumentDetectorResult mDocumentDetectorResult = (DocumentDetectorResult) data.getSerializableExtra(DocumentDetectorResult.PARAMETER_NAME);
+                if (mDocumentDetectorResult.wasSuccessful()) {
+                    if (result != null)
+                        result.success(getSucessResponseMap(mDocumentDetectorResult));
                 } else {
-                    response.put("success", Boolean.valueOf(false));
-                    if (documentDetectorResult.getSdkFailure() instanceof InvalidTokenReason) {
-                        response.put("errorType", "InvalidTokenReason");
-                        response.put("errorMessage", documentDetectorResult.getSdkFailure().getMessage());
-                    } else if (documentDetectorResult.getSdkFailure() instanceof PermissionReason) {
-                        response.put("errorType", "PermissionReason");
-                        response.put("errorMessage", documentDetectorResult.getSdkFailure().getMessage());
-                    } else if (documentDetectorResult.getSdkFailure() instanceof NetworkReason) {
-                        response.put("errorType", "NetworkReason");
-                        response.put("errorMessage", documentDetectorResult.getSdkFailure().getMessage());
-                    } else if (documentDetectorResult.getSdkFailure() instanceof ServerReason) {
-                        response.put("errorType", "ServerReason");
-                        response.put("errorCode", ((ServerReason) documentDetectorResult.getSdkFailure()).getCode());
-                        response.put("errorMessage", documentDetectorResult.getSdkFailure().getMessage());
-                    } else if (documentDetectorResult.getSdkFailure() instanceof StorageReason) {
-                        response.put("errorType", "StorageReason");
-                        response.put("errorMessage", documentDetectorResult.getSdkFailure().getMessage());
-                    } else if (documentDetectorResult.getSdkFailure() instanceof LibraryReason) {
-                        response.put("errorType", "LibraryReason");
-                        response.put("errorMessage", documentDetectorResult.getSdkFailure().getMessage());
-                    } else {
-                        response.put("errorType", "SDKFailure");
-                        response.put("errorMessage", documentDetectorResult.getSdkFailure().getMessage());
-                    }
+                    if (result != null)
+                        result.success(getFailureResponseMap(mDocumentDetectorResult.getSdkFailure()));
                 }
-                pendingResult.success(response);
-                return true;
             } else {
-                // the user closes the activity
-                response.put("success", Boolean.valueOf(false));
-                response.put("cancel", Boolean.valueOf(true));
-                pendingResult.success(response);
-                return false;
+                if (result != null) result.success(getClosedResponseMap());
             }
         }
-        return true;
+        return false;
     }
 
-    private Document getDocumentType(String type) {
-        switch (type) {
-            case "CNH_FRONT":
-                return CNH_FRONT;
-            case "CNH_BACK":
-                return CNH_BACK;
-            case "CNH_FULL":
-                return CNH_FULL;
-            case "RG_FRONT":
-                return RG_FRONT;
-            case "RG_BACK":
-                return RG_BACK;
-            case "RG_FULL":
-                return RG_FULL;
-            default:
-                return OTHERS;
-        }
+    @Override
+    public synchronized void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+        this.context = flutterPluginBinding.getApplicationContext();
+        this.channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "document_detector");
+        this.channel.setMethodCallHandler(this);
+    }
+
+    @Override
+    public synchronized void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        this.channel.setMethodCallHandler(null);
+        this.context = null;
+    }
+
+    @Override
+    public synchronized void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+        this.activity = binding.getActivity();
+        this.activityBinding = binding;
+        this.activityBinding.addActivityResultListener(this);
+    }
+
+    @Override
+    public synchronized void onDetachedFromActivityForConfigChanges() {
+
+    }
+
+    @Override
+    public synchronized void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+        this.activity = binding.getActivity();
+    }
+
+    @Override
+    public synchronized void onDetachedFromActivity() {
+        this.activity = null;
+        this.activityBinding.removeActivityResultListener(this);
+        this.activityBinding = null;
     }
 }

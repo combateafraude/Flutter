@@ -29,6 +29,10 @@ android {
         minSdkVersion 21
     }
 
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
     dataBinding.enabled = true
 
     compileOptions {
@@ -40,11 +44,7 @@ android {
         noCompress "tflite"
     }
 
-    lintOptions {
-        disable 'InvalidPackage'
-    }
-
     dependencies {
-        implementation 'com.combateafraude.sdk:document-detector:4.4.1'
+        implementation 'com.combateafraude.sdk:document-detector:5.1.3'
     }
 }

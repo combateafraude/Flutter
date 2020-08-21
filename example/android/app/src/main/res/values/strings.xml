@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="stepLabel">stepLabel</string>
-    <string name="notFoundMessage">notFoundMessage</string>
-    <string name="luminosityMessage">luminosityMessage</string>
-    <string name="orientationMessage">orientationMessage</string>
-    <string name="stabilityMessage">stabilityMessage</string>
-</resources>

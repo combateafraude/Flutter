@@ -1,6 +1,6 @@
-# document_detector_sdk_example
+# document_detector_example
 
-Demonstrates how to use the document_detector_sdk plugin.
+Demonstrates how to use the document_detector plugin.
 
 ## Getting Started
 
