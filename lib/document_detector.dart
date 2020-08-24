@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:document_detector/android/android_settings.dart';
-import 'package:document_detector/android/sensor_settings.dart';
 import 'package:document_detector/document_detector_step.dart';
+import 'package:document_detector/ios/ios_settings.dart';
 import 'package:document_detector/result/capture.dart';
 import 'package:document_detector/result/document_detector_closed.dart';
 import 'package:document_detector/result/document_detector_failure.dart';
@@ -10,8 +10,6 @@ import 'package:document_detector/result/document_detector_result.dart';
 import 'package:document_detector/result/document_detector_success.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-
-import 'android/document_detector_customization.dart';
 
 class DocumentDetector {
   static const MethodChannel _channel =
@@ -23,6 +21,7 @@ class DocumentDetector {
   bool sound;
   int requestTimeout;
   DocumentDetectorAndroidSettings androidSettings;
+  DocumentDetectorIosSettings iosSettings;
 
   DocumentDetector({@required this.mobileToken});
 
@@ -46,6 +45,10 @@ class DocumentDetector {
     this.androidSettings = androidSettings;
   }
 
+  void setIosSettings(DocumentDetectorIosSettings iosSettings){
+    this.iosSettings = iosSettings;
+  }
+
   Future<DocumentDetectorResult> start() async {
     Map<String, dynamic> params = new Map();
 
@@ -54,6 +57,7 @@ class DocumentDetector {
     params["sound"] = sound;
     params["requestTimeout"] = requestTimeout;
     params["androidSettings"] = androidSettings?.asMap();
+    params["iosSettings"] = iosSettings?.asMap();
 
     List<Map<String, dynamic>> stepsMap = [];
     for (var step in documentDetectorSteps) {
