@@ -67,21 +67,21 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             documentDetectorBuilder = documentDetectorBuilder.enableSound(enableSound: hasSound)
         }
 
-        if let requestTimeout = arguments["requestTimeout"] as! TimeInterval? {
+        if let requestTimeout = arguments["requestTimeout"] as? TimeInterval {
             documentDetectorBuilder = documentDetectorBuilder.setNetworkSettings(requestTimeout: requestTimeout)
         }
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] {
-            if let detectionThreshold = iosSettings["detectionThreshold"] as! Float? {
+            if let detectionThreshold = iosSettings["detectionThreshold"] as? Float {
                 documentDetectorBuilder = documentDetectorBuilder.setDetectionSettings(detectionThreshold: detectionThreshold)
             }
 
-            if let verifyQuality = iosSettings["verifyQuality"] as! Bool? {
-                let qualityThreshold = iosSettings["qualityThreshold"] as! Double?
+            if let verifyQuality = iosSettings["verifyQuality"] as? Bool {
+                let qualityThreshold = iosSettings["qualityThreshold"] as? Double
                 documentDetectorBuilder = documentDetectorBuilder.setQualitySettings(verifyQuality: verifyQuality, qualityThreshold: qualityThreshold)
             }
 
-            if let colorHex = iosSettings["colorHex"] as! String? {
+            if let colorHex = iosSettings["colorHex"] as? String {
                 documentDetectorBuilder = documentDetectorBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
             }
 
@@ -112,26 +112,26 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                     documentDetectorBuilder = documentDetectorBuilder.showStepLabel(show: showStepLabel)
                 }
 
-                if let showStatusLabel = customization["showStatusLabel"] as! Bool? {
+                if let showStatusLabel = customization["showStatusLabel"] as? Bool {
                     documentDetectorBuilder = documentDetectorBuilder.showStatusLabel(show: showStatusLabel)
                 }
                 
-                if let closeImageName = customization["closeImageName"] as! String? {
+                if let closeImageName = customization["closeImageName"] as? String {
                     layout.closeImage = UIImage(named: closeImageName)
                 }
                 
                 var greenMask : UIImage?
-                if let greenMaskImageName = customization["greenMaskImageName"] as! String? {
+                if let greenMaskImageName = customization["greenMaskImageName"] as? String {
                     greenMask = UIImage(named: greenMaskImageName) 
                 }
                 
                 var whiteMask : UIImage?
-                if let whiteMaskImageName = customization["whiteMaskImageName"] as! String? {
+                if let whiteMaskImageName = customization["whiteMaskImageName"] as? String {
                     whiteMask = UIImage(named: whiteMaskImageName) 
                 }
                 
                 var redMask : UIImage?
-                if let redMaskImageName = customization["redMaskImageName"] as! String? {
+                if let redMaskImageName = customization["redMaskImageName"] as? String {
                     redMask = UIImage(named: redMaskImageName) 
                 }
                 

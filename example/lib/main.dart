@@ -5,6 +5,7 @@ import 'package:document_detector/android/document_detector_customization.dart';
 import 'package:document_detector/android/sensor_settings.dart';
 import 'package:document_detector/document_detector_step.dart';
 import 'package:document_detector/document_type.dart';
+import 'package:document_detector/ios/ios_settings.dart';
 import 'package:document_detector/result/capture.dart';
 import 'package:document_detector/result/document_detector_failure.dart';
 import 'package:document_detector/result/document_detector_result.dart';
@@ -29,8 +30,7 @@ class _MyAppState extends State<MyApp> {
   String _result = "";
   String _description = "";
 
-  String mobileToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1ZjIzNDBhM2UxMjY5YjAwMDdlOTdmOGEifQ.pWN09KRGTPZdxHMHjjpgp-HvAvkyFmqkz6RRa7FX0T8";
+  String mobileToken = "";
 
   @override
   void initState() {
@@ -52,6 +52,12 @@ class _MyAppState extends State<MyApp> {
         new DocumentDetector(mobileToken: mobileToken);
 
     documentDetector.setDocumentFlow(documentSteps);
+    documentDetector.enableSound(false);
+    documentDetector.setPopupSettings(false);
+    DocumentDetectorIosSettings documentDetectorIosSettings =
+        new DocumentDetectorIosSettings();
+    documentDetectorIosSettings.colorHex = "#000000";
+    documentDetector.setIosSettings(documentDetectorIosSettings);
 
     DocumentDetectorResult documentDetectorResult =
         await documentDetector.start();
