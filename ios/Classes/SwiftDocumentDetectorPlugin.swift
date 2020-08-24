@@ -1,13 +1,14 @@
 import Flutter
 import UIKit
+import TensorFlowLite
+import DocumentDetector
 
 public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetectorControllerDelegate {
 
-    var methodChannel: FlutterMethodChannel?
     var flutterResult: FlutterResult?
 
     public static func register(with registrar: FlutterPluginRegistrar) {
-        methodChannel = FlutterMethodChannel(name: "document_detector", binaryMessenger: registrar.messenger())
+        let channel = FlutterMethodChannel(name: "document_detector", binaryMessenger: registrar.messenger())
         let instance = SwiftDocumentDetectorPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
@@ -32,101 +33,105 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         if let flowData = arguments["documentSteps"] as? [[String: Any]] {
             let bundle = Bundle.init(for: type(of: self))
             for (_, docStep) in flowData.enumerated() {
-                let document = Document(rawValue: docStep["document"] as! String)
+                let document = convertToDocument(documentType: docStep["document"] as! String)
                 
-                let iosCustomization = docStep["ios"] as? [[String: Any]]
-                
-                let stepLabel = iosCustomization["stepLabel"] as? String
-                
-                var image : UIImage?
-                if let illustration = iosCustomization["illustration"] as? String {
-                    let imageURL = URL(fileURLWithPath: bundle.path(forResource: illustration, ofType: "png")!)
-                    image = UIImage(data: NSData(contentsOf: imageURL)! as Data)
+                var audioURL: URL?
+                var illustration: UIImage?
+                var stepLabel: String?
+
+                if let iosCustomization = docStep["ios"] as? [String: Any] {
+                    stepLabel = iosCustomization["stepLabel"] as? String
+                    
+                    if let illustrationString = iosCustomization["illustration"] as? String {
+                        let imageURL = URL(fileURLWithPath: bundle.path(forResource: illustrationString, ofType: "png")!)
+                        illustration = UIImage(data: NSData(contentsOf: imageURL)! as Data)
+                    }
+                    
+                    if let audioName = iosCustomization["audioName"] as? String {
+                        audioURL = URL(fileURLWithPath: bundle.path(forResource: audioName, ofType: "mp3")!)
+                    }
                 }
                 
-                var audioURL : URL?
-                if let audioName = iosCustomization["audioName"] as? String {
-                    audioURL = URL(fileURLWithPath: bundle.path(forResource: audioName, ofType: "mp3")!)
-                }
-                
-                documentDetectorSteps.append(DocumentDetectorStep(document: document, stepLabel: stepLabel, illustration: image, audio: audioURL))
+                documentDetectorSteps.append(DocumentDetectorStep(document: document, stepLabel: stepLabel, illustration: illustration, audio: audioURL))
             }
         }
 
-        let documentDetectorConfiguration = DocumentDetectorBuilder(apiToken: mobileToken)
+        var documentDetectorBuilder = DocumentDetectorBuilder(apiToken: mobileToken)
             .setDocumentDetectorFlow(flow: documentDetectorSteps)
 
-        if let showPopup = arguments["popup"] as! Bool {
-            documentDetectorConfiguration.setPopupSettings(showPopup)
+        if let showPopup = arguments["popup"] as! Bool? {
+            documentDetectorBuilder = documentDetectorBuilder.setPopupSettings(show: showPopup)
         }
 
-        if let hasSound = arguments["sound"] as! Bool {
-            documentDetectorConfiguration.enableSound(hasSound)
+        if let hasSound = arguments["sound"] as! Bool? {
+            documentDetectorBuilder = documentDetectorBuilder.enableSound(enableSound: hasSound)
         }
 
-        if let requestTimeout = arguments["requestTimeout"] as! Int {
-            documentDetectorConfiguration.setNetworkSettings(requestTimeout)
+        if let requestTimeout = arguments["requestTimeout"] as! TimeInterval? {
+            documentDetectorBuilder = documentDetectorBuilder.setNetworkSettings(requestTimeout: requestTimeout)
         }
 
-        if let iosSettings = arguments["iosSettings"] as? [[String: Any]] {
-            if let detectionThreshold = iosSettings["detectionThreshold"] as! Float {
-                documentDetectorConfiguration.setDetectionSettings(detectionThreshold)
+        if let iosSettings = arguments["iosSettings"] as? [String: Any] {
+            if let detectionThreshold = iosSettings["detectionThreshold"] as! Float? {
+                documentDetectorBuilder = documentDetectorBuilder.setDetectionSettings(detectionThreshold: detectionThreshold)
             }
 
-            if let verifyQuality = iosSettings["verifyQuality"] as! Bool {
+            if let verifyQuality = iosSettings["verifyQuality"] as! Bool? {
                 let qualityThreshold = iosSettings["qualityThreshold"] as! Double?
-                documentDetectorConfiguration.setQualitySettings(verifyQuality, qualityThreshold)
+                documentDetectorBuilder = documentDetectorBuilder.setQualitySettings(verifyQuality: verifyQuality, qualityThreshold: qualityThreshold)
             }
 
-            if let colorHex = iosSettings["colorHex"] as! String {
-                documentDetectorConfiguration.setColorTheme(UIColor.init(hexString: colorHex))
+            if let colorHex = iosSettings["colorHex"] as! String? {
+                documentDetectorBuilder = documentDetectorBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
             }
 
-            if let sensorLuminosity = iosSettings["sensorLuminosity"] as? [[String: Any]] {
-                let message = sensorLuminosity["message"] as! String?
+            /*
+            if let sensorLuminosity = iosSettings["sensorLuminosity"] as? [String: Any] {
+                let message = sensorLuminosity["message"] as! String? ?? "Luminosity"
                 let luminosityThreshold = sensorLuminosity["luminosityThreshold"] as! Float?
-                documentDetectorConfiguration.setSensorLuminosityMessage(message: message, luminosityThreshold: luminosityThreshold)
+                documentDetectorBuilder = documentDetectorBuilder.setLuminositySensorSettings(message: message, luminosityThreshold: luminosityThreshold)
             }
 
             if let sensorOrientation = iosSettings["sensorOrientation"] as? [[String: Any]] {
-                let message = sensorOrientation["message"] as! String?
+                let message = sensorOrientation["message"] as! String? ?? "Luminosity"
                 let orientationThreshold = sensorOrientation["orientationThreshold"] as! Double?
-                documentDetectorConfiguration.setSensorOrientationMessage(message: message, orientationThreshold: orientationThreshold)
+                documentDetectorBuilder = documentDetectorBuilder.setOrientationSensorSettings(message: message, orientationThreshold: orientationThreshold)
             }
 
             if let sensorStability = iosSettings["sensorStability"] as? [[String: Any]] {
-                let message = sensorStability["message"] as! String?
+                let message = sensorStability["message"] as! String? ?? "Luminosity"
                 let stabilityThreshold = sensorStability["stabilityThreshold"] as! Double?
-                documentDetectorConfiguration.setSensorStabilityMessage(message: message, stabilityThreshold: stabilityThreshold)
+                documentDetectorBuilder = documentDetectorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
             }
+            */
 
             let layout = DocumentDetectorLayout()
             
             if let customization = iosSettings["customization"] as? [String: Any] {
                 if let showStepLabel = customization["showStepLabel"] as! Bool? {
-                    documentDetectorConfiguration.showStepLabel(show: showStepLabel)
+                    documentDetectorBuilder = documentDetectorBuilder.showStepLabel(show: showStepLabel)
                 }
 
                 if let showStatusLabel = customization["showStatusLabel"] as! Bool? {
-                    documentDetectorConfiguration.showStatusLabel(show: showStatusLabel)
+                    documentDetectorBuilder = documentDetectorBuilder.showStatusLabel(show: showStatusLabel)
                 }
                 
-                if let closeImageName = customization["closeImageName"] as? String {
+                if let closeImageName = customization["closeImageName"] as! String? {
                     layout.closeImage = UIImage(named: closeImageName)
                 }
                 
                 var greenMask : UIImage?
-                if let greenMaskImageName = customization["greenMaskImageName"] as? String {
+                if let greenMaskImageName = customization["greenMaskImageName"] as! String? {
                     greenMask = UIImage(named: greenMaskImageName) 
                 }
                 
                 var whiteMask : UIImage?
-                if let whiteMaskImageName = customization["whiteMaskImageName"] as? String {
+                if let whiteMaskImageName = customization["whiteMaskImageName"] as! String? {
                     whiteMask = UIImage(named: whiteMaskImageName) 
                 }
                 
                 var redMask : UIImage?
-                if let redMaskImageName = customization["redMaskImageName"] as? String {
+                if let redMaskImageName = customization["redMaskImageName"] as! String? {
                     redMask = UIImage(named: redMaskImageName) 
                 }
                 
@@ -136,15 +141,36 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                     redMask: redMask)
 
                 
-                documentDetectorConfiguration.setLayout(layout: layout)
+                documentDetectorBuilder = documentDetectorBuilder.setLayout(layout: layout)
             }
         }
         
         let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
         
-        let scannerVC = DocumentDetectorController(documentDetectorConfiguration: documentDetectorConfiguration.build())
+        let scannerVC = DocumentDetectorController(documentDetectorConfiguration: documentDetectorBuilder.build())
         scannerVC.documentDetectorDelegate = self
         controller.present(scannerVC, animated: true, completion: nil)
+    }
+
+    func convertToDocument (documentType: String) -> Document {
+        switch documentType {
+        case "CNH_FRONT":
+            return Document.CNH_FRONT
+        case "CNH_BACK":
+            return Document.CNH_BACK
+        case "CNH_FULL":
+            return Document.CNH_FULL
+        case "RG_FRONT":
+            return Document.RG_FRONT
+        case "RG_BACK":
+            return Document.RG_BACK
+        case "RG_FULL":
+            return Document.RG_FULL
+        case "CRLV":
+            return Document.CRLV
+        default:
+            return Document.OTHERS
+        }
     }
     
     //---------------------------------------------------------------------------------------------
@@ -152,7 +178,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
     // --------------------------------------------------------------------------------------------
     
     public func documentDetectionController(_ scanner: DocumentDetectorController, didFinishWithResults results: DocumentDetectorResult) {
-        
+        /*
         var captureMap : [NSMutableDictionary?]  = []
         for index in (0 ... results.captures.count - 1) {
             let capture : NSMutableDictionary! = [:]
@@ -174,17 +200,20 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         response["capture"] = captureMap
         
         flutterResult!(response)
+        */
     }
     
     public func documentDetectionControllerDidCancel(_ scanner: DocumentDetectorController) {
+        /*
         let response : NSMutableDictionary! = [:]
         response["success"] = NSNumber(value: false)
         response["cancel"] = NSNumber(value: true)
         flutterResult!(response)
+        */
     }
     
     public  func documentDetectionController(_ scanner: DocumentDetectorController, didFailWithError error:  DocumentDetector.SDKFailure) {
-        
+        /*
         let response : NSMutableDictionary! = [:]
         response["success"] = NSNumber(value: false)
         if (error is InvalidTokenReason) {
@@ -205,6 +234,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             response["errorMessage"] = error.message
         }
         flutterResult!(response)
+        */
     }
     
     func saveImageToDocumentsDirectory(image: UIImage, withName: String) -> String? {
