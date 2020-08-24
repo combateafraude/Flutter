@@ -37,15 +37,15 @@ class DocumentDetector {
     this.sound = enable;
   }
 
-  void setNetworkSettings(int requestTimeout){
+  void setNetworkSettings(int requestTimeout) {
     this.requestTimeout = requestTimeout;
   }
 
-  void setAndroidSettings(DocumentDetectorAndroidSettings androidSettings){
+  void setAndroidSettings(DocumentDetectorAndroidSettings androidSettings) {
     this.androidSettings = androidSettings;
   }
 
-  void setIosSettings(DocumentDetectorIosSettings iosSettings){
+  void setIosSettings(DocumentDetectorIosSettings iosSettings) {
     this.iosSettings = iosSettings;
   }
 

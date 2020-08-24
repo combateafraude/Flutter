@@ -108,7 +108,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             let layout = DocumentDetectorLayout()
             
             if let customization = iosSettings["customization"] as? [String: Any] {
-                if let showStepLabel = customization["showStepLabel"] as! Bool? {
+                if let showStepLabel = customization["showStepLabel"] as? Bool {
                     documentDetectorBuilder = documentDetectorBuilder.showStepLabel(show: showStepLabel)
                 }
 
@@ -178,63 +178,37 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
     // --------------------------------------------------------------------------------------------
     
     public func documentDetectionController(_ scanner: DocumentDetectorController, didFinishWithResults results: DocumentDetectorResult) {
-        /*
         var captureMap : [NSMutableDictionary?]  = []
         for index in (0 ... results.captures.count - 1) {
             let capture : NSMutableDictionary! = [:]
-            let capture_imagePath = saveImageToDocumentsDirectory(image: results.captures[index].image, withName: "document\(index).jpg")
-            capture["imagePath"] = capture_imagePath
-            if let imageUrl = results.captures[index].imageUrl {
-                capture["imageUrl"] = imageUrl
-            } else {
-                capture["imageUrl"] = ""
-            }
-            capture["missedAttemps"] = results.captures[index].missedAttemps
-            capture["scannedLabel"] = results.captures[index].scannedLabel
+            let imagePath = saveImageToDocumentsDirectory(image: results.captures[index].image, withName: "document\(index).jpg")
+            capture["imagePath"] = imagePath
+            capture["imageUrl"] = results.captures[index].imageUrl
+            capture["quality"] = results.captures[index].quality
+            capture["label"] = results.captures[index].scannedLabel
             captureMap.append(capture)
         }
         
         let response : NSMutableDictionary! = [:]
         response["success"] = NSNumber(value: true)
-        response["capture_type"] = results.type
-        response["capture"] = captureMap
+        response["type"] = results.type
+        response["captures"] = captureMap
         
         flutterResult!(response)
-        */
     }
     
     public func documentDetectionControllerDidCancel(_ scanner: DocumentDetectorController) {
-        /*
         let response : NSMutableDictionary! = [:]
-        response["success"] = NSNumber(value: false)
-        response["cancel"] = NSNumber(value: true)
+        response["success"] = NSNumber(value: nil)
         flutterResult!(response)
-        */
     }
     
     public  func documentDetectionController(_ scanner: DocumentDetectorController, didFailWithError error:  DocumentDetector.SDKFailure) {
-        /*
         let response : NSMutableDictionary! = [:]
         response["success"] = NSNumber(value: false)
-        if (error is InvalidTokenReason) {
-            response["errorType"] = "InvalidTokenReason"
-            response["errorMessage"] = error.message
-        } else if ( error is NetworkReason) {
-            response["errorType"] = "NetworkReason"
-            response["errorMessage"] = error.message
-        } else if ( error is ServerReason) {
-            response["errorType"] = "ServerReason"
-            response["errorCode"] = (error as! ServerReason).code
-            response["errorMessage"] = error.message
-        } else if ( error is StorageReason) {
-            response["errorType"] = "StorageReason"
-            response["errorMessage"] = error.message
-        } else {
-            response["errorType"] = "SDKFailure"
-            response["errorMessage"] = error.message
-        }
+        response["message"] = error.message
+        response["type"] = String(describing: type(of: error))
         flutterResult!(response)
-        */
     }
     
     func saveImageToDocumentsDirectory(image: UIImage, withName: String) -> String? {
