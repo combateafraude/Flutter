@@ -66,7 +66,7 @@ end
 
 Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runner/Info.plist`:
 
-``` plist
+```
 <key>NSCameraUsageDescription</key>
 <string>To read the documents</string>
 ```
@@ -140,7 +140,7 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `bool wantSensorCheck`<br><br>Flag que indica se este estágio deve/não deve passar pela validação dos sensores |
 | `QualitySettings qualitySettings`<br><br>Configurações de verificação de qualidade do documento. O único parâmetro de `QualitySettings` é o limiar de aceitação da verificação da qualidade, de 1.0 a 5.0, onde 1.8 é o recomendado |
 | `DetectionSettings detectionSettings`<br><br>Configurações de detecção do documento pela câmera. Os parâmetros de `DetectionSettings` são, respectivamente, o limiar de aceitação do documento, em um valor de 0.0 a 1.0 com 0.91 de recomendado e a quantidade de frames consecutivos corretos necessários, onde o recomendado é 5 |
-| `CaptureMode captureMode`<br><br>Modo de captura da foto. Pode ser CaptureMode.AUTOMATIC para a captura automática ou CaptureMode.MANUAL para a aparição de um botão para o usuário efetuar a captura |
+| `CaptureMode captureMode`<br><br>Modo de captura da foto. Pode ser `CaptureMode.AUTOMATIC` para a captura automática ou `CaptureMode.MANUAL` para a aparição de um botão para o usuário efetuar a captura |
 
 | DocumentDetectorCustomizationAndroid constructor |
 | --------- |
