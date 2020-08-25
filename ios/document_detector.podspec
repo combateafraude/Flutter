@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
   s.name             = 'document_detector'
   s.version          = '3.0.0'
-  s.summary          = 'Flutter plugin DocumentDetector'
+  s.summary          = 'Flutter plugin for DocumentDetector'
   s.homepage         = 'https://www.combateafraude.com/'
-  s.license          = { :file => '../LICENSE' }
+  s.license          = { :file => 'LICENSE' }
   s.author           = { 'frederico.gassen@combateafraude.com' => 'frederico.gassen@combateafraude.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'

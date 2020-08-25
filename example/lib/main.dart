@@ -1,8 +1,3 @@
-import 'package:document_detector/android/android_settings.dart';
-import 'package:document_detector/android/capture_stage/capture_mode.dart';
-import 'package:document_detector/android/capture_stage/capture_stage.dart';
-import 'package:document_detector/android/document_detector_customization.dart';
-import 'package:document_detector/android/sensor_settings.dart';
 import 'package:document_detector/document_detector_step.dart';
 import 'package:document_detector/document_type.dart';
 import 'package:document_detector/ios/ios_settings.dart';
@@ -11,9 +6,7 @@ import 'package:document_detector/result/document_detector_failure.dart';
 import 'package:document_detector/result/document_detector_result.dart';
 import 'package:document_detector/result/document_detector_success.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:document_detector/document_detector.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -52,15 +45,10 @@ class _MyAppState extends State<MyApp> {
         new DocumentDetector(mobileToken: mobileToken);
 
     documentDetector.setDocumentFlow(documentSteps);
-    documentDetector.enableSound(false);
-    documentDetector.setPopupSettings(false);
-    DocumentDetectorIosSettings documentDetectorIosSettings =
-        new DocumentDetectorIosSettings();
-    documentDetectorIosSettings.colorHex = "#000000";
-    documentDetector.setIosSettings(documentDetectorIosSettings);
 
-    DocumentDetectorResult documentDetectorResult =
-        await documentDetector.start();
+    // Put the others parameters here
+
+    DocumentDetectorResult documentDetectorResult = await documentDetector.start();
 
     if (documentDetectorResult is DocumentDetectorSuccess) {
       result = "Success!";

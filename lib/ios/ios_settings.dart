@@ -4,7 +4,6 @@ import 'package:document_detector/ios/sensor_orientation_settings.dart';
 import 'package:document_detector/ios/sensor_stability_settings.dart';
 
 class DocumentDetectorIosSettings {
-
   double detectionThreshold;
   bool verifyQuality;
   double qualityThreshold;
@@ -14,7 +13,17 @@ class DocumentDetectorIosSettings {
   SensorOrientationSettingsIos sensorOrientation;
   SensorStabilitySettingsIos sensorStability;
 
-  Map asMap(){
+  DocumentDetectorIosSettings(
+      this.detectionThreshold,
+      this.verifyQuality,
+      this.qualityThreshold,
+      this.customization,
+      this.colorHex,
+      this.sensorLuminosity,
+      this.sensorOrientation,
+      this.sensorStability);
+
+  Map asMap() {
     Map<String, dynamic> map = new Map();
 
     map["detectionThreshold"] = detectionThreshold;
@@ -28,5 +37,4 @@ class DocumentDetectorIosSettings {
 
     return map;
   }
-
 }

@@ -199,7 +199,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
     
     public func documentDetectionControllerDidCancel(_ scanner: DocumentDetectorController) {
         let response : NSMutableDictionary! = [:]
-        response["success"] = NSNumber(value: nil)
+        response["success"] = nil
         flutterResult!(response)
     }
     

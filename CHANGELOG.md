@@ -1,3 +1,7 @@
+# 3.0.0
+- **Android SDK - 5.1.3**
+- **iOS SDK - 2.2.1**
+
 # 2.0.0
 __Android Native SDK Update to 4.1.0__
 __iOS Native SDK Update to 2.1.0__
