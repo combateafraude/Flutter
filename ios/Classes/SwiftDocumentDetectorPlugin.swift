@@ -81,30 +81,31 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 documentDetectorBuilder = documentDetectorBuilder.setQualitySettings(verifyQuality: verifyQuality, qualityThreshold: qualityThreshold)
             }
 
-            /* Pegar o sensorSettings
-            if let sensorLuminosity = iosSettings["sensorLuminosity"] as? [String: Any] {
-                let message = sensorLuminosity["message"] as! String? ?? "Luminosity"
-                let luminosityThreshold = sensorLuminosity["luminosityThreshold"] as! Float?
-                documentDetectorBuilder = documentDetectorBuilder.setLuminositySensorSettings(message: message, luminosityThreshold: luminosityThreshold)
-            }
+            if let sensorStability = iosSettings["sensorStability"] as? [String: Any] {
 
-            if let sensorOrientation = iosSettings["sensorOrientation"] as? [[String: Any]] {
-                let message = sensorOrientation["message"] as! String? ?? "Luminosity"
-                let orientationThreshold = sensorOrientation["orientationThreshold"] as! Double?
-                documentDetectorBuilder = documentDetectorBuilder.setOrientationSensorSettings(message: message, orientationThreshold: orientationThreshold)
-            }
+                if let sensorLuminosity = iosSettings["sensorLuminosity"] as? [String: Any] {
+                    let message = sensorLuminosity["message"] as! String?
+                    let luminosityThreshold = sensorLuminosity["luminosityThreshold"] as! Float?
+                    documentDetectorBuilder = documentDetectorBuilder.setLuminositySensorSettings(message: message, luminosityThreshold: luminosityThreshold)
+                }
 
-            if let sensorStability = iosSettings["sensorStability"] as? [[String: Any]] {
-                let message = sensorStability["message"] as! String? ?? "Luminosity"
-                let stabilityThreshold = sensorStability["stabilityThreshold"] as! Double?
-                documentDetectorBuilder = documentDetectorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
-            }
-            */
+                if let sensorOrientation = iosSettings["sensorOrientation"] as? [String: Any] {
+                    let message = sensorOrientation["message"] as! String?
+                    let orientationThreshold = sensorOrientation["orientationThreshold"] as! Double?
+                    documentDetectorBuilder = documentDetectorBuilder.setOrientationSensorSettings(message: message, orientationThreshold: orientationThreshold)
+                }
 
-            let layout = DocumentDetectorLayout()
+                if let sensorStability = iosSettings["sensorStability"] as? [String: Any] {
+                    let message = sensorStability["message"] as! String?
+                    let stabilityThreshold = sensorStability["stabilityThreshold"] as! Double?
+                    documentDetectorBuilder = documentDetectorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
+                }
+
+            }
             
             if let customization = iosSettings["customization"] as? [String: Any] {
 
+                let layout = DocumentDetectorLayout()
 
                 if let colorHex = customization["colorHex"] as? String {
                     documentDetectorBuilder = documentDetectorBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
