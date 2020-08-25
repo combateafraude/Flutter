@@ -3,7 +3,6 @@ import 'package:passive_face_liveness/ios/sensor_stability_settings.dart';
 
 class PassiveFaceLivenessIosSettings {
   PassiveFaceLivenessCustomizationIos customization;
-  String colorHex;
   int beforePictureMillis;
   SensorStabilitySettingsIos sensorStability;
 
@@ -11,7 +10,6 @@ class PassiveFaceLivenessIosSettings {
     Map<String, dynamic> map = new Map();
 
     map["customization"] = customization?.asMap();
-    map["colorHex"] = colorHex;
     map["beforePictureMillis"] = beforePictureMillis;
     map["sensorStability"] = sensorStability?.asMap();
 

@@ -2,128 +2,99 @@ import Flutter
 import UIKit
 import PassiveFaceLiveness
 
-let MESSAGE_CHANNEL = "com.combateafraude.passive_face_liveness/message"
-let ERROR_CODE = "PASSIVE_FACE_LIVENESS_SDK_ERROR"
-
 public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFaceLivenessControllerDelegate {
-    var methodChannel: FlutterMethodChannel?
+    
     var flutterResult: FlutterResult?
     
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: MESSAGE_CHANNEL, binaryMessenger: registrar.messenger())
+        let channel = FlutterMethodChannel(name: "passive_face_liveness", binaryMessenger: registrar.messenger())
         let instance = SwiftPassiveFaceLivenessPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
-    
-    //---------------------------------------------------------------------------------------------
-    // FlutterMethodChannel Interface Methods
-    // --------------------------------------------------------------------------------------------
+
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        switch (call.method) {
-        case "getDocuments":
-            getDocuments(call: call, result: result)
-            break
-        default:
-            result(FlutterMethodNotImplemented)
+        if call.method == "start" {
+            flutterResult = result;
+            start(call: call);
+        } else {
+            result(FlutterMethodNotImplemented);
         }
     }
-    
-    //---------------------------------------------------------------------------------------------
-    // Combate a Fraudes Call Methods
-    // --------------------------------------------------------------------------------------------
-    private func getDocuments(call: FlutterMethodCall, result: @escaping FlutterResult) {
+
+    private func start(call: FlutterMethodCall) {
+
+        let arguments = call.arguments as! [String: Any?]
         
-        var requestTimeout = 15
-        var showStepLabel : Bool = true;
-        var showStatusLabel : Bool = true;
-        var enableSound : Bool = true;
-        var colorTheme = UIColor.init(hexString: "#4CD964")
-        let layout = PassiveFaceLivenessLayout()
+        let mobileToken = arguments["mobileToken"] as! String
         
-        self.flutterResult = result
-        let args = call.arguments as! [String: Any?]
-        let mobileToken = args["mobileToken"] as! String
-        
-        if let argTimeout = args["requestTimeout"] as? Int {
-            requestTimeout = argTimeout
+        var passiveFaceLivenessBuilder = PassiveFaceLivenessBuilder(apiToken: mobileToken)
+
+        if let hasSound = arguments["sound"] as! Bool? {
+            passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.enableSound(enableSound: hasSound)
         }
-        
-        if let argHasSound = args["hasSound"] as? Bool {
-            enableSound = argHasSound
+
+        if let requestTimeout = arguments["requestTimeout"] as? TimeInterval {
+            passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.setNetworkSettings(requestTimeout: requestTimeout)
         }
-        
-        if let argShowStepLabel = args["showStepLabel"] as? Bool {
-            showStepLabel = argShowStepLabel
-        }
-        
-        if let argShowStatusLabel = args["ShowStatusLabel"] as? Bool {
-            showStatusLabel = argShowStatusLabel
-        }
-        
-        if let argColorTheme = args["colorTheme"] as? String {
-            colorTheme = UIColor.init(hexString: argColorTheme)
-        }
-        
-        if let layoutData = args["layout"] as? [String: Any] {
-            var greenMask : UIImage?
-            var whiteMask : UIImage?
-            var redMask : UIImage?
-            var soundOn : UIImage?
-            var soundOff : UIImage?
-            
-            if let closeImageName = layoutData["closeImageName"] as? String {
-                if let image = UIImage(named: closeImageName) {
-                    layout.closeImage = image
+
+        if let iosSettings = arguments["iosSettings"] as? [String: Any] {
+
+            if let customization = iosSettings["customization"] as? [String: Any] {
+
+                let layout = PassiveFaceLivenessLayout()
+
+                if let colorHex = customization["colorHex"] as? String {
+                    passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
+                }
+
+                if let showStepLabel = customization["showStepLabel"] as? Bool {
+                    passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.showStepLabel(show: showStepLabel)
+                }
+
+                if let showStatusLabel = customization["showStatusLabel"] as? Bool {
+                    passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.showStatusLabel(show: showStatusLabel)
+                }
+                
+                if let closeImageName = customization["closeImageName"] as? String {
+                    layout.closeImage = UIImage(named: closeImageName)
+                }
+                
+                var greenMask : UIImage?
+                if let greenMaskImageName = customization["greenMaskImageName"] as? String {
+                    greenMask = UIImage(named: greenMaskImageName) 
+                }
+                
+                var whiteMask : UIImage?
+                if let whiteMaskImageName = customization["whiteMaskImageName"] as? String {
+                    whiteMask = UIImage(named: whiteMaskImageName) 
+                }
+                
+                var redMask : UIImage?
+                if let redMaskImageName = customization["redMaskImageName"] as? String {
+                    redMask = UIImage(named: redMaskImageName) 
+                }
+                
+                layout.changeMaskImages(
+                    greenMask: greenMask,
+                    whiteMask: whiteMask,
+                    redMask: redMask)
+
+                
+                passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.setLayout(layout: layout)
+            }
+
+            if let beforePictureMillis = iosSettings["beforePictureMillis"] as? TimeInterval {
+                passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.setCaptureSettings(beforePictureInterval: beforePictureMillis)
+            }
+
+            if let sensorStability = iosSettings["sensorStability"] as? [String: Any] {
+                if let sensorStability = sensorStability["sensorStability"] as? [String: Any] {
+                    let message = sensorStability["message"] as! String?
+                    let stabilityThreshold = sensorStability["stabilityThreshold"] as! Double?
+                    passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
                 }
             }
-            
-            if let greenMaskImageName = layoutData["greenMaskImageName"] as? String {
-                if let image = UIImage(named: greenMaskImageName) {
-                    greenMask = image
-                }
-            }
-            
-            if let whiteMaskImageName = layoutData["whiteMaskImageName"] as? String {
-                if let image = UIImage(named: whiteMaskImageName) {
-                    whiteMask = image
-                }
-            }
-            
-            if let redMaskImageName = layoutData["redMaskImageName"] as? String {
-                if let image = UIImage(named: redMaskImageName) {
-                    redMask = image
-                }
-            }
-            
-            if let soundOnImageName = layoutData["soundOnImageName"] as? String {
-                if let image = UIImage(named: soundOnImageName) {
-                    soundOn = image
-                }
-            }
-            
-            if let soundOffImageName = layoutData["soundOffImageName"] as? String {
-                if let image = UIImage(named: soundOffImageName) {
-                    soundOff = image
-                }
-            }
-            
-            layout.changeMaskImages(
-                greenMask: greenMask,
-                whiteMask: whiteMask,
-                redMask: redMask)
-            
-            layout.changeSoundImages(soundOn: soundOn,
-                                     soundOff: soundOff)
         }
-        
-        let passiveFacelivenessConfiguration = PassiveFaceLivenessBuilder(apiToken: mobileToken)
-            .setNetworkSettings(requestTimeout: TimeInterval(requestTimeout))
-            .enableSound(enableSound: enableSound)
-            .showStepLabel(show: showStepLabel)
-            .showStatusLabel(show: showStatusLabel)
-            .setColorTheme(color: colorTheme)
-            .setLayout(layout: layout)
-            .build()
         
         let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
         
@@ -132,56 +103,36 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         controller.present(scannerVC, animated: true, completion: nil)
     }
     
-    //---------------------------------------------------------------------------------------------
-    // Delegates
-    // --------------------------------------------------------------------------------------------
-    
-    // MARK: - PassiveFaceLiveness Delegates
     public func passiveFaceLivenessController(_ passiveFacelivenessController: PassiveFaceLivenessController, didFinishWithResults results: PassiveFaceLivenessResult) {
-        let imagePath = saveImageToDocumentsDirectory(image: results.image, withName: "selfie.jpg")
-        
         let response : NSMutableDictionary! = [:]
+
+        let imagePath = saveImageToDocumentsDirectory(image: results.image, withName: "selfie.jpg")
         response["success"] = NSNumber(value: true)
         response["imagePath"] = imagePath
         response["imageUrl"] = results.imageUrl
         response["signedResponse"] = results.signedResponse
-        response["missedAttemps"] = results.missedAttemps
+
         flutterResult!(response)
     }
     
     public func passiveFaceLivenessControllerDidCancel(_ passiveFacelivenessController: PassiveFaceLivenessController) {
         let response : NSMutableDictionary! = [:]
-        response["success"] = NSNumber(value: false)
-        response["cancel"] = NSNumber(value: true)
+
+        response["success"] = nil
+
         flutterResult!(response)
     }
     
     public func passiveFaceLivenessController(_ passiveFacelivenessController: PassiveFaceLivenessController, didFailWithError error: SDKFailure) {
         let response : NSMutableDictionary! = [:]
+
         response["success"] = NSNumber(value: false)
-        if (error is InvalidTokenReason) {
-            response["errorType"] = "InvalidTokenReason"
-            response["errorMessage"] = error.message
-        } else if ( error is NetworkReason) {
-            response["errorType"] = "NetworkReason"
-            response["errorMessage"] = error.message
-        } else if ( error is ServerReason) {
-            response["errorType"] = "ServerReason"
-            response["errorCode"] = (error as! ServerReason).code
-            response["errorMessage"] = error.message
-        } else if ( error is StorageReason) {
-            response["errorType"] = "StorageReason"
-            response["errorMessage"] = error.message
-        } else {
-            response["errorType"] = "SDKFailure"
-            response["errorMessage"] = error.message
-        }
+        response["message"] = error.message
+        response["type"] = String(describing: type(of: error))
+
         flutterResult!(response)
     }
     
-    //---------------------------------------------------------------------------------------------
-    // Functions
-    // --------------------------------------------------------------------------------------------
     func saveImageToDocumentsDirectory(image: UIImage, withName: String) -> String? {
         if let data = image.jpegData(compressionQuality: 0.8) {
             let dirPath = getDocumentsDirectory()
@@ -203,9 +154,6 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
     }
 }
 
-//---------------------------------------------------------------------------------------------
-// Extension
-// --------------------------------------------------------------------------------------------
 extension UIColor {
     convenience init(hexString: String, alpha: CGFloat = 1.0) {
         let hexString: String = hexString.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
