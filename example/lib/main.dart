@@ -50,7 +50,8 @@ class _MyAppState extends State<MyApp> {
     // Put the others parameters here
 
     try {
-      DocumentDetectorResult documentDetectorResult = await documentDetector.start();
+      DocumentDetectorResult documentDetectorResult =
+          await documentDetector.start();
 
       if (documentDetectorResult is DocumentDetectorSuccess) {
         result = "Success!";

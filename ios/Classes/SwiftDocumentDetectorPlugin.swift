@@ -81,6 +81,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 documentDetectorBuilder = documentDetectorBuilder.setQualitySettings(verifyQuality: verifyQuality, qualityThreshold: qualityThreshold)
             }
 
+            /*
             if let sensorStability = iosSettings["sensorStability"] as? [String: Any] {
 
                 if let sensorLuminosity = iosSettings["sensorLuminosity"] as? [String: Any] {
@@ -102,6 +103,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 }
 
             }
+            */
             
             if let customization = iosSettings["customization"] as? [String: Any] {
 
