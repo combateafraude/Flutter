@@ -112,40 +112,26 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 | PassiveFaceLivenessAndroidSettings constructor |
 | --------- |
 | `PassiveFaceLivenessCustomizationAndroid customization`<br><br>Customização do layout em Android da activity |
-| `CaptureSettings captureSettings`<br><br>Configuraçōes |
+| `CaptureSettings captureSettings`<br><br>Configuraçōes de tempos de estabilização para a captura da selfie |
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
 
-| CaptureStage constructor |
+| PassiveFaceLivenessCustomizationAndroid constructor |
 | --------- |
-| `int durationMillis`<br><br>Duração em milissegundos deste respectivo passo antes de passar para o próximo, se houver. `null` para infinito |
-| `bool wantSensorCheck`<br><br>Flag que indica se este estágio deve/não deve passar pela validação dos sensores |
-| `QualitySettings qualitySettings`<br><br>Configurações de verificação de qualidade do documento. O único parâmetro de `QualitySettings` é o limiar de aceitação da verificação da qualidade, de 1.0 a 5.0, onde 1.8 é o recomendado |
-| `DetectionSettings detectionSettings`<br><br>Configurações de detecção do documento pela câmera. Os parâmetros de `DetectionSettings` são, respectivamente, o limiar de aceitação do documento, em um valor de 0.0 a 1.0 com 0.91 de recomendado e a quantidade de frames consecutivos corretos necessários, onde o recomendado é 5 |
-| `CaptureMode captureMode`<br><br>Modo de captura da foto. Pode ser `CaptureMode.AUTOMATIC` para a captura automática ou `CaptureMode.MANUAL` para a aparição de um botão para o usuário efetuar a captura |
-
-| DocumentDetectorCustomizationAndroid constructor |
-| --------- |
-| `String styleResIdName`<br><br>Nome do style resource que define as cores do DocumentDetector. Por exemplo, caso deseje mudar as cores do SDK, crie um style em `ROOT_PROJECT/android/app/src/main/res/values/styles.xml` com o nome `R.style.my_custom_style` seguindo o [template](https://gist.github.com/kikogassen/4b57db7139034ea2e85ea798eb88d248) e parametrize "my_custom_style" |
-| `String layoutResIdName`<br><br>Nome do layout resource que substituirá o layout padrão do DocumentDetector. Por exemplo, caso deseje mudar o layout do SDK, crie um layout em `ROOT_PROJECT/android/app/src/main/res/layout/my_custom_layout.xml` seguindo o [template](https://gist.github.com/kikogassen/89d6517fb08c13a7a5d677dd3c8f79e5) e parametrize "my_custom_layout" |
+| `String styleResIdName`<br><br>Nome do style resource que define as cores do SDK. Por exemplo, caso deseje mudar as cores do SDK, crie um style em `ROOT_PROJECT/android/app/src/main/res/values/styles.xml` com o nome `R.style.my_custom_style` seguindo o [template](https://gist.github.com/kikogassen/4b57db7139034ea2e85ea798eb88d248) e parametrize "my_custom_style" |
+| `String layoutResIdName`<br><br>Nome do layout resource que substituirá o layout padrão do SDK. Por exemplo, caso deseje mudar o layout do SDK, crie um layout em `ROOT_PROJECT/android/app/src/main/res/layout/my_custom_layout.xml` seguindo o [template](https://gist.github.com/kikogassen/63a45e15501140fd0149b17ec824115a) e parametrize "my_custom_layout" |
 | `String greenMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara verde padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_green_mask.png` e parametrize "my_custom_green_mask" |
 | `String redMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara vermelha padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_red_mask.png` e parametrize "my_custom_red_mask" |
 | `String whiteMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara branca padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_white_mask.png` e parametrize "my_custom_white_mask" |
 
+| CaptureSettings constructor |
+| --------- |
+| `int beforePictureMillis`<br><br>Duração em milissegundos entre a primeira detecção do rosto e a efetiva captura da foto |
+| `int afterPictureMillis`<br><br>Duração em milissegundos entre a captura da foto e o envio para o servidor para o mantimento do rosto e dos sensores válidos |
+
+
 | SensorSettingsAndroid constructor |
 | --------- |
-| `SensorLuminositySettingsAndroid sensorLuminositySettings`<br><br>Configurações do sensor de luminosidade à ser aplicado em todos os passos do SDK |
-| `SensorOrientationSettingsAndroid sensorOrientationSettings`<br><br>Configurações do sensor de orientação à ser aplicado em todos os passos do SDK |
 | `SensorStabilitySettingsAndroid sensorStabilitySettings`<br><br>Configurações do sensor de orientação à ser aplicado em todos os passos do SDK |
-
-| SensorLuminositySettingsAndroid constructor |
-| --------- |
-| `String messageResourceIdName`<br><br>Nome do string resource à ser mostrado quando o ambiente estiver escuro. A mensagem padrão é "Ambiente muito escuro". Por exemplo, caso deseje mostrar a String "Teste", crie uma String em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml` com o nome `R.string.my_custom_luminosity_string` e valor "Teste" e parametrize "my_custom_luminosity_string" |
-| `int luminosityThreshold`<br><br>Limiar inferior entre luminosidade aceitável/não aceitável, em lx. O padrão é `5` lx |
-
-| SensorOrientationSettingsAndroid constructor |
-| --------- |
-| `String messageResourceIdName`<br><br>Nome do string resource à ser mostrado quando o celular não estiver na horizontal. A mensagem padrão é "Celular não está na horizontal". Por exemplo, caso deseje mostrar a String "Teste", crie uma String em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml` com o nome `R.string.my_custom_orientation_string` e valor "Teste" e parametrize "my_custom_orientation_string" |
-| `double orientationThreshold`<br><br>Limiar inferior entre orientação correta/incorreta, em variação de m/s² da orientação totalmente horizontal. O padrão é `3` m/s² |
 
 | SensorStabilitySettingsAndroid constructor |
 | --------- |
@@ -155,15 +141,13 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 
 #### iOS
 
-| DocumentDetectorIosSettings constructor |
+| PassiveFaceLivenessIosSettings constructor |
 | --------- |
-| `double detectionThreshold`<br><br>Limiar de aceitação do documento, em um valor de 0.0 a 1.0. O padrão é 0.95 |
-| `bool verifyQuality`<br><br>Flag que indica se deseja verificar a qualidade do documento capturado |
-| `double qualityThreshold`<br><br>Limiar de aceitação da qualidade, entre 1.0 e 5.0. 1.8 é o recomendado para um futuro OCR |
-| `DocumentDetectorCustomizationIos customization`<br><br>Customização visual do DocumentDetector |
-| `SensorSettingsIos sensorSettings`<br><br>Configurações personalizadas dos sensores em iOS, null para desabilitar |
+| `PassiveFaceLivenessCustomizationIos customization`<br><br>Customização visual do SDK |
+| `int beforePictureMillis`<br><br>Duração em milissegundos entre a primeira detecção do rosto e a efetiva captura da foto |
+| `SensorStabilitySettingsIos sensorStability`<br><br>Configurações do sensor de estabilidade à ser aplicado no SDK |
 
-| DocumentDetectorCustomizationIos constructor |
+| PassiveFaceLivenessCustomizationIos constructor |
 | --------- |
 | `String colorHex`<br><br>Cor tema do SDK. Por exemplo, caso deseje usar a cor preta, utilize "#000000" |
 | `String greenMaskImageName`<br><br>Nome da imagem à substituir a máscara verde padrão. Lembre de adicionar a imagem em `Assets Catalog Document` no seu projeto do XCode |
@@ -173,22 +157,6 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 | `bool showStepLabel`<br><br>Flag que indica se deseja mostrar o label do passo atual |
 | `bool showStatusLabel`<br><br>Flag que indica se deseja mostrar o label do status atual |
 
-| SensorSettingsIos constructor |
-| --------- |
-| `SensorLuminositySettingsIos sensorLuminosity`<br><br>Configurações do sensor de luminosidade à ser aplicado em todos os passos do SDK |
-| `SensorOrientationSettingsIos sensorOrientation`<br><br>Configurações do sensor de orientação à ser aplicado em todos os passos do SDK |
-| `SensorStabilitySettingsIos sensorStability`<br><br>Configurações do sensor de estabilidade à ser aplicado em todos os passos do SDK |
-
-| SensorLuminositySettingsIos constructor |
-| --------- |
-| `String message`<br><br>String à ser mostrada quando o ambiente estiver escuro |
-| `double luminosityThreshold`<br><br>Limiar inferior entre luminosidade aceitável/não aceitável. O padrão é `-3` |
-
-| SensorOrientationSettingsAndroid constructor |
-| --------- |
-| `String message`<br><br>String à ser mostrada quando o celular não estiver na horizontal |
-| `double orientationThreshold`<br><br>Limiar inferior entre orientação correta/incorreta. O padrão é `0.3` |
-
 | SensorStabilitySettingsAndroid constructor |
 | --------- |
 | `String message`<br><br>String à ser mostrada quando o celular não estiver estável |
@@ -196,25 +164,17 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 
 ### Coletando o resultado
 
-O objeto de retorno do DocumentDetector é do tipo abstrato `DocumentDetectorResult`. Ele pode ser uma instância de `DocumentDetectorSuccess`, `DocumentDtetectorFailure` ou `DocumentDetectorClosed`.
+O objeto de retorno do PassiveFaceLiveness é do tipo abstrato `PassiveFaceLivenessResult`. Ele pode ser uma instância de `PassiveFaceLivenessSuccess`, `PassiveFaceLivenessFailure` ou `PassiveFaceLivenessClosed`.
 
-#### DocumentDetectorSuccess
+#### PassiveFaceLivenessSuccess
 
-| Campo | Observação |
-| --------- | --------- |
-| `List<Capture> captures`<br><br>Lista de capturas dos documentos | Terá o mesmo tamanho e a mesma ordem do parâmetro `List<DocumentDetectorStep>` |
-| `String type`<br><br>Tipo de documento detectado pelo próprio SDK, util para a integração com nossa rota externa de OCR. Por exemplo, se você capturar `DocumentType.CNH_FRONT` e `DocumentType.CNH_BACK`, este parâmetro será "cnh" | Será nulo se o SDK não conseguir verificar o tipo do documento ou se a detecção for desabilitada |
+| Campo |
+| --------- |
+| `String imagePath`<br><br>Endereço completo da imagem no dispositivo |
+| `String imageUrl`<br><br>URL da imagem armazenada temporariamente nos servidores da CAF |
+| `String signedResponse`<br><br>Resposta assinada do servidor da CAF que confirmou que a selfie capturada possui um rosto verdadeiro (não é foto de foto ou vídeo). Utilize esse parâmetro caso queira uma camada extra de segurança verificando se a assinatura da resposta não está quebrada, provocada por uma interceptação da requisição. Se estiver quebrada, há um grande indício de interceptação da requisição |
 
-##### Capture
-
-| Campo | Observação |
-| --------- | --------- |
-| `String imagePath`<br><br>Endereço completo da imagem no dispositivo | - |
-| `String imageUrl`<br><br>URL da imagem armazenada temporariamente nos servidores da CAF | Será nulo se o SDK não conseguir verificar a qualidade ou se a mesma estiver desabilitada |
-| `String label`<br><br>Label de detecção da captura. Por exemplo, se a captura for referente a um `DocumentType.RG_FRONT`, este label pode ser "rg_front" ou "rg_new_front", que se refere aos novos modelos de RG | Será nulo se a foto for coletada em um estágio onde a detecção está desativada |
-| `double quality`<br><br>Qualidade da foto do documento, em um valor de 1.0 a 5.0 | Será nulo se a foto for coletada em um estágio onde a verificação de qualidade está desativada |
-
-#### DocumentDtetectorFailure
+#### PassiveFaceLivenessFailure
 
 | Campo |
 | --------- |
