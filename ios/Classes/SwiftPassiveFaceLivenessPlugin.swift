@@ -87,6 +87,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.setCaptureSettings(beforePictureInterval: beforePictureMillis)
             }
 
+            /*
             if let sensorStability = iosSettings["sensorStability"] as? [String: Any] {
                 if let sensorStability = sensorStability["sensorStability"] as? [String: Any] {
                     let message = sensorStability["message"] as! String?
@@ -94,11 +95,12 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                     passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
                 }
             }
+            */
         }
         
         let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
         
-        let scannerVC = PassiveFaceLivenessController(passiveFaceLivenessConfiguration: passiveFacelivenessConfiguration)
+        let scannerVC = PassiveFaceLivenessController(passiveFaceLivenessConfiguration: passiveFaceLivenessBuilder.build())
         scannerVC.passiveFaceLivenessDelegate = self
         controller.present(scannerVC, animated: true, completion: nil)
     }

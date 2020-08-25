@@ -55,7 +55,9 @@ class _MyAppState extends State<MyApp> {
               ? passiveFaceLivenessResult.imageUrl.split("?")[0] + "..."
               : "null") +
           "\n\tsignedResponse: " +
-          (passiveFaceLivenessResult.signedResponse != null ? passiveFaceLivenessResult.signedResponse : "null");
+          (passiveFaceLivenessResult.signedResponse != null
+              ? passiveFaceLivenessResult.signedResponse
+              : "null");
     } else if (passiveFaceLivenessResult is PassiveFaceLivenessFailure) {
       result = "Falha!";
       description = "\tType: " +
