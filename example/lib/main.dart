@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:passive_face_liveness/passive_face_liveness.dart';
+import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart';
+import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
+import 'package:passive_face_liveness/result/passive_face_liveness_success.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -12,11 +15,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String result = '';
-  PassiveFaceLivenessResult passiveFaceLivenessResult =
-      PassiveFaceLivenessResult();
+  String _result = "";
+  String _description = "";
 
-  final mobileToken = '';
+  String mobileToken = "";
 
   @override
   void initState() {
@@ -31,103 +33,85 @@ class _MyAppState extends State<MyApp> {
     ].request();
   }
 
+  void startPassiveFaceLiveness() async {
+    String result = "";
+    String description = "";
+
+    PassiveFaceLiveness passiveFaceLiveness =
+        new PassiveFaceLiveness(mobileToken: mobileToken);
+
+    // Put the others parameters here
+
+    PassiveFaceLivenessResult passiveFaceLivenessResult =
+        await passiveFaceLiveness.start();
+
+    if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
+      result = "Success!";
+
+      description += "\n\timagePath: " +
+          passiveFaceLivenessResult.imagePath +
+          "\n\timageUrl: " +
+          (passiveFaceLivenessResult.imageUrl != null
+              ? passiveFaceLivenessResult.imageUrl.split("?")[0] + "..."
+              : "null") +
+          "\n\tsignedResponse: " +
+          (passiveFaceLivenessResult.signedResponse != null ? passiveFaceLivenessResult.signedResponse : "null");
+    } else if (passiveFaceLivenessResult is PassiveFaceLivenessFailure) {
+      result = "Falha!";
+      description = "\tType: " +
+          passiveFaceLivenessResult.type +
+          "\n\tMessage: " +
+          passiveFaceLivenessResult.message;
+    } else {
+      result = "Closed!";
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      _result = result;
+      _description = description;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Sample PassiveFaceLiveness Plugin'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Container(
-                height: 50,
-                child: RaisedButton(
-                    child: Text('PassiveFaceLiveness'),
-                    onPressed: () async {
-                      PassiveFaceLiveness passiveFaceLiveness =
-                          PassiveFaceLiveness.builder(mobileToken: mobileToken);
-
-                      /*
-                      //Opcional parameters:
-                      passiveFaceLiveness.setAndroidMask(
-                          drawableGreenName: "ic_mask_document",
-                          drawableWhiteName: "ic_mask_document",
-                          drawableRedName: "ic_mask_document");
-                      passiveFaceLiveness.setAndroidLayout("activity_sdk");
-                      passiveFaceLiveness.hasSound(true);
-                      passiveFaceLiveness.setAndroidStyle("baseOneColor");
-                      passiveFaceLiveness.setRequestTimeout(30);
-                      passiveFaceLiveness.setIOSColorTheme(Color(0xc22a1e));
-                      passiveFaceLiveness.setIOSSLayout(
-                        PassiveFaceLivenessLayout(
-                            closeImageName: "close",
-                            soundOnImageName: "sound_on",
-                            soundOffImageName: "sound_off",
-                            greenMaskImageName: "green_mask",
-                            redMaskImageName: "red_mask",
-                            whiteMaskImageName: "white_mask"),
-                      );
-                      passiveFaceLiveness.hasSound(false);
-                      passiveFaceLiveness.setIOSShowStatusLabel(false);
-                      passiveFaceLiveness.setIOSShowStepLabel(false);
-                       */
-
-                      passiveFaceLivenessResult =
-                          await passiveFaceLiveness.build();
-
-                      if (passiveFaceLivenessResult.sdkFailure == null) {
-                        print(
-                            'success: ${passiveFaceLivenessResult.imagePath}');
-                        print(
-                            'success: ${passiveFaceLivenessResult.missedAttemps}');
-                        print('success: ${passiveFaceLivenessResult.imageUrl}');
-                        print(
-                            'success: ${passiveFaceLivenessResult.signedResponse}');
-                      } else {
-                        print(
-                            'failed: ${passiveFaceLivenessResult.sdkFailure.toString()}');
-                      }
-                      setState(() {
-                        result = passiveFaceLivenessResult.toString();
-                      });
-                    }),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: Text(
-                  'Results',
-                  style: TextStyle(
-                      color: Colors.blue, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Image : ${passiveFaceLivenessResult.imagePath ?? ''}',
-                style: TextStyle(color: Colors.black),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Text(
-                'Error: ${passiveFaceLivenessResult.sdkFailure ?? ''}',
-                style: TextStyle(color: Colors.black),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+        home: Scaffold(
+            appBar: AppBar(
+              title: const Text('PassiveFaceLiveness plugin example'),
+            ),
+            body: Container(
+                margin: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        RaisedButton(
+                          child: Text('Start PassiveFaceLiveness'),
+                          onPressed: () async {
+                            startPassiveFaceLiveness();
+                          },
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(top: 10.0),
+                            child: Text("Result: $_result"))
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text("Description:\n$_description",
+                              overflow: TextOverflow.clip),
+                        )
+                      ],
+                    ),
+                  ],
+                ))));
   }
 }

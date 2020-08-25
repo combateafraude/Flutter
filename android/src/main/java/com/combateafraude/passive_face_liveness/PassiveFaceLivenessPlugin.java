@@ -6,17 +6,21 @@ import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.combateafraude.helpers.sdk.failure.InvalidTokenReason;
 import com.combateafraude.helpers.sdk.failure.LibraryReason;
 import com.combateafraude.helpers.sdk.failure.NetworkReason;
 import com.combateafraude.helpers.sdk.failure.PermissionReason;
 import com.combateafraude.helpers.sdk.failure.AvailabilityReason;
+import com.combateafraude.helpers.sdk.failure.SDKFailure;
 import com.combateafraude.helpers.sdk.failure.ServerReason;
 import com.combateafraude.helpers.sdk.failure.StorageReason;
+import com.combateafraude.helpers.sensors.SensorStabilitySettings;
 import com.combateafraude.passivefaceliveness.PassiveFaceLiveness;
 import com.combateafraude.passivefaceliveness.PassiveFaceLivenessActivity;
 import com.combateafraude.passivefaceliveness.PassiveFaceLivenessResult;
+import com.combateafraude.passivefaceliveness.configuration.CaptureSettings;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -35,232 +39,180 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * PassiveFaceLivenessPlugin
- */
+@SuppressWarnings("unchecked")
 public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
-  private static final String DEBUG_NAME = "PassiveFaceSdk";
+
+  private static final int REQUEST_CODE = 1002;
+
+  private static final String DRAWABLE_RES = "drawable";
+  private static final String STYLE_RES = "style";
+  private static final String STRING_RES = "string";
+  private static final String RAW_RES = "raw";
+  private static final String LAYOUT_RES = "layout";
+
+  private MethodChannel channel;
+  private Result result;
   private Activity activity;
-  private Context context;
   private ActivityPluginBinding activityBinding;
-
-  private MethodChannel methodChannel;
-  private MethodChannel.Result pendingResult;
-
-  private static final String MESSAGE_CHANNEL = "com.combateafraude.passive_face_liveness/message";
-
-  private static final int REQUEST_CODE_PASSIVEFACE_LIVENESS = 20950;
+  private Context context;
 
   @Override
-  public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-    setupChannels(binding.getFlutterEngine().getDartExecutor(), binding.getApplicationContext());
+  public synchronized void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+    if (call.method.equals("start")) {
+      this.result = result;
+      start(call);
+    } else {
+      result.notImplemented();
+    }
   }
 
-  // This static function is optional and equivalent to onAttachedToEngine. It supports the old
-  // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
-  // plugin registration via this function while apps migrate to use the new Android APIs
-  // post-flutter-1.12 via https://flutter.dev/go/android-project-migration.
-  //
-  // It is encouraged to share logic between onAttachedToEngine and registerWith to keep
-  // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
-  // depending on the user's project. onAttachedToEngine or registerWith must both be defined
-  // in the same class.
-  public static void registerWith(Registrar registrar) {
-    if (registrar.activity() == null) {
-      // When a background flutter view tries to register the plugin, the registrar has no activity.
-      // We stop the registration process as this plugin is foreground only.
-      return;
+  private synchronized void start(@NonNull MethodCall call) {
+    HashMap<String, Object> argumentsMap = (HashMap<String, Object>) call.arguments;
+
+    // Mobile token
+    String mobileToken = (String) argumentsMap.get("mobileToken");
+
+    PassiveFaceLiveness.Builder mPassiveFaceLivenessBuilder = new PassiveFaceLiveness.Builder(mobileToken);
+
+    // Android specific settings
+    HashMap<String, Object> androidSettings = (HashMap<String, Object>) argumentsMap.get("androidSettings");
+    if (androidSettings != null) {
+
+      // Layout customization
+      HashMap<String, Object> customizationAndroid = (HashMap<String, Object>) androidSettings.get("customization");
+      if (customizationAndroid != null) {
+        Integer styleId = getResourceId((String) customizationAndroid.get("styleResIdName"), STYLE_RES);
+        if (styleId != null) mPassiveFaceLivenessBuilder.setStyle(styleId);
+
+        Integer layoutId = getResourceId((String) customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
+        Integer greenMaskId = getResourceId((String) customizationAndroid.get("greenMaskResIdName"), DRAWABLE_RES);
+        Integer whiteMaskId = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"), DRAWABLE_RES);
+        Integer redMaskId = getResourceId((String) customizationAndroid.get("redMaskResIdName"), DRAWABLE_RES);
+        mPassiveFaceLivenessBuilder.setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId);
+      }
+
+      // Sensor settings
+      HashMap<String, Object> sensorSettings = (HashMap<String, Object>) androidSettings.get("sensorSettings");
+      if (sensorSettings != null) {
+        HashMap<String, Object> sensorStability = (HashMap<String, Object>) sensorSettings.get("sensorStabilitySettings");
+        if (sensorStability != null) {
+          Integer sensorMessageId = getResourceId((String) sensorStability.get("messageResourceIdName"), STRING_RES);
+          Integer stabilityStabledMillis = (Integer) sensorStability.get("stabilityStabledMillis");
+          Double stabilityThreshold = (Double) sensorStability.get("stabilityThreshold");
+          if (sensorMessageId != null && stabilityStabledMillis != null && stabilityThreshold != null) {
+            mPassiveFaceLivenessBuilder.setStabilitySensorSettings(new SensorStabilitySettings(sensorMessageId, stabilityStabledMillis, stabilityThreshold));
+          }
+        } else {
+          mPassiveFaceLivenessBuilder.setStabilitySensorSettings(null);
+        }
+      }
+
+      // Capture settings
+      HashMap<String, Object> captureSettings = (HashMap<String, Object>) androidSettings.get("captureSettings");
+      if (captureSettings != null) {
+        Integer beforePictureMillis = (Integer) captureSettings.get("beforePictureMillis");
+        Integer afterPictureMillis = (Integer) captureSettings.get("afterPictureMillis");
+        if (beforePictureMillis != null && afterPictureMillis != null){
+          mPassiveFaceLivenessBuilder.setCaptureSettings(new CaptureSettings(beforePictureMillis, afterPictureMillis));
+        }
+      }
     }
 
-    PassiveFaceLivenessPlugin plugin = new PassiveFaceLivenessPlugin();
-    plugin.setupChannels(registrar.messenger(), registrar.activity().getApplicationContext());
-    plugin.setActivity(registrar.activity());
-    registrar.addActivityResultListener(plugin);
+    // Sound settings
+    Boolean enableSound = (Boolean) argumentsMap.get("sound");
+    if (enableSound != null) mPassiveFaceLivenessBuilder.enableSound(enableSound);
+
+    // Network settings
+    Integer requestTimeout = (Integer) argumentsMap.get("requestTimeout");
+    if (requestTimeout != null) mPassiveFaceLivenessBuilder.setNetworkSettings(requestTimeout);
+
+    Intent mIntent = new Intent(context, PassiveFaceLivenessActivity.class);
+    mIntent.putExtra(PassiveFaceLiveness.PARAMETER_NAME, mPassiveFaceLivenessBuilder.build());
+    activity.startActivityForResult(mIntent, REQUEST_CODE);
+  }
+
+  private Integer getResourceId(@Nullable String resourceName, String resourceType) {
+    if (resourceName == null || activity == null) return null;
+    int resId = activity.getResources().getIdentifier(resourceName, resourceType, activity.getPackageName());
+    return resId == 0 ? null : resId;
+  }
+
+  private HashMap<String, Object> getSucessResponseMap(PassiveFaceLivenessResult mPassiveFaceLivenessResult) {
+    HashMap<String, Object> responseMap = new HashMap<>();
+    responseMap.put("success", Boolean.TRUE);
+    responseMap.put("imagePath", mPassiveFaceLivenessResult.getImagePath());
+    responseMap.put("imageUrl", mPassiveFaceLivenessResult.getImageUrl());
+    responseMap.put("signedResponse", mPassiveFaceLivenessResult.getSignedResponse());
+    return responseMap;
+  }
+
+  private HashMap<String, Object> getFailureResponseMap(SDKFailure sdkFailure) {
+    HashMap<String, Object> responseMap = new HashMap<>();
+    responseMap.put("success", Boolean.FALSE);
+    responseMap.put("message", sdkFailure.getMessage());
+    responseMap.put("type", sdkFailure.getClass().getSimpleName());
+    return responseMap;
+  }
+
+  private HashMap<String, Object> getClosedResponseMap() {
+    HashMap<String, Object> responseMap = new HashMap<>();
+    responseMap.put("success", null);
+    return responseMap;
   }
 
   @Override
-  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-    Log.d(DEBUG_NAME, "onDetachedFromEngine");
-    teardownChannels();
-  }
-
-  private void setupChannels(BinaryMessenger messenger, Context context) {
-    Log.d(DEBUG_NAME, "setupChannels");
-    this.context = context;
-    methodChannel = new MethodChannel(messenger, MESSAGE_CHANNEL);
-    methodChannel.setMethodCallHandler(this);
-  }
-
-  private void setActivity(Activity activity) {
-    this.activity = activity;
-  }
-
-  private void teardownChannels() {
-    Log.d(DEBUG_NAME, "teardownChannels");
-    this.activity = null;
-    if (this.activityBinding != null) {
-      this.activityBinding.removeActivityResultListener(this);
-      this.activityBinding = null;
+  public synchronized boolean onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    if (requestCode == REQUEST_CODE) {
+      if (resultCode == Activity.RESULT_OK && data != null) {
+        PassiveFaceLivenessResult mPassiveFaceLivenessResult = (PassiveFaceLivenessResult) data.getSerializableExtra(PassiveFaceLivenessResult.PARAMETER_NAME);
+        if (mPassiveFaceLivenessResult.wasSuccessful()) {
+          if (result != null)
+            result.success(getSucessResponseMap(mPassiveFaceLivenessResult));
+        } else {
+          if (result != null)
+            result.success(getFailureResponseMap(mPassiveFaceLivenessResult.getSdkFailure()));
+        }
+      } else {
+        if (result != null) result.success(getClosedResponseMap());
+      }
     }
+    return false;
+  }
+
+  @Override
+  public synchronized void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+    this.context = flutterPluginBinding.getApplicationContext();
+    this.channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "passive_face_liveness");
+    this.channel.setMethodCallHandler(this);
+  }
+
+  @Override
+  public synchronized void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+    this.channel.setMethodCallHandler(null);
     this.context = null;
   }
 
   @Override
-  public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
-    Log.d(DEBUG_NAME, "onAttachedToActivity");
+  public synchronized void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+    this.activity = binding.getActivity();
     this.activityBinding = binding;
-    setActivity(binding.getActivity());
     this.activityBinding.addActivityResultListener(this);
   }
 
   @Override
-  public void onDetachedFromActivity() {
-    Log.d(DEBUG_NAME, "onDetachedFromActivity");
-    teardownChannels();
+  public synchronized void onDetachedFromActivityForConfigChanges() {
+
   }
 
   @Override
-  public void onDetachedFromActivityForConfigChanges() {
-    Log.d(DEBUG_NAME, "onDetachedFromActivityForConfigChanges");
-    onDetachedFromActivity();
+  public synchronized void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+    this.activity = binding.getActivity();
   }
 
   @Override
-  public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
-    Log.d(DEBUG_NAME, "onReattachedToActivityForConfigChanges");
-    onAttachedToActivity(binding);
-  }
-
-  @Override
-  public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-    this.pendingResult = result;
-    switch (call.method) {
-      case "getDocuments":
-        getDocuments(call, result);
-        break;
-      default:
-        result.notImplemented();
-    }
-  }
-  private void getDocuments(MethodCall call, final Result result) {
-    HashMap<String, Object> argsMap = (HashMap<String, Object>) call.arguments;
-
-    if (!(call.arguments instanceof Map)) {
-      throw new IllegalArgumentException("Map argument expected");
-    }
-
-    String mobileToken = (String) argsMap.get("mobileToken");
-    Boolean enableSound = (Boolean) argsMap.get("enableSound");
-    Integer requestTimeout = (Integer) argsMap.get("requestTimeout");
-
-    Integer idRedMask = null;
-    if (argsMap.containsKey("nameRedMask")) {
-      idRedMask = activity.getResources().getIdentifier((String) argsMap.get("nameRedMask"), "drawable", activity.getPackageName());
-
-      if (idRedMask == 0) throw new IllegalArgumentException("Invalid RedMask name");
-    }
-
-    Integer idWhiteMask = null;
-    if (argsMap.containsKey("nameWhiteMask")) {
-      idWhiteMask = activity.getResources().getIdentifier((String) argsMap.get("nameWhiteMask"), "drawable", activity.getPackageName());
-
-      if (idWhiteMask == 0) throw new IllegalArgumentException("Invalid WhiteMask name");
-    }
-
-    Integer idGreenMask = null;
-    if (argsMap.containsKey("nameGreenMask")) {
-      idGreenMask = activity.getResources().getIdentifier((String) argsMap.get("nameGreenMask"), "drawable", activity.getPackageName());
-
-      if (idGreenMask == 0) throw new IllegalArgumentException("Invalid GreenMask name");
-    }
-
-    Integer idLayout = null;
-    if (argsMap.containsKey("nameLayout")) {
-      idLayout = activity.getResources().getIdentifier((String) argsMap.get("nameLayout"), "layout", activity.getPackageName());
-
-      if (idLayout == 0) throw new IllegalArgumentException("Invalid Layout name");
-    }
-
-    Integer idStyle = null;
-    if (argsMap.containsKey("nameStyle")) {
-      idStyle = activity.getResources().getIdentifier((String) argsMap.get("nameStyle"), "style", activity.getPackageName());
-
-      if (idStyle == 0) throw new IllegalArgumentException("Invalid Style name");
-    }
-
-    PassiveFaceLiveness.Builder mPassiveFaceLivenessBuilder = new PassiveFaceLiveness.Builder(mobileToken)
-            .setLayout(idLayout, idGreenMask, idWhiteMask, idRedMask);
-
-    if (enableSound != null){
-      mPassiveFaceLivenessBuilder.enableSound(enableSound);
-    }
-
-    if (idStyle != null){
-      mPassiveFaceLivenessBuilder.setStyle(idStyle);
-    }
-
-    Intent mIntent = new Intent(context, PassiveFaceLivenessActivity.class);
-    mIntent.putExtra(PassiveFaceLiveness.PARAMETER_NAME, (Serializable) mPassiveFaceLivenessBuilder.build());
-    activity.startActivityForResult(mIntent, REQUEST_CODE_PASSIVEFACE_LIVENESS);
-  }
-
-  @Override
-  public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-    final Map<String, Object> response = new HashMap<>();
-    if (requestCode == REQUEST_CODE_PASSIVEFACE_LIVENESS) {
-      if (resultCode == RESULT_OK && data != null) {
-        PassiveFaceLivenessResult mPassiveFaceLivenessResult = (PassiveFaceLivenessResult) data.getSerializableExtra(PassiveFaceLivenessResult.PARAMETER_NAME);
-        if (mPassiveFaceLivenessResult.wasSuccessful()) {
-          response.put("success", Boolean.valueOf(true));
-          if (mPassiveFaceLivenessResult.getImagePath() != null) {
-            response.put("imagePath", mPassiveFaceLivenessResult.getImagePath());
-          }
-          if (mPassiveFaceLivenessResult.getImageUrl() != null) {
-            response.put("imageUrl", mPassiveFaceLivenessResult.getImageUrl());
-          }
-          if (mPassiveFaceLivenessResult.getSignedResponse() != null) {
-            response.put("signedResponse", mPassiveFaceLivenessResult.getSignedResponse());
-          }
-          response.put("missedAttemps", mPassiveFaceLivenessResult.getMissedAttemps());
-        } else {
-          response.put("success", Boolean.valueOf(false));
-          if (mPassiveFaceLivenessResult.getSdkFailure() instanceof InvalidTokenReason) {
-            response.put("errorType", "InvalidTokenReason");
-            response.put("errorMessage", mPassiveFaceLivenessResult.getSdkFailure().getMessage());
-          } else if (mPassiveFaceLivenessResult.getSdkFailure() instanceof PermissionReason) {
-            response.put("errorType", "PermissionReason");
-            response.put("errorMessage", mPassiveFaceLivenessResult.getSdkFailure().getMessage());
-          } else if (mPassiveFaceLivenessResult.getSdkFailure() instanceof NetworkReason) {
-            response.put("errorType", "NetworkReason");
-            response.put("errorMessage", mPassiveFaceLivenessResult.getSdkFailure().getMessage());
-          } else if (mPassiveFaceLivenessResult.getSdkFailure() instanceof ServerReason) {
-            response.put("errorType", "ServerReason");
-            response.put("errorCode", ((ServerReason) mPassiveFaceLivenessResult.getSdkFailure()).getCode());
-            response.put("errorMessage", mPassiveFaceLivenessResult.getSdkFailure().getMessage());
-          } else if (mPassiveFaceLivenessResult.getSdkFailure() instanceof StorageReason) {
-            response.put("errorType", "StorageReason");
-            response.put("errorMessage", mPassiveFaceLivenessResult.getSdkFailure().getMessage());
-          } else if (mPassiveFaceLivenessResult.getSdkFailure() instanceof LibraryReason) {
-            response.put("errorType", "LibraryReason");
-            response.put("errorMessage", mPassiveFaceLivenessResult.getSdkFailure().getMessage());
-          } else if (mPassiveFaceLivenessResult.getSdkFailure() instanceof AvailabilityReason) {
-            response.put("errorType", "AvailabilityReason");
-            response.put("errorMessage", mPassiveFaceLivenessResult.getSdkFailure().getMessage());
-          } else {
-            response.put("errorType", "SDKFailure");
-            response.put("errorMessage", mPassiveFaceLivenessResult.getSdkFailure().getMessage());
-          }
-        }
-        pendingResult.success(response);
-        return true;
-      } else {
-        // the user closes the activity
-        response.put("success", Boolean.valueOf(false));
-        response.put("cancel", Boolean.valueOf(true));
-        pendingResult.success(response);
-        return false;
-      }
-    }
-    return true;
+  public synchronized void onDetachedFromActivity() {
+    this.activity = null;
+    this.activityBinding.removeActivityResultListener(this);
+    this.activityBinding = null;
   }
 }
