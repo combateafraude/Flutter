@@ -96,3 +96,4 @@ android/.idea/gradle.xml
 android/.idea/jarRepositories.xml
 android/.idea/misc.xml
 android/.idea/modules.xml
+.packages

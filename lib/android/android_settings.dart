@@ -1,7 +1,7 @@
-import 'package:document_detector/android/capture_stage/capture_stage.dart';
-import 'package:document_detector/android/sensor_settings.dart';
 
-import 'document_detector_customization.dart';
+import 'capture_stage/capture_stage.dart';
+import 'customization.dart';
+import 'sensor_settings.dart';
 
 class DocumentDetectorAndroidSettings {
   DocumentDetectorCustomizationAndroid customization;

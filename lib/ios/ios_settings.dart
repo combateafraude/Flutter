@@ -1,27 +1,20 @@
-import 'package:document_detector/ios/document_detector_customization.dart';
-import 'package:document_detector/ios/sensor_luminosity_settings.dart';
-import 'package:document_detector/ios/sensor_orientation_settings.dart';
-import 'package:document_detector/ios/sensor_stability_settings.dart';
+
+import 'customization.dart';
+import 'sensor_settings.dart';
 
 class DocumentDetectorIosSettings {
   double detectionThreshold;
   bool verifyQuality;
   double qualityThreshold;
   DocumentDetectorCustomizationIos customization;
-  String colorHex;
-  SensorLuminositySettingsIos sensorLuminosity;
-  SensorOrientationSettingsIos sensorOrientation;
-  SensorStabilitySettingsIos sensorStability;
+  SensorSettingsIos sensorSettings;
 
   DocumentDetectorIosSettings(
       this.detectionThreshold,
       this.verifyQuality,
       this.qualityThreshold,
       this.customization,
-      this.colorHex,
-      this.sensorLuminosity,
-      this.sensorOrientation,
-      this.sensorStability);
+      this.sensorSettings);
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -30,10 +23,7 @@ class DocumentDetectorIosSettings {
     map["verifyQuality"] = verifyQuality;
     map["qualityThreshold"] = qualityThreshold;
     map["customization"] = customization?.asMap();
-    map["colorHex"] = colorHex;
-    map["sensorLuminosity"] = sensorLuminosity?.asMap();
-    map["sensorOrientation"] = sensorOrientation?.asMap();
-    map["sensorStability"] = sensorStability?.asMap();
+    map["sensorSettings"] = sensorSettings?.asMap();;
 
     return map;
   }

@@ -1,4 +1,5 @@
 class DocumentDetectorCustomizationIos {
+  String colorHex;
   String greenMaskImageName;
   String whiteMaskImageName;
   String redMaskImageName;
@@ -7,6 +8,7 @@ class DocumentDetectorCustomizationIos {
   bool showStatusLabel;
 
   DocumentDetectorCustomizationIos(
+      this.colorHex,
       this.greenMaskImageName,
       this.whiteMaskImageName,
       this.redMaskImageName,
@@ -17,6 +19,7 @@ class DocumentDetectorCustomizationIos {
   Map asMap() {
     Map<String, dynamic> map = new Map();
 
+    map["colorHex"] = colorHex;
     map["greenMaskImageName"] = greenMaskImageName;
     map["whiteMaskImageName"] = whiteMaskImageName;
     map["redMaskImageName"] = redMaskImageName;

@@ -154,7 +154,7 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
             }
 
             // Sensor settings
-            HashMap<String, Object> sensorSettings = (HashMap<String, Object>) argumentsMap.get("sensorSettings");
+            HashMap<String, Object> sensorSettings = (HashMap<String, Object>) androidSettings.get("sensorSettings");
             if (sensorSettings != null) {
                 HashMap<String, Object> sensorLuminosity = (HashMap<String, Object>) sensorSettings.get("sensorLuminositySettings");
                 if (sensorLuminosity != null) {

@@ -1,8 +1,8 @@
-import 'package:document_detector/android/document_detector_step_customization.dart';
-import 'package:document_detector/ios/document_detector_step_customization.dart';
 import 'package:flutter/foundation.dart';
 
+import 'android/step_customization.dart';
 import 'document_type.dart';
+import 'ios/step_customization.dart';
 
 class DocumentDetectorStep {
   DocumentType document;

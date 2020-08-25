@@ -8,6 +8,7 @@ import 'package:document_detector/result/document_detector_success.dart';
 import 'package:flutter/material.dart';
 
 import 'package:document_detector/document_detector.dart';
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -48,34 +49,39 @@ class _MyAppState extends State<MyApp> {
 
     // Put the others parameters here
 
-    DocumentDetectorResult documentDetectorResult = await documentDetector.start();
+    try {
+      DocumentDetectorResult documentDetectorResult = await documentDetector.start();
 
-    if (documentDetectorResult is DocumentDetectorSuccess) {
-      result = "Success!";
-      description = "Type: " +
-          (documentDetectorResult.type != null
-              ? documentDetectorResult.type
-              : "null");
-      for (Capture capture in documentDetectorResult.captures) {
-        description += "\n\n\tCapture:\n\timagePath: " +
-            capture.imagePath +
-            "\n\timageUrl: " +
-            (capture.imageUrl != null
-                ? capture.imageUrl.split("?")[0] + "..."
-                : "null") +
-            "\n\tlabel: " +
-            (capture.label != null ? capture.label : "null") +
-            "\n\tquality: " +
-            (capture.quality != null ? capture.quality.toString() : "null");
+      if (documentDetectorResult is DocumentDetectorSuccess) {
+        result = "Success!";
+        description = "Type: " +
+            (documentDetectorResult.type != null
+                ? documentDetectorResult.type
+                : "null");
+        for (Capture capture in documentDetectorResult.captures) {
+          description += "\n\n\tCapture:\n\timagePath: " +
+              capture.imagePath +
+              "\n\timageUrl: " +
+              (capture.imageUrl != null
+                  ? capture.imageUrl.split("?")[0] + "..."
+                  : "null") +
+              "\n\tlabel: " +
+              (capture.label != null ? capture.label : "null") +
+              "\n\tquality: " +
+              (capture.quality != null ? capture.quality.toString() : "null");
+        }
+      } else if (documentDetectorResult is DocumentDetectorFailure) {
+        result = "Falha!";
+        description = "\tType: " +
+            documentDetectorResult.type +
+            "\n\tMessage: " +
+            documentDetectorResult.message;
+      } else {
+        result = "Closed!";
       }
-    } else if (documentDetectorResult is DocumentDetectorFailure) {
-      result = "Falha!";
-      description = "\tType: " +
-          documentDetectorResult.type +
-          "\n\tMessage: " +
-          documentDetectorResult.message;
-    } else {
-      result = "Closed!";
+    } on PlatformException catch (err) {
+      result = "Excpection!";
+      description = err.message;
     }
 
     if (!mounted) return;

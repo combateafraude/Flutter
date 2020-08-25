@@ -1,6 +1,7 @@
-import 'package:document_detector/android/sensor_luminosity_settings.dart';
-import 'package:document_detector/android/sensor_orientation_settings.dart';
-import 'package:document_detector/android/sensor_stability_settings.dart';
+
+import 'sensor_luminosity_settings.dart';
+import 'sensor_orientation_settings.dart';
+import 'sensor_stability_settings.dart';
 
 class SensorSettingsAndroid {
   SensorLuminositySettingsAndroid sensorLuminositySettings;

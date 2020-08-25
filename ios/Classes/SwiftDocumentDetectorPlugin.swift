@@ -81,11 +81,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 documentDetectorBuilder = documentDetectorBuilder.setQualitySettings(verifyQuality: verifyQuality, qualityThreshold: qualityThreshold)
             }
 
-            if let colorHex = iosSettings["colorHex"] as? String {
-                documentDetectorBuilder = documentDetectorBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
-            }
-
-            /*
+            /* Pegar o sensorSettings
             if let sensorLuminosity = iosSettings["sensorLuminosity"] as? [String: Any] {
                 let message = sensorLuminosity["message"] as! String? ?? "Luminosity"
                 let luminosityThreshold = sensorLuminosity["luminosityThreshold"] as! Float?
@@ -108,6 +104,12 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             let layout = DocumentDetectorLayout()
             
             if let customization = iosSettings["customization"] as? [String: Any] {
+
+
+                if let colorHex = customization["colorHex"] as? String {
+                    documentDetectorBuilder = documentDetectorBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
+                }
+
                 if let showStepLabel = customization["showStepLabel"] as? Bool {
                     documentDetectorBuilder = documentDetectorBuilder.showStepLabel(show: showStepLabel)
                 }
