@@ -6,5 +6,7 @@ enum DocumentType {
   CNH_BACK,
   CNH_FULL,
   CRLV,
+  RNE_FRONT,
+  RNE_BACK,
   OTHERS
 }
