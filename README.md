@@ -74,7 +74,7 @@ Adicione o plugin no seu arquivo `ROOT_PROJECT/pubspec.yaml`:
 
 ```yml
 dependencies:  
-  document_detector:
+  passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
       ref: passive-face-liveness-v1.0.1
