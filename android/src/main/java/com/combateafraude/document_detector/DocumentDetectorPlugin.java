@@ -68,6 +68,7 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
             start(call);
         } else {
             result.notImplemented();
+            result = null;
         }
     }
 
@@ -252,14 +253,21 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
             if (resultCode == Activity.RESULT_OK && data != null) {
                 DocumentDetectorResult mDocumentDetectorResult = (DocumentDetectorResult) data.getSerializableExtra(DocumentDetectorResult.PARAMETER_NAME);
                 if (mDocumentDetectorResult.wasSuccessful()) {
-                    if (result != null)
+                    if (result != null){
                         result.success(getSucessResponseMap(mDocumentDetectorResult));
+                        result = null;
+                    }
                 } else {
-                    if (result != null)
+                    if (result != null){
                         result.success(getFailureResponseMap(mDocumentDetectorResult.getSdkFailure()));
+                        result = null;
+                    }
                 }
             } else {
-                if (result != null) result.success(getClosedResponseMap());
+                if (result != null) {
+                    result.success(getClosedResponseMap());
+                    result = null;
+                }
             }
         }
         return false;
