@@ -5,17 +5,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 
 import com.combateafraude.faceauthenticator.FaceAuthenticator;
 import com.combateafraude.faceauthenticator.FaceAuthenticatorActivity;
 import com.combateafraude.faceauthenticator.FaceAuthenticatorResult;
+import com.combateafraude.faceauthenticator.configuration.CaptureSettings;
 import com.combateafraude.helpers.sdk.failure.InvalidTokenReason;
 import com.combateafraude.helpers.sdk.failure.LibraryReason;
 import com.combateafraude.helpers.sdk.failure.NetworkReason;
 import com.combateafraude.helpers.sdk.failure.PermissionReason;
+import com.combateafraude.helpers.sdk.failure.SDKFailure;
 import com.combateafraude.helpers.sdk.failure.ServerReason;
 import com.combateafraude.helpers.sdk.failure.StorageReason;
+import com.combateafraude.helpers.sensors.SensorStabilitySettings;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,217 +37,191 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * ActivefaceLivenessSdkPlugin
- */
+@SuppressWarnings("unchecked")
 public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
-    private static final String DEBUG_NAME = "ActiveFaceSdk";
+
+    private static final int REQUEST_CODE = 1003;
+
+    private static final String DRAWABLE_RES = "drawable";
+    private static final String STYLE_RES = "style";
+    private static final String STRING_RES = "string";
+    private static final String RAW_RES = "raw";
+    private static final String LAYOUT_RES = "layout";
+
+    private MethodChannel channel;
+    private Result result;
     private Activity activity;
-    private Context context;
     private ActivityPluginBinding activityBinding;
-
-    private MethodChannel methodChannel;
-    private MethodChannel.Result pendingResult;
-
-    private static final String MESSAGE_CHANNEL = "com.combateafraude.face_authenticator/message";
-
-    private static final int REQUEST_CODE_FACE_AUTHENTICATOR = 20991;
+    private Context context;
 
     @Override
-    public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-        setupChannels(binding.getFlutterEngine().getDartExecutor(), binding.getApplicationContext());
-    }
-
-    // This static function is optional and equivalent to onAttachedToEngine. It supports the old
-    // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
-    // plugin registration via this function while apps migrate to use the new Android APIs
-    // post-flutter-1.12 via https://flutter.dev/go/android-project-migration.
-    //
-    // It is encouraged to share logic between onAttachedToEngine and registerWith to keep
-    // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
-    // depending on the user's project. onAttachedToEngine or registerWith must both be defined
-    // in the same class.
-    public static void registerWith(Registrar registrar) {
-        if (registrar.activity() == null) {
-            // When a background flutter view tries to register the plugin, the registrar has no activity.
-            // We stop the registration process as this plugin is foreground only.
-            return;
-        }
-
-        FaceAuthenticatorPlugin plugin = new FaceAuthenticatorPlugin();
-        plugin.setupChannels(registrar.messenger(), registrar.activity().getApplicationContext());
-        plugin.setActivity(registrar.activity());
-        registrar.addActivityResultListener(plugin);
-    }
-
-    @Override
-    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-        Log.d(DEBUG_NAME, "onDetachedFromEngine");
-        teardownChannels();
-    }
-
-    private void setupChannels(BinaryMessenger messenger, Context context) {
-        Log.d(DEBUG_NAME, "setupChannels");
-        this.context = context;
-        methodChannel = new MethodChannel(messenger, MESSAGE_CHANNEL);
-        methodChannel.setMethodCallHandler(this);
-    }
-
-    private void setActivity(Activity activity) {
-        this.activity = activity;
-    }
-
-    private void teardownChannels() {
-        Log.d(DEBUG_NAME, "teardownChannels");
-        this.activity = null;
-        this.activityBinding.removeActivityResultListener(this);
-        this.activityBinding = null;
-        this.context = null;
-    }
-
-    @Override
-    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
-        Log.d(DEBUG_NAME, "onAttachedToActivity");
-        this.activityBinding = binding;
-        setActivity(binding.getActivity());
-        this.activityBinding.addActivityResultListener(this);
-    }
-
-    @Override
-    public void onDetachedFromActivity() {
-        Log.d(DEBUG_NAME, "onDetachedFromActivity");
-        teardownChannels();
-    }
-
-    @Override
-    public void onDetachedFromActivityForConfigChanges() {
-        Log.d(DEBUG_NAME, "onDetachedFromActivityForConfigChanges");
-        onDetachedFromActivity();
-    }
-
-    @Override
-    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
-        Log.d(DEBUG_NAME, "onReattachedToActivityForConfigChanges");
-        onAttachedToActivity(binding);
-    }
-
-    @Override
-    public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-        this.pendingResult = result;
-        switch (call.method) {
-            case "getDocuments":
-                getDocuments(call, result);
-                break;
-            default:
-                result.notImplemented();
+    public synchronized void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+        if (call.method.equals("start")) {
+            this.result = result;
+            start(call);
+        } else {
+            result.notImplemented();
+            result = null;
         }
     }
 
-    private void getDocuments(MethodCall call, final Result result) {
-        HashMap<String, Object> argsMap = (HashMap<String, Object>) call.arguments;
+    private synchronized void start(@NonNull MethodCall call) {
+        HashMap<String, Object> argumentsMap = (HashMap<String, Object>) call.arguments;
 
-        if (!(call.arguments instanceof Map)) {
-            throw new IllegalArgumentException("Map argument expected");
+        // Mobile token
+        String mobileToken = (String) argumentsMap.get("mobileToken");
+
+        // People ID
+        String peopleId = (String) argumentsMap.get("peopleId");
+
+        FaceAuthenticator.Builder mFaceAuthenticatorBuilder = new FaceAuthenticator.Builder(mobileToken);
+        mFaceAuthenticatorBuilder.setPeopleId(peopleId);
+
+        // Android specific settings
+        HashMap<String, Object> androidSettings = (HashMap<String, Object>) argumentsMap.get("androidSettings");
+        if (androidSettings != null) {
+
+            // Layout customization
+            HashMap<String, Object> customizationAndroid = (HashMap<String, Object>) androidSettings.get("customization");
+            if (customizationAndroid != null) {
+                Integer styleId = getResourceId((String) customizationAndroid.get("styleResIdName"), STYLE_RES);
+                if (styleId != null) mFaceAuthenticatorBuilder.setStyle(styleId);
+
+                Integer layoutId = getResourceId((String) customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
+                Integer greenMaskId = getResourceId((String) customizationAndroid.get("greenMaskResIdName"), DRAWABLE_RES);
+                Integer whiteMaskId = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"), DRAWABLE_RES);
+                Integer redMaskId = getResourceId((String) customizationAndroid.get("redMaskResIdName"), DRAWABLE_RES);
+                mFaceAuthenticatorBuilder.setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId);
+            }
+
+            // Sensor settings
+            HashMap<String, Object> sensorSettings = (HashMap<String, Object>) androidSettings.get("sensorSettings");
+            if (sensorSettings != null) {
+                HashMap<String, Object> sensorStability = (HashMap<String, Object>) sensorSettings.get("sensorStabilitySettings");
+                if (sensorStability != null) {
+                    Integer sensorMessageId = getResourceId((String) sensorStability.get("messageResourceIdName"), STRING_RES);
+                    Integer stabilityStabledMillis = (Integer) sensorStability.get("stabilityStabledMillis");
+                    Double stabilityThreshold = (Double) sensorStability.get("stabilityThreshold");
+                    if (sensorMessageId != null && stabilityStabledMillis != null && stabilityThreshold != null) {
+                        mFaceAuthenticatorBuilder.setStabilitySensorSettings(new SensorStabilitySettings(sensorMessageId, stabilityStabledMillis, stabilityThreshold));
+                    }
+                } else {
+                    mFaceAuthenticatorBuilder.setStabilitySensorSettings(null);
+                }
+            }
+
+            // Capture settings
+            HashMap<String, Object> captureSettings = (HashMap<String, Object>) androidSettings.get("captureSettings");
+            if (captureSettings != null) {
+                Integer beforePictureMillis = (Integer) captureSettings.get("beforePictureMillis");
+                Integer afterPictureMillis = (Integer) captureSettings.get("afterPictureMillis");
+                if (beforePictureMillis != null && afterPictureMillis != null) {
+                    mFaceAuthenticatorBuilder.setCaptureSettings(new CaptureSettings(beforePictureMillis, afterPictureMillis));
+                }
+            }
         }
 
-        String mobileToken = (String) argsMap.get("mobileToken");
-        Boolean hasSound = (Boolean) argsMap.get("hasSound");
-        Integer requestTimeout = (Integer) argsMap.get("requestTimeout");
-        String cpf = (String) argsMap.get("cpf");
+        // Sound settings
+        Boolean enableSound = (Boolean) argumentsMap.get("sound");
+        if (enableSound != null) mFaceAuthenticatorBuilder.enableSound(enableSound);
 
-        Integer idRedMask = null;
-        if (argsMap.containsKey("nameRedMask")) {
-            idRedMask = activity.getResources().getIdentifier((String) argsMap.get("nameRedMask"), "drawable", activity.getPackageName());
-
-            if (idRedMask == 0) throw new IllegalArgumentException("Invalid RedMask name");
-        }
-
-        Integer idWhiteMask = null;
-        if (argsMap.containsKey("nameWhiteMask")) {
-            idWhiteMask = activity.getResources().getIdentifier((String) argsMap.get("nameWhiteMask"), "drawable", activity.getPackageName());
-
-            if (idWhiteMask == 0) throw new IllegalArgumentException("Invalid WhiteMask name");
-        }
-
-        Integer idGreenMask = null;
-        if (argsMap.containsKey("nameGreenMask")) {
-            idGreenMask = activity.getResources().getIdentifier((String) argsMap.get("nameGreenMask"), "drawable", activity.getPackageName());
-
-            if (idGreenMask == 0) throw new IllegalArgumentException("Invalid GreenMask name");
-        }
-
-        Integer idLayout = null;
-        if (argsMap.containsKey("nameLayout")) {
-            idLayout = activity.getResources().getIdentifier((String) argsMap.get("nameLayout"), "layout", activity.getPackageName());
-
-            if (idLayout == 0) throw new IllegalArgumentException("Invalid Layout name");
-        }
-
-        Integer idStyle = null;
-        if (argsMap.containsKey("nameStyle")) {
-            idStyle = activity.getResources().getIdentifier((String) argsMap.get("nameStyle"), "style", activity.getPackageName());
-
-            if (idStyle == 0) throw new IllegalArgumentException("Invalid Style name");
-        }
-
-        FaceAuthenticator.Builder mFaceAuthenticatorBuilder = new FaceAuthenticator.Builder(mobileToken)
-                .setLayout(idLayout, idGreenMask, idWhiteMask, idRedMask)
-                .setPeopleId(cpf);
-        if (hasSound != null) mFaceAuthenticatorBuilder.enableSound(hasSound);
-        if (idStyle != null) mFaceAuthenticatorBuilder.setStyle(idStyle);
+        // Network settings
+        Integer requestTimeout = (Integer) argumentsMap.get("requestTimeout");
         if (requestTimeout != null) mFaceAuthenticatorBuilder.setNetworkSettings(requestTimeout);
 
         Intent mIntent = new Intent(context, FaceAuthenticatorActivity.class);
         mIntent.putExtra(FaceAuthenticator.PARAMETER_NAME, mFaceAuthenticatorBuilder.build());
-        activity.startActivityForResult(mIntent, REQUEST_CODE_FACE_AUTHENTICATOR);
+        activity.startActivityForResult(mIntent, REQUEST_CODE);
+    }
+
+    private Integer getResourceId(@Nullable String resourceName, String resourceType) {
+        if (resourceName == null || activity == null) return null;
+        int resId = activity.getResources().getIdentifier(resourceName, resourceType, activity.getPackageName());
+        return resId == 0 ? null : resId;
+    }
+
+    private HashMap<String, Object> getSucessResponseMap(FaceAuthenticatorResult mFaceAuthenticatorResult) {
+        HashMap<String, Object> responseMap = new HashMap<>();
+        responseMap.put("success", Boolean.TRUE);
+        responseMap.put("authenticated", mFaceAuthenticatorResult.isAuthenticated());
+        responseMap.put("signedResponse", mFaceAuthenticatorResult.getSignedResponse());
+        return responseMap;
+    }
+
+    private HashMap<String, Object> getFailureResponseMap(SDKFailure sdkFailure) {
+        HashMap<String, Object> responseMap = new HashMap<>();
+        responseMap.put("success", Boolean.FALSE);
+        responseMap.put("message", sdkFailure.getMessage());
+        responseMap.put("type", sdkFailure.getClass().getSimpleName());
+        return responseMap;
+    }
+
+    private HashMap<String, Object> getClosedResponseMap() {
+        HashMap<String, Object> responseMap = new HashMap<>();
+        responseMap.put("success", null);
+        return responseMap;
     }
 
     @Override
-    public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-        final Map<String, Object> response = new HashMap<>();
-        if (requestCode == REQUEST_CODE_FACE_AUTHENTICATOR) {
-            if (resultCode == RESULT_OK && data != null) {
+    public synchronized boolean onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
                 FaceAuthenticatorResult mFaceAuthenticatorResult = (FaceAuthenticatorResult) data.getSerializableExtra(FaceAuthenticatorResult.PARAMETER_NAME);
                 if (mFaceAuthenticatorResult.wasSuccessful()) {
-                    response.put("success", Boolean.valueOf(true));
-                    response.put("authenticated", mFaceAuthenticatorResult.isAuthenticated());
-                    response.put("signedResponse", mFaceAuthenticatorResult.getSignedResponse());
+                    if (result != null) {
+                        result.success(getSucessResponseMap(mFaceAuthenticatorResult));
+                        result = null;
+                    }
                 } else {
-                    response.put("success", Boolean.valueOf(false));
-                    if (mFaceAuthenticatorResult.getSdkFailure() instanceof InvalidTokenReason) {
-                        response.put("errorType", "InvalidTokenReason");
-                        response.put("errorMessage", mFaceAuthenticatorResult.getSdkFailure().getMessage());
-                    } else if (mFaceAuthenticatorResult.getSdkFailure() instanceof PermissionReason) {
-                        response.put("errorType", "PermissionReason");
-                        response.put("errorMessage", mFaceAuthenticatorResult.getSdkFailure().getMessage());
-                    } else if (mFaceAuthenticatorResult.getSdkFailure() instanceof NetworkReason) {
-                        response.put("errorType", "NetworkReason");
-                        response.put("errorMessage", mFaceAuthenticatorResult.getSdkFailure().getMessage());
-                    } else if (mFaceAuthenticatorResult.getSdkFailure() instanceof ServerReason) {
-                        response.put("errorType", "ServerReason");
-                        response.put("errorCode", ((ServerReason) mFaceAuthenticatorResult.getSdkFailure()).getCode());
-                        response.put("errorMessage", mFaceAuthenticatorResult.getSdkFailure().getMessage());
-                    } else if (mFaceAuthenticatorResult.getSdkFailure() instanceof StorageReason) {
-                        response.put("errorType", "StorageReason");
-                        response.put("errorMessage", mFaceAuthenticatorResult.getSdkFailure().getMessage());
-                    } else if (mFaceAuthenticatorResult.getSdkFailure() instanceof LibraryReason) {
-                        response.put("errorType", "LibraryReason");
-                        response.put("errorMessage", mFaceAuthenticatorResult.getSdkFailure().getMessage());
-                    } else {
-                        response.put("errorType", "SDKFailure");
-                        response.put("errorMessage", mFaceAuthenticatorResult.getSdkFailure().getMessage());
+                    if (result != null) {
+                        result.success(getFailureResponseMap(mFaceAuthenticatorResult.getSdkFailure()));
+                        result = null;
                     }
                 }
-                pendingResult.success(response);
-                return true;
             } else {
-                // the user closes the activity
-                response.put("success", Boolean.valueOf(false));
-                response.put("cancel", Boolean.valueOf(true));
-                pendingResult.success(response);
-                return false;
+                if (result != null) {
+                    result.success(getClosedResponseMap());
+                    result = null;
+                }
             }
         }
-        return true;
+        return false;
+    }
+
+    @Override
+    public synchronized void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+        this.context = flutterPluginBinding.getApplicationContext();
+        this.channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "face_authenticator");
+        this.channel.setMethodCallHandler(this);
+    }
+
+    @Override
+    public synchronized void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        this.channel.setMethodCallHandler(null);
+        this.context = null;
+    }
+
+    @Override
+    public synchronized void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+        this.activity = binding.getActivity();
+        this.activityBinding = binding;
+        this.activityBinding.addActivityResultListener(this);
+    }
+
+    @Override
+    public synchronized void onDetachedFromActivityForConfigChanges() {
+
+    }
+
+    @Override
+    public synchronized void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+        this.activity = binding.getActivity();
+    }
+
+    @Override
+    public synchronized void onDetachedFromActivity() {
+        this.activity = null;
+        this.activityBinding.removeActivityResultListener(this);
+        this.activityBinding = null;
     }
 }

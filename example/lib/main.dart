@@ -1,4 +1,7 @@
 import 'package:face_authenticator/face_authenticator.dart';
+import 'package:face_authenticator/result/face_authenticator_failure.dart';
+import 'package:face_authenticator/result/face_authenticator_result.dart';
+import 'package:face_authenticator/result/face_authenticator_success.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -12,11 +15,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String result = '';
-  FaceAuthenticatorResult faceAuthenticatorResult =
-  FaceAuthenticatorResult();
-  final mobileToken =
-      '';
+  String _result = "";
+  String _description = "";
+
+  String mobileToken = "";
+  String peopleId = "";
 
   @override
   void initState() {
@@ -26,87 +29,91 @@ class _MyAppState extends State<MyApp> {
   }
 
   void requestPermissions() async {
-    Map<Permission, PermissionStatus> statuses = await [
+    await [
       Permission.camera,
     ].request();
+  }
+
+  void startFaceAuthenticator() async {
+    String result = "";
+    String description = "";
+
+    FaceAuthenticator faceAuthenticator =
+        new FaceAuthenticator(mobileToken: mobileToken);
+    faceAuthenticator.setPeopleId(peopleId);
+
+    // Put the others parameters here
+
+    FaceAuthenticatorResult faceAuthenticatorResult =
+        await faceAuthenticator.start();
+
+    if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
+      result = "Success!";
+
+      description += "\n\tauthenticated: " +
+          (faceAuthenticatorResult.authenticated
+              ? "true"
+              : "false") +
+          "\n\tsignedResponse: " +
+          (faceAuthenticatorResult.signedResponse != null
+              ? faceAuthenticatorResult.signedResponse
+              : "null");
+    } else if (faceAuthenticatorResult is FaceAuthenticatorFailure) {
+      result = "Falha!";
+      description = "\tType: " +
+          faceAuthenticatorResult.type +
+          "\n\tMessage: " +
+          faceAuthenticatorResult.message;
+    } else {
+      result = "Closed!";
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      _result = result;
+      _description = description;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Sample FaceAuthenticator Plugin'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Container(
-                height: 50,
-                child: RaisedButton(
-                    child: Text('FaceAuthenticator'),
-                    onPressed: () async {
-                      FaceAuthenticator faceAuthenticator = FaceAuthenticator.builder(mobileToken: mobileToken);
-                      faceAuthenticator.setCpf("03073736069");
-                      /*
-                      faceAuthenticator.setRequestTimeout(30);
-
-                      faceAuthenticator.setIOSColorTheme(Colors.blue);
-                      faceAuthenticator.setAndroidStyle("baseOneColor");
-                      faceAuthenticator.setAndroidLayout("activity_sdk");
-                      faceAuthenticator.setAndroidMask(
-                          drawableGreenName: "ic_mask_document",
-                          drawableWhiteName: "ic_mask_document",
-                          drawableRedName: "ic_mask_document");
-                      */
-                      faceAuthenticatorResult =
-                          await faceAuthenticator.build();
-
-                      if (faceAuthenticatorResult.sdkFailure == null) {
-                        print('success: ${faceAuthenticatorResult.authenticated}');
-                        print('success: ${faceAuthenticatorResult.signedResponse}');
-                      } else {
-                        print('failed: ${faceAuthenticatorResult.sdkFailure.toString()}');
-                      }
-                      setState(() {
-                        result = faceAuthenticatorResult.toString();
-                      });
-                    }),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: Text(
-                  'Results',
-                  style: TextStyle(
-                      color: Colors.blue, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Authenticated: ${faceAuthenticatorResult.authenticated ?? ''}',
-                style: TextStyle(color: Colors.black),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Text(
-                'Error: ${faceAuthenticatorResult.sdkFailure ?? ''}',
-                style: TextStyle(color: Colors.black),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+        home: Scaffold(
+            appBar: AppBar(
+              title: const Text('FaceAuthenticator plugin example'),
+            ),
+            body: Container(
+                margin: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        RaisedButton(
+                          child: Text('Start FaceAuthenticator'),
+                          onPressed: () async {
+                            startFaceAuthenticator();
+                          },
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(top: 10.0),
+                            child: Text("Result: $_result"))
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text("Description:\n$_description",
+                              overflow: TextOverflow.clip),
+                        )
+                      ],
+                    ),
+                  ],
+                ))));
   }
 }

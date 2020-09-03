@@ -1,11 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="89622f5b-4648-4e6e-9076-93cb3b350d8a" name="Default Changelist" comment="">
+    <list default="true" id="867764ff-b868-48fa-987d-ea1562b39996" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/ios/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/android/capture_settings.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/android/customization.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/android/sensor_settings.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/android/sensor_stability_settings.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/android/settings.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ios/customization.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ios/sensor_stability_settings.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ios/settings.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/result/face_authenticator_closed.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/result/face_authenticator_failure.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/result/face_authenticator_result.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/result/face_authenticator_success.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/com/combateafraude/face_authenticator/FaceAuthenticatorPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/combateafraude/face_authenticator/FaceAuthenticatorPlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Classes/SwiftFaceAuthenticatorPluginSdkPlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/SwiftFaceAuthenticatorPluginSdkPlugin.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/face_authenticator.podspec" beforeDir="false" afterPath="$PROJECT_DIR$/ios/face_authenticator.podspec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/face_authenticator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/face_authenticator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/face_authenticator.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/face_authenticator_messenger.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/face_authenticator_result.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/sdk_result.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +50,9 @@
     </option>
   </component>
   <component name="ProjectId" id="1d5J751YAR7L9ejiHjK688EbIVm" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -32,12 +62,18 @@
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ios" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
     <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kikog\Documents\combateafraude\GitHub\Flutter\ios" />
+      <recent name="C:\Users\kikog\Documents\combateafraude\GitHub\Flutter\lib" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
@@ -59,6 +95,14 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="723" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1599164142623">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="723" y="323" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1599164142623" />
+    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser" timestamp="1599163731941">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1599163731941" />
     <state x="679" y="409" width="433" height="222" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1597781506182">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -67,33 +111,37 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="476" y="175" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1597781504176" />
-    <state x="595" y="114" key="CommitChangelistDialog2" timestamp="1597782129483">
+    <state x="595" y="114" key="CommitChangelistDialog2" timestamp="1599165981640">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="595" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1597782129483" />
-    <state width="1877" height="280" key="GridCell.Tab.0.bottom" timestamp="1597781968680">
+    <state x="595" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1599165981640" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1599162247142">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="280" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1597781968680" />
-    <state width="1877" height="280" key="GridCell.Tab.0.center" timestamp="1597781968679">
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1599162247142" />
+    <state width="1877" height="281" key="GridCell.Tab.0.bottom" timestamp="1599165919013">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="280" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1597781968679" />
-    <state width="1877" height="280" key="GridCell.Tab.0.left" timestamp="1597781968679">
+    <state width="1877" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1599165919013" />
+    <state width="1877" height="281" key="GridCell.Tab.0.center" timestamp="1599165919012">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="280" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1597781968679" />
-    <state width="1877" height="280" key="GridCell.Tab.0.right" timestamp="1597781968680">
+    <state width="1877" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1599165919012" />
+    <state width="1877" height="281" key="GridCell.Tab.0.left" timestamp="1599165919012">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="280" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1597781968680" />
+    <state width="1877" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1599165919012" />
+    <state width="1877" height="281" key="GridCell.Tab.0.right" timestamp="1599165919012">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1599165919012" />
     <state x="440" y="94" key="SettingsEditor" timestamp="1597781522343">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1597781522343" />
-    <state width="435" height="109" key="javadoc.popup.new" timestamp="1596119568536">
+    <state width="435" height="109" key="javadoc.popup.new" timestamp="1599165298945">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="435" height="109" key="javadoc.popup.new/0.0.1920.1040@0.0.1920.1040" timestamp="1596119568536" />
+    <state width="435" height="109" key="javadoc.popup.new/0.0.1920.1040@0.0.1920.1040" timestamp="1599165298945" />
   </component>
 </project>
