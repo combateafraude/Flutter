@@ -10,7 +10,7 @@ class FaceAuthenticatorAndroidSettings {
   SensorSettingsAndroid sensorSettings;
 
   FaceAuthenticatorAndroidSettings(
-      this.customization, this.captureSettings, this.sensorSettings);
+  {this.customization, this.captureSettings, this.sensorSettings});
 
   Map asMap(){
     Map<String, dynamic> map = new Map();

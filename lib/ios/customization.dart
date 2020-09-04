@@ -8,13 +8,13 @@ class FaceAuthenticatorCustomizationIos {
   bool showStatusLabel;
 
   FaceAuthenticatorCustomizationIos(
-      this.colorHex,
-      this.greenMaskImageName,
-      this.whiteMaskImageName,
-      this.redMaskImageName,
-      this.closeImageName,
-      this.showStepLabel,
-      this.showStatusLabel);
+  {this.colorHex,
+    this.greenMaskImageName,
+    this.whiteMaskImageName,
+    this.redMaskImageName,
+    this.closeImageName,
+    this.showStepLabel,
+    this.showStatusLabel});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();

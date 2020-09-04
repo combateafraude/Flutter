@@ -6,6 +6,9 @@ class FaceAuthenticatorIosSettings {
   int beforePictureMillis;
   SensorStabilitySettingsIos sensorStability;
 
+  FaceAuthenticatorIosSettings(
+  {this.customization, this.beforePictureMillis, this.sensorStability});
+
   Map asMap() {
     Map<String, dynamic> map = new Map();
 
