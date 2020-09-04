@@ -6,6 +6,9 @@ class PassiveFaceLivenessIosSettings {
   int beforePictureMillis;
   SensorStabilitySettingsIos sensorStability;
 
+  PassiveFaceLivenessIosSettings(
+  {this.customization, this.beforePictureMillis, this.sensorStability});
+
   Map asMap() {
     Map<String, dynamic> map = new Map();
 

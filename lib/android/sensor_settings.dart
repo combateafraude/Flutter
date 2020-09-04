@@ -4,7 +4,7 @@ class SensorSettingsAndroid {
   SensorStabilitySettingsAndroid sensorStabilitySettings;
 
   SensorSettingsAndroid(
-      this.sensorStabilitySettings);
+  {this.sensorStabilitySettings});
 
   Map asMap(){
     Map<String, dynamic> map = new Map();

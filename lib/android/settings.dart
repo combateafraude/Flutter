@@ -10,7 +10,7 @@ class PassiveFaceLivenessAndroidSettings {
   SensorSettingsAndroid sensorSettings;
 
   PassiveFaceLivenessAndroidSettings(
-      this.customization, this.captureSettings, this.sensorSettings);
+  {this.customization, this.captureSettings, this.sensorSettings});
 
   Map asMap(){
     Map<String, dynamic> map = new Map();

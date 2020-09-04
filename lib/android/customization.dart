@@ -6,11 +6,11 @@ class PassiveFaceLivenessCustomizationAndroid {
   String whiteMaskResIdName;
 
   PassiveFaceLivenessCustomizationAndroid(
-      this.styleResIdName,
-      this.layoutResIdName,
-      this.greenMaskResIdName,
-      this.redMaskResIdName,
-      this.whiteMaskResIdName);
+  {this.styleResIdName,
+    this.layoutResIdName,
+    this.greenMaskResIdName,
+    this.redMaskResIdName,
+    this.whiteMaskResIdName});
 
   Map asMap(){
     Map<String, dynamic> map = new Map();
