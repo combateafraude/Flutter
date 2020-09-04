@@ -113,7 +113,8 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
                 for (int i = 0; i < paramStages.size(); i++) {
                     HashMap<String, Object> stage = paramStages.get(i);
 
-                    Long durationMillis = (Long) stage.get("durationMillis");
+                    Long durationMillis = ((Number) stage.get("durationMillis")).longValue();
+                    
                     Boolean wantSensorCheck = (Boolean) stage.get("wantSensorCheck");
                     if (wantSensorCheck == null) wantSensorCheck = false;
 
