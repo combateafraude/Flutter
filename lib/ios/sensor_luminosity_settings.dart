@@ -3,7 +3,7 @@ class SensorLuminositySettingsIos {
   double luminosityThreshold;
 
   SensorLuminositySettingsIos(
-      this.message, this.luminosityThreshold);
+  {this.message, this.luminosityThreshold});
 
   Map asMap(){
     Map<String, dynamic> map = new Map();

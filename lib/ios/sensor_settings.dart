@@ -9,9 +9,9 @@ class SensorSettingsIos {
   SensorStabilitySettingsIos sensorStability;
 
   SensorSettingsIos(
-      this.sensorLuminosity,
-      this.sensorOrientation,
-      this.sensorStability);
+  {this.sensorLuminosity,
+    this.sensorOrientation,
+    this.sensorStability});
 
   Map asMap(){
     Map<String, dynamic> map = new Map();

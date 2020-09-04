@@ -1,4 +1,3 @@
-
 import 'sensor_luminosity_settings.dart';
 import 'sensor_orientation_settings.dart';
 import 'sensor_stability_settings.dart';
@@ -9,11 +8,11 @@ class SensorSettingsAndroid {
   SensorStabilitySettingsAndroid sensorStabilitySettings;
 
   SensorSettingsAndroid(
-      this.sensorLuminositySettings,
+      {this.sensorLuminositySettings,
       this.sensorOrientationSettings,
-      this.sensorStabilitySettings);
+      this.sensorStabilitySettings});
 
-  Map asMap(){
+  Map asMap() {
     Map<String, dynamic> map = new Map();
 
     map["sensorLuminositySettings"] = sensorLuminositySettings?.asMap();

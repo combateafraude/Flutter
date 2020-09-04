@@ -1,3 +1,7 @@
+import 'package:document_detector/android/android_settings.dart';
+import 'package:document_detector/android/capture_stage/capture_mode.dart';
+import 'package:document_detector/android/capture_stage/capture_stage.dart';
+import 'package:document_detector/android/customization.dart';
 import 'package:document_detector/document_detector_step.dart';
 import 'package:document_detector/document_type.dart';
 import 'package:document_detector/ios/ios_settings.dart';

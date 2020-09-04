@@ -3,7 +3,7 @@ class SensorOrientationSettingsAndroid {
   double orientationThreshold;
 
   SensorOrientationSettingsAndroid(
-      this.messageResourceIdName, this.orientationThreshold);
+  {this.messageResourceIdName, this.orientationThreshold});
 
   Map asMap(){
     Map<String, dynamic> map = new Map();

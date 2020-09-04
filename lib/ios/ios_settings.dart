@@ -10,11 +10,11 @@ class DocumentDetectorIosSettings {
   SensorSettingsIos sensorSettings;
 
   DocumentDetectorIosSettings(
-      this.detectionThreshold,
-      this.verifyQuality,
-      this.qualityThreshold,
-      this.customization,
-      this.sensorSettings);
+  {this.detectionThreshold,
+    this.verifyQuality,
+    this.qualityThreshold,
+    this.customization,
+    this.sensorSettings});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();

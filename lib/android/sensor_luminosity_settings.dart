@@ -3,7 +3,7 @@ class SensorLuminositySettingsAndroid {
   int luminosityThreshold;
 
   SensorLuminositySettingsAndroid(
-      this.messageResourceIdName, this.luminosityThreshold);
+  {this.messageResourceIdName, this.luminosityThreshold});
 
   Map asMap(){
     Map<String, dynamic> map = new Map();
