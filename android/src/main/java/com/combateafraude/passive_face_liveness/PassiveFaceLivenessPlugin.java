@@ -3,41 +3,27 @@ package com.combateafraude.passive_face_liveness;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.combateafraude.helpers.sdk.failure.InvalidTokenReason;
-import com.combateafraude.helpers.sdk.failure.LibraryReason;
-import com.combateafraude.helpers.sdk.failure.NetworkReason;
-import com.combateafraude.helpers.sdk.failure.PermissionReason;
-import com.combateafraude.helpers.sdk.failure.AvailabilityReason;
-import com.combateafraude.helpers.sdk.failure.SDKFailure;
-import com.combateafraude.helpers.sdk.failure.ServerReason;
-import com.combateafraude.helpers.sdk.failure.StorageReason;
-import com.combateafraude.helpers.sensors.SensorStabilitySettings;
-import com.combateafraude.passivefaceliveness.PassiveFaceLiveness;
 import com.combateafraude.passivefaceliveness.PassiveFaceLivenessActivity;
-import com.combateafraude.passivefaceliveness.PassiveFaceLivenessResult;
-import com.combateafraude.passivefaceliveness.configuration.CaptureSettings;
+import com.combateafraude.passivefaceliveness.controller.sensors.SensorStabilitySettings;
+import com.combateafraude.passivefaceliveness.input.CaptureSettings;
+import com.combateafraude.passivefaceliveness.input.PassiveFaceLiveness;
+import com.combateafraude.passivefaceliveness.output.PassiveFaceLivenessResult;
+import com.combateafraude.passivefaceliveness.output.failure.SDKFailure;
 
-import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
-import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
-
-import static android.app.Activity.RESULT_OK;
 
 @SuppressWarnings("unchecked")
 public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {

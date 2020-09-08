@@ -32,14 +32,6 @@ android {
 }
 ```
 
-#### Regras do Proguard
-
-Se você utiliza o Proguard para obfuscação do código, adicione o seguinte trecho no seu arquivo de regras (comumente chamado de `proguard_rules.pro`):
-
-``` pro
--keep class com.combateafraude.helpers.server.model.** { <fields>; }
-```
-
 ### iOS
 
 No arquivo `ROOT_PROJECT/ios/Podfile`, adicione no final do arquivo:
@@ -77,7 +69,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-v1.0.3
+      ref: passive-face-liveness-v1.0.4
 ```
 
 ## Utilização
