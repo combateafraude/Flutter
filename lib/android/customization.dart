@@ -6,11 +6,11 @@ class FaceAuthenticatorCustomizationAndroid {
   String whiteMaskResIdName;
 
   FaceAuthenticatorCustomizationAndroid(
-      this.styleResIdName,
+      {this.styleResIdName,
       this.layoutResIdName,
       this.greenMaskResIdName,
       this.redMaskResIdName,
-      this.whiteMaskResIdName);
+      this.whiteMaskResIdName});
 
   Map asMap(){
     Map<String, dynamic> map = new Map();
