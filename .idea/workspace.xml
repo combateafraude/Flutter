@@ -1,37 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="867764ff-b868-48fa-987d-ea1562b39996" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ios/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/android/capture_settings.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/android/customization.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/android/sensor_settings.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/android/sensor_stability_settings.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/android/settings.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ios/customization.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ios/sensor_stability_settings.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ios/settings.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/result/face_authenticator_closed.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/result/face_authenticator_failure.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/result/face_authenticator_result.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/result/face_authenticator_success.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
+    <list default="true" id="3186dff7-0340-42a5-b74d-c96a3327c955" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/com/combateafraude/face_authenticator/FaceAuthenticatorPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/combateafraude/face_authenticator/FaceAuthenticatorPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/SwiftFaceAuthenticatorPluginSdkPlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/SwiftFaceAuthenticatorPluginSdkPlugin.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Classes/FaceAuthenticatorPlugin.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/FaceAuthenticatorPlugin.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Classes/SwiftFaceAuthenticatorPluginSdkPlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/SwiftFaceAuthenticatorPlugin.swift" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/face_authenticator.podspec" beforeDir="false" afterPath="$PROJECT_DIR$/ios/face_authenticator.podspec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/face_authenticator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/face_authenticator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/face_authenticator.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/face_authenticator_messenger.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/face_authenticator_result.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/sdk_result.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

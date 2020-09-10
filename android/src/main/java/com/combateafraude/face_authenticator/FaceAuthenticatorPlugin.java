@@ -8,18 +8,12 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 
-import com.combateafraude.faceauthenticator.FaceAuthenticator;
 import com.combateafraude.faceauthenticator.FaceAuthenticatorActivity;
-import com.combateafraude.faceauthenticator.FaceAuthenticatorResult;
-import com.combateafraude.faceauthenticator.configuration.CaptureSettings;
-import com.combateafraude.helpers.sdk.failure.InvalidTokenReason;
-import com.combateafraude.helpers.sdk.failure.LibraryReason;
-import com.combateafraude.helpers.sdk.failure.NetworkReason;
-import com.combateafraude.helpers.sdk.failure.PermissionReason;
-import com.combateafraude.helpers.sdk.failure.SDKFailure;
-import com.combateafraude.helpers.sdk.failure.ServerReason;
-import com.combateafraude.helpers.sdk.failure.StorageReason;
-import com.combateafraude.helpers.sensors.SensorStabilitySettings;
+import com.combateafraude.faceauthenticator.input.CaptureSettings;
+import com.combateafraude.faceauthenticator.input.FaceAuthenticator;
+import com.combateafraude.faceauthenticator.input.SensorStabilitySettings;
+import com.combateafraude.faceauthenticator.output.FaceAuthenticatorResult;
+import com.combateafraude.faceauthenticator.output.failure.SDKFailure;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -35,7 +35,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
             var faceAuthenticatorBuilder = FaceAuthenticatorBuilder(apiToken: mobileToken)
 
             if let hasSound = arguments["sound"] as! Bool? {
-                faceAuthenticatorBuilder = faceAuthenticatorBuilder.enableSound(enableSound: hasSound)
+                faceAuthenticatorBuilder = faceAuthenticatorBuilder.enableSound(hasSound: hasSound)
             }
 
             if let requestTimeout = arguments["requestTimeout"] as? TimeInterval {
@@ -97,7 +97,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
                     if let sensorStability = sensorStability["sensorStability"] as? [String: Any] {
                         let message = sensorStability["message"] as! String?
                         let stabilityThreshold = sensorStability["stabilityThreshold"] as! Double?
-                        faceAuthenticatorBuilder = faceAuthenticatorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
+                        //faceAuthenticatorBuilder = faceAuthenticatorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
                     }
                 }
 

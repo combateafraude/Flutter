@@ -3,6 +3,7 @@ import 'package:face_authenticator/result/face_authenticator_failure.dart';
 import 'package:face_authenticator/result/face_authenticator_result.dart';
 import 'package:face_authenticator/result/face_authenticator_success.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -44,28 +45,31 @@ class _MyAppState extends State<MyApp> {
 
     // Put the others parameters here
 
-    FaceAuthenticatorResult faceAuthenticatorResult =
-        await faceAuthenticator.start();
+    try {
+      FaceAuthenticatorResult faceAuthenticatorResult =
+          await faceAuthenticator.start();
 
-    if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
-      result = "Success!";
+      if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
+        result = "Success!";
 
-      description += "\n\tauthenticated: " +
-          (faceAuthenticatorResult.authenticated
-              ? "true"
-              : "false") +
-          "\n\tsignedResponse: " +
-          (faceAuthenticatorResult.signedResponse != null
-              ? faceAuthenticatorResult.signedResponse
-              : "null");
-    } else if (faceAuthenticatorResult is FaceAuthenticatorFailure) {
-      result = "Falha!";
-      description = "\tType: " +
-          faceAuthenticatorResult.type +
-          "\n\tMessage: " +
-          faceAuthenticatorResult.message;
-    } else {
-      result = "Closed!";
+        description += "\n\tauthenticated: " +
+            (faceAuthenticatorResult.authenticated ? "true" : "false") +
+            "\n\tsignedResponse: " +
+            (faceAuthenticatorResult.signedResponse != null
+                ? faceAuthenticatorResult.signedResponse
+                : "null");
+      } else if (faceAuthenticatorResult is FaceAuthenticatorFailure) {
+        result = "Falha!";
+        description = "\tType: " +
+            faceAuthenticatorResult.type +
+            "\n\tMessage: " +
+            faceAuthenticatorResult.message;
+      } else {
+        result = "Closed!";
+      }
+    } on PlatformException catch (err) {
+      result = "Excpection!";
+      description = err.message;
     }
 
     if (!mounted) return;

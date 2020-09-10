@@ -1,35 +1,42 @@
 PODS:
-  - activeface_liveness_sdk (0.2.0):
-    - ActiveFaceLiveness (~> 1.0.0)
+  - face_authenticator (1.1.0):
+    - FaceAuthenticator (~> 1.3.0)
     - Flutter
-  - ActiveFaceLiveness (1.0.0)
+  - FaceAuthenticator (1.3.0):
+    - Sentry (~> 5.2.0)
   - Flutter (1.0.0)
-  - "permission_handler (5.0.0+hotfix.6)":
+  - "permission_handler (5.0.1+1)":
     - Flutter
+  - Sentry (5.2.2):
+    - Sentry/Core (= 5.2.2)
+  - Sentry/Core (5.2.2)
 
 DEPENDENCIES:
-  - activeface_liveness_sdk (from `.symlinks/plugins/activeface_liveness_sdk/ios`)
+  - face_authenticator (from `.symlinks/plugins/face_authenticator/ios`)
   - Flutter (from `Flutter`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
 
 SPEC REPOS:
-  https://github.com/combateafraude/Mobile.git:
-    - ActiveFaceLiveness
+  https://github.com/combateafraude/iOS.git:
+    - FaceAuthenticator
+  trunk:
+    - Sentry
 
 EXTERNAL SOURCES:
-  activeface_liveness_sdk:
-    :path: ".symlinks/plugins/activeface_liveness_sdk/ios"
+  face_authenticator:
+    :path: ".symlinks/plugins/face_authenticator/ios"
   Flutter:
     :path: Flutter
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  activeface_liveness_sdk: cc36b30dacae8fbb568e23262d7d826817283198
-  ActiveFaceLiveness: 182daa9ac7c4fc058b3d6dfb375c45b405f0feca
+  face_authenticator: 2965b279e2ad2f9f1fd6d2c8444acc6fb9f310d2
+  FaceAuthenticator: 63d778e1ea5c1aee33060f2d4b561ad3b222cf0f
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  permission_handler: b7a0953389e699927c6217933754cdcd0fa2c5a7
+  permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
+  Sentry: 8fa58a051237554f22507fb483b9a1de0171a2dc
 
-PODFILE CHECKSUM: 121cd6ed011b38fff514f4d3c43efa6bcb032bc2
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3
