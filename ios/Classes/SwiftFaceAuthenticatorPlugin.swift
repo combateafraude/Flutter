@@ -33,6 +33,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
             let peopleId = arguments["peopleId"] as! String
 
             var faceAuthenticatorBuilder = FaceAuthenticatorBuilder(apiToken: mobileToken)
+            faceAuthenticatorBuilder.setPeopleId(peopleId)
 
             if let hasSound = arguments["sound"] as! Bool? {
                 faceAuthenticatorBuilder = faceAuthenticatorBuilder.enableSound(hasSound: hasSound)
