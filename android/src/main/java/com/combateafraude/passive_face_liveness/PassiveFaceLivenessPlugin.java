@@ -61,6 +61,14 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
 
         PassiveFaceLiveness.Builder mPassiveFaceLivenessBuilder = new PassiveFaceLiveness.Builder(mobileToken);
 
+        // People ID
+        String peopleId = (String) argumentsMap.get("peopleId");
+        mPassiveFaceLivenessBuilder.setPeopleId(peopleId);
+
+        // Use Analytics
+        Boolean useAnalytics = (Boolean) argumentsMap.get("useAnalytics");
+        if (useAnalytics != null) mPassiveFaceLivenessBuilder.setAnalyticsSettings(useAnalytics);
+
         // Android specific settings
         HashMap<String, Object> androidSettings = (HashMap<String, Object>) argumentsMap.get("androidSettings");
         if (androidSettings != null) {

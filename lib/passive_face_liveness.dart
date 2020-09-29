@@ -12,6 +12,8 @@ class PassiveFaceLiveness {
       const MethodChannel('passive_face_liveness');
 
   String mobileToken;
+  String peopleId;
+  bool useAnalytics;
   bool sound;
   int requestTimeout;
   PassiveFaceLivenessAndroidSettings androidSettings;
@@ -21,6 +23,14 @@ class PassiveFaceLiveness {
 
   void enableSound(bool enable) {
     this.sound = enable;
+  }
+
+  void setPeopleId(String peopleId) {
+    this.peopleId = peopleId;
+  }
+
+  void setAnalyticsSettings(bool useAnalytics) {
+    this.useAnalytics = useAnalytics;
   }
 
   void setNetworkSettings(int requestTimeout) {
@@ -39,6 +49,8 @@ class PassiveFaceLiveness {
     Map<String, dynamic> params = new Map();
 
     params["mobileToken"] = mobileToken;
+    params["peopleId"] = peopleId;
+    params["useAnalytics"] = useAnalytics;
     params["sound"] = sound;
     params["requestTimeout"] = requestTimeout;
     params["androidSettings"] = androidSettings?.asMap();

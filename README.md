@@ -2,6 +2,10 @@
 
 Plugin que chama os SDKs nativos em [Android](https://docs.combateafraude.com/docs/mobile/android/passive-face-liveness/) e [iOS](https://docs.combateafraude.com/docs/mobile/ios/passive-face-liveness/). Caso tenha alguma dúvida, envie um email para o nosso [Head of Mobile](mailto:frederico.gassen@combateafraude.com)
 
+# Políticas de privacidade e termos e condições de uso
+
+Ao utilizar nosso plugin, certifique-se que você concorda com nossas [Políticas de privacidade](https://www.combateafraude.com/politicas/politicas-de-privacidade) e nossos [Termos e condições de uso](https://www.combateafraude.com/politicas/termos-e-condicoes-de-uso).
+
 ## Pré requisitos
 
 | Configuração mínima | Versão |
@@ -69,7 +73,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-v1.1.0
+      ref: passive-face-liveness-v1.2.0
 ```
 
 ## Utilização
@@ -94,6 +98,8 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 
 | PassiveFaceLiveness |
 | --------- |
+| `.setPeopleId(String peopleId)`<br><br>CPF do usuário que está utilizando o plugin à ser usado para detecção de fraudes via analytics |
+| `.setAnalyticsSettings(bool useAnalytics)`<br><br>Habilita/desabilita a coleta de dados para maximização da informação antifraude. O padrão é `true` |
 | `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
 | `.setAndroidSettings(PassiveFaceLivenessAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
