@@ -105,6 +105,8 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 
 | DocumentDetector |
 | --------- |
+| `.setPeopleId(String peopleId)`<br><br>CPF do usuário que está utilizando o plugin à ser usado para detecção de fraudes via analytics |
+| `.setAnalyticsSettings(bool useAnalytics)`<br><br>Habilita/desabilita a coleta de dados para maximização da informação antifraude. O padrão é `true` |
 | `.setDocumentFlow(List<DocumentDetectorStep> documentSteps)`<br><br>Fluxo de documentos à serem capturados no SDK |
 | `.setPopupSettings(bool show)`<br><br>Altera a configuração dos popups inflados antes de cada documento. O padrão é `true` |
 | `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
