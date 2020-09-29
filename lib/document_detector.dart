@@ -16,6 +16,8 @@ class DocumentDetector {
       const MethodChannel('document_detector');
 
   String mobileToken;
+  String peopleId;
+  bool useAnalytics;
   List<DocumentDetectorStep> documentDetectorSteps;
   bool popup;
   bool sound;
@@ -27,6 +29,14 @@ class DocumentDetector {
 
   void setDocumentFlow(List<DocumentDetectorStep> documentDetectorSteps) {
     this.documentDetectorSteps = documentDetectorSteps;
+  }
+
+  void setPeopleId(String peopleId) {
+    this.peopleId = peopleId;
+  }
+
+  void setAnalyticsSettings(bool useAnalytics) {
+    this.useAnalytics = useAnalytics;
   }
 
   void setPopupSettings(bool show) {
@@ -53,6 +63,8 @@ class DocumentDetector {
     Map<String, dynamic> params = new Map();
 
     params["mobileToken"] = mobileToken;
+    params["peopleId"] = peopleId;
+    params["useAnalytics"] = useAnalytics;
     params["popup"] = popup;
     params["sound"] = sound;
     params["requestTimeout"] = requestTimeout;

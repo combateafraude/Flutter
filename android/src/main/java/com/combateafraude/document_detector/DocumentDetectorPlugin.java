@@ -70,6 +70,14 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
 
         DocumentDetector.Builder mDocumentDetectorBuilder = new DocumentDetector.Builder(mobileToken);
 
+        // People ID
+        String peopleId = (String) argumentsMap.get("peopleId");
+        mDocumentDetectorBuilder.setPeopleId(peopleId);
+
+        // Use Analytics
+        Boolean useAnalytics = (Boolean) argumentsMap.get("useAnalytics");
+        if (useAnalytics != null) mDocumentDetectorBuilder.setAnalyticsSettings(useAnalytics);
+
         // Document steps
         ArrayList<HashMap<String, Object>> paramSteps = (ArrayList<HashMap<String, Object>>) argumentsMap.get("documentSteps");
         DocumentDetectorStep[] documentDetectorSteps = new DocumentDetectorStep[paramSteps.size()];

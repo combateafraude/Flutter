@@ -4,6 +4,10 @@ Plugin que chama os SDKs nativos em [Android](https://docs.combateafraude.com/do
 
 Atualmente, os documentos suportados são RG, CNH, RNE e CRLV. Caso tenha alguma sugestão de outro documento, contate-nos!
 
+# Políticas de privacidade e termos e condições de uso
+
+Ao utilizar nosso plugin, certifique-se que você concorda com nossas [Políticas de privacidade](https://www.combateafraude.com/politicas/politicas-de-privacidade) e nossos [Termos e condições de uso](https://www.combateafraude.com/politicas/termos-e-condicoes-de-uso).
+
 ## Pré requisitos
 
 | Configuração mínima | Versão |
@@ -75,7 +79,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v3.2.0
+      ref: document-detector-v3.3.0
 ```
 
 ## Utilização
