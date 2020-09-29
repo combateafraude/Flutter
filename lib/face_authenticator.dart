@@ -14,6 +14,7 @@ class FaceAuthenticator {
 
   String mobileToken;
   String peopleId;
+  bool useAnalytics;
   bool sound;
   int requestTimeout;
   FaceAuthenticatorAndroidSettings androidSettings;
@@ -27,6 +28,10 @@ class FaceAuthenticator {
 
   void setPeopleId(String peopleId) {
     this.peopleId = peopleId;
+  }
+
+  void setAnalyticsSettings(bool useAnalytics) {
+    this.useAnalytics = useAnalytics;
   }
 
   void setNetworkSettings(int requestTimeout) {
@@ -46,6 +51,7 @@ class FaceAuthenticator {
 
     params["mobileToken"] = mobileToken;
     params["peopleId"] = peopleId;
+    params["useAnalytics"] = useAnalytics;
     params["sound"] = sound;
     params["requestTimeout"] = requestTimeout;
     params["androidSettings"] = androidSettings?.asMap();

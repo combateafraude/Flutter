@@ -71,6 +71,10 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
         FaceAuthenticator.Builder mFaceAuthenticatorBuilder = new FaceAuthenticator.Builder(mobileToken);
         mFaceAuthenticatorBuilder.setPeopleId(peopleId);
 
+        // Use Analytics
+        Boolean useAnalytics = (Boolean) argumentsMap.get("useAnalytics");
+        if (useAnalytics != null) mFaceAuthenticatorBuilder.setAnalyticsSettings(useAnalytics);
+
         // Android specific settings
         HashMap<String, Object> androidSettings = (HashMap<String, Object>) argumentsMap.get("androidSettings");
         if (androidSettings != null) {
