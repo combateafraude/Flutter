@@ -27,14 +27,22 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         
         let mobileToken = arguments["mobileToken"] as! String
         
-        var passiveFaceLivenessBuilder = PassiveFaceLivenessBuilder(apiToken: mobileToken)
+        var passiveFaceLivenessBuilder = PassiveFaceLiveness.Builder(mobileToken: mobileToken)
+
+        if let peopleId = arguments["peopleId"] as! String? {
+            passiveFaceLivenessBuilder.setPeopleId(peopleId: peopleId)
+        }
+
+        if let useAnalytics = arguments["useAnalytics"] as! Bool? {
+            passiveFaceLivenessBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)
+        }
 
         if let hasSound = arguments["sound"] as! Bool? {
-            passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.enableSound(enableSound: hasSound)
+            passiveFaceLivenessBuilder.enableSound(enableSound: hasSound)
         }
 
         if let requestTimeout = arguments["requestTimeout"] as? TimeInterval {
-            passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.setNetworkSettings(requestTimeout: requestTimeout)
+            passiveFaceLivenessBuilder.setNetworkSettings(requestTimeout: requestTimeout)
         }
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] {
@@ -44,15 +52,15 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 let layout = PassiveFaceLivenessLayout()
 
                 if let colorHex = customization["colorHex"] as? String {
-                    passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
+                    passiveFaceLivenessBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
                 }
 
                 if let showStepLabel = customization["showStepLabel"] as? Bool {
-                    passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.showStepLabel(show: showStepLabel)
+                    passiveFaceLivenessBuilder.showStepLabel(show: showStepLabel)
                 }
 
                 if let showStatusLabel = customization["showStatusLabel"] as? Bool {
-                    passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.showStatusLabel(show: showStatusLabel)
+                    passiveFaceLivenessBuilder.showStatusLabel(show: showStatusLabel)
                 }
                 
                 if let closeImageName = customization["closeImageName"] as? String {
@@ -80,11 +88,11 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                     redMask: redMask)
 
                 
-                passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.setLayout(layout: layout)
+                passiveFaceLivenessBuilder.setLayout(layout: layout)
             }
 
             if let beforePictureMillis = iosSettings["beforePictureMillis"] as? TimeInterval {
-                passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.setCaptureSettings(beforePictureInterval: beforePictureMillis)
+                passiveFaceLivenessBuilder.setCaptureSettings(beforePictureInterval: beforePictureMillis)
             }
 
             
@@ -92,7 +100,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 if let sensorStability = sensorStability["sensorStability"] as? [String: Any] {
                     let message = sensorStability["message"] as! String?
                     let stabilityThreshold = sensorStability["stabilityThreshold"] as! Double?
-                    passiveFaceLivenessBuilder = passiveFaceLivenessBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
+                    passiveFaceLivenessBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
                 }
             }
             
@@ -100,7 +108,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         
         let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
         
-        let scannerVC = PassiveFaceLivenessController(passiveFaceLivenessConfiguration: passiveFaceLivenessBuilder.build())
+        let scannerVC = PassiveFaceLivenessController(passiveFaceLiveness: passiveFaceLivenessBuilder.build())
         scannerVC.passiveFaceLivenessDelegate = self
         controller.present(scannerVC, animated: true, completion: nil)
     }
@@ -125,7 +133,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         flutterResult!(response)
     }
     
-    public func passiveFaceLivenessController(_ passiveFacelivenessController: PassiveFaceLivenessController, didFailWithError error: SDKFailure) {
+    public func passiveFaceLivenessController(_ passiveFacelivenessController: PassiveFaceLivenessController, didFailWithError error: PassiveFaceLivenessFailure) {
         let response : NSMutableDictionary! = [:]
 
         response["success"] = NSNumber(value: false)

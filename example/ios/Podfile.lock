@@ -1,10 +1,12 @@
 PODS:
+  - Alamofire (5.2.0)
   - Flutter (1.0.0)
-  - passive_face_liveness (1.0.0):
+  - passive_face_liveness (1.3.0):
     - Flutter
-    - PassiveFaceLiveness (= 1.4.1)
-  - PassiveFaceLiveness (1.4.1):
-    - Sentry (~> 5.2.0)
+    - PassiveFaceLiveness (= 2.2.0)
+  - PassiveFaceLiveness (2.2.0):
+    - Alamofire (= 5.2)
+    - Sentry (= 5.2.0)
   - "permission_handler (5.0.1+1)":
     - Flutter
   - Sentry (5.2.0):
@@ -20,6 +22,7 @@ SPEC REPOS:
   https://github.com/combateafraude/iOS.git:
     - PassiveFaceLiveness
   trunk:
+    - Alamofire
     - Sentry
 
 EXTERNAL SOURCES:
@@ -31,9 +34,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
+  Alamofire: c1ca147559e730bfb2182c8c7aafbdd90a867987
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  passive_face_liveness: c9cc268b90a7558e4f4e21127e946e7df4e72539
-  PassiveFaceLiveness: 5f9f2982b5062a61e436b82b151b3fb238df5bc2
+  passive_face_liveness: 0a31949d484a260af90a78881988e7963382149d
+  PassiveFaceLiveness: 52d6dcdd78845e963aada79e6fe27614c11bbbf5
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
   Sentry: 6e04bc3e11bf771ca79140a112de64dcfbc7d8cb
 

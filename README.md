@@ -42,19 +42,7 @@ No arquivo `ROOT_PROJECT/ios/Podfile`, adicione no final do arquivo:
 
 ``` swift
 source 'https://github.com/combateafraude/iOS.git'
-source 'https://cdn.cocoapods.org/'
-```
-
-Além disso, nesse mesmo arquivo, se tiver alguma configuração `ENABLE_BITCODE`, desabilite-a como no exemplo:
-
-``` swift
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['ENABLE_BITCODE'] = 'NO'
-    end
-  end
-end
+source 'https://cdn.cocoapods.org/' # ou 'https://github.com/CocoaPods/Specs' se o CDN estiver fora do ar
 ```
 
 Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runner/Info.plist`:
@@ -73,7 +61,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-v1.2.1
+      ref: passive-face-liveness-v1.3.0
 ```
 
 ## Utilização
