@@ -138,6 +138,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
         responseMap.put("imagePath", mPassiveFaceLivenessResult.getImagePath());
         responseMap.put("imageUrl", mPassiveFaceLivenessResult.getImageUrl());
         responseMap.put("signedResponse", mPassiveFaceLivenessResult.getSignedResponse());
+        responseMap.put("trackingId", mPassiveFaceLivenessResult.getTrackingId());
         return responseMap;
     }
 

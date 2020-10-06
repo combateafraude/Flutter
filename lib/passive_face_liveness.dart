@@ -63,8 +63,11 @@ class PassiveFaceLiveness {
     if (success == null) {
       return new PassiveFaceLivenessClosed();
     } else if (success == true) {
-      return new PassiveFaceLivenessSuccess(resultMap["imagePath"],
-          resultMap["imageUrl"], resultMap["signedResponse"]);
+      return new PassiveFaceLivenessSuccess(
+          resultMap["imagePath"],
+          resultMap["imageUrl"],
+          resultMap["signedResponse"],
+          resultMap["trackingId"]);
     } else if (success == false) {
       return new PassiveFaceLivenessFailure(
           resultMap["message"], resultMap["type"]);

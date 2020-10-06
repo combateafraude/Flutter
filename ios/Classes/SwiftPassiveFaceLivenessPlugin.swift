@@ -121,6 +121,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         response["imagePath"] = imagePath
         response["imageUrl"] = results.imageUrl
         response["signedResponse"] = results.signedResponse
+        response["trackingId"] = results.trackingId
 
         flutterResult!(response)
     }

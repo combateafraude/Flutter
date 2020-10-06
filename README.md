@@ -61,7 +61,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-v1.3.0
+      ref: passive-face-liveness-v1.3.1
 ```
 
 ## Utilização
@@ -159,6 +159,7 @@ O objeto de retorno do PassiveFaceLiveness é do tipo abstrato `PassiveFaceLiven
 | `String imagePath`<br><br>Endereço completo da imagem no dispositivo |
 | `String imageUrl`<br><br>URL da imagem armazenada temporariamente nos servidores da CAF |
 | `String signedResponse`<br><br>Resposta assinada do servidor da CAF que confirmou que a selfie capturada possui um rosto verdadeiro (não é foto de foto ou vídeo). Utilize esse parâmetro caso queira uma camada extra de segurança verificando se a assinatura da resposta não está quebrada, provocada por uma interceptação da requisição. Se estiver quebrada, há um grande indício de interceptação da requisição |
+| `String trackingId`<br><br>Identificador dessa execução em nossos servidores. Se possível, salve este campo e mande-o junto para nossa API. Assim, teremos mais dados de como o usuário se comportou durante a execução | Será nulo se o usuário configurar useAnalytics = false ou as chamadas de analytics não funcionarem |
 
 #### PassiveFaceLivenessFailure
 
