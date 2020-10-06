@@ -36,15 +36,15 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
             faceAuthenticatorBuilder.setPeopleId(peopleId)
 
             if let useAnalytics = arguments["useAnalytics"] as! Bool? {
-                faceAuthenticatorBuilder = faceAuthenticatorBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)
+                faceAuthenticatorBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)
             }
 
             if let hasSound = arguments["sound"] as! Bool? {
-                faceAuthenticatorBuilder = faceAuthenticatorBuilder.enableSound(hasSound: hasSound)
+                faceAuthenticatorBuilder.enableSound(hasSound: hasSound)
             }
 
             if let requestTimeout = arguments["requestTimeout"] as? TimeInterval {
-                faceAuthenticatorBuilder = faceAuthenticatorBuilder.setNetworkSettings(requestTimeout: requestTimeout)
+                faceAuthenticatorBuilder.setNetworkSettings(requestTimeout: requestTimeout)
             }
 
             if let iosSettings = arguments["iosSettings"] as? [String: Any] {
@@ -54,15 +54,15 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
                     let layout = FaceAuthenticatorLayout()
 
                     if let colorHex = customization["colorHex"] as? String {
-                        faceAuthenticatorBuilder = faceAuthenticatorBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
+                        faceAuthenticatorBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
                     }
 
                     if let showStepLabel = customization["showStepLabel"] as? Bool {
-                        faceAuthenticatorBuilder = faceAuthenticatorBuilder.showStepLabel(show: showStepLabel)
+                        faceAuthenticatorBuilder.showStepLabel(show: showStepLabel)
                     }
 
                     if let showStatusLabel = customization["showStatusLabel"] as? Bool {
-                        faceAuthenticatorBuilder = faceAuthenticatorBuilder.showStatusLabel(show: showStatusLabel)
+                        faceAuthenticatorBuilder.showStatusLabel(show: showStatusLabel)
                     }
 
                     if let closeImageName = customization["closeImageName"] as? String {
@@ -90,11 +90,11 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
                         redMask: redMask)
 
 
-                    faceAuthenticatorBuilder = faceAuthenticatorBuilder.setLayout(layout: layout)
+                    faceAuthenticatorBuilder.setLayout(layout: layout)
                 }
 
                 if let beforePictureMillis = iosSettings["beforePictureMillis"] as? TimeInterval {
-                    faceAuthenticatorBuilder = faceAuthenticatorBuilder.setCaptureSettings(beforePictureInterval: beforePictureMillis)
+                    faceAuthenticatorBuilder.setCaptureSettings(beforePictureInterval: beforePictureMillis)
                 }
 
 
@@ -102,7 +102,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
                     if let sensorStability = sensorStability["sensorStability"] as? [String: Any] {
                         let message = sensorStability["message"] as! String?
                         let stabilityThreshold = sensorStability["stabilityThreshold"] as! Double?
-                        faceAuthenticatorBuilder = faceAuthenticatorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
+                        faceAuthenticatorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
                     }
                 }
 
