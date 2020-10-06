@@ -93,7 +93,8 @@ class DocumentDetector {
             captureRaw["label"],
             captureRaw["quality"]));
       }
-      return new DocumentDetectorSuccess(captureList, resultMap["type"]);
+      return new DocumentDetectorSuccess(
+          captureList, resultMap["type"], resultMap["trackingId"]);
     } else if (success == false) {
       return new DocumentDetectorFailure(
           resultMap["message"], resultMap["type"]);

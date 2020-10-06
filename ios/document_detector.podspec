@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
   s.name             = 'document_detector'
-  s.version          = '3.3.1'
+  s.version          = '3.4.0'
   s.summary          = 'Flutter plugin for DocumentDetector'
   s.homepage         = 'https://www.combateafraude.com/'
   s.license          = { :file => 'LICENSE', :type => 'MIT' }
-  s.author           = { 'frederico.gassen@combateafraude.com' => 'frederico.gassen@combateafraude.com' }
+  s.author           = { 'ti@combateafraude.com' => 'ti@combateafraude.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.platform = :ios, '11.0'
@@ -14,5 +14,5 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
   
   s.dependency 'Flutter'
-  s.dependency 'DocumentDetector', '~> 2.3.0'
+  s.dependency 'DocumentDetector', '~> 3.1.0'
 end

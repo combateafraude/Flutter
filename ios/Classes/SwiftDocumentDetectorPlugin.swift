@@ -56,29 +56,37 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             }
         }
 
-        var documentDetectorBuilder = DocumentDetectorBuilder(apiToken: mobileToken)
+        var documentDetectorBuilder = DocumentDetector.Builder(mobileToken: mobileToken)
             .setDocumentDetectorFlow(flow: documentDetectorSteps)
 
+        if let useAnalytics = arguments["useAnalytics"] as! Bool? {
+            documentDetectorBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)
+        }
+
+        if let peopleId = arguments["peopleId"] as! String? {
+            documentDetectorBuilder.setPeopleId(peopleId: peopleId)
+        }
+        
         if let showPopup = arguments["popup"] as! Bool? {
-            documentDetectorBuilder = documentDetectorBuilder.setPopupSettings(show: showPopup)
+            documentDetectorBuilder.setPopupSettings(show: showPopup)
         }
 
         if let hasSound = arguments["sound"] as! Bool? {
-            documentDetectorBuilder = documentDetectorBuilder.enableSound(enableSound: hasSound)
+            documentDetectorBuilder.enableSound(enableSound: hasSound)
         }
 
         if let requestTimeout = arguments["requestTimeout"] as? TimeInterval {
-            documentDetectorBuilder = documentDetectorBuilder.setNetworkSettings(requestTimeout: requestTimeout)
+            documentDetectorBuilder.setNetworkSettings(requestTimeout: requestTimeout)
         }
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] {
             if let detectionThreshold = iosSettings["detectionThreshold"] as? Float {
-                documentDetectorBuilder = documentDetectorBuilder.setDetectionSettings(detectionThreshold: detectionThreshold)
+                documentDetectorBuilder.setDetectionSettings(detectionThreshold: detectionThreshold)
             }
 
             if let verifyQuality = iosSettings["verifyQuality"] as? Bool {
                 let qualityThreshold = iosSettings["qualityThreshold"] as? Double
-                documentDetectorBuilder = documentDetectorBuilder.setQualitySettings(verifyQuality: verifyQuality, qualityThreshold: qualityThreshold)
+                documentDetectorBuilder.setQualitySettings(verifyQuality: verifyQuality, qualityThreshold: qualityThreshold)
             }
 
             if let sensorStability = iosSettings["sensorStability"] as? [String: Any] {
@@ -86,19 +94,19 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 if let sensorLuminosity = iosSettings["sensorLuminosity"] as? [String: Any] {
                     let message = sensorLuminosity["message"] as! String?
                     let luminosityThreshold = sensorLuminosity["luminosityThreshold"] as! Float?
-                    documentDetectorBuilder = documentDetectorBuilder.setLuminositySensorSettings(message: message, luminosityThreshold: luminosityThreshold)
+                    documentDetectorBuilder.setLuminositySensorSettings(message: message, luminosityThreshold: luminosityThreshold)
                 }
 
                 if let sensorOrientation = iosSettings["sensorOrientation"] as? [String: Any] {
                     let message = sensorOrientation["message"] as! String?
                     let orientationThreshold = sensorOrientation["orientationThreshold"] as! Double?
-                    documentDetectorBuilder = documentDetectorBuilder.setOrientationSensorSettings(message: message, orientationThreshold: orientationThreshold)
+                    documentDetectorBuilder.setOrientationSensorSettings(message: message, orientationThreshold: orientationThreshold)
                 }
 
                 if let sensorStability = iosSettings["sensorStability"] as? [String: Any] {
                     let message = sensorStability["message"] as! String?
                     let stabilityThreshold = sensorStability["stabilityThreshold"] as! Double?
-                    documentDetectorBuilder = documentDetectorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
+                    documentDetectorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
                 }
 
             }
@@ -108,15 +116,15 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 let layout = DocumentDetectorLayout()
 
                 if let colorHex = customization["colorHex"] as? String {
-                    documentDetectorBuilder = documentDetectorBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
+                    documentDetectorBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
                 }
 
                 if let showStepLabel = customization["showStepLabel"] as? Bool {
-                    documentDetectorBuilder = documentDetectorBuilder.showStepLabel(show: showStepLabel)
+                    documentDetectorBuilder.showStepLabel(show: showStepLabel)
                 }
 
                 if let showStatusLabel = customization["showStatusLabel"] as? Bool {
-                    documentDetectorBuilder = documentDetectorBuilder.showStatusLabel(show: showStatusLabel)
+                    documentDetectorBuilder.showStatusLabel(show: showStatusLabel)
                 }
                 
                 if let closeImageName = customization["closeImageName"] as? String {
@@ -144,13 +152,13 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                     redMask: redMask)
 
                 
-                documentDetectorBuilder = documentDetectorBuilder.setLayout(layout: layout)
+                documentDetectorBuilder.setLayout(layout: layout)
             }
         }
         
         let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
         
-        let scannerVC = DocumentDetectorController(documentDetectorConfiguration: documentDetectorBuilder.build())
+        let scannerVC = DocumentDetectorController(documentDetector: documentDetectorBuilder.build())
         scannerVC.documentDetectorDelegate = self
         controller.present(scannerVC, animated: true, completion: nil)
     }
@@ -196,6 +204,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         response["success"] = NSNumber(value: true)
         response["type"] = results.type
         response["captures"] = captureMap
+        response["trackingId"] = results.trackingId
         
         flutterResult!(response)
     }
@@ -206,7 +215,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         flutterResult!(response)
     }
     
-    public  func documentDetectionController(_ scanner: DocumentDetectorController, didFailWithError error:  DocumentDetector.SDKFailure) {
+    public  func documentDetectionController(_ scanner: DocumentDetectorController, didFailWithError error:  DocumentDetectorFailure) {
         let response : NSMutableDictionary! = [:]
         response["success"] = NSNumber(value: false)
         response["message"] = error.message

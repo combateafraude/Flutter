@@ -1,10 +1,12 @@
 PODS:
-  - document_detector (3.0.3):
-    - DocumentDetector (~> 2.2.1)
+  - Alamofire (5.2.0)
+  - document_detector (3.4.0):
+    - DocumentDetector (~> 3.1.0)
     - Flutter
-  - DocumentDetector (2.2.1):
-    - Sentry (~> 5.2.0)
-    - TensorFlowLiteSwift (~> 2.1.0)
+  - DocumentDetector (3.1.0):
+    - Alamofire (= 5.2)
+    - Sentry (= 5.2.0)
+    - TensorFlowLiteSwift (= 2.1.0)
   - Flutter (1.0.0)
   - "permission_handler (5.0.1+1)":
     - Flutter
@@ -24,6 +26,7 @@ SPEC REPOS:
   https://github.com/combateafraude/iOS.git:
     - DocumentDetector
   trunk:
+    - Alamofire
     - Sentry
     - TensorFlowLiteC
     - TensorFlowLiteSwift
@@ -37,8 +40,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  document_detector: a89b1919a72f6c81a7b92e8cc7963dc4ecf8a3c0
-  DocumentDetector: bac2a11964d1445542bc7ce281147eae189635b8
+  Alamofire: c1ca147559e730bfb2182c8c7aafbdd90a867987
+  document_detector: d265d717e106bd0e7c5174f5c7f6b5ec4bf2ca2c
+  DocumentDetector: 54244871404753d9af5304a4de773dcdca6573d8
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
   Sentry: 6e04bc3e11bf771ca79140a112de64dcfbc7d8cb

@@ -47,19 +47,7 @@ No arquivo `ROOT_PROJECT/ios/Podfile`, adicione no final do arquivo:
 
 ``` swift
 source 'https://github.com/combateafraude/iOS.git'
-source 'https://cdn.cocoapods.org/'
-```
-
-Além disso, nesse mesmo arquivo, se tiver alguma configuração `ENABLE_BITCODE`, desabilite-a como no exemplo:
-
-``` swift
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['ENABLE_BITCODE'] = 'NO'
-    end
-  end
-end
+source 'https://cdn.cocoapods.org/' # ou 'https://github.com/CocoaPods/Specs' se o CDN estiver fora do ar
 ```
 
 Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runner/Info.plist`:
@@ -79,7 +67,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v3.3.1
+      ref: document-detector-v3.4.0
 ```
 
 ## Utilização
@@ -223,6 +211,7 @@ O objeto de retorno do DocumentDetector é do tipo abstrato `DocumentDetectorRes
 | --------- | --------- |
 | `List<Capture> captures`<br><br>Lista de capturas dos documentos | Terá o mesmo tamanho e a mesma ordem do parâmetro `List<DocumentDetectorStep>` |
 | `String type`<br><br>Tipo de documento detectado pelo próprio SDK, util para a integração com nossa rota externa de OCR. Por exemplo, se você capturar `DocumentType.CNH_FRONT` e `DocumentType.CNH_BACK`, este parâmetro será "cnh" | Será nulo se o SDK não conseguir verificar o tipo do documento ou se a detecção for desabilitada |
+| `String trackingId`<br><br>Identificador dessa execução em nossos servidores. Se possível, salve este campo e mande-o junto para nossa API. Assim, teremos mais dados de como o usuário se comportou durante a execução | Será nulo se o usuário configurar useAnalytics = false ou as chamadas de analytics não funcionarem |
 
 ##### Capture
 

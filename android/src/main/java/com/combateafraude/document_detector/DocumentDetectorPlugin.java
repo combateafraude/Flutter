@@ -229,6 +229,7 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
         }
         responseMap.put("captures", captures);
         responseMap.put("type", mDocumentDetectorResult.getType());
+        responseMap.put("trackingId", mDocumentDetectorResult.getTrackingId());
         return responseMap;
     }
 
