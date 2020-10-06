@@ -61,7 +61,7 @@ dependencies:
   face_authenticator:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: face-authenticator-v1.3.0
+      ref: face-authenticator-v1.3.1
 ```
 
 ## Utilização
@@ -159,6 +159,7 @@ O objeto de retorno do FaceAuthenticator é do tipo abstrato `FaceAuthenticatorR
 | --------- |
 | `bool authenticated`<br><br>Flag que indica se o usuário foi aprovado na autenticação facial |
 | `String signedResponse`<br><br>Resposta assinada do servidor da CAF que confirmou a autenticação facial. Utilize esse parâmetro caso queira uma camada extra de segurança verificando se a assinatura da resposta não está quebrada, provocada por uma interceptação da requisição. Se estiver quebrada, há um grande indício de interceptação da requisição |
+| `String trackingId`<br><br>Identificador dessa execução em nossos servidores. Se possível, salve este campo e mande-o junto para nossa API. Assim, teremos mais dados de como o usuário se comportou durante a execução | Será nulo se o usuário configurar useAnalytics = false ou as chamadas de analytics não funcionarem |
 
 #### FaceAuthenticatorFailure
 

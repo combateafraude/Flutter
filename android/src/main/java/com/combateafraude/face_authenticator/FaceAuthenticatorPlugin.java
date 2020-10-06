@@ -143,6 +143,7 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
         responseMap.put("success", Boolean.TRUE);
         responseMap.put("authenticated", mFaceAuthenticatorResult.isAuthenticated());
         responseMap.put("signedResponse", mFaceAuthenticatorResult.getSignedResponse());
+        responseMap.put("trackingId", mFaceAuthenticatorResult.getTrackingId());
         return responseMap;
     }
 

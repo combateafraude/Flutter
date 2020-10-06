@@ -121,6 +121,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
             response["success"] = NSNumber(value: true)
             response["authenticated"] = results.authenticated
             response["signedResponse"] = results.signedResponse
+            response["trackingId"] = results.trackingId
 
             flutterResult!(response)
         }

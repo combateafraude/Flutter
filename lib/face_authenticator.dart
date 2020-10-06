@@ -64,8 +64,8 @@ class FaceAuthenticator {
     if (success == null) {
       return new FaceAuthenticatorClosed();
     } else if (success == true) {
-      return new FaceAuthenticatorSuccess(
-          resultMap["authenticated"], resultMap["signedResponse"]);
+      return new FaceAuthenticatorSuccess(resultMap["authenticated"],
+          resultMap["signedResponse"], resultMap["trackingId"]);
     } else if (success == false) {
       return new FaceAuthenticatorFailure(
           resultMap["message"], resultMap["type"]);
