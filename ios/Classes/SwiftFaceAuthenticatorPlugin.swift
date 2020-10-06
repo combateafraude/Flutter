@@ -32,8 +32,12 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
 
             let peopleId = arguments["peopleId"] as! String
 
-            var faceAuthenticatorBuilder = FaceAuthenticatorBuilder(apiToken: mobileToken)
+            var faceAuthenticatorBuilder = FaceAuthenticator.Builder(mobileToken: mobileToken)
             faceAuthenticatorBuilder.setPeopleId(peopleId)
+
+            if let useAnalytics = arguments["useAnalytics"] as! Bool? {
+                faceAuthenticatorBuilder = faceAuthenticatorBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)
+            }
 
             if let hasSound = arguments["sound"] as! Bool? {
                 faceAuthenticatorBuilder = faceAuthenticatorBuilder.enableSound(hasSound: hasSound)
@@ -98,7 +102,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
                     if let sensorStability = sensorStability["sensorStability"] as? [String: Any] {
                         let message = sensorStability["message"] as! String?
                         let stabilityThreshold = sensorStability["stabilityThreshold"] as! Double?
-                        //faceAuthenticatorBuilder = faceAuthenticatorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
+                        faceAuthenticatorBuilder = faceAuthenticatorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
                     }
                 }
 
@@ -106,7 +110,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
 
             let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
 
-            let scannerVC = FaceAuthenticatorController(faceAuthenticatorConfiguration: faceAuthenticatorBuilder.build())
+            let scannerVC = FaceAuthenticatorController(faceAuthenticator: faceAuthenticatorBuilder.build())
             scannerVC.faceAuthenticatorDelegate = self
             controller.present(scannerVC, animated: true, completion: nil)
         }
@@ -129,7 +133,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
             flutterResult!(response)
         }
 
-        public func faceAuthenticatorController(_ faceAuthenticatorController: FaceAuthenticatorController, didFailWithError error: SDKFailure) {
+        public func faceAuthenticatorController(_ faceAuthenticatorController: FaceAuthenticatorController, didFailWithError error: FaceAuthenticatorFailure) {
             let response : NSMutableDictionary! = [:]
 
             response["success"] = NSNumber(value: false)
