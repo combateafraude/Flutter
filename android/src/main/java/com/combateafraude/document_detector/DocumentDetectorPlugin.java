@@ -92,9 +92,15 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
                 Integer illustrationId = getResourceId((String) stepCustomization.get("illustrationDrawableResName"), DRAWABLE_RES);
                 Integer audioId = getResourceId((String) stepCustomization.get("audioRawResName"), RAW_RES);
 
-                documentDetectorSteps[i] = new DocumentDetectorStep(document, stepLabelId, illustrationId, audioId);
+                DocumentDetectorStep detectorStep = new DocumentDetectorStep(document);
+
+                if(stepLabelId != null) detectorStep.setStepLabel(stepLabelId);
+                if(illustrationId != null) detectorStep.setIllustration(illustrationId);
+                if(audioId != null) detectorStep.setStepAudio(audioId);
+            
+                documentDetectorSteps[i] = detectorStep;
             } else {
-                documentDetectorSteps[i] = new DocumentDetectorStep(document, null, null, null);
+                documentDetectorSteps[i] = new DocumentDetectorStep(document);
             }
         }
         mDocumentDetectorBuilder.setDocumentSteps(documentDetectorSteps);
