@@ -1,9 +1,9 @@
 PODS:
   - Alamofire (5.2.0)
-  - document_detector (3.4.0):
-    - DocumentDetector (~> 3.1.0)
+  - document_detector (3.6.1):
+    - DocumentDetector (~> 3.1.1)
     - Flutter
-  - DocumentDetector (3.1.0):
+  - DocumentDetector (3.1.1):
     - Alamofire (= 5.2)
     - Sentry (= 5.2.0)
     - TensorFlowLiteSwift (= 2.1.0)
@@ -41,8 +41,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: c1ca147559e730bfb2182c8c7aafbdd90a867987
-  document_detector: d265d717e106bd0e7c5174f5c7f6b5ec4bf2ca2c
-  DocumentDetector: 54244871404753d9af5304a4de773dcdca6573d8
+  document_detector: 5c4d3ab8cb18e6d648951c912892d65886082c22
+  DocumentDetector: 2e72fe6097486bf88615e03b70836d7e98349fff
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
   Sentry: 6e04bc3e11bf771ca79140a112de64dcfbc7d8cb
@@ -51,4 +51,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 4189eac5c970d8dcdd758ef8ed3e4591d4abd2dd
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0
