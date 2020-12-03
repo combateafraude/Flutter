@@ -1,6 +1,6 @@
 # [FaceAuthenticator](https://docs.combateafraude.com/docs/mobile/introduction/home/#faceauthenticator) - Flutter Plugin
 
-Plugin que chama os SDKs nativos em [Android](https://docs.combateafraude.com/docs/mobile/android/face-authenticator/) e [iOS](https://docs.combateafraude.com/docs/mobile/ios/face-authenticator/). Caso tenha alguma dúvida, envie um email para o nosso [Head of Mobile](mailto:frederico.gassen@combateafraude.com)
+Plugin que chama os SDKs nativos em [Android](https://docs.combateafraude.com/docs/mobile/android/face-authenticator/) e [iOS](https://docs.combateafraude.com/docs/mobile/ios/face-authenticator/). Caso tenha alguma dúvida, envie um email para o nosso [Head of Mobile](mailto:daniel.seitenfus@combateafraude.com)
 
 # Políticas de privacidade e termos e condições de uso
 
