@@ -56,7 +56,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "3.7.0"
+    version: "3.8.0"
   fake_async:
     dependency: transitive
     description:
@@ -101,7 +101,7 @@ packages:
       name: permission_handler
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.1+1"
+    version: "5.0.0"
   permission_handler_platform_interface:
     dependency: transitive
     description:
