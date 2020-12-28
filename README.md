@@ -100,6 +100,7 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 | `PassiveFaceLivenessCustomizationAndroid customization`<br><br>Customização do layout em Android da activity |
 | `CaptureSettings captureSettings`<br><br>Configuraçōes de tempos de estabilização para a captura da selfie |
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
+| `int showButtonTime`<br><br>Altera o tempo para a exibição do botão de captura manual. O padrão é `20000` milisegundos |
 
 | PassiveFaceLivenessCustomizationAndroid constructor |
 | --------- |
