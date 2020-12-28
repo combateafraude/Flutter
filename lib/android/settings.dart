@@ -8,7 +8,7 @@ class PassiveFaceLivenessAndroidSettings {
   SensorSettingsAndroid sensorSettings;
   int showButtonTime;
 
-  PassiveFaceLivenessAndroidSettings(param0,
+  PassiveFaceLivenessAndroidSettings(
       {this.customization,
       this.captureSettings,
       this.sensorSettings,

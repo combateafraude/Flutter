@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
         new PassiveFaceLiveness(mobileToken: mobileToken);
 
     PassiveFaceLivenessAndroidSettings passiveFaceLivenessAndroidSettings =
-        new PassiveFaceLivenessAndroidSettings(0, showButtonTime: 50000);
+        new PassiveFaceLivenessAndroidSettings(showButtonTime: 50000);
 
     passiveFaceLiveness.setAndroidSettings(passiveFaceLivenessAndroidSettings);
 
