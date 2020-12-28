@@ -111,6 +111,12 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                     mPassiveFaceLivenessBuilder.setCaptureSettings(new CaptureSettings(beforePictureMillis, afterPictureMillis));
                 }
             }
+
+            if (androidSettings.get("showButtonTime") != null){
+                    int showButtonTime = (int) androidSettings.get("showButtonTime");
+                    mPassiveFaceLivenessBuilder.setShowButtonTime(showButtonTime);
+            }
+            
         }
 
         // Sound settings

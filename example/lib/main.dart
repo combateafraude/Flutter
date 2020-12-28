@@ -1,3 +1,4 @@
+import 'package:passive_face_liveness/android/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:passive_face_liveness/passive_face_liveness.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart';
@@ -39,6 +40,11 @@ class _MyAppState extends State<MyApp> {
 
     PassiveFaceLiveness passiveFaceLiveness =
         new PassiveFaceLiveness(mobileToken: mobileToken);
+
+    PassiveFaceLivenessAndroidSettings passiveFaceLivenessAndroidSettings =
+        new PassiveFaceLivenessAndroidSettings(0, showButtonTime: 50000);
+
+    passiveFaceLiveness.setAndroidSettings(passiveFaceLivenessAndroidSettings);
 
     // Put the others parameters here
 
