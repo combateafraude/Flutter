@@ -156,7 +156,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             }
         }
         
-        let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
+        let controller = UIApplication.shared.keyWindow!.rootViewController!
         
         let scannerVC = DocumentDetectorController(documentDetector: documentDetectorBuilder.build())
         scannerVC.documentDetectorDelegate = self
