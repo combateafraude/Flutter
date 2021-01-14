@@ -106,7 +106,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             
         }
         
-        let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
+        let controller = UIApplication.shared.keyWindow!.rootViewController!
         
         let scannerVC = PassiveFaceLivenessController(passiveFaceLiveness: passiveFaceLivenessBuilder.build())
         scannerVC.passiveFaceLivenessDelegate = self
