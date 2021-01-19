@@ -28,8 +28,6 @@ android {
 
     ...
 
-    dataBinding.enabled = true
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -64,7 +62,7 @@ Adicione o plugin no seu arquivo `ROOT_PROJECT/pubspec.yaml`:
 
 ```yml
 dependencies:  
-  document_detector:
+  document_detector_nodatabinding:
     git:
       url: https://github.com/combateafraude/Flutter.git
       ref: document-detector-v3.8.1

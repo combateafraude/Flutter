@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:document_detector/document_detector.dart';
+import 'package:document_detector_nodatabinding/document_detector.dart';
 
 void main() {
   const MethodChannel channel = MethodChannel('document_detector');
@@ -16,5 +16,4 @@ void main() {
   tearDown(() {
     channel.setMockMethodCallHandler(null);
   });
-
 }

@@ -1,6 +1,6 @@
-import 'package:document_detector/android/capture_stage/capture_mode.dart';
-import 'package:document_detector/android/capture_stage/detection_settings.dart';
-import 'package:document_detector/android/capture_stage/quality_settings.dart';
+import 'package:document_detector_nodatabinding/android/capture_stage/capture_mode.dart';
+import 'package:document_detector_nodatabinding/android/capture_stage/detection_settings.dart';
+import 'package:document_detector_nodatabinding/android/capture_stage/quality_settings.dart';
 import 'package:flutter/cupertino.dart';
 
 class CaptureStage {
@@ -10,8 +10,12 @@ class CaptureStage {
   DetectionSettings detectionSettings;
   CaptureMode captureMode;
 
-  CaptureStage({this.durationMillis, @required this.wantSensorCheck, this.qualitySettings,
-    this.detectionSettings, this.captureMode});
+  CaptureStage(
+      {this.durationMillis,
+      @required this.wantSensorCheck,
+      this.qualitySettings,
+      this.detectionSettings,
+      this.captureMode});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();

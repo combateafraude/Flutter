@@ -1,4 +1,4 @@
-name: document_detector
+name: document_detector_nodatabinding
 description: Flutter plugin cross-platform for Combate à Fraude's DocumentDetector.
 version: 3.8.1
 author: Combate à Fraude
