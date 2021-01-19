@@ -28,8 +28,7 @@ class _MyAppState extends State<MyApp> {
   String _result = "";
   String _description = "";
 
-  String mobileToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1ZmMxNTZiNTlmMjUyZDAwMDg5YWE3ZDQifQ.2ShYDn9L8raPMqjarVcure1EsCdlbPFyXKKmYAjeYFU";
+  String mobileToken = "";
 
   @override
   void initState() {
