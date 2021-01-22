@@ -43,6 +43,6 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk.nodatabinding:document-detector:6.4.1'
+        implementation 'com.combateafraude.sdk.nodatabinding:document-detector:6.4.4'
     }
 }
