@@ -76,8 +76,7 @@ class MyApp extends StatelessWidget {
   String _result = "";
   String _description = "";
 
-  String mobileToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1ZmMxM2U5MDE2YTgxODAwMDczNzNlMWYifQ._jdY1z1N1dfaFIq88Qk0akEgOk-taH2OxoW3oT1eLl0";
+  String mobileToken = "";
 
   void startDocumentDetector(List<DocumentDetectorStep> documentSteps) async {
     String result = "";

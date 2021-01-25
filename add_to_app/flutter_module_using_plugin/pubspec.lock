@@ -47,11 +47,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "document-detector-nodatabinding-v3.8.2"
-      resolved-ref: e05be6f7216bd5b6abcf9f6140bfa26291bd35d9
+      ref: "document-detector-nodatabinding-v3.8.3"
+      resolved-ref: "825e872cf47417f6eebeefed45b7550e1f4d830a"
       url: "https://github.com/combateafraude/Flutter.git"
     source: git
-    version: "3.8.2"
+    version: "3.8.3"
   fake_async:
     dependency: transitive
     description:
