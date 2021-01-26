@@ -65,7 +65,7 @@ dependencies:
   document_detector_nodatabinding:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-nodatabinding-v3.8.3
+      ref: document-detector-nodatabinding-v3.8.4
 ```
 
 ## Utilização
