@@ -58,10 +58,10 @@ Adicione o plugin no seu arquivo `ROOT_PROJECT/pubspec.yaml`:
 
 ```yml
 dependencies:  
-  passive_face_liveness:
+  passive_face_liveness_nodatabinding:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-v1.8.1
+      ref: passive-face-liveness-nodatabinding-v1.8.1
 ```
 
 ## Utilização

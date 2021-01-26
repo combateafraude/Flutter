@@ -1,4 +1,4 @@
-group 'com.combateafraude.passive_face_liveness'
+group 'com.combateafraude.document_detector'
 version '1.0'
 
 buildscript {
@@ -16,7 +16,7 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
-        maven { url "https://repo.combateafraude.com/android/release" }
+        maven { url "https://repo.combateafraude.com/android/release"}
     }
 }
 
@@ -29,23 +29,16 @@ android {
         minSdkVersion 21
     }
 
-    dataBinding.enabled = true
+    lintOptions {
+        disable 'InvalidPackage'
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    aaptOptions {
-        noCompress "tflite"
-    }
-
-    lintOptions {
-        disable 'InvalidPackage'
-    }
-
     dependencies {
-        implementation 'com.combateafraude.sdk:passive-face-liveness:4.4.1'
+        implementation 'com.combateafraude.sdk.nodatabinding:passive-face-liveness:4.4.5'
     }
-
 }

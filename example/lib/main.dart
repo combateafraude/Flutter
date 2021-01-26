@@ -1,9 +1,9 @@
-import 'package:passive_face_liveness/android/settings.dart';
+import 'package:passive_face_liveness_nodatabinding/android/settings.dart';
 import 'package:flutter/material.dart';
-import 'package:passive_face_liveness/passive_face_liveness.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_success.dart';
+import 'package:passive_face_liveness_nodatabinding/passive_face_liveness.dart';
+import 'package:passive_face_liveness_nodatabinding/result/passive_face_liveness_failure.dart';
+import 'package:passive_face_liveness_nodatabinding/result/passive_face_liveness_result.dart';
+import 'package:passive_face_liveness_nodatabinding/result/passive_face_liveness_success.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {

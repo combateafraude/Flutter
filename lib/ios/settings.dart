@@ -1,5 +1,5 @@
-import 'package:passive_face_liveness/ios/customization.dart';
-import 'package:passive_face_liveness/ios/sensor_stability_settings.dart';
+import 'package:passive_face_liveness_nodatabinding/ios/customization.dart';
+import 'package:passive_face_liveness_nodatabinding/ios/sensor_stability_settings.dart';
 
 class PassiveFaceLivenessIosSettings {
   PassiveFaceLivenessCustomizationIos customization;
@@ -7,7 +7,7 @@ class PassiveFaceLivenessIosSettings {
   SensorStabilitySettingsIos sensorStability;
 
   PassiveFaceLivenessIosSettings(
-  {this.customization, this.beforePictureMillis, this.sensorStability});
+      {this.customization, this.beforePictureMillis, this.sensorStability});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();

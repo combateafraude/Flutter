@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:passive_face_liveness/android/settings.dart';
-import 'package:passive_face_liveness/ios/settings.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_closed.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_success.dart';
+import 'package:passive_face_liveness_nodatabinding/android/settings.dart';
+import 'package:passive_face_liveness_nodatabinding/ios/settings.dart';
+import 'package:passive_face_liveness_nodatabinding/result/passive_face_liveness_closed.dart';
+import 'package:passive_face_liveness_nodatabinding/result/passive_face_liveness_failure.dart';
+import 'package:passive_face_liveness_nodatabinding/result/passive_face_liveness_result.dart';
+import 'package:passive_face_liveness_nodatabinding/result/passive_face_liveness_success.dart';
 
 class PassiveFaceLiveness {
   static const MethodChannel _channel =

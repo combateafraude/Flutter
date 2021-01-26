@@ -81,7 +81,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0-nullsafety.3"
-  passive_face_liveness:
+  passive_face_liveness_nodatabinding:
     dependency: "direct main"
     description:
       path: ".."
