@@ -112,10 +112,22 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 }
             }
 
+            HashMap<String, Object> showPreview = (HashMap<String, Object>) androidSettings.get("showPreview");
+            if (showPreview != null) {
+                String title = (String) showPreview.get("title");
+                String subTitle = (String) showPreview.get("subTitle");
+                String acceptLabel = (String) showPreview.get("acceptLabel");
+                String tryAgainLabel = (String) showPreview.get("tryAgainLabel");
+
+                mPassiveFaceLivenessBuilder.showPreview(title, subTitle, acceptLabel, tryAgainLabel);
+            }
+
             if (androidSettings.get("showButtonTime") != null){
                     int showButtonTime = (int) androidSettings.get("showButtonTime");
                     mPassiveFaceLivenessBuilder.setShowButtonTime(showButtonTime);
             }
+
+            
             
         }
 

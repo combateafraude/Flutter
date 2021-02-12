@@ -1,4 +1,5 @@
 import 'package:passive_face_liveness/android/settings.dart';
+import 'package:passive_face_liveness/android/show_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:passive_face_liveness/passive_face_liveness.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart';
@@ -41,8 +42,15 @@ class _MyAppState extends State<MyApp> {
     PassiveFaceLiveness passiveFaceLiveness =
         new PassiveFaceLiveness(mobileToken: mobileToken);
 
+    ShowPreview showPreview = new ShowPreview(
+        title: "A foto ficou boa?",
+        subTitle: "confira",
+        acceptLabel: "Sim, ficou boa!",
+        tryAgainLabel: "Tirar novamente");
+
     PassiveFaceLivenessAndroidSettings passiveFaceLivenessAndroidSettings =
-        new PassiveFaceLivenessAndroidSettings(showButtonTime: 50000);
+        new PassiveFaceLivenessAndroidSettings(
+            showButtonTime: 50000, showPreview: showPreview);
 
     passiveFaceLiveness.setAndroidSettings(passiveFaceLivenessAndroidSettings);
 
