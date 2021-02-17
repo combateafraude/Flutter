@@ -97,7 +97,7 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
                 if(stepLabelId != null) detectorStep.setStepLabel(stepLabelId);
                 if(illustrationId != null) detectorStep.setIllustration(illustrationId);
                 if(audioId != null) detectorStep.setStepAudio(audioId);
-            
+
                 documentDetectorSteps[i] = detectorStep;
             } else {
                 documentDetectorSteps[i] = new DocumentDetectorStep(document);
@@ -118,7 +118,7 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
                     HashMap<String, Object> stage = paramStages.get(i);
 
                     Long durationMillis = ((Number) stage.get("durationMillis")).longValue();
-                    
+
                     Boolean wantSensorCheck = (Boolean) stage.get("wantSensorCheck");
                     if (wantSensorCheck == null) wantSensorCheck = false;
 
@@ -157,6 +157,19 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
                 Integer whiteMaskId = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"), DRAWABLE_RES);
                 Integer redMaskId = getResourceId((String) customizationAndroid.get("redMaskResIdName"), DRAWABLE_RES);
                 mDocumentDetectorBuilder.setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId);
+            }
+
+
+            // Preview
+            HashMap<String, Object> showPreview = (HashMap<String, Object>) androidSettings.get("showPreview");
+            System.out.println("if preview");
+            if (showPreview != null) {
+                String title = (String) showPreview.get("title");
+                String subTitle = (String) showPreview.get("subTitle");
+                String acceptLabel = (String) showPreview.get("acceptLabel");
+                String tryAgainLabel = (String) showPreview.get("tryAgainLabel");
+                System.out.println("entrou preview");
+                mDocumentDetectorBuilder.showPreview(true, title, subTitle, acceptLabel, tryAgainLabel);
             }
 
             // Sensor settings

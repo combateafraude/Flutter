@@ -2,6 +2,7 @@ import 'package:document_detector/android/android_settings.dart';
 import 'package:document_detector/android/capture_stage/capture_mode.dart';
 import 'package:document_detector/android/capture_stage/capture_stage.dart';
 import 'package:document_detector/android/customization.dart';
+import 'package:document_detector/android/show_preview.dart';
 import 'package:document_detector/document_detector_step.dart';
 import 'package:document_detector/document_type.dart';
 import 'package:document_detector/ios/ios_settings.dart';
@@ -47,7 +48,19 @@ class _MyAppState extends State<MyApp> {
     String description = "";
 
     DocumentDetector documentDetector =
-        new DocumentDetector(mobileToken: mobileToken);
+    new DocumentDetector(mobileToken: mobileToken);
+
+    ShowPreview showPreview = new ShowPreview(
+        title: "A foto ficou boa?",
+        subTitle:
+        "Veja se todas informações estão legíveis e os documentos sem reflexos",
+        acceptLabel: "Sim, ficou boa!",
+        tryAgainLabel: "Tirar novamente");
+
+    DocumentDetectorAndroidSettings androidSettings =
+    new DocumentDetectorAndroidSettings(showPreview: showPreview);
+
+    documentDetector.setAndroidSettings(androidSettings);
 
     documentDetector.setDocumentFlow(documentSteps);
 
@@ -55,7 +68,7 @@ class _MyAppState extends State<MyApp> {
 
     try {
       DocumentDetectorResult documentDetectorResult =
-          await documentDetector.start();
+      await documentDetector.start();
 
       if (documentDetectorResult is DocumentDetectorSuccess) {
         result = "Success!";
@@ -125,7 +138,7 @@ class _MyAppState extends State<MyApp> {
                     ),
                     Row(
                       children: [
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text('Start DocumentDetector for RG'),
                           onPressed: () async {
                             startDocumentDetector([

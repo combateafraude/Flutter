@@ -16,7 +16,8 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
-        maven { url "https://repo.combateafraude.com/android/release"}
+        mavenLocal()
+        //maven { url "https://repo.combateafraude.com/android/release"}
     }
 }
 
@@ -45,6 +46,6 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:document-detector:6.5.4'
+        implementation 'com.combateafraude.sdk:document-detector:6.5.3'
     }
 }
