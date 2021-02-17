@@ -119,7 +119,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 String acceptLabel = (String) showPreview.get("acceptLabel");
                 String tryAgainLabel = (String) showPreview.get("tryAgainLabel");
 
-                mPassiveFaceLivenessBuilder.showPreview(title, subTitle, acceptLabel, tryAgainLabel);
+                mPassiveFaceLivenessBuilder.showPreview(true, title, subTitle, acceptLabel, tryAgainLabel);
             }
 
             if (androidSettings.get("showButtonTime") != null){
