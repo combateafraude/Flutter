@@ -1,4 +1,4 @@
-group 'com.combateafraude.passive_face_liveness'
+group 'com.combateafraude.address_check'
 version '1.0'
 
 buildscript {
@@ -20,6 +20,8 @@ rootProject.allprojects {
         //maven { url "https://repo.combateafraude.com/android/release" }
     }
 }
+
+
 
 apply plugin: 'com.android.library'
 
@@ -46,7 +48,14 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:passive-face-liveness:4.5.3'
+        implementation 'com.combateafraude.sdk:address-check:3.0.1'
+
+        // JWT
+        api 'io.jsonwebtoken:jjwt-api:0.11.2'
+        runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+        runtimeOnly('io.jsonwebtoken:jjwt-orgjson:0.11.2') {
+            exclude group: 'org.json', module: 'json' //provided by Android natively
+        }
     }
 
 }

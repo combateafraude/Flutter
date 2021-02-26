@@ -1,16 +1,16 @@
-import 'package:passive_face_liveness/android/capture_settings.dart';
+/*import 'package:passive_face_liveness/android/capture_settings.dart';
 import 'package:passive_face_liveness/android/customization.dart';
 import 'package:passive_face_liveness/android/sensor_settings.dart';
 import 'package:passive_face_liveness/android/show_preview.dart';
 
-class PassiveFaceLivenessAndroidSettings {
+class AddressCheckAndroidSettings {
   PassiveFaceLivenessCustomizationAndroid customization;
   CaptureAndroidSettings captureSettings;
   SensorSettingsAndroid sensorSettings;
   ShowPreview showPreview;
   int showButtonTime;
 
-  PassiveFaceLivenessAndroidSettings(
+  AddressCheckAndroidSettings(
       {this.customization,
       this.captureSettings,
       this.sensorSettings,
@@ -28,4 +28,4 @@ class PassiveFaceLivenessAndroidSettings {
 
     return map;
   }
-}
+}*/

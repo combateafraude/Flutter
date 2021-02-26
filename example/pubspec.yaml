@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  mask_text_input_formatter: ^1.2.1
+  http: ^0.12.2
 
   passive_face_liveness:
     # When depending on this package from a real application you should use:

@@ -1,3 +1,4 @@
-<manifest package="com.combateafraude.passive_face_liveness">
-
+<manifest package="com.combateafraude.address_check"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 </manifest>
