@@ -30,7 +30,7 @@ class ResultState extends State<ResultPage> {
                 onPressed: () async {
                     var response = await http.get(
                         Uri.encodeFull(
-                            "https://api.dev.mobile.combateafraude.com/address/02801389030"),
+                            "https://api.mobile.combateafraude.com/address/79504755011"),
                         //+ widget.userId),
                         headers: {
                           "Authorization":
@@ -38,9 +38,12 @@ class ResultState extends State<ResultPage> {
                         });
                     final Map<String, dynamic> responseMap = json.decode(response.body);
                     setState(() {
-                      _correlation =
+                      if(response.statusCode != 404)
+                        _correlation =
                           json.decode(response.body)["address_verification"][0]
                               ["correlation"];
+                      var a = json.decode(response.body);
+                      a = null;
                     });
                 },
               ),

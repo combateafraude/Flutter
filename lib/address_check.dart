@@ -40,7 +40,7 @@ class AddressCheck {
     params["peopleId"] = peopleId;
     params["useAnalytics"] = useAnalytics;
     params["requestTimeout"] = requestTimeout;
-    params["address"] = this.address?.asMap();
+    params["address"] = address?.asMap();
 
     Map<dynamic, dynamic> resultMap =
         await _channel.invokeMethod('start', params);

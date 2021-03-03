@@ -44,8 +44,7 @@ public class AddressCheckPlugin implements FlutterPlugin, MethodCallHandler {
     private Activity activity;
     private ActivityPluginBinding activityBinding;
     private Context context;
-    private String ClientId = "";
-    private String ClientSecret = "";
+    String mobileToken;
 
     @Override
     public synchronized void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
@@ -60,11 +59,12 @@ public class AddressCheckPlugin implements FlutterPlugin, MethodCallHandler {
 
     @TargetApi(Build.VERSION_CODES.DONUT)
     private synchronized void start(@NonNull MethodCall call) {
+        AddressCheck.init(context);
         HashMap<String, Object> argumentsMap = (HashMap<String, Object>) call.arguments;
         Address address = new Address(new Locale("pt", "BR"));
 
         // Mobile token
-        String mobileToken = (String) argumentsMap.get("mobileToken");
+        mobileToken = (String) argumentsMap.get("mobileToken");
         System.out.println(mobileToken);
 
 
@@ -105,12 +105,12 @@ public class AddressCheckPlugin implements FlutterPlugin, MethodCallHandler {
             address.setPostalCode(postalCode);
         }
 
-        AddressCheck addressCheck = getAddressCheck("90843623063");
+        AddressCheck addressCheck = getAddressCheck("79504755011");
+        //28700710008
         AddressCollection mAddressCollection = new AddressCollection(addressCheck, context);
         mAddressCollection.setAddress(address, new AddressCollection.Callback() {
             @Override
             public void onSuccess(String userId) {
-                System.out.println("sucesso");
                 return;
                 // o endereço foi atribuído com sucesso e o userId será usado para verificar o status atual da verificação
             }
@@ -126,12 +126,8 @@ public class AddressCheckPlugin implements FlutterPlugin, MethodCallHandler {
         return;
     }
 
-    public String getMobileToken(){
-        return Jwts.builder().setIssuer(ClientId).signWith(Keys.hmacShaKeyFor(ClientSecret.getBytes())).compact();
-    }
-
     public AddressCheck getAddressCheck(String cpf) {
-        return new AddressCheck.Builder(getMobileToken())
+        return new AddressCheck.Builder(mobileToken)
                 .setPeopleId(cpf)
                 .build();
     }
