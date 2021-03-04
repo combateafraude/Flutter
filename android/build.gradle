@@ -16,8 +16,7 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
-        mavenLocal()
-        //maven { url "https://repo.combateafraude.com/android/release" }
+        maven { url "https://repo.combateafraude.com/android/release" }
     }
 }
 
@@ -46,7 +45,7 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:passive-face-liveness:4.5.3'
+        implementation 'com.combateafraude.sdk:passive-face-liveness:4.6.0'
     }
 
 }
