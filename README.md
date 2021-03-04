@@ -61,7 +61,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-v1.9.0
+      ref: passive-face-liveness-v2.0.0
 ```
 
 ## Utilização
@@ -93,6 +93,14 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 | `.setShowPreview(ShowPreview showPreview)`<br><br> Preview para verificação de qualidade da foto |
 | `.setAndroidSettings(PassiveFaceLivenessAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(PassiveFaceLivenessIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
+
+| ShowPreview |
+| --------- |
+| `bool show`<br><br>Habilita/Desabilita preview |
+| `String title`<br><br>Título |
+| `String subTitle`<br><br>Subtítulo |
+| `String confirmLabel`<br><br>Texto do botão de confirmação |
+| `String retryLabel`<br><br>Texto do botão de capturar novamente |
 
 #### Android
 
