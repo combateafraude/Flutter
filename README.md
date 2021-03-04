@@ -67,7 +67,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v3.9.0
+      ref: document-detector-v4.0.0
 ```
 
 ## Utilização
@@ -108,6 +108,14 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `DocumentType document`<br><br>Documento a ser escaneado neste respectivo passo |
 | `DocumentDetectorStepCustomizationAndroid android`<br><br>Customizações visuais do respectivo passo aplicados em Android |
 | `DocumentDetectorStepCustomizationIos ios`<br><br>Customizações visuais do respectivo passo aplicados em iOS |
+
+| ShowPreview |
+| --------- |
+| `bool show`<br><br>Habilita/Desabilita preview |
+| `String title`<br><br>Título |
+| `String subTitle`<br><br>Subtítulo |
+| `String confirmLabel`<br><br>Texto do botão de confirmação |
+| `String retryLabel`<br><br>Texto do botão de capturar novamente |
 
 #### Android
 
