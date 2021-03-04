@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
   String _result = "";
   String _description = "";
 
-  String mobileToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1ZmMxM2U5MDE2YTgxODAwMDczNzNlMWYifQ._jdY1z1N1dfaFIq88Qk0akEgOk-taH2OxoW3oT1eLl0";
+  String mobileToken = "";
 
   @override
   void initState() {
@@ -48,17 +48,18 @@ class _MyAppState extends State<MyApp> {
     String description = "";
 
     DocumentDetector documentDetector =
-    new DocumentDetector(mobileToken: mobileToken);
+        new DocumentDetector(mobileToken: mobileToken);
 
-    ShowPreview showPreview = new ShowPreview(show: true,
+    ShowPreview showPreview = new ShowPreview(
+        show: true,
         title: "A foto ficou boa?",
         subTitle:
-        "Veja se todas informações estão legíveis e os documentos sem reflexos",
+            "Veja se todas informações estão legíveis e os documentos sem reflexos",
         confirmLabel: "Sim, ficou boa!",
         retryLabel: "Tirar novamente");
 
     DocumentDetectorAndroidSettings androidSettings =
-    new DocumentDetectorAndroidSettings();
+        new DocumentDetectorAndroidSettings();
 
     documentDetector.setShowPreview(showPreview);
 
@@ -70,7 +71,7 @@ class _MyAppState extends State<MyApp> {
 
     try {
       DocumentDetectorResult documentDetectorResult =
-      await documentDetector.start();
+          await documentDetector.start();
 
       if (documentDetectorResult is DocumentDetectorSuccess) {
         result = "Success!";
