@@ -1,6 +1,5 @@
 import 'capture_stage/capture_stage.dart';
 import 'customization.dart';
-import '../show_preview.dart';
 import 'sensor_settings.dart';
 
 class DocumentDetectorAndroidSettings {

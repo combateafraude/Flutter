@@ -108,12 +108,12 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
         // Preview
         HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
         if (showPreview != null) {
-            boolean showPreview1 = (boolean) showPreview.get("showPreview");
+            boolean show = (boolean) showPreview.get("show");
             String title = (String) showPreview.get("title");
             String subTitle = (String) showPreview.get("subTitle");
-            String acceptLabel = (String) showPreview.get("acceptLabel");
-            String tryAgainLabel = (String) showPreview.get("tryAgainLabel");
-            mDocumentDetectorBuilder.showPreview(showPreview1, title, subTitle, acceptLabel, tryAgainLabel);
+            String confirmLabel = (String) showPreview.get("confirmLabel");
+            String retryLabel = (String) showPreview.get("retryLabel");
+            mDocumentDetectorBuilder.showPreview(show, title, subTitle, confirmLabel, retryLabel);
         }
 
 

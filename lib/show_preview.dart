@@ -1,21 +1,21 @@
 class ShowPreview {
   String title;
   String subTitle;
-  String acceptLabel;
-  String tryAgainLabel;
-  bool showPreview;
+  String confirmLabel;
+  String retryLabel;
+  bool show;
 
   ShowPreview(
-      {this.showPreview, this.title, this.subTitle, this.acceptLabel, this.tryAgainLabel});
+      {this.show, this.title, this.subTitle, this.confirmLabel, this.retryLabel});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
 
     map["title"] = title;
     map["subTitle"] = subTitle;
-    map["acceptLabel"] = acceptLabel;
-    map["tryAgainLabel"] = tryAgainLabel;
-    map["showPreview"] = showPreview;
+    map["confirmLabel"] = confirmLabel;
+    map["retryLabel"] = retryLabel;
+    map["show"] = show;
     return map;
   }
 }

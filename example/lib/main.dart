@@ -50,12 +50,12 @@ class _MyAppState extends State<MyApp> {
     DocumentDetector documentDetector =
     new DocumentDetector(mobileToken: mobileToken);
 
-    ShowPreview showPreview = new ShowPreview(showPreview: true,
+    ShowPreview showPreview = new ShowPreview(show: true,
         title: "A foto ficou boa?",
         subTitle:
         "Veja se todas informações estão legíveis e os documentos sem reflexos",
-        acceptLabel: "Sim, ficou boa!",
-        tryAgainLabel: "Tirar novamente");
+        confirmLabel: "Sim, ficou boa!",
+        retryLabel: "Tirar novamente");
 
     DocumentDetectorAndroidSettings androidSettings =
     new DocumentDetectorAndroidSettings();
