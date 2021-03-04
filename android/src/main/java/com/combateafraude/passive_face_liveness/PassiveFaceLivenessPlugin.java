@@ -69,6 +69,16 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
         Boolean useAnalytics = (Boolean) argumentsMap.get("useAnalytics");
         if (useAnalytics != null) mPassiveFaceLivenessBuilder.setAnalyticsSettings(useAnalytics);
 
+        HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
+        if (showPreview != null) {
+            String title = (String) showPreview.get("title");
+            String subTitle = (String) showPreview.get("subTitle");
+            String confirmLabel = (String) showPreview.get("confirmLabel");
+            String retryLabel = (String) showPreview.get("retryLabel");
+            boolean show = (boolean) showPreview.get("show");
+            mPassiveFaceLivenessBuilder.showPreview(show, title, subTitle, confirmLabel, retryLabel);
+        }
+
         // Android specific settings
         HashMap<String, Object> androidSettings = (HashMap<String, Object>) argumentsMap.get("androidSettings");
         if (androidSettings != null) {
@@ -112,15 +122,6 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 }
             }
 
-            HashMap<String, Object> showPreview = (HashMap<String, Object>) androidSettings.get("showPreview");
-            if (showPreview != null) {
-                String title = (String) showPreview.get("title");
-                String subTitle = (String) showPreview.get("subTitle");
-                String acceptLabel = (String) showPreview.get("acceptLabel");
-                String tryAgainLabel = (String) showPreview.get("tryAgainLabel");
-
-                mPassiveFaceLivenessBuilder.showPreview(true, title, subTitle, acceptLabel, tryAgainLabel);
-            }
 
             if (androidSettings.get("showButtonTime") != null){
                     int showButtonTime = (int) androidSettings.get("showButtonTime");

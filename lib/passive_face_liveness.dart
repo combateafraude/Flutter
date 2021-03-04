@@ -6,6 +6,7 @@ import 'package:passive_face_liveness/result/passive_face_liveness_closed.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_success.dart';
+import 'package:passive_face_liveness/show_preview.dart';
 
 class PassiveFaceLiveness {
   static const MethodChannel _channel =
@@ -16,6 +17,7 @@ class PassiveFaceLiveness {
   bool useAnalytics;
   bool sound;
   int requestTimeout;
+  ShowPreview showPreview;
   PassiveFaceLivenessAndroidSettings androidSettings;
   PassiveFaceLivenessIosSettings iosSettings;
 
@@ -37,6 +39,10 @@ class PassiveFaceLiveness {
     this.requestTimeout = requestTimeout;
   }
 
+  void setShowPreview(ShowPreview showPreview) {
+    this.showPreview = showPreview;
+  }
+
   void setAndroidSettings(PassiveFaceLivenessAndroidSettings androidSettings) {
     this.androidSettings = androidSettings;
   }
@@ -53,6 +59,7 @@ class PassiveFaceLiveness {
     params["useAnalytics"] = useAnalytics;
     params["sound"] = sound;
     params["requestTimeout"] = requestTimeout;
+    params["showPreview"] = showPreview?.asMap();
     params["androidSettings"] = androidSettings?.asMap();
     params["iosSettings"] = iosSettings?.asMap();
 
