@@ -162,13 +162,11 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
 
             // Preview
             HashMap<String, Object> showPreview = (HashMap<String, Object>) androidSettings.get("showPreview");
-            System.out.println("if preview");
             if (showPreview != null) {
                 String title = (String) showPreview.get("title");
                 String subTitle = (String) showPreview.get("subTitle");
                 String acceptLabel = (String) showPreview.get("acceptLabel");
                 String tryAgainLabel = (String) showPreview.get("tryAgainLabel");
-                System.out.println("entrou preview");
                 mDocumentDetectorBuilder.showPreview(true, title, subTitle, acceptLabel, tryAgainLabel);
             }
 
