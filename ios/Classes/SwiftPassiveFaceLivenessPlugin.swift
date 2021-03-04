@@ -45,6 +45,18 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             passiveFaceLivenessBuilder.setNetworkSettings(requestTimeout: requestTimeout)
         }
 
+        if let showPreview = arguments["showPreview"] as? [String: Any] {
+            var show = showPreview["show"] as? Bool
+            if(show == nil){
+                show = false
+            }
+            let title = showPreview["title"] as? String
+            let subtitle = showPreview["subTitle"] as? String
+            let confirmLabel = showPreview["confirmLabel"] as? String
+            let retryLabel = showPreview["retryLabel"] as? String
+            passiveFaceLivenessBuilder.showPreview(show!, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
+         }
+
         if let iosSettings = arguments["iosSettings"] as? [String: Any] {
 
             if let customization = iosSettings["customization"] as? [String: Any] {
