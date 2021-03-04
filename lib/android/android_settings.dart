@@ -1,25 +1,22 @@
 import 'capture_stage/capture_stage.dart';
 import 'customization.dart';
-import 'show_preview.dart';
+import '../show_preview.dart';
 import 'sensor_settings.dart';
 
 class DocumentDetectorAndroidSettings {
   DocumentDetectorCustomizationAndroid customization;
   SensorSettingsAndroid sensorSettings;
-  ShowPreview showPreview;
   List<CaptureStage> captureStages;
 
   DocumentDetectorAndroidSettings(
       {this.customization,
         this.sensorSettings,
-        this.captureStages,
-        this.showPreview});
+        this.captureStages});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
 
     map["customization"] = customization?.asMap();
-    map["showPreview"] = showPreview?.asMap();
     map["sensorSettings"] = sensorSettings?.asMap();
 
     if (captureStages != null) {

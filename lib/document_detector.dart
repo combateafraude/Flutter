@@ -8,6 +8,7 @@ import 'package:document_detector/result/document_detector_closed.dart';
 import 'package:document_detector/result/document_detector_failure.dart';
 import 'package:document_detector/result/document_detector_result.dart';
 import 'package:document_detector/result/document_detector_success.dart';
+import 'package:document_detector/show_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -22,6 +23,7 @@ class DocumentDetector {
   bool popup;
   bool sound;
   int requestTimeout;
+  ShowPreview showPreview;
   DocumentDetectorAndroidSettings androidSettings;
   DocumentDetectorIosSettings iosSettings;
 
@@ -51,6 +53,10 @@ class DocumentDetector {
     this.requestTimeout = requestTimeout;
   }
 
+  void setShowPreview(ShowPreview showPreview) {
+    this.showPreview = showPreview;
+  }
+
   void setAndroidSettings(DocumentDetectorAndroidSettings androidSettings) {
     this.androidSettings = androidSettings;
   }
@@ -68,6 +74,7 @@ class DocumentDetector {
     params["popup"] = popup;
     params["sound"] = sound;
     params["requestTimeout"] = requestTimeout;
+    params["showPreview"] = showPreview?.asMap();
     params["androidSettings"] = androidSettings?.asMap();
     params["iosSettings"] = iosSettings?.asMap();
 

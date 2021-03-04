@@ -105,6 +105,17 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
         }
         mDocumentDetectorBuilder.setDocumentSteps(documentDetectorSteps);
 
+        // Preview
+        HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
+        if (showPreview != null) {
+            boolean showPreview1 = (boolean) showPreview.get("showPreview");
+            String title = (String) showPreview.get("title");
+            String subTitle = (String) showPreview.get("subTitle");
+            String acceptLabel = (String) showPreview.get("acceptLabel");
+            String tryAgainLabel = (String) showPreview.get("tryAgainLabel");
+            mDocumentDetectorBuilder.showPreview(showPreview1, title, subTitle, acceptLabel, tryAgainLabel);
+        }
+
 
         // Android specific settings
         HashMap<String, Object> androidSettings = (HashMap<String, Object>) argumentsMap.get("androidSettings");
@@ -159,16 +170,6 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
                 mDocumentDetectorBuilder.setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId);
             }
 
-
-            // Preview
-            HashMap<String, Object> showPreview = (HashMap<String, Object>) androidSettings.get("showPreview");
-            if (showPreview != null) {
-                String title = (String) showPreview.get("title");
-                String subTitle = (String) showPreview.get("subTitle");
-                String acceptLabel = (String) showPreview.get("acceptLabel");
-                String tryAgainLabel = (String) showPreview.get("tryAgainLabel");
-                mDocumentDetectorBuilder.showPreview(true, title, subTitle, acceptLabel, tryAgainLabel);
-            }
 
             // Sensor settings
             HashMap<String, Object> sensorSettings = (HashMap<String, Object>) androidSettings.get("sensorSettings");

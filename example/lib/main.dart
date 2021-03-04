@@ -2,7 +2,7 @@ import 'package:document_detector/android/android_settings.dart';
 import 'package:document_detector/android/capture_stage/capture_mode.dart';
 import 'package:document_detector/android/capture_stage/capture_stage.dart';
 import 'package:document_detector/android/customization.dart';
-import 'package:document_detector/android/show_preview.dart';
+import 'package:document_detector/show_preview.dart';
 import 'package:document_detector/document_detector_step.dart';
 import 'package:document_detector/document_type.dart';
 import 'package:document_detector/ios/ios_settings.dart';
@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
     DocumentDetector documentDetector =
     new DocumentDetector(mobileToken: mobileToken);
 
-    ShowPreview showPreview = new ShowPreview(
+    ShowPreview showPreview = new ShowPreview(showPreview: true,
         title: "A foto ficou boa?",
         subTitle:
         "Veja se todas informações estão legíveis e os documentos sem reflexos",
@@ -58,7 +58,9 @@ class _MyAppState extends State<MyApp> {
         tryAgainLabel: "Tirar novamente");
 
     DocumentDetectorAndroidSettings androidSettings =
-    new DocumentDetectorAndroidSettings(showPreview: showPreview);
+    new DocumentDetectorAndroidSettings();
+
+    documentDetector.setShowPreview(showPreview);
 
     documentDetector.setAndroidSettings(androidSettings);
 

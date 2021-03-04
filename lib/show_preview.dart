@@ -3,9 +3,10 @@ class ShowPreview {
   String subTitle;
   String acceptLabel;
   String tryAgainLabel;
+  bool showPreview;
 
   ShowPreview(
-      {this.title, this.subTitle, this.acceptLabel, this.tryAgainLabel});
+      {this.showPreview, this.title, this.subTitle, this.acceptLabel, this.tryAgainLabel});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -14,7 +15,7 @@ class ShowPreview {
     map["subTitle"] = subTitle;
     map["acceptLabel"] = acceptLabel;
     map["tryAgainLabel"] = tryAgainLabel;
-
+    map["showPreview"] = showPreview;
     return map;
   }
 }
