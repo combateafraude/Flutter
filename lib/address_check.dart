@@ -10,7 +10,7 @@ class AddressCheck {
   static const MethodChannel _channel = const MethodChannel('address_check');
 
   String mobileToken;
-  String peopleId = "90843623063";
+  String peopleId;
   bool useAnalytics;
   int requestTimeout;
   Address address;

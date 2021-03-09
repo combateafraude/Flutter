@@ -29,11 +29,9 @@ class _MyAppState extends State<MyApp> {
       mask: '#####-###', filter: {"#": RegExp(r'[0-9]')});
   var countryCodeMaskFormatter =
       new MaskTextInputFormatter(mask: '##', filter: {"#": RegExp(r'[A-Z]')});
-  String _result = "";
-  String _description = "";
-
+  String cpf = "219.764.130-10";
   String mobileToken =
-      "";
+    "";
   @override
   void initState() {
     super.initState();
@@ -49,23 +47,16 @@ class _MyAppState extends State<MyApp> {
   }
 
   void startAddressCheck(Address address) async {
-    String result = "";
-    String description = "";
-    String cpf = "02801389030";
-
     AddressCheck addressCheck = new AddressCheck(mobileToken: mobileToken);
 
     addressCheck.setAddress(address);
 
+    addressCheck.setPeopleId(cpf);
+
     AddressCheckResult addressCheckResult = await addressCheck.start();
 
     Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => ResultPage(cpf)));
-
-    setState(() {
-      _result = result;
-      _description = description;
-    });
+        context, new MaterialPageRoute(builder: (context) => ResultPage(cpf,mobileToken)));
   }
 
   @override

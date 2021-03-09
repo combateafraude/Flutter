@@ -4,8 +4,9 @@ import 'dart:convert';
 
 class ResultPage extends StatefulWidget {
   final String userId;
+  final String mobileToken;
 
-  ResultPage(this.userId);
+  ResultPage(this.userId, this.mobileToken);
 
   @override
   ResultState createState() => ResultState();
@@ -14,7 +15,7 @@ class ResultPage extends StatefulWidget {
 class ResultState extends State<ResultPage> {
   @override
   String last_activity_ts;
-  String _correlation = "teste";
+  String _correlation = "Aperte no botão para fazer a requisição de score";
   void initState() {
     super.initState();
   }
@@ -24,17 +25,17 @@ class ResultState extends State<ResultPage> {
         body: Container(
             margin: const EdgeInsets.all(20.0),
             child: ListView(children: <Widget>[
-              Text(_correlation),
+              Text(_correlation, textAlign: TextAlign.center),
               ElevatedButton(
-                child: Text('Update Result'),
+                child: Text('Update Result', textAlign: TextAlign.center),
                 onPressed: () async {
                     var response = await http.get(
                         Uri.encodeFull(
-                            "https://api.mobile.combateafraude.com/address/79504755011"),
+                            "https://api.mobile.combateafraude.com/address/"+ widget.userId),
                         //+ widget.userId),
                         headers: {
                           "Authorization":
-                              ""
+                          widget.mobileToken
                         });
                     final Map<String, dynamic> responseMap = json.decode(response.body);
                     setState(() {

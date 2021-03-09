@@ -65,23 +65,19 @@ public class AddressCheckPlugin implements FlutterPlugin, MethodCallHandler {
 
         // Mobile token
         mobileToken = (String) argumentsMap.get("mobileToken");
-        System.out.println(mobileToken);
-
-
+        AddressCheck.Builder mAddressCheck = new AddressCheck.Builder(mobileToken);
 
         // People ID
-        /*String peopleId = (String) argumentsMap.get("peopleId");
+        String peopleId = (String) argumentsMap.get("peopleId");
         mAddressCheck.setPeopleId(peopleId);
-        System.out.println(peopleId);
 
         // Use Analytics
         Boolean useAnalytics = (Boolean) argumentsMap.get("useAnalytics");
         if (useAnalytics != null) mAddressCheck.setAnalyticsSettings(useAnalytics);
 
-
         // Network settings
         Integer requestTimeout = (Integer) argumentsMap.get("requestTimeout");
-        if (requestTimeout != null) mAddressCheck.setNetworkSettings(requestTimeout);*/
+        if (requestTimeout != null) mAddressCheck.setNetworkSettings(requestTimeout);
 
         HashMap<String, Object> addressMap = (HashMap<String, Object>) argumentsMap.get("address");
         if (addressMap != null) {
@@ -105,7 +101,7 @@ public class AddressCheckPlugin implements FlutterPlugin, MethodCallHandler {
             address.setPostalCode(postalCode);
         }
 
-        AddressCheck addressCheck = getAddressCheck("79504755011");
+        AddressCheck addressCheck = mAddressCheck.build();
         //28700710008
         AddressCollection mAddressCollection = new AddressCollection(addressCheck, context);
         mAddressCollection.setAddress(address, new AddressCollection.Callback() {
