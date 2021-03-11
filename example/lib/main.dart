@@ -16,6 +16,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final CPFController = TextEditingController(text: "219.764.130-10");
   final CountryNameController = TextEditingController(text: "Brasil");
   final CountryCodeController = TextEditingController(text: "BR");
   final AdminAreaController = TextEditingController(text: "Rio Grande do Sul");
@@ -25,11 +26,6 @@ class _MyAppState extends State<MyApp> {
   final ThoroughfareController = TextEditingController(text: "Av. Azenha");
   final SubThoroughfareController = TextEditingController(text: "200");
   final PostalCodeController = TextEditingController(text: "51110-100");
-  var postalCodeMaskFormatter = new MaskTextInputFormatter(
-      mask: '#####-###', filter: {"#": RegExp(r'[0-9]')});
-  var countryCodeMaskFormatter =
-      new MaskTextInputFormatter(mask: '##', filter: {"#": RegExp(r'[A-Z]')});
-  String cpf = "219.764.130-10";
   String mobileToken =
     "";
   @override
@@ -46,7 +42,7 @@ class _MyAppState extends State<MyApp> {
     ].request();
   }
 
-  void startAddressCheck(Address address) async {
+  void startAddressCheck(Address address, String cpf) async {
     AddressCheck addressCheck = new AddressCheck(mobileToken: mobileToken);
 
     addressCheck.setAddress(address);
@@ -54,9 +50,12 @@ class _MyAppState extends State<MyApp> {
     addressCheck.setPeopleId(cpf);
 
     AddressCheckResult addressCheckResult = await addressCheck.start();
+    if(addressCheckResult.success){
+      Navigator.push(
+          context, new MaterialPageRoute(builder: (context) => ResultPage(cpf,mobileToken)));
+    }
 
-    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => ResultPage(cpf,mobileToken)));
+
   }
 
   @override
@@ -71,6 +70,17 @@ class _MyAppState extends State<MyApp> {
                 child: ListView(
                   children: <Widget>[
                     TextFormField(
+                      controller: CPFController,
+                      decoration: InputDecoration(
+                          labelText: "CPF",
+                          labelStyle: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                          )),
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    TextFormField(
                       controller: CountryNameController,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
@@ -84,7 +94,6 @@ class _MyAppState extends State<MyApp> {
                     ),
                     TextFormField(
                       controller: CountryCodeController,
-                      inputFormatters: [countryCodeMaskFormatter],
                       decoration: InputDecoration(
                           labelText: "Country Code",
                           labelStyle: TextStyle(
@@ -168,7 +177,6 @@ class _MyAppState extends State<MyApp> {
                     ),
                     TextFormField(
                       controller: PostalCodeController,
-                      inputFormatters: [postalCodeMaskFormatter],
                       decoration: InputDecoration(
                           labelText: "PostalCode",
                           labelStyle: TextStyle(
@@ -193,7 +201,8 @@ class _MyAppState extends State<MyApp> {
                         address
                             .setSubThoroughfare(SubThoroughfareController.text);
                         address.setPostalCode(PostalCodeController.text);
-                        startAddressCheck(address);
+                        String cpf = CPFController.text;
+                        startAddressCheck(address, cpf);
                       },
                     ),
                   ],

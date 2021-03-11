@@ -102,23 +102,20 @@ public class AddressCheckPlugin implements FlutterPlugin, MethodCallHandler {
         }
 
         AddressCheck addressCheck = mAddressCheck.build();
-        //28700710008
         AddressCollection mAddressCollection = new AddressCollection(addressCheck, context);
         mAddressCollection.setAddress(address, new AddressCollection.Callback() {
             @Override
             public void onSuccess(String userId) {
+                result.success(getSucessResponseMap());
                 return;
                 // o endereço foi atribuído com sucesso e o userId será usado para verificar o status atual da verificação
             }
 
             @Override
             public void onFailure(SDKFailure sdkFailure) {
-                System.out.println("fail");
-                System.out.println(sdkFailure.toString());
-                System.out.println(sdkFailure.getMessage());
+                result.success(getFailureResponseMap(sdkFailure));
             }
         });
-        result.success(getSucessResponseMap());
         return;
     }
 

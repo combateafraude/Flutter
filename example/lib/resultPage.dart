@@ -27,8 +27,11 @@ class ResultState extends State<ResultPage> {
             child: ListView(children: <Widget>[
               Text(_correlation, textAlign: TextAlign.center),
               ElevatedButton(
-                child: Text('Update Result', textAlign: TextAlign.center),
+                child: Text('Atualizar', textAlign: TextAlign.center),
                 onPressed: () async {
+                    setState(() {
+                      _correlation = 'Carregando...';
+                    });
                     var response = await http.get(
                         Uri.encodeFull(
                             "https://api.mobile.combateafraude.com/address/"+ widget.userId),
@@ -39,12 +42,10 @@ class ResultState extends State<ResultPage> {
                         });
                     final Map<String, dynamic> responseMap = json.decode(response.body);
                     setState(() {
-                      if(response.statusCode != 404)
+                      if(response.statusCode == 200)
                         _correlation =
                           json.decode(response.body)["address_verification"][0]
                               ["correlation"];
-                      var a = json.decode(response.body);
-                      a = null;
                     });
                 },
               ),
