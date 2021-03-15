@@ -15,3 +15,4 @@ Este repositório contém documentações e publicações dos plugins Flutter pa
 | [PassiveFaceLiveness](https://github.com/combateafraude/Flutter/tree/passive-face-liveness) | Câmera inteligente que captura uma selfie confiável do seu usuário utilizando inteligência artificial. É capaz de detectar e reprovar fotos de foto e gravações | [Demonstração](https://youtu.be/HrEt-DVkCJE) |
 | [ActiveFaceLiveness](https://github.com/combateafraude/Flutter/tree/active-face-liveness) | Câmera inteligente que captura uma selfie confiável do seu usuário utilizando movimentos faciais | [Demonstração](https://youtu.be/RjUTagXgotQ) |
 | [FaceAuthenticator](https://github.com/combateafraude/Flutter/tree/face-authenticator) | Facematch com prova de vida do usuário do seu app | [Demonstração](https://youtu.be/tuA_oUcFLYg) |
+| [AddressCheck](https://github.com/combateafraude/Flutter/tree/address-check) | Descubra se o seu usuário realmente mora onde informou | |
