@@ -128,7 +128,7 @@ AddressCheckResult addressCheckResult = await addressCheck.start();
 
 ## Verificando o status da validação do endereço
 
-Confira [aqui](https://docs.combateafraude.com/docs/mobile/android/address-check/#body).
+Para Android, verifique [aqui](https://docs.combateafraude.com/docs/mobile/android/address-check/#verificando-o-status-da-valida%C3%A7%C3%A3o-do-endere%C3%A7o). Para iOS, [aqui](https://docs.combateafraude.com/docs/mobile/ios/address-check/#verificando-o-status-da-valida%C3%A7%C3%A3o-do-endere%C3%A7o).
 
 
 
