@@ -1,6 +1,6 @@
-name: passive_face_liveness
+name: address_check
 description: Flutter plugin cross-platform (iOS, Android) for Combate à Fraude's AddressCheck (https://github.com/combateafraude).
-version: 1.9.0
+version: 1.0.0
 author: Combate à Fraude
 homepage: https://www.combateafraude.com/
 
@@ -23,4 +23,4 @@ flutter:
         package: com.combateafraude.address_check
         pluginClass: AddressCheckPlugin
       ios:
-        pluginClass: PassiveFaceLivenessPlugin
+        pluginClass: AddressCheckPlugin

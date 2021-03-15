@@ -48,7 +48,7 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:address-check:3.0.1'
+        implementation 'com.combateafraude.sdk:address-check:4.0.0'
 
         // JWT
         api 'io.jsonwebtoken:jjwt-api:0.11.2'

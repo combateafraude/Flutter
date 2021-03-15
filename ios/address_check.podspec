@@ -3,9 +3,9 @@
 # Run `pod lib lint passive_face_liveness.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'passive_face_liveness'
-  s.summary          = 'Flutter plugin for PassiveFaceLiveness'
-  s.version          = '1.9.0'
+  s.name             = 'address_check'
+  s.summary          = 'Flutter plugin for AddressCheck'
+  s.version          = '1.0.0'
   s.homepage         = 'https://www.combateafraude.com/'
   s.license          = { :file => 'LICENSE', :type => 'MIT' }
   s.author           = { 'ti@combateafraude.com' => 'ti@combateafraude.com' }
@@ -18,5 +18,5 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
   
   s.dependency 'Flutter'
-  s.dependency 'PassiveFaceLiveness', '3.1.2'
+  s.dependency 'AddressCheck', '4.0.0'
 end
