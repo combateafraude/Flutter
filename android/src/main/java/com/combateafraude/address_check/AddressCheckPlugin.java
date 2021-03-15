@@ -106,7 +106,7 @@ public class AddressCheckPlugin implements FlutterPlugin, MethodCallHandler {
         mAddressCollection.setAddress(address, new AddressCollection.Callback() {
             @Override
             public void onSuccess(String userId) {
-                result.success(getSucessResponseMap());
+                result.success(getSuccessResponseMap());
                 return;
                 // o endereço foi atribuído com sucesso e o userId será usado para verificar o status atual da verificação
             }
@@ -125,12 +125,9 @@ public class AddressCheckPlugin implements FlutterPlugin, MethodCallHandler {
                 .build();
     }
 
-    private HashMap<String, Object> getSucessResponseMap() {
+    private HashMap<String, Object> getSuccessResponseMap() {
         HashMap<String, Object> responseMap = new HashMap<>();
         responseMap.put("success", Boolean.TRUE);
-        responseMap.put("last_activity_ts","s");
-        responseMap.put("installations", "a");
-        responseMap.put("address_verification","e");
         return responseMap;
     }
 
