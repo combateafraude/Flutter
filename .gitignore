@@ -13,3 +13,5 @@ android/.idea/jarRepositories.xml
 android/.idea/misc.xml
 android/.idea/modules.xml
 local.properties
+
+example/ios/Runner/InLocoOptions.plist

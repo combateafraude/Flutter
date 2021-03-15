@@ -1,4 +1,4 @@
-name: passive_face_liveness_example
+name: address_check_example
 description: Demonstrates how to use the passive_face_liveness plugin.
 
 # The following line prevents the package from being accidentally published to
@@ -14,7 +14,7 @@ dependencies:
   mask_text_input_formatter: ^1.2.1
   http: ^0.12.2
 
-  passive_face_liveness:
+  address_check:
     # When depending on this package from a real application you should use:
     #   passiveface_liveness: ^x.y.z
     # See https://dart.dev/tools/pub/dependencies#version-constraints
