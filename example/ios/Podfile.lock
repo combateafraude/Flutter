@@ -1,8 +1,8 @@
 PODS:
   - address_check (1.0.0):
-    - AddressCheck (= 4.0.0)
+    - AddressCheck (= 4.0.1)
     - Flutter
-  - AddressCheck (4.0.0):
+  - AddressCheck (4.0.1):
     - InLocoEngage-iOS-SDK (= 5.6.1)
   - Flutter (1.0.0)
   - InLoco-iOS-SDK (5.6.1):
@@ -35,8 +35,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  address_check: 78436a2f1079d42c186706973679199c203cb21d
-  AddressCheck: dc573e29b222afee988e4d9816eb051bf840c796
+  address_check: 51e498fc7de82ae22a2149c0ed755047398142e7
+  AddressCheck: e10c59e51790718bc86698d76bd9b80c449e48c6
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   InLoco-iOS-SDK: 7d6276c3058f7c3e7b084fe1c4798f89b66c7fb9
   InLocoCommon-iOS-SDK: cc69b1d1ac07ca0b3364fbda82b3105c3111d592
