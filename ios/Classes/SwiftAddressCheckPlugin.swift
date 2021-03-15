@@ -66,6 +66,7 @@ public class SwiftAddressCheckPlugin: NSObject, FlutterPlugin, AddressCollection
             let addressCheck = addressCheckBuilder.bluid()
 
             let addressCollection = AddressCollection(addressCheck: addressCheck)
+            addressCollection.delegate = self
             addressCollection.setAddress(address)
         }
         
@@ -73,13 +74,13 @@ public class SwiftAddressCheckPlugin: NSObject, FlutterPlugin, AddressCollection
     
     public func onSucess() {
         let response : NSMutableDictionary! = [:]
-        response["result"] = "sucess"
+        response["success"] = true
         flutterResult!(response)
     }
     
     public func onError(error: AddressCheckFailure) {
         let response : NSMutableDictionary! = [:]
-        response["result"] = "error"
+        response["success"] = false
         flutterResult!(response)
     }
     
