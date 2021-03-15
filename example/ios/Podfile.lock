@@ -1,41 +1,47 @@
 PODS:
-  - Flutter (1.0.0)
-  - passive_face_liveness (1.9.0):
+  - address_check (1.0.0):
+    - AddressCheck (= 4.0.0)
     - Flutter
-    - PassiveFaceLiveness (= 3.1.2)
-  - PassiveFaceLiveness (3.1.2):
-    - Sentry (= 5.2.0)
+  - AddressCheck (4.0.0):
+    - InLocoEngage-iOS-SDK (= 5.6.1)
+  - Flutter (1.0.0)
+  - InLoco-iOS-SDK (5.6.1):
+    - InLocoCommon-iOS-SDK (= 5.6.1)
+  - InLocoCommon-iOS-SDK (5.6.1)
+  - InLocoEngage-iOS-SDK (5.6.1):
+    - InLoco-iOS-SDK (= 5.6.1)
   - "permission_handler (5.0.1+1)":
     - Flutter
-  - Sentry (5.2.0):
-    - Sentry/Core (= 5.2.0)
-  - Sentry/Core (5.2.0)
 
 DEPENDENCIES:
+  - address_check (from `.symlinks/plugins/address_check/ios`)
   - Flutter (from `Flutter`)
-  - passive_face_liveness (from `.symlinks/plugins/passive_face_liveness/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
 
 SPEC REPOS:
   https://github.com/combateafraude/iOS.git:
-    - PassiveFaceLiveness
+    - AddressCheck
   trunk:
-    - Sentry
+    - InLoco-iOS-SDK
+    - InLocoCommon-iOS-SDK
+    - InLocoEngage-iOS-SDK
 
 EXTERNAL SOURCES:
+  address_check:
+    :path: ".symlinks/plugins/address_check/ios"
   Flutter:
     :path: Flutter
-  passive_face_liveness:
-    :path: ".symlinks/plugins/passive_face_liveness/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
+  address_check: 78436a2f1079d42c186706973679199c203cb21d
+  AddressCheck: dc573e29b222afee988e4d9816eb051bf840c796
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  passive_face_liveness: 148779da88e69cd38c81bf9d27c32a9f26cbfa05
-  PassiveFaceLiveness: 401e20fbff4877cf4b6e95fda1c1cdf1f79faa19
+  InLoco-iOS-SDK: 7d6276c3058f7c3e7b084fe1c4798f89b66c7fb9
+  InLocoCommon-iOS-SDK: cc69b1d1ac07ca0b3364fbda82b3105c3111d592
+  InLocoEngage-iOS-SDK: e05b52cfa3d042da74f7939ee0a3f908baee70bd
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
-  Sentry: 6e04bc3e11bf771ca79140a112de64dcfbc7d8cb
 
 PODFILE CHECKSUM: 4189eac5c970d8dcdd758ef8ed3e4591d4abd2dd
 

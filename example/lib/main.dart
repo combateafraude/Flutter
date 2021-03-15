@@ -1,12 +1,11 @@
+import 'package:address_check/address_check.dart';
+import 'package:address_check/android/address.dart';
+import 'package:address_check/result/address_check_result.dart';
+import 'package:address_check_example/resultPage.dart';
 import 'package:flutter/material.dart';
-import 'package:passive_face_liveness/address_check.dart';
-import 'package:passive_face_liveness/android/address.dart';
-import 'package:passive_face_liveness/result/address_check_failure.dart';
-import 'package:passive_face_liveness/result/address_check_result.dart';
-import 'package:passive_face_liveness/result/address_check_success.dart';
+
 import 'package:permission_handler/permission_handler.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:passive_face_liveness_example/resultPage.dart';
 
 void main() => runApp(MaterialApp(home: MyApp()));
 
@@ -26,8 +25,7 @@ class _MyAppState extends State<MyApp> {
   final ThoroughfareController = TextEditingController(text: "Av. Azenha");
   final SubThoroughfareController = TextEditingController(text: "200");
   final PostalCodeController = TextEditingController(text: "51110-100");
-  String mobileToken =
-    "";
+  String mobileToken = "";
   @override
   void initState() {
     super.initState();
@@ -36,10 +34,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void requestPermissions() async {
-    await [
-      Permission.camera,
-      Permission.storage,
-    ].request();
+    await [Permission.locationAlways].request();
   }
 
   void startAddressCheck(Address address, String cpf) async {
@@ -50,12 +45,12 @@ class _MyAppState extends State<MyApp> {
     addressCheck.setPeopleId(cpf);
 
     AddressCheckResult addressCheckResult = await addressCheck.start();
-    if(addressCheckResult.success){
+    if (addressCheckResult.success) {
       Navigator.push(
-          context, new MaterialPageRoute(builder: (context) => ResultPage(cpf,mobileToken)));
+          context,
+          new MaterialPageRoute(
+              builder: (context) => ResultPage(cpf, mobileToken)));
     }
-
-
   }
 
   @override
