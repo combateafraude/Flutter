@@ -16,8 +16,8 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
-        mavenLocal()
-        //maven { url "https://repo.combateafraude.com/android/release" }
+        //mavenLocal()
+        maven { url "https://repo.combateafraude.com/android/release" }
     }
 }
 
