@@ -1,0 +1,263 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name DocumentDetector
+import AVFoundation
+import AVKit
+import Accelerate
+import AdSupport
+import CommonCrypto/*.CC_LONG*/
+import CommonCrypto/*.CC_MD5*/
+import CommonCrypto/*.CC_MD5_DIGEST_LENGTH*/
+import CoreImage
+import CoreMotion
+import Foundation
+import Sentry
+import Swift
+import TensorFlowLite
+import UIKit
+import VideoToolbox
+import Vision
+extension UIImage {
+  public convenience init?(pixelBuffer: CoreVideo.CVPixelBuffer)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class DocumentDetectorFailure : ObjectiveC.NSObject, Swift.Encodable {
+  public var message: Swift.String!
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@objc @_hasMissingDesignatedInitializers public class InvalidConfigurationReason : DocumentDetector.DocumentDetectorFailure {
+  @objc deinit
+}
+@objc public protocol DocumentDetectorControllerDelegate : ObjectiveC.NSObjectProtocol {
+  @objc func documentDetectionController(_ scanner: DocumentDetector.DocumentDetectorController, didFinishWithResults results: DocumentDetector.DocumentDetectorResult)
+  @objc func documentDetectionControllerDidCancel(_ scanner: DocumentDetector.DocumentDetectorController)
+  @objc func documentDetectionController(_ scanner: DocumentDetector.DocumentDetectorController, didFailWithError error: DocumentDetector.DocumentDetectorFailure)
+}
+@objc(DocumentDetectorController) open class DocumentDetectorController : UIKit.UINavigationController {
+  @objc weak public var documentDetectorDelegate: DocumentDetector.DocumentDetectorControllerDelegate?
+  @objc required public init(documentDetector: DocumentDetector.DocumentDetector)
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc override dynamic public var supportedInterfaceOrientations: UIKit.UIInterfaceOrientationMask {
+    @objc get
+  }
+  @objc deinit
+  @available(iOS 5.0, *)
+  @objc override dynamic public init(navigationBarClass: Swift.AnyClass?, toolbarClass: Swift.AnyClass?)
+  @objc override dynamic public init(rootViewController: UIKit.UIViewController)
+}
+@objc @_hasMissingDesignatedInitializers public class ServerReason : DocumentDetector.DocumentDetectorFailure {
+  public var code: Swift.Int!
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class Api : ObjectiveC.NSObject {
+  public var baseUrl: Swift.String!
+  public var relativeUrl: Swift.String!
+  public var method: Swift.String!
+  public var headers: [Swift.String]!
+  public func getUrl(pathParam: Swift.String = "") -> Swift.String!
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class CafApi : DocumentDetector.Api {
+  public static var IMAGE_UPLOAD: DocumentDetector.CafApi
+  public static var TRANSACTIONS: DocumentDetector.CafApi
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class DocumentDetector : ObjectiveC.NSObject, Swift.Encodable {
+  public static var SDK_NAME: Swift.String
+  public var mobileToken: Swift.String!
+  public var peopleId: Swift.String?
+  public var useAnalytics: Swift.Bool!
+  public var requestTimeout: Foundation.TimeInterval!
+  public var colorTheme: UIKit.UIColor!
+  public var hasSound: Swift.Bool!
+  public var showPopup: Swift.Bool!
+  public var showStepLabel: Swift.Bool!
+  public var showStatusLabel: Swift.Bool!
+  public var documentDetectorFlow: [DocumentDetector.DocumentDetectorStep]!
+  public var documentDetectorLayout: DocumentDetector.DocumentDetectorLayout?
+  public var shouldUpload: Swift.Bool!
+  public var imageQuality: CoreGraphics.CGFloat!
+  public var sensorLuminosityMessage: Swift.String!
+  public var sensorOrientationMessage: Swift.String!
+  public var sensorStabilityMessage: Swift.String!
+  public var verifyQuality: Swift.Bool!
+  public var qualityThreshold: Swift.Double!
+  public var detectionThreshold: Swift.Float!
+  public var orientationThreshold: Swift.Double!
+  public var stabilityThreshold: Swift.Double!
+  public var luminosityThreshold: Swift.Float!
+  public var proxySettings: DocumentDetector.ProxySettings?
+  public var previewShow: Swift.Bool!
+  public var previewTitle: Swift.String!
+  public var previewSubtitle: Swift.String!
+  public var previewConfirmLabel: Swift.String!
+  public var previewRetryLabel: Swift.String!
+  public func encode(to encoder: Swift.Encoder) throws
+  @objc public class Builder : ObjectiveC.NSObject {
+    public init(mobileToken: Swift.String)
+    public func setPeopleId(peopleId: Swift.String?) -> DocumentDetector.DocumentDetector.Builder
+    public func setAnalyticsSettings(useAnalytics: Swift.Bool!) -> DocumentDetector.DocumentDetector.Builder
+    public func setNetworkSettings(requestTimeout: Foundation.TimeInterval) -> DocumentDetector.DocumentDetector.Builder
+    public func setColorTheme(color: UIKit.UIColor) -> DocumentDetector.DocumentDetector.Builder
+    public func enableSound(enableSound: Swift.Bool) -> DocumentDetector.DocumentDetector.Builder
+    public func setPopupSettings(show: Swift.Bool) -> DocumentDetector.DocumentDetector.Builder
+    public func showStepLabel(show: Swift.Bool) -> DocumentDetector.DocumentDetector.Builder
+    public func showStatusLabel(show: Swift.Bool) -> DocumentDetector.DocumentDetector.Builder
+    public func setDocumentDetectorFlow(flow: [DocumentDetector.DocumentDetectorStep]) -> DocumentDetector.DocumentDetector.Builder
+    public func setLayout(layout: DocumentDetector.DocumentDetectorLayout) -> DocumentDetector.DocumentDetector.Builder
+    public func setLuminositySensorSettings(message: Swift.String?, luminosityThreshold: Swift.Float?) -> DocumentDetector.DocumentDetector.Builder
+    public func setOrientationSensorSettings(message: Swift.String?, orientationThreshold: Swift.Double?) -> DocumentDetector.DocumentDetector.Builder
+    public func setStabilitySensorSettings(message: Swift.String?, stabilityThreshold: Swift.Double?) -> DocumentDetector.DocumentDetector.Builder
+    public func setQualitySettings(verifyQuality: Swift.Bool, qualityThreshold: Swift.Double?) -> DocumentDetector.DocumentDetector.Builder
+    public func setDetectionSettings(detectionThreshold: Swift.Float) -> DocumentDetector.DocumentDetector.Builder
+    public func setProxySettings(proxySettings: DocumentDetector.ProxySettings?) -> DocumentDetector.DocumentDetector.Builder
+    public func showPreview(_ show: Swift.Bool, title: Swift.String?, subtitle: Swift.String?, confirmLabel: Swift.String?, retryLabel: Swift.String?) -> DocumentDetector.DocumentDetector.Builder
+    public func build() -> DocumentDetector.DocumentDetector
+    @objc deinit
+    @objc override dynamic public init()
+  }
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class MobileApi : DocumentDetector.Api {
+  public static var TOKEN_VERIFICATION: DocumentDetector.MobileApi
+  public static var DOCUMENT_QUALITY: DocumentDetector.MobileApi
+  @objc deinit
+}
+@objc public class TokenVerificationResponse : ObjectiveC.NSObject {
+  public var message: Swift.String!
+  public var status: Swift.String!
+  public init(dict: [Swift.String : Any])
+  public func isValidToken() -> Swift.Bool
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc @_inheritsConvenienceInitializers public class DocumentDetectorLayout : ObjectiveC.NSObject {
+  public var closeImage: UIKit.UIImage?
+  @objc override dynamic public init()
+  public func changeMaskImages(greenMask: UIKit.UIImage?, whiteMask: UIKit.UIImage?, redMask: UIKit.UIImage?)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class PermissionReason : DocumentDetector.DocumentDetectorFailure {
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class DocumentDetectorResult : ObjectiveC.NSObject, Swift.Encodable {
+  public var type: Swift.String!
+  public var captures: [DocumentDetector.Capture]!
+  public var trackingId: Swift.String?
+  @objc deinit
+  @objc override dynamic public init()
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@objc @_hasMissingDesignatedInitializers public class Label : ObjectiveC.NSObject, Swift.Encodable {
+  public static var BLANK: DocumentDetector.Label
+  public static var CNH_BACK: DocumentDetector.Label
+  public static var CNH_FRONT: DocumentDetector.Label
+  public static var CNH_FULL: DocumentDetector.Label
+  public static var CRLV: DocumentDetector.Label
+  public static var GENERIC: DocumentDetector.Label
+  public static var RG_BACK: DocumentDetector.Label
+  public static var RG_FRONT: DocumentDetector.Label
+  public static var RG_FULL: DocumentDetector.Label
+  public static var RG_NEW_BACK: DocumentDetector.Label
+  public static var RG_NEW_FRONT: DocumentDetector.Label
+  public static var RG_NEW_FULL: DocumentDetector.Label
+  public static var RNE_BACK: DocumentDetector.Label
+  public static var RNE_FRONT: DocumentDetector.Label
+  public var scanLabel: Swift.String!
+  public var documentType: Swift.String?
+  public static func getScannedLabel(scanLabel: Swift.String) -> DocumentDetector.Label?
+  public func encode(to encoder: Swift.Encoder) throws
+  public static func allLabels() -> [DocumentDetector.Label]
+  public static func allScanLabels() -> [Swift.String]
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc @_hasMissingDesignatedInitializers public class Capture : ObjectiveC.NSObject, Swift.Encodable {
+  public var image: UIKit.UIImage
+  public var scannedLabel: Swift.String!
+  public var imageUrl: Swift.String?
+  public var quality: Swift.Double!
+  public func encode(to encoder: Swift.Encoder) throws
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_hasMissingDesignatedInitializers public class UploadHelper {
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class AnalyticsApi : DocumentDetector.Api {
+  public static var REQUEST_TRACKING_ID: DocumentDetector.AnalyticsApi
+  public static var ADD_EVENT: DocumentDetector.AnalyticsApi
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class StorageReason : DocumentDetector.DocumentDetectorFailure {
+  @objc deinit
+}
+@objc public class ProxySettings : ObjectiveC.NSObject {
+  public var hostname: Swift.String!
+  public var port: Swift.Int!
+  public var user: Swift.String?
+  public var password: Swift.String?
+  public init(hostname: Swift.String, port: Swift.Int)
+  public func setAutentication(user: Swift.String, password: Swift.String) -> DocumentDetector.ProxySettings
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc public class DocumentDetectorStep : ObjectiveC.NSObject, Swift.Encodable {
+  public var document: DocumentDetector.Document!
+  public var stepLabel: Swift.String!
+  public var illustration: UIKit.UIImage!
+  public var audio: Foundation.URL!
+  public init(document: DocumentDetector.Document, stepLabel: Swift.String?, illustration: UIKit.UIImage?, audio: Foundation.URL?)
+  public func encode(to encoder: Swift.Encoder) throws
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc @_hasMissingDesignatedInitializers public class NetworkReason : DocumentDetector.DocumentDetectorFailure {
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class InvalidTokenReason : DocumentDetector.DocumentDetectorFailure {
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class Document : ObjectiveC.NSObject {
+  public static var RG_FRONT: DocumentDetector.Document
+  public static var RG_BACK: DocumentDetector.Document
+  public static var RG_FULL: DocumentDetector.Document
+  public static var CNH_FRONT: DocumentDetector.Document
+  public static var CNH_BACK: DocumentDetector.Document
+  public static var CNH_FULL: DocumentDetector.Document
+  public static var CRLV: DocumentDetector.Document
+  public static var RNE_FRONT: DocumentDetector.Document
+  public static var RNE_BACK: DocumentDetector.Document
+  public static var OTHERS: DocumentDetector.Document
+  public var labels: [DocumentDetector.Label]
+  public var stepLabel: Swift.String!
+  public var wrongDocumentFoundMessage: Swift.String!
+  public var illustration: UIKit.UIImage!
+  public var audio: Foundation.URL!
+  public static func getByLabel(label: DocumentDetector.Label) -> DocumentDetector.Document?
+  public static func allDocuments() -> [DocumentDetector.Document]
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc public class ServerFailureResponse : ObjectiveC.NSObject {
+  public var message: Swift.String?
+  public init(response: [Swift.String : Any])
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc @_inheritsConvenienceInitializers public class DocumentValidator : ObjectiveC.NSObject {
+  public var isDocumentDetected: Swift.Bool!
+  public var isPhoneInHorizontal: Swift.Bool!
+  public var isPhoneStable: Swift.Bool!
+  public var errorStatus: Swift.String!
+  public var missedAttemps: Swift.Int!
+  public var lastLabelScanned: DocumentDetector.Label!
+  @objc deinit
+  @objc override dynamic public init()
+}

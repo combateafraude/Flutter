@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.combateafraude.sdk:passive-face-liveness:4.6.2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/259b849379deb0373cabe40683f73d4c/passive-face-liveness-4.6.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/259b849379deb0373cabe40683f73d4c/passive-face-liveness-4.6.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/259b849379deb0373cabe40683f73d4c/passive-face-liveness-4.6.2/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

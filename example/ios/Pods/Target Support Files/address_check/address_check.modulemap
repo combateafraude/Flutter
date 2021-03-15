@@ -1,0 +1,6 @@
+framework module address_check {
+  umbrella header "address_check-umbrella.h"
+
+  export *
+  module * { export * }
+}

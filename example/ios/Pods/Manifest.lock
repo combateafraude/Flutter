@@ -1,0 +1,48 @@
+PODS:
+  - address_check (1.0.0):
+    - AddressCheck (= 4.0.1)
+    - Flutter
+  - AddressCheck (4.0.1):
+    - InLocoEngage-iOS-SDK (= 5.6.1)
+  - Flutter (1.0.0)
+  - InLoco-iOS-SDK (5.6.1):
+    - InLocoCommon-iOS-SDK (= 5.6.1)
+  - InLocoCommon-iOS-SDK (5.6.1)
+  - InLocoEngage-iOS-SDK (5.6.1):
+    - InLoco-iOS-SDK (= 5.6.1)
+  - "permission_handler (5.0.1+1)":
+    - Flutter
+
+DEPENDENCIES:
+  - address_check (from `.symlinks/plugins/address_check/ios`)
+  - Flutter (from `Flutter`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+
+SPEC REPOS:
+  https://github.com/combateafraude/iOS.git:
+    - AddressCheck
+  trunk:
+    - InLoco-iOS-SDK
+    - InLocoCommon-iOS-SDK
+    - InLocoEngage-iOS-SDK
+
+EXTERNAL SOURCES:
+  address_check:
+    :path: ".symlinks/plugins/address_check/ios"
+  Flutter:
+    :path: Flutter
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
+
+SPEC CHECKSUMS:
+  address_check: 51e498fc7de82ae22a2149c0ed755047398142e7
+  AddressCheck: e10c59e51790718bc86698d76bd9b80c449e48c6
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  InLoco-iOS-SDK: 7d6276c3058f7c3e7b084fe1c4798f89b66c7fb9
+  InLocoCommon-iOS-SDK: cc69b1d1ac07ca0b3364fbda82b3105c3111d592
+  InLocoEngage-iOS-SDK: e05b52cfa3d042da74f7939ee0a3f908baee70bd
+  permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
+
+PODFILE CHECKSUM: 4189eac5c970d8dcdd758ef8ed3e4591d4abd2dd
+
+COCOAPODS: 1.10.0

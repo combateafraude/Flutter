@@ -1,0 +1,4 @@
+framework module PassiveFaceLiveness {
+  header "PassiveFaceLiveness-Swift.h"
+  requires objc
+}

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.combateafraude.sdk.nodatabinding:document-detector:2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/9cdc3d6fb06c0a3dfb9658a8ad1975bb/document-detector-2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/9cdc3d6fb06c0a3dfb9658a8ad1975bb/document-detector-2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/9cdc3d6fb06c0a3dfb9658a8ad1975bb/document-detector-2/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

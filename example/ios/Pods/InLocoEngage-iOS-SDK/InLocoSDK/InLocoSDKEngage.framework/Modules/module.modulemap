@@ -1,0 +1,8 @@
+
+framework module InLocoSDKEngage {
+  umbrella header "InLocoEngage.h"
+
+  export *
+  module * { export * }
+
+}

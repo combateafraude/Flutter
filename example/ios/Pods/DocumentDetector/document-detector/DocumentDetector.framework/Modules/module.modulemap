@@ -1,0 +1,4 @@
+framework module DocumentDetector {
+  header "DocumentDetector-Swift.h"
+  requires objc
+}

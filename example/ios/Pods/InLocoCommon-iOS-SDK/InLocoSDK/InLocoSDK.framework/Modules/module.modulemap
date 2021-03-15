@@ -1,0 +1,8 @@
+
+framework module InLocoSDK {
+  umbrella header "InLoco.h"
+
+  export *
+  module * { export * }
+
+}

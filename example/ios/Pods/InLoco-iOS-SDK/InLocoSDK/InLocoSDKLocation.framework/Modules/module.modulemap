@@ -1,0 +1,8 @@
+
+framework module InLocoSDKLocation {
+  umbrella header "InLocoLocation.h"
+
+  export *
+  module * { export * }
+
+}
