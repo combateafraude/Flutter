@@ -130,7 +130,7 @@ class _MyAppState extends State<MyApp> {
                   children: [
                     Row(
                       children: [
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text('Start DocumentDetector for CNH'),
                           onPressed: () async {
                             startDocumentDetector([
@@ -153,6 +153,21 @@ class _MyAppState extends State<MyApp> {
                                   document: DocumentType.RG_FRONT),
                               new DocumentDetectorStep(
                                   document: DocumentType.RG_BACK)
+                            ]);
+                          },
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          child: Text('Start DocumentDetector for RNE'),
+                          onPressed: () async {
+                            startDocumentDetector([
+                              new DocumentDetectorStep(
+                                  document: DocumentType.RNE_FRONT),
+                              new DocumentDetectorStep(
+                                  document: DocumentType.RNE_BACK)
                             ]);
                           },
                         )
