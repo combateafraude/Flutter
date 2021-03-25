@@ -67,6 +67,10 @@ class _MyAppState extends State<MyApp> {
 
     documentDetector.setDocumentFlow(documentSteps);
 
+    documentDetector.setAutoDetection(true);
+
+    documentDetector.setCurrentStepDoneDelay(true, 2000);
+
     // Put the others parameters here
 
     try {

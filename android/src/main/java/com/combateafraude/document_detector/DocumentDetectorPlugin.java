@@ -222,6 +222,20 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
         Integer requestTimeout = (Integer) argumentsMap.get("requestTimeout");
         if (requestTimeout != null) mDocumentDetectorBuilder.setNetworkSettings(requestTimeout);
 
+        //AutoDetection
+        Boolean autoDetectionEnable = (Boolean) argumentsMap.get("autoDetection");
+        if(autoDetectionEnable != null) mDocumentDetectorBuilder.setAutoDetection(autoDetectionEnable);
+
+        //CurrentStepDoneDelay
+        Boolean showDelay = (Boolean) argumentsMap.get("showDelay");
+        if(showDelay != null){
+            if(argumentsMap.get("delay") != null) {
+                System.out.println("oi");
+                int delay = (int) argumentsMap.get("delay");
+                mDocumentDetectorBuilder.setCurrentStepDoneDelay(showDelay, delay);
+            }
+        }
+
         Intent mIntent = new Intent(context, DocumentDetectorActivity.class);
         mIntent.putExtra(DocumentDetector.PARAMETER_NAME, mDocumentDetectorBuilder.build());
         activity.startActivityForResult(mIntent, REQUEST_CODE);
