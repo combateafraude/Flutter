@@ -191,6 +191,10 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             return Document.RG_FULL
         case "CRLV":
             return Document.CRLV
+        case "RNE_FRONT":
+            return Document.RNE_FRONT
+        case "RNE_BACK":
+            return Document.RNE_BACK
         default:
             return Document.OTHERS
         }
