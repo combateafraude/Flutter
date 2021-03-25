@@ -136,6 +136,16 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
         Boolean enableSound = (Boolean) argumentsMap.get("sound");
         if (enableSound != null) mPassiveFaceLivenessBuilder.enableSound(enableSound);
 
+        //CurrentStepDoneDelay
+        Boolean showDelay = (Boolean) argumentsMap.get("showDelay");
+        if(showDelay != null){
+            if(argumentsMap.get("delay") != null) {
+                System.out.println("oi");
+                int delay = (int) argumentsMap.get("delay");
+                mPassiveFaceLivenessBuilder.setCurrentStepDoneDelay(showDelay, delay);
+            }
+        }
+
         // Network settings
         Integer requestTimeout = (Integer) argumentsMap.get("requestTimeout");
         if (requestTimeout != null) mPassiveFaceLivenessBuilder.setNetworkSettings(requestTimeout);

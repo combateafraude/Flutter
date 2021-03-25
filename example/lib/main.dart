@@ -56,6 +56,8 @@ class _MyAppState extends State<MyApp> {
 
     passiveFaceLiveness.setAndroidSettings(passiveFaceLivenessAndroidSettings);
 
+    passiveFaceLiveness.setCurrentStepDoneDelay(false, 2000);
+
     // Put the others parameters here
 
     PassiveFaceLivenessResult passiveFaceLivenessResult =

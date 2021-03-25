@@ -20,6 +20,8 @@ class PassiveFaceLiveness {
   ShowPreview showPreview;
   PassiveFaceLivenessAndroidSettings androidSettings;
   PassiveFaceLivenessIosSettings iosSettings;
+  bool showDelay;
+  int delay;
 
   PassiveFaceLiveness({@required this.mobileToken});
 
@@ -51,6 +53,11 @@ class PassiveFaceLiveness {
     this.iosSettings = iosSettings;
   }
 
+  void setCurrentStepDoneDelay(bool showDelay, int delay) {
+    this.showDelay = showDelay;
+    this.delay = delay;
+  }
+
   Future<PassiveFaceLivenessResult> start() async {
     Map<String, dynamic> params = new Map();
 
@@ -62,6 +69,8 @@ class PassiveFaceLiveness {
     params["showPreview"] = showPreview?.asMap();
     params["androidSettings"] = androidSettings?.asMap();
     params["iosSettings"] = iosSettings?.asMap();
+    params["showDelay"] = showDelay;
+    params["delay"] = delay;
 
     Map<dynamic, dynamic> resultMap =
         await _channel.invokeMethod('start', params);
