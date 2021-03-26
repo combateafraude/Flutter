@@ -71,7 +71,7 @@ dependencies:
   address_check:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: address-check-v1.0.0
+      ref: address-check-v1.0.1
 ```
 
 ## Utilização

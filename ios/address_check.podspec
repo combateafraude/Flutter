@@ -5,7 +5,7 @@
 Pod::Spec.new do |s|
   s.name             = 'address_check'
   s.summary          = 'Flutter plugin for AddressCheck'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.homepage         = 'https://www.combateafraude.com/'
   s.license          = { :file => 'LICENSE', :type => 'MIT' }
   s.author           = { 'ti@combateafraude.com' => 'ti@combateafraude.com' }
@@ -18,5 +18,5 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
   
   s.dependency 'Flutter'
-  s.dependency 'AddressCheck', '4.0.1'
+  s.dependency 'AddressCheck', '4.0.2'
 end
