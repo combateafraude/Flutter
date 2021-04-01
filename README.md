@@ -67,7 +67,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v4.1.0
+      ref: document-detector-test-v4.1.1
 ```
 
 ## Utilização
