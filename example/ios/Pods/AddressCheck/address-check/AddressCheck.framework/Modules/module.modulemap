@@ -1,4 +1,0 @@
-framework module AddressCheck {
-  header "AddressCheck-Swift.h"
-  requires objc
-}
