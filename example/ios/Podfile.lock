@@ -1,10 +1,8 @@
 PODS:
-  - Alamofire (5.2.0)
   - face_authenticator (1.4.1):
-    - FaceAuthenticator (~> 2.2.1)
+    - FaceAuthenticator (~> 2.3.0)
     - Flutter
-  - FaceAuthenticator (2.2.1):
-    - Alamofire (= 5.2)
+  - FaceAuthenticator (2.3.0):
     - Sentry (= 5.2.0)
   - Flutter (1.0.0)
   - "permission_handler (5.0.1+1)":
@@ -22,7 +20,6 @@ SPEC REPOS:
   https://github.com/combateafraude/iOS.git:
     - FaceAuthenticator
   trunk:
-    - Alamofire
     - Sentry
 
 EXTERNAL SOURCES:
@@ -34,9 +31,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  Alamofire: c1ca147559e730bfb2182c8c7aafbdd90a867987
-  face_authenticator: dd96bdf03ba08d6fe1756f2ee5562f10f394987e
-  FaceAuthenticator: 3dc6c1a67cae6817fe8979cb724455caf6d4dd7c
+  face_authenticator: 2a1e7cd6e2f787968abe13e4e6d557af5b887c9d
+  FaceAuthenticator: 168aff2ac7fd4a80762de91b51c6c92361819020
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
   Sentry: 6e04bc3e11bf771ca79140a112de64dcfbc7d8cb
