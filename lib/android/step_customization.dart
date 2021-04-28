@@ -1,7 +1,7 @@
 class DocumentDetectorStepCustomizationAndroid {
-  String stepLabelStringResName;
-  String illustrationDrawableResName;
-  String audioRawResName;
+  String? stepLabelStringResName;
+  String? illustrationDrawableResName;
+  String? audioRawResName;
 
   DocumentDetectorStepCustomizationAndroid(
       {this.stepLabelStringResName,

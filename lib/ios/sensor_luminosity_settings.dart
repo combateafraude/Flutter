@@ -1,6 +1,6 @@
 class SensorLuminositySettingsIos {
-  String message;
-  double luminosityThreshold;
+  String? message;
+  double? luminosityThreshold;
 
   SensorLuminositySettingsIos(
   {this.message, this.luminosityThreshold});

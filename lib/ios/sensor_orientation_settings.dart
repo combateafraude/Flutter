@@ -1,6 +1,6 @@
 class SensorOrientationSettingsIos {
-  String message;
-  double orientationThreshold;
+  String? message;
+  double? orientationThreshold;
 
   SensorOrientationSettingsIos(
   {this.message, this.orientationThreshold});

@@ -3,9 +3,9 @@ import 'sensor_orientation_settings.dart';
 import 'sensor_stability_settings.dart';
 
 class SensorSettingsAndroid {
-  SensorLuminositySettingsAndroid sensorLuminositySettings;
-  SensorOrientationSettingsAndroid sensorOrientationSettings;
-  SensorStabilitySettingsAndroid sensorStabilitySettings;
+  SensorLuminositySettingsAndroid? sensorLuminositySettings;
+  SensorOrientationSettingsAndroid? sensorOrientationSettings;
+  SensorStabilitySettingsAndroid? sensorStabilitySettings;
 
   SensorSettingsAndroid(
       {this.sensorLuminositySettings,
