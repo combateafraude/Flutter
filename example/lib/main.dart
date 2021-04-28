@@ -49,7 +49,26 @@ class _MyAppState extends State<MyApp> {
     DocumentDetector documentDetector =
         new DocumentDetector(mobileToken: mobileToken);
 
+    ShowPreview showPreview = new ShowPreview(
+        show: true,
+        title: "A foto ficou boa?",
+        subTitle:
+            "Veja se todas informações estão legíveis e os documentos sem reflexos",
+        confirmLabel: "Sim, ficou boa!",
+        retryLabel: "Tirar novamente");
+
+    DocumentDetectorAndroidSettings androidSettings =
+        new DocumentDetectorAndroidSettings();
+
+    documentDetector.setShowPreview(showPreview);
+
+    documentDetector.setAndroidSettings(androidSettings);
+
     documentDetector.setDocumentFlow(documentSteps);
+
+    documentDetector.setAutoDetection(true);
+
+    documentDetector.setCurrentStepDoneDelay(true, 2000);
 
     // Put the others parameters here
 
@@ -110,7 +129,7 @@ class _MyAppState extends State<MyApp> {
                   children: [
                     Row(
                       children: [
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text('Start DocumentDetector for CNH'),
                           onPressed: () async {
                             startDocumentDetector([
@@ -125,7 +144,7 @@ class _MyAppState extends State<MyApp> {
                     ),
                     Row(
                       children: [
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text('Start DocumentDetector for RG'),
                           onPressed: () async {
                             startDocumentDetector([
@@ -133,6 +152,21 @@ class _MyAppState extends State<MyApp> {
                                   document: DocumentType.RG_FRONT),
                               new DocumentDetectorStep(
                                   document: DocumentType.RG_BACK)
+                            ]);
+                          },
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          child: Text('Start DocumentDetector for RNE'),
+                          onPressed: () async {
+                            startDocumentDetector([
+                              new DocumentDetectorStep(
+                                  document: DocumentType.RNE_FRONT),
+                              new DocumentDetectorStep(
+                                  document: DocumentType.RNE_BACK)
                             ]);
                           },
                         )

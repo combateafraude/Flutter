@@ -22,8 +22,13 @@ class DocumentDetector {
   bool popup;
   bool sound;
   int requestTimeout;
+  ShowPreview showPreview;
   DocumentDetectorAndroidSettings androidSettings;
   DocumentDetectorIosSettings iosSettings;
+  bool showDelay;
+  int delay;
+  bool autoDetection;
+
 
   DocumentDetector({@required this.mobileToken});
 
@@ -51,6 +56,19 @@ class DocumentDetector {
     this.requestTimeout = requestTimeout;
   }
 
+  void setShowPreview(ShowPreview showPreview) {
+    this.showPreview = showPreview;
+  }
+
+  void setAutoDetection(bool enable){
+    this.autoDetection = enable;
+  }
+
+  void setCurrentStepDoneDelay(bool showDelay, int delay){
+    this.showDelay = showDelay;
+    this.delay = delay;
+  }
+
   void setAndroidSettings(DocumentDetectorAndroidSettings androidSettings) {
     this.androidSettings = androidSettings;
   }
@@ -68,8 +86,12 @@ class DocumentDetector {
     params["popup"] = popup;
     params["sound"] = sound;
     params["requestTimeout"] = requestTimeout;
+    params["showPreview"] = showPreview?.asMap();
     params["androidSettings"] = androidSettings?.asMap();
     params["iosSettings"] = iosSettings?.asMap();
+    params["showDelay"] = showDelay;
+    params["delay"] = delay;
+    params["autoDetection"] = autoDetection;
 
     List<Map<String, dynamic>> stepsMap = [];
     for (var step in documentDetectorSteps) {

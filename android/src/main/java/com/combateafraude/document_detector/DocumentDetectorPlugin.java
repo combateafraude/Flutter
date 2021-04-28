@@ -97,13 +97,24 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
                 if(stepLabelId != null) detectorStep.setStepLabel(stepLabelId);
                 if(illustrationId != null) detectorStep.setIllustration(illustrationId);
                 if(audioId != null) detectorStep.setStepAudio(audioId);
-            
+
                 documentDetectorSteps[i] = detectorStep;
             } else {
                 documentDetectorSteps[i] = new DocumentDetectorStep(document);
             }
         }
         mDocumentDetectorBuilder.setDocumentSteps(documentDetectorSteps);
+
+        // Preview
+        HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
+        if (showPreview != null) {
+            boolean show = (boolean) showPreview.get("show");
+            String title = (String) showPreview.get("title");
+            String subTitle = (String) showPreview.get("subTitle");
+            String confirmLabel = (String) showPreview.get("confirmLabel");
+            String retryLabel = (String) showPreview.get("retryLabel");
+            mDocumentDetectorBuilder.showPreview(show, title, subTitle, confirmLabel, retryLabel);
+        }
 
 
         // Android specific settings
@@ -118,7 +129,7 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
                     HashMap<String, Object> stage = paramStages.get(i);
 
                     Long durationMillis = ((Number) stage.get("durationMillis")).longValue();
-                    
+
                     Boolean wantSensorCheck = (Boolean) stage.get("wantSensorCheck");
                     if (wantSensorCheck == null) wantSensorCheck = false;
 
@@ -158,6 +169,7 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
                 Integer redMaskId = getResourceId((String) customizationAndroid.get("redMaskResIdName"), DRAWABLE_RES);
                 mDocumentDetectorBuilder.setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId);
             }
+
 
             // Sensor settings
             HashMap<String, Object> sensorSettings = (HashMap<String, Object>) androidSettings.get("sensorSettings");
@@ -209,6 +221,20 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
         // Network settings
         Integer requestTimeout = (Integer) argumentsMap.get("requestTimeout");
         if (requestTimeout != null) mDocumentDetectorBuilder.setNetworkSettings(requestTimeout);
+
+        //AutoDetection
+        Boolean autoDetectionEnable = (Boolean) argumentsMap.get("autoDetection");
+        if(autoDetectionEnable != null) mDocumentDetectorBuilder.setAutoDetection(autoDetectionEnable);
+
+        //CurrentStepDoneDelay
+        Boolean showDelay = (Boolean) argumentsMap.get("showDelay");
+        if(showDelay != null){
+            if(argumentsMap.get("delay") != null) {
+                System.out.println("oi");
+                int delay = (int) argumentsMap.get("delay");
+                mDocumentDetectorBuilder.setCurrentStepDoneDelay(showDelay, delay);
+            }
+        }
 
         Intent mIntent = new Intent(context, DocumentDetectorActivity.class);
         mIntent.putExtra(DocumentDetector.PARAMETER_NAME, mDocumentDetectorBuilder.build());

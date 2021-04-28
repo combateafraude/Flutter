@@ -79,6 +79,18 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             documentDetectorBuilder.setNetworkSettings(requestTimeout: requestTimeout)
         }
 
+        if let showPreview = arguments["showPreview"] as? [String: Any] {
+            var show = showPreview["show"] as? Bool
+            if(show == nil){
+                show = false
+            }
+            let title = showPreview["title"] as? String
+            let subtitle = showPreview["subTitle"] as? String
+            let confirmLabel = showPreview["confirmLabel"] as? String
+            let retryLabel = showPreview["retryLabel"] as? String
+            documentDetectorBuilder.showPreview(show!, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
+         }
+
         if let iosSettings = arguments["iosSettings"] as? [String: Any] {
             if let detectionThreshold = iosSettings["detectionThreshold"] as? Float {
                 documentDetectorBuilder.setDetectionSettings(detectionThreshold: detectionThreshold)
@@ -179,6 +191,10 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             return Document.RG_FULL
         case "CRLV":
             return Document.CRLV
+        case "RNE_FRONT":
+            return Document.RNE_FRONT
+        case "RNE_BACK":
+            return Document.RNE_BACK
         default:
             return Document.OTHERS
         }

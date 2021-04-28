@@ -7,8 +7,10 @@ class DocumentDetectorAndroidSettings {
   SensorSettingsAndroid sensorSettings;
   List<CaptureStage> captureStages;
 
-
-  DocumentDetectorAndroidSettings({this.customization, this.sensorSettings, this.captureStages});
+  DocumentDetectorAndroidSettings(
+      {this.customization,
+        this.sensorSettings,
+        this.captureStages});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
