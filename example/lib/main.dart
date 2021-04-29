@@ -10,6 +10,7 @@ import 'package:document_detector_nodatabinding/result/document_detector_failure
 import 'package:document_detector_nodatabinding/result/document_detector_result.dart';
 import 'package:document_detector_nodatabinding/result/document_detector_success.dart';
 import 'package:flutter/material.dart';
+import 'package:document_detector_nodatabinding/show_preview.dart';
 
 import 'package:document_detector_nodatabinding/document_detector.dart';
 import 'package:flutter/services.dart';

@@ -8,6 +8,7 @@ import 'package:document_detector_nodatabinding/result/document_detector_closed.
 import 'package:document_detector_nodatabinding/result/document_detector_failure.dart';
 import 'package:document_detector_nodatabinding/result/document_detector_result.dart';
 import 'package:document_detector_nodatabinding/result/document_detector_success.dart';
+import 'package:document_detector_nodatabinding/show_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
