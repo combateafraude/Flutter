@@ -13,17 +13,17 @@ class PassiveFaceLiveness {
       const MethodChannel('passive_face_liveness');
 
   String mobileToken;
-  String peopleId;
-  bool useAnalytics;
-  bool sound;
-  int requestTimeout;
-  ShowPreview showPreview;
-  PassiveFaceLivenessAndroidSettings androidSettings;
-  PassiveFaceLivenessIosSettings iosSettings;
-  bool showDelay;
-  int delay;
+  String? peopleId;
+  bool? useAnalytics;
+  bool? sound;
+  int? requestTimeout;
+  ShowPreview? showPreview;
+  PassiveFaceLivenessAndroidSettings? androidSettings;
+  PassiveFaceLivenessIosSettings? iosSettings;
+  bool? showDelay;
+  int? delay;
 
-  PassiveFaceLiveness({@required this.mobileToken});
+  PassiveFaceLiveness({required this.mobileToken});
 
   void enableSound(bool enable) {
     this.sound = enable;
@@ -73,9 +73,9 @@ class PassiveFaceLiveness {
     params["delay"] = delay;
 
     Map<dynamic, dynamic> resultMap =
-        await _channel.invokeMethod('start', params);
+        await (_channel.invokeMethod('start', params) as FutureOr<Map<dynamic, dynamic>>);
 
-    bool success = resultMap["success"];
+    bool? success = resultMap["success"];
     if (success == null) {
       return new PassiveFaceLivenessClosed();
     } else if (success == true) {
