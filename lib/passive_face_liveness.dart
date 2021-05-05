@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:passive_face_liveness/android/settings.dart';
@@ -72,8 +74,8 @@ class PassiveFaceLiveness {
     params["showDelay"] = showDelay;
     params["delay"] = delay;
 
-    Map<dynamic, dynamic> resultMap =
-        await (_channel.invokeMethod('start', params) as FutureOr<Map<dynamic, dynamic>>);
+    Map<dynamic, dynamic> resultMap = await (_channel.invokeMethod(
+        'start', params) as FutureOr<Map<dynamic, dynamic>>);
 
     bool? success = resultMap["success"];
     if (success == null) {
@@ -84,7 +86,7 @@ class PassiveFaceLiveness {
           resultMap["imageUrl"],
           resultMap["signedResponse"],
           resultMap["trackingId"]);
-    } else if (success == false) {
+    } else {
       return new PassiveFaceLivenessFailure(
           resultMap["message"], resultMap["type"]);
     }
