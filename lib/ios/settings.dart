@@ -2,9 +2,9 @@ import 'customization.dart';
 import 'sensor_stability_settings.dart';
 
 class FaceAuthenticatorIosSettings {
-  FaceAuthenticatorCustomizationIos customization;
-  int beforePictureMillis;
-  SensorStabilitySettingsIos sensorStability;
+  FaceAuthenticatorCustomizationIos? customization;
+  int? beforePictureMillis;
+  SensorStabilitySettingsIos? sensorStability;
 
   FaceAuthenticatorIosSettings(
   {this.customization, this.beforePictureMillis, this.sensorStability});

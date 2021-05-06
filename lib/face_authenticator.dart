@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
@@ -13,14 +15,14 @@ class FaceAuthenticator {
       const MethodChannel('face_authenticator');
 
   String mobileToken;
-  String peopleId;
-  bool useAnalytics;
-  bool sound;
-  int requestTimeout;
-  FaceAuthenticatorAndroidSettings androidSettings;
-  FaceAuthenticatorIosSettings iosSettings;
+  String? peopleId;
+  bool? useAnalytics;
+  bool? sound;
+  int? requestTimeout;
+  FaceAuthenticatorAndroidSettings? androidSettings;
+  FaceAuthenticatorIosSettings? iosSettings;
 
-  FaceAuthenticator({@required this.mobileToken});
+  FaceAuthenticator({required this.mobileToken});
 
   void enableSound(bool enable) {
     this.sound = enable;
@@ -57,16 +59,16 @@ class FaceAuthenticator {
     params["androidSettings"] = androidSettings?.asMap();
     params["iosSettings"] = iosSettings?.asMap();
 
-    Map<dynamic, dynamic> resultMap =
-        await _channel.invokeMethod('start', params);
+    Map<dynamic, dynamic> resultMap = await (_channel.invokeMethod(
+        'start', params) as FutureOr<Map<dynamic, dynamic>>);
 
-    bool success = resultMap["success"];
+    bool? success = resultMap["success"];
     if (success == null) {
       return new FaceAuthenticatorClosed();
     } else if (success == true) {
       return new FaceAuthenticatorSuccess(resultMap["authenticated"],
           resultMap["signedResponse"], resultMap["trackingId"]);
-    } else if (success == false) {
+    } else {
       return new FaceAuthenticatorFailure(
           resultMap["message"], resultMap["type"]);
     }
