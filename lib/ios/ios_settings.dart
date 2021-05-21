@@ -3,11 +3,11 @@ import 'customization.dart';
 import 'sensor_settings.dart';
 
 class DocumentDetectorIosSettings {
-  double detectionThreshold;
-  bool verifyQuality;
-  double qualityThreshold;
-  DocumentDetectorCustomizationIos customization;
-  SensorSettingsIos sensorSettings;
+  double? detectionThreshold;
+  bool? verifyQuality;
+  double? qualityThreshold;
+  DocumentDetectorCustomizationIos? customization;
+  SensorSettingsIos? sensorSettings;
 
   DocumentDetectorIosSettings(
   {this.detectionThreshold,

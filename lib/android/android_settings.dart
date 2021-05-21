@@ -3,9 +3,9 @@ import 'customization.dart';
 import 'sensor_settings.dart';
 
 class DocumentDetectorAndroidSettings {
-  DocumentDetectorCustomizationAndroid customization;
-  SensorSettingsAndroid sensorSettings;
-  List<CaptureStage> captureStages;
+  DocumentDetectorCustomizationAndroid? customization;
+  SensorSettingsAndroid? sensorSettings;
+  List<CaptureStage>? captureStages;
 
   DocumentDetectorAndroidSettings(
       {this.customization,
@@ -20,8 +20,8 @@ class DocumentDetectorAndroidSettings {
 
     if (captureStages != null) {
       List<Map<String, dynamic>> stagesMap = [];
-      for (var stage in captureStages) {
-        stagesMap.add(stage.asMap());
+      for (var stage in captureStages!) {
+        stagesMap.add(stage.asMap() as Map<String, dynamic>);
       }
       map["captureStages"] = stagesMap;
     }

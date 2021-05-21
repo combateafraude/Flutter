@@ -4,13 +4,13 @@ import 'package:document_detector/android/capture_stage/quality_settings.dart';
 import 'package:flutter/cupertino.dart';
 
 class CaptureStage {
-  int durationMillis;
+  int? durationMillis;
   bool wantSensorCheck;
-  QualitySettings qualitySettings;
-  DetectionSettings detectionSettings;
-  CaptureMode captureMode;
+  QualitySettings? qualitySettings;
+  DetectionSettings? detectionSettings;
+  CaptureMode? captureMode;
 
-  CaptureStage({this.durationMillis, @required this.wantSensorCheck, this.qualitySettings,
+  CaptureStage({this.durationMillis, required this.wantSensorCheck, this.qualitySettings,
     this.detectionSettings, this.captureMode});
 
   Map asMap() {

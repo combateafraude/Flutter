@@ -6,10 +6,10 @@ import 'ios/step_customization.dart';
 
 class DocumentDetectorStep {
   DocumentType document;
-  DocumentDetectorStepCustomizationAndroid android;
-  DocumentDetectorStepCustomizationIos ios;
+  DocumentDetectorStepCustomizationAndroid? android;
+  DocumentDetectorStepCustomizationIos? ios;
 
-  DocumentDetectorStep({@required this.document, this.android, this.ios});
+  DocumentDetectorStep({required this.document, this.android, this.ios});
 
   Map asMap(){
     Map<String, dynamic> map = new Map();

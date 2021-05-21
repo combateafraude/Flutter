@@ -17,21 +17,20 @@ class DocumentDetector {
       const MethodChannel('document_detector');
 
   String mobileToken;
-  String peopleId;
-  bool useAnalytics;
-  List<DocumentDetectorStep> documentDetectorSteps;
-  bool popup;
-  bool sound;
-  int requestTimeout;
-  ShowPreview showPreview;
-  DocumentDetectorAndroidSettings androidSettings;
-  DocumentDetectorIosSettings iosSettings;
-  bool showDelay;
-  int delay;
-  bool autoDetection;
+  String? peopleId;
+  bool? useAnalytics;
+  late List<DocumentDetectorStep> documentDetectorSteps;
+  bool? popup;
+  bool? sound;
+  int? requestTimeout;
+  ShowPreview? showPreview;
+  DocumentDetectorAndroidSettings? androidSettings;
+  DocumentDetectorIosSettings? iosSettings;
+  bool? showDelay;
+  int? delay;
+  bool? autoDetection;
 
-
-  DocumentDetector({@required this.mobileToken});
+  DocumentDetector({required this.mobileToken});
 
   void setDocumentFlow(List<DocumentDetectorStep> documentDetectorSteps) {
     this.documentDetectorSteps = documentDetectorSteps;
@@ -61,11 +60,11 @@ class DocumentDetector {
     this.showPreview = showPreview;
   }
 
-  void setAutoDetection(bool enable){
+  void setAutoDetection(bool enable) {
     this.autoDetection = enable;
   }
 
-  void setCurrentStepDoneDelay(bool showDelay, int delay){
+  void setCurrentStepDoneDelay(bool showDelay, int delay) {
     this.showDelay = showDelay;
     this.delay = delay;
   }
@@ -96,19 +95,19 @@ class DocumentDetector {
 
     List<Map<String, dynamic>> stepsMap = [];
     for (var step in documentDetectorSteps) {
-      stepsMap.add(step.asMap());
+      stepsMap.add(step.asMap() as Map<String, dynamic>);
     }
     params["documentSteps"] = stepsMap;
 
-    Map<dynamic, dynamic> resultMap =
-        await _channel.invokeMethod('start', params);
+    Map<dynamic, dynamic> resultMap = await (_channel.invokeMethod(
+        'start', params) as FutureOr<Map<dynamic, dynamic>>);
 
-    bool success = resultMap["success"];
+    bool? success = resultMap["success"];
     if (success == null) {
       return new DocumentDetectorClosed();
     } else if (success == true) {
       List<dynamic> capturesRaw = resultMap["captures"];
-      List<Capture> captureList = new List();
+      List<Capture> captureList = new List.empty();
       for (dynamic captureRaw in capturesRaw) {
         captureList.add(new Capture(
             captureRaw["imagePath"],
@@ -118,7 +117,7 @@ class DocumentDetector {
       }
       return new DocumentDetectorSuccess(
           captureList, resultMap["type"], resultMap["trackingId"]);
-    } else if (success == false) {
+    } else {
       return new DocumentDetectorFailure(
           resultMap["message"], resultMap["type"]);
     }
