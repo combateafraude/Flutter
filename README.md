@@ -67,7 +67,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v4.2.0
+      ref: document-detector-v4.4.0
 ```
 
 ## Utilização
@@ -100,6 +100,7 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
 | `.setShowPreview(ShowPreview showPreview)`<br><br> Preview para verificação da qualidade da foto |
+| `.setMessageSettings(MessageSettings messageSettings)`<br><br> Permite personalizar mensagens exibidas no balão de "status" durante o processo de captura e análise. |
 | `.setAndroidSettings(DocumentDetectorAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(DocumentDetectorIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
 
@@ -116,6 +117,14 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `String subTitle`<br><br>Subtítulo |
 | `String confirmLabel`<br><br>Texto do botão de confirmação |
 | `String retryLabel`<br><br>Texto do botão de capturar novamente |
+
+| MessageSettings |
+| --------- |
+| `String? fitTheDocumentMessage`<br><br>"Encaixe o documento na marcação" |
+| `String? holdItMessage (disponível somente para Android)`<br><br>"Segure assim" |
+| `String? verifyingQualityMessage`<br><br>"Verificando qualidade…" |
+| `String? lowQualityDocumentMessage`<br><br>"Ops, não foi possível ler as informações. Por favor, tente novamente" |
+| `String? uploadingImageMessage`<br><br>"Enviando imagem…" |
 
 #### Android
 

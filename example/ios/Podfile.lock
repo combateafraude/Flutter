@@ -1,8 +1,8 @@
 PODS:
-  - document_detector (4.1.0):
-    - DocumentDetector (~> 4.4.0)
+  - document_detector (4.2.0):
+    - DocumentDetector (~> 4.4.2)
     - Flutter
-  - DocumentDetector (4.4.0):
+  - DocumentDetector (4.4.2):
     - Sentry (= 5.2.0)
     - TensorFlowLiteSwift (= 2.4.0)
   - Flutter (1.0.0)
@@ -41,14 +41,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  document_detector: 642d44267b241aba43530d08d90d1fce8a53ec4d
-  DocumentDetector: bcaaa79055d9ff7c27ebfd5cc30522ec8128a429
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  document_detector: 60c726b6647a20f2557e0d08cac76613a2e8a6fb
+  DocumentDetector: 385eb1b6d2ab8e23a75d04544ae82c85a62d59eb
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   permission_handler: c136c8d87d3438c7fad2754fe144e5f712c536b2
   Sentry: 6e04bc3e11bf771ca79140a112de64dcfbc7d8cb
   TensorFlowLiteC: 09f8ac75a76caeadb19bcfa694e97454cc1ecf87
   TensorFlowLiteSwift: f062dc1178120100d825d7799fd9f115b4a37fee
 
-PODFILE CHECKSUM: 4189eac5c970d8dcdd758ef8ed3e4591d4abd2dd
+PODFILE CHECKSUM: 48ed8943beec15aeee7d28a74e100b515836e362
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

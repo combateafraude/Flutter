@@ -1,3 +1,9 @@
+# 4.4.0
+__Android Native SDK Update to 6.9.1__
+__iOS Native SDK Update to 4.4.2__
+- Added: MessageSettings
+- Added: support for NullSafety
+
 # 3.0.0
 - **Android SDK - 5.1.3**
 - **iOS SDK - 2.2.1**

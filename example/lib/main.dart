@@ -2,6 +2,7 @@ import 'package:document_detector/android/android_settings.dart';
 import 'package:document_detector/android/capture_stage/capture_mode.dart';
 import 'package:document_detector/android/capture_stage/capture_stage.dart';
 import 'package:document_detector/android/customization.dart';
+import 'package:document_detector/message_settings.dart';
 import 'package:document_detector/show_preview.dart';
 import 'package:document_detector/document_detector_step.dart';
 import 'package:document_detector/document_type.dart';
@@ -29,7 +30,8 @@ class _MyAppState extends State<MyApp> {
   String _result = "";
   String _description = "";
 
-  String mobileToken = "";
+  String mobileToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1ZjAzYzFkMjAyZTBhZjAwMDhjZTVkMzcifQ.NNu_W6S2ZnmKM4GW-NC-b-sua3Tuf1WvgQWW5RSDDeo";
 
   @override
   void initState() {
@@ -58,18 +60,17 @@ class _MyAppState extends State<MyApp> {
         confirmLabel: "Sim, ficou boa!",
         retryLabel: "Tirar novamente");
 
-    DocumentDetectorAndroidSettings androidSettings =
-        new DocumentDetectorAndroidSettings();
+    MessageSettings messageSettings = new MessageSettings(
+        holdItMessage: "Segure assim!",
+        lowQualityDocumentMessage: "A qualidade não está boa. Tire outra foto.",
+        uploadingImageMessage: "Salvando...",
+        verifyingQualityMessage: "Verificando qualidade...");
 
     documentDetector.setShowPreview(showPreview);
 
-    documentDetector.setAndroidSettings(androidSettings);
-
     documentDetector.setDocumentFlow(documentSteps);
 
-    documentDetector.setAutoDetection(true);
-
-    documentDetector.setCurrentStepDoneDelay(true, 2000);
+    documentDetector.setMessageSettings(messageSettings);
 
     // Put the others parameters here
 

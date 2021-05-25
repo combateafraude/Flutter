@@ -90,6 +90,21 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             let retryLabel = showPreview["retryLabel"] as? String
             documentDetectorBuilder.showPreview(show!, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
          }
+        
+        if let messageSettingsParam = arguments["messageSettings"] as? [String: Any] {
+            let fitTheDocumentMessage = messageSettingsParam["fitTheDocumentMessage"] as? String
+            let verifyingQualityMessage = messageSettingsParam["verifyingQualityMessage"] as? String
+            let lowQualityDocumentMessage = messageSettingsParam["lowQualityDocumentMessage"] as? String
+            let uploadingImageMessage = messageSettingsParam["uploadingImageMessage"] as? String
+            
+            let messageSettings = MessageSettings()
+            if(fitTheDocumentMessage != nil){ messageSettings.fitTheDocumentMessage = fitTheDocumentMessage}
+            if(verifyingQualityMessage != nil){ messageSettings.verifyingQualityMessage = verifyingQualityMessage}
+            if(lowQualityDocumentMessage != nil){ messageSettings.lowQualityDocumentMessage = lowQualityDocumentMessage}
+            if(uploadingImageMessage != nil){ messageSettings.uploadingImageMessage == uploadingImageMessage}
+            
+            documentDetectorBuilder.setMessageSettings(messageSettings)
+         }
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] {
             if let detectionThreshold = iosSettings["detectionThreshold"] as? Float {

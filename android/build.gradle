@@ -23,10 +23,6 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-     //  buildFeatures {
-     //  dataBinding = true
-   // }
-
 
     compileSdkVersion 28
 
@@ -50,6 +46,6 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:document-detector:6.9.0'
+        implementation 'com.combateafraude.sdk:document-detector:6.9.1'
     }
 }
