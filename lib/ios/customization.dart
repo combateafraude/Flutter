@@ -1,11 +1,11 @@
 class PassiveFaceLivenessCustomizationIos {
-  String colorHex;
-  String greenMaskImageName;
-  String whiteMaskImageName;
-  String redMaskImageName;
-  String closeImageName;
-  bool showStepLabel;
-  bool showStatusLabel;
+  String? colorHex;
+  String? greenMaskImageName;
+  String? whiteMaskImageName;
+  String? redMaskImageName;
+  String? closeImageName;
+  bool? showStepLabel;
+  bool? showStatusLabel;
 
   PassiveFaceLivenessCustomizationIos(
   {this.colorHex,

@@ -1,9 +1,9 @@
 class ShowPreview {
-  String title;
-  String subTitle;
-  String confirmLabel;
-  String retryLabel;
-  bool show;
+  String? title;
+  String? subTitle;
+  String? confirmLabel;
+  String? retryLabel;
+  bool? show;
 
   ShowPreview(
       {this.show, this.title, this.subTitle, this.confirmLabel, this.retryLabel});

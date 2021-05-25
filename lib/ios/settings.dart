@@ -2,9 +2,9 @@ import 'package:passive_face_liveness/ios/customization.dart';
 import 'package:passive_face_liveness/ios/sensor_stability_settings.dart';
 
 class PassiveFaceLivenessIosSettings {
-  PassiveFaceLivenessCustomizationIos customization;
-  int beforePictureMillis;
-  SensorStabilitySettingsIos sensorStability;
+  PassiveFaceLivenessCustomizationIos? customization;
+  int? beforePictureMillis;
+  SensorStabilitySettingsIos? sensorStability;
 
   PassiveFaceLivenessIosSettings(
   {this.customization, this.beforePictureMillis, this.sensorStability});
