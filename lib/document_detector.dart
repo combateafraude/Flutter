@@ -9,6 +9,7 @@ import 'package:document_detector/result/document_detector_failure.dart';
 import 'package:document_detector/result/document_detector_result.dart';
 import 'package:document_detector/result/document_detector_success.dart';
 import 'package:document_detector/show_preview.dart';
+import 'package:document_detector/message_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -29,6 +30,7 @@ class DocumentDetector {
   bool? showDelay;
   int? delay;
   bool? autoDetection;
+  MessageSettings? messageSettings;
 
   DocumentDetector({required this.mobileToken});
 
@@ -69,6 +71,10 @@ class DocumentDetector {
     this.delay = delay;
   }
 
+  void setMessageSettings(MessageSettings messageSettings) {
+    this.messageSettings = messageSettings;
+  }
+
   void setAndroidSettings(DocumentDetectorAndroidSettings androidSettings) {
     this.androidSettings = androidSettings;
   }
@@ -92,6 +98,7 @@ class DocumentDetector {
     params["showDelay"] = showDelay;
     params["delay"] = delay;
     params["autoDetection"] = autoDetection;
+    params["messageSettings"] = messageSettings?.asMap();
 
     List<Map<String, dynamic>> stepsMap = [];
     for (var step in documentDetectorSteps) {

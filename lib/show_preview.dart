@@ -6,7 +6,11 @@ class ShowPreview {
   bool? show;
 
   ShowPreview(
-      {this.show, this.title, this.subTitle, this.confirmLabel, this.retryLabel});
+      {this.show,
+      this.title,
+      this.subTitle,
+      this.confirmLabel,
+      this.retryLabel});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
