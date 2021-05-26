@@ -1,3 +1,6 @@
+# 4.4.1
+- Fixed: error in the return treatment
+
 # 4.4.0
 __Android Native SDK Update to 6.9.1__
 __iOS Native SDK Update to 4.4.2__

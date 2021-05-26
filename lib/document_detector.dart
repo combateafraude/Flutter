@@ -106,15 +106,16 @@ class DocumentDetector {
     }
     params["documentSteps"] = stepsMap;
 
-    Map<dynamic, dynamic> resultMap = await (_channel.invokeMethod(
-        'start', params) as FutureOr<Map<dynamic, dynamic>>);
+    Map<dynamic, dynamic> resultMap =
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)
+            as Map<dynamic, dynamic>;
 
     bool? success = resultMap["success"];
     if (success == null) {
       return new DocumentDetectorClosed();
     } else if (success == true) {
       List<dynamic> capturesRaw = resultMap["captures"];
-      List<Capture> captureList = new List.empty();
+      var captureList = <Capture>[];
       for (dynamic captureRaw in capturesRaw) {
         captureList.add(new Capture(
             captureRaw["imagePath"],
