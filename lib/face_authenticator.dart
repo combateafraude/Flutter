@@ -59,8 +59,9 @@ class FaceAuthenticator {
     params["androidSettings"] = androidSettings?.asMap();
     params["iosSettings"] = iosSettings?.asMap();
 
-    Map<dynamic, dynamic> resultMap = await (_channel.invokeMethod(
-        'start', params) as FutureOr<Map<dynamic, dynamic>>);
+    Map<dynamic, dynamic> resultMap =
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)
+            as Map<dynamic, dynamic>;
 
     bool? success = resultMap["success"];
     if (success == null) {
