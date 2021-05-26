@@ -9,6 +9,8 @@ import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart'
 import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_success.dart';
 import 'package:passive_face_liveness/show_preview.dart';
+import 'package:passive_face_liveness/message_settings.dart';
+
 
 class PassiveFaceLiveness {
   static const MethodChannel _channel =
@@ -24,6 +26,7 @@ class PassiveFaceLiveness {
   PassiveFaceLivenessIosSettings? iosSettings;
   bool? showDelay;
   int? delay;
+  MessageSettings? messageSettings;
 
   PassiveFaceLiveness({required this.mobileToken});
 
@@ -45,6 +48,10 @@ class PassiveFaceLiveness {
 
   void setShowPreview(ShowPreview showPreview) {
     this.showPreview = showPreview;
+  }
+
+  void setMessageSettings(MessageSettings messageSettings) {
+    this.messageSettings = messageSettings;
   }
 
   void setAndroidSettings(PassiveFaceLivenessAndroidSettings androidSettings) {
@@ -73,9 +80,11 @@ class PassiveFaceLiveness {
     params["iosSettings"] = iosSettings?.asMap();
     params["showDelay"] = showDelay;
     params["delay"] = delay;
+    params["messageSettings"] = messageSettings?.asMap();
 
-    Map<dynamic, dynamic> resultMap = await (_channel.invokeMethod(
-        'start', params) as FutureOr<Map<dynamic, dynamic>>);
+    Map<dynamic, dynamic> resultMap =
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)
+            as Map<dynamic, dynamic>;
 
     bool? success = resultMap["success"];
     if (success == null) {

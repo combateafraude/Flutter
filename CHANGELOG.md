@@ -1,3 +1,8 @@
+# 2.3.0
+__Android Native SDK Update to 4.7.7__
+- Added: MessageSettings
+- Added: support for NullSafety
+
 ## 0.3.0
 Android module bugfix
 ## 0.2.0

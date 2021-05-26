@@ -57,6 +57,27 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             passiveFaceLivenessBuilder.showPreview(show!, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
          }
 
+         if let messageSettingsParam = arguments["messageSettings"] as? [String: Any] {
+            let stepName = messageSettingsParam["stepName"] as? String
+            let faceNotFoundMessage = messageSettingsParam["faceNotFoundMessage"] as? String
+            let faceTooFarMessage = messageSettingsParam["faceTooFarMessage"] as? String
+            let faceNotFittedMessage = messageSettingsParam["faceNotFittedMessage"] as? String
+            let multipleFaceDetectedMessage = messageSettingsParam["multipleFaceDetectedMessage"] as? String
+            let holdItMessage = messageSettingsParam["holdItMessage"] as? String
+            let invalidFaceMessage = messageSettingsParam["invalidFaceMessage"] as? String
+            
+            let messageSettings = MessageSettings()
+            if(stepName != nil){ messageSettings.stepName = stepName}
+            if(faceNotFoundMessage != nil){ messageSettings.faceNotFoundMessage = faceNotFoundMessage}
+            if(faceTooFarMessage != nil){ messageSettings.faceTooFarMessage = faceTooFarMessage}
+            if(faceNotFittedMessage != nil){ messageSettings.faceNotFittedMessage = faceNotFittedMessage}
+            if(multipleFaceDetectedMessage != nil){ messageSettings.multipleFaceDetectedMessage = multipleFaceDetectedMessage}
+            if(holdItMessage != nil){ messageSettings.holdItMessage = holdItMessage}
+            if(invalidFaceMessage != nil){ messageSettings.invalidFaceMessage = invalidFaceMessage}
+            
+            passiveFaceLivenessBuilder.setMessageSettings(messageSettings)
+         }
+
         if let iosSettings = arguments["iosSettings"] as? [String: Any] {
 
             if let customization = iosSettings["customization"] as? [String: Any] {

@@ -6,6 +6,7 @@ import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart'
 import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_success.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:passive_face_liveness/message_settings.dart';
 
 void main() {
   runApp(MyApp());
@@ -49,14 +50,26 @@ class _MyAppState extends State<MyApp> {
         confirmLabel: "Sim, ficou boa!",
         retryLabel: "Tirar novamente");
 
+    MessageSettings messageSettings = new MessageSettings(
+      stepName: "Registro Facial",
+      faceNotFoundMessage: "Não encontramos um rosto",
+      faceTooFarMessage: "Aproxime seu rosto",
+      faceTooCloseMessage: "Afaste seu rosto",
+      faceNotFittedMessage: "Encaixe seu rosto",
+      multipleFaceDetectedMessage: "Mais de um rosto detectado",
+      verifyingLivenessMessage: "Verificando selfie...",
+      holdItMessage: "Segure assim",
+      invalidFaceMessage: "Ops, rosto inválido. Tente novamente"
+    );
+
     PassiveFaceLivenessAndroidSettings passiveFaceLivenessAndroidSettings =
-        new PassiveFaceLivenessAndroidSettings(showButtonTime: 50000);
+        new PassiveFaceLivenessAndroidSettings(showButtonTime: 25000);
 
     passiveFaceLiveness.setShowPreview(showPreview);
 
     passiveFaceLiveness.setAndroidSettings(passiveFaceLivenessAndroidSettings);
 
-    passiveFaceLiveness.setCurrentStepDoneDelay(false, 2000);
+    passiveFaceLiveness.setMessageSettings(messageSettings);
 
     // Put the others parameters here
 
