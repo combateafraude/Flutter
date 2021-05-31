@@ -35,52 +35,52 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
             var faceAuthenticatorBuilder = FaceAuthenticator.Builder(mobileToken: mobileToken)
             faceAuthenticatorBuilder.setPeopleId(peopleId)
 
-            if let useAnalytics = arguments["useAnalytics"] as! Bool? {
+            if let useAnalytics = arguments["useAnalytics"] as? Bool ?? nil {
                 faceAuthenticatorBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)
             }
 
-            if let hasSound = arguments["sound"] as! Bool? {
+            if let hasSound = arguments["sound"] as? Bool ?? nil {
                 faceAuthenticatorBuilder.enableSound(hasSound: hasSound)
             }
 
-            if let requestTimeout = arguments["requestTimeout"] as? TimeInterval {
+            if let requestTimeout = arguments["requestTimeout"] as? TimeInterval ?? nil {
                 faceAuthenticatorBuilder.setNetworkSettings(requestTimeout: requestTimeout)
             }
 
-            if let iosSettings = arguments["iosSettings"] as? [String: Any] {
+            if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
 
-                if let customization = iosSettings["customization"] as? [String: Any] {
+                if let customization = iosSettings["customization"] as? [String: Any] ?? nil {
 
                     let layout = FaceAuthenticatorLayout()
 
-                    if let colorHex = customization["colorHex"] as? String {
+                    if let colorHex = customization["colorHex"] as? String ?? nil {
                         faceAuthenticatorBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
                     }
 
-                    if let showStepLabel = customization["showStepLabel"] as? Bool {
+                    if let showStepLabel = customization["showStepLabel"] as? Bool ?? nil {
                         faceAuthenticatorBuilder.showStepLabel(show: showStepLabel)
                     }
 
-                    if let showStatusLabel = customization["showStatusLabel"] as? Bool {
+                    if let showStatusLabel = customization["showStatusLabel"] as? Bool ?? nil {
                         faceAuthenticatorBuilder.showStatusLabel(show: showStatusLabel)
                     }
 
-                    if let closeImageName = customization["closeImageName"] as? String {
+                    if let closeImageName = customization["closeImageName"] as? String ?? nil {
                         layout.closeImage = UIImage(named: closeImageName)
                     }
 
                     var greenMask : UIImage?
-                    if let greenMaskImageName = customization["greenMaskImageName"] as? String {
+                    if let greenMaskImageName = customization["greenMaskImageName"] as? String ?? nil {
                         greenMask = UIImage(named: greenMaskImageName)
                     }
 
                     var whiteMask : UIImage?
-                    if let whiteMaskImageName = customization["whiteMaskImageName"] as? String {
+                    if let whiteMaskImageName = customization["whiteMaskImageName"] as? String ?? nil {
                         whiteMask = UIImage(named: whiteMaskImageName)
                     }
 
                     var redMask : UIImage?
-                    if let redMaskImageName = customization["redMaskImageName"] as? String {
+                    if let redMaskImageName = customization["redMaskImageName"] as? String ?? nil {
                         redMask = UIImage(named: redMaskImageName)
                     }
 
@@ -93,15 +93,15 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
                     faceAuthenticatorBuilder.setLayout(layout: layout)
                 }
 
-                if let beforePictureMillis = iosSettings["beforePictureMillis"] as? TimeInterval {
+                if let beforePictureMillis = iosSettings["beforePictureMillis"] as? TimeInterval ?? nil {
                     faceAuthenticatorBuilder.setCaptureSettings(beforePictureInterval: beforePictureMillis)
                 }
 
 
-                if let sensorStability = iosSettings["sensorStability"] as? [String: Any] {
-                    if let sensorStability = sensorStability["sensorStability"] as? [String: Any] {
-                        let message = sensorStability["message"] as! String?
-                        let stabilityThreshold = sensorStability["stabilityThreshold"] as! Double?
+                if let sensorStability = iosSettings["sensorStability"] as? [String: Any] ?? nil {
+                    if let sensorStability = sensorStability["sensorStability"] as? [String: Any] ?? nil {
+                        let message = sensorStability["message"] as? String ?? nil
+                        let stabilityThreshold = sensorStability["stabilityThreshold"] as? Double ?? nil
                         faceAuthenticatorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
                     }
                 }
