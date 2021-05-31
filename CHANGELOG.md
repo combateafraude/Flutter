@@ -1,3 +1,6 @@
+# 4.4.5
+- Added: support for ios version 14.5+
+
 # 4.4.1
 - Fixed: error in the return treatment
 

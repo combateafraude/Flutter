@@ -1,5 +1,5 @@
 PODS:
-  - document_detector (4.4.1):
+  - document_detector (4.4.5):
     - DocumentDetector (~> 4.4.2)
     - Flutter
   - DocumentDetector (4.4.2):
@@ -41,7 +41,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  document_detector: 06e5cea135d9064ad70f41dbc64164e113b894c0
+  document_detector: 9e0e76485de16ef5678a5fae32bd64023d9d69c4
   DocumentDetector: 385eb1b6d2ab8e23a75d04544ae82c85a62d59eb
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   permission_handler: c136c8d87d3438c7fad2754fe144e5f712c536b2

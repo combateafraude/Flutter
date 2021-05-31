@@ -13,9 +13,10 @@ Ao utilizar nosso plugin, certifique-se que você concorda com nossas [Política
 | Configuração mínima | Versão |
 | ------------------- | ------ |
 | Flutter             | 1.12+  |
+| Dart                | 2.12+  |
 | Android API         | 21+    |
 | iOS                 | 11.0+  |
-| Swift               | 5      |
+| Swift               | 5.4    |
 
 ## Configurações
 
@@ -67,7 +68,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v4.4.1
+      ref: document-detector-v4.4.5
 ```
 
 ## Utilização
