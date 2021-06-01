@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name             = 'document_detector'
+  s.name             = 'document_detector_nodatabinding'
   s.version          = '4.4.5'
   s.summary          = 'Flutter plugin for DocumentDetector'
   s.homepage         = 'https://www.combateafraude.com/'
