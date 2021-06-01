@@ -3,7 +3,7 @@
 # Run `pod lib lint passive_face_liveness.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'passive_face_liveness'
+  s.name             = 'passive_face_liveness_nodatabinding'
   s.summary          = 'Flutter plugin for PassiveFaceLiveness'
   s.version          = '2.3.5'
   s.homepage         = 'https://www.combateafraude.com/'
