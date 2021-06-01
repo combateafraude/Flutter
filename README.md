@@ -26,6 +26,8 @@ android {
 
     ...
 
+    dataBinding.enabled = true
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -56,10 +58,10 @@ Adicione o plugin no seu arquivo `ROOT_PROJECT/pubspec.yaml`:
 
 ```yml
 dependencies:  
-  passive_face_liveness_nodatabinding:
+  passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-nodatabinding-v1.8.1
+      ref: passive-face-liveness-compatible-v2.3.5
 ```
 
 ## Utilização
@@ -88,8 +90,17 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 | `.setAnalyticsSettings(bool useAnalytics)`<br><br>Habilita/desabilita a coleta de dados para maximização da informação antifraude. O padrão é `true` |
 | `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
+| `.setShowPreview(ShowPreview showPreview)`<br><br> Preview para verificação de qualidade da foto |
 | `.setAndroidSettings(PassiveFaceLivenessAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(PassiveFaceLivenessIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
+
+| ShowPreview |
+| --------- |
+| `bool show`<br><br>Habilita/Desabilita preview |
+| `String title`<br><br>Título |
+| `String subTitle`<br><br>Subtítulo |
+| `String confirmLabel`<br><br>Texto do botão de confirmação |
+| `String retryLabel`<br><br>Texto do botão de capturar novamente |
 
 #### Android
 

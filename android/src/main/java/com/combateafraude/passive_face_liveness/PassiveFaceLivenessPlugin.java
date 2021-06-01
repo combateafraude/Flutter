@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.combateafraude.passivefaceliveness.PassiveFaceLivenessActivity;
 import com.combateafraude.passivefaceliveness.input.CaptureSettings;
+import com.combateafraude.passivefaceliveness.input.MessageSettings;
 import com.combateafraude.passivefaceliveness.input.PassiveFaceLiveness;
 import com.combateafraude.passivefaceliveness.input.SensorStabilitySettings;
 import com.combateafraude.passivefaceliveness.output.PassiveFaceLivenessResult;
@@ -63,11 +64,57 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
 
         // People ID
         String peopleId = (String) argumentsMap.get("peopleId");
-        mPassiveFaceLivenessBuilder.setPeopleId(peopleId);
+        mPassiveFaceLivenessBuilder.setPersonId(peopleId);
 
         // Use Analytics
         Boolean useAnalytics = (Boolean) argumentsMap.get("useAnalytics");
         if (useAnalytics != null) mPassiveFaceLivenessBuilder.setAnalyticsSettings(useAnalytics);
+
+        HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
+        if (showPreview != null) {
+            String title = (String) showPreview.get("title");
+            String subTitle = (String) showPreview.get("subTitle");
+            String confirmLabel = (String) showPreview.get("confirmLabel");
+            String retryLabel = (String) showPreview.get("retryLabel");
+            boolean show = (boolean) showPreview.get("show");
+            mPassiveFaceLivenessBuilder.showPreview(show, title, subTitle, confirmLabel, retryLabel);
+        }
+
+        HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
+        if (messageSettingsParam != null) {
+            String stepName = (String) messageSettingsParam.get("stepName");
+            String faceNotFoundMessage = (String) messageSettingsParam.get("faceNotFoundMessage");
+            String faceTooFarMessage = (String) messageSettingsParam.get("faceTooFarMessage");
+            String faceTooCloseMessage = (String) messageSettingsParam.get("faceTooCloseMessage");
+            String faceNotFittedMessage = (String) messageSettingsParam.get("faceNotFittedMessage");
+            String multipleFaceDetectedMessage = (String) messageSettingsParam.get("multipleFaceDetectedMessage");
+            String verifyingLivenessMessage = (String) messageSettingsParam.get("verifyingLivenessMessage");
+            String holdItMessage = (String) messageSettingsParam.get("holdItMessage");
+            String invalidFaceMessage = (String) messageSettingsParam.get("invalidFaceMessage");
+
+            MessageSettings messageSettings = new MessageSettings();
+            if (stepName != null)
+                messageSettings.setStepName(stepName);
+            if (faceNotFoundMessage != null)
+                messageSettings.setFaceNotFoundMessage(faceNotFoundMessage);
+            if (faceTooFarMessage != null)
+                messageSettings.setFaceTooFarMessage(faceTooFarMessage);
+            if (faceTooCloseMessage != null)
+                messageSettings.setFaceTooCloseMessage(faceTooCloseMessage);
+            if (faceNotFittedMessage != null)
+                messageSettings.setFaceNotFittedMessage(faceNotFittedMessage);
+            if (multipleFaceDetectedMessage != null)
+                messageSettings.setMultipleFaceDetectedMessage(multipleFaceDetectedMessage);
+            if (verifyingLivenessMessage != null)
+                messageSettings.setVerifyingLivenessMessage(verifyingLivenessMessage);
+            if (holdItMessage != null)
+                messageSettings.setHoldItMessage(holdItMessage);
+            if (invalidFaceMessage != null)
+                messageSettings.setInvalidFaceMessage(invalidFaceMessage);
+
+            mPassiveFaceLivenessBuilder.setMessageSettings(messageSettings);
+        }
+
 
         // Android specific settings
         HashMap<String, Object> androidSettings = (HashMap<String, Object>) argumentsMap.get("androidSettings");
@@ -113,15 +160,23 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
             }
 
             if (androidSettings.get("showButtonTime") != null){
-                    int showButtonTime = (int) androidSettings.get("showButtonTime");
-                    mPassiveFaceLivenessBuilder.setShowButtonTime(showButtonTime);
+                int showButtonTime = (int) androidSettings.get("showButtonTime");
+                mPassiveFaceLivenessBuilder.setShowButtonTime(showButtonTime);
             }
-            
         }
 
         // Sound settings
         Boolean enableSound = (Boolean) argumentsMap.get("sound");
         if (enableSound != null) mPassiveFaceLivenessBuilder.enableSound(enableSound);
+
+        //CurrentStepDoneDelay
+        Boolean showDelay = (Boolean) argumentsMap.get("showDelay");
+        if(showDelay != null){
+            if(argumentsMap.get("delay") != null) {
+                int delay = (int) argumentsMap.get("delay");
+                mPassiveFaceLivenessBuilder.setCurrentStepDoneDelay(showDelay, delay);
+            }
+        }
 
         // Network settings
         Integer requestTimeout = (Integer) argumentsMap.get("requestTimeout");
