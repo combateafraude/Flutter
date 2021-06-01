@@ -28,6 +28,8 @@ android {
 
     ...
 
+    dataBinding.enabled = true
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -62,10 +64,10 @@ Adicione o plugin no seu arquivo `ROOT_PROJECT/pubspec.yaml`:
 
 ```yml
 dependencies:  
-  document_detector_nodatabinding:
+  document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-nodatabinding-v3.8.4
+      ref: document-detector-compatible-v4.4.5
 ```
 
 ## Utilização
@@ -97,6 +99,7 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `.setPopupSettings(bool show)`<br><br>Altera a configuração dos popups inflados antes de cada documento. O padrão é `true` |
 | `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
+| `.setShowPreview(ShowPreview showPreview)`<br><br> Preview para verificação da qualidade da foto |
 | `.setAndroidSettings(DocumentDetectorAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(DocumentDetectorIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
 
@@ -105,6 +108,14 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `DocumentType document`<br><br>Documento a ser escaneado neste respectivo passo |
 | `DocumentDetectorStepCustomizationAndroid android`<br><br>Customizações visuais do respectivo passo aplicados em Android |
 | `DocumentDetectorStepCustomizationIos ios`<br><br>Customizações visuais do respectivo passo aplicados em iOS |
+
+| ShowPreview |
+| --------- |
+| `bool show`<br><br>Habilita/Desabilita preview |
+| `String title`<br><br>Título |
+| `String subTitle`<br><br>Subtítulo |
+| `String confirmLabel`<br><br>Texto do botão de confirmação |
+| `String retryLabel`<br><br>Texto do botão de capturar novamente |
 
 #### Android
 
