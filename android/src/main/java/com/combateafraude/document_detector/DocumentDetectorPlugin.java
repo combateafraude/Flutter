@@ -18,6 +18,7 @@ import com.combateafraude.documentdetector.input.QualitySettings;
 import com.combateafraude.documentdetector.input.SensorLuminositySettings;
 import com.combateafraude.documentdetector.input.SensorOrientationSettings;
 import com.combateafraude.documentdetector.input.SensorStabilitySettings;
+import com.combateafraude.documentdetector.input.MessageSettings;
 import com.combateafraude.documentdetector.output.Capture;
 import com.combateafraude.documentdetector.output.DocumentDetectorResult;
 import com.combateafraude.documentdetector.output.failure.SDKFailure;
@@ -35,7 +36,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 @SuppressWarnings("unchecked")
-public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
+public class DocumentDetectorPlugin
+        implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
 
     private static final int REQUEST_CODE = 1001;
 
@@ -72,14 +74,16 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
 
         // People ID
         String peopleId = (String) argumentsMap.get("peopleId");
-        mDocumentDetectorBuilder.setPeopleId(peopleId);
+        mDocumentDetectorBuilder.setPersonId(peopleId);
 
         // Use Analytics
         Boolean useAnalytics = (Boolean) argumentsMap.get("useAnalytics");
-        if (useAnalytics != null) mDocumentDetectorBuilder.setAnalyticsSettings(useAnalytics);
+        if (useAnalytics != null)
+            mDocumentDetectorBuilder.setAnalyticsSettings(useAnalytics);
 
         // Document steps
-        ArrayList<HashMap<String, Object>> paramSteps = (ArrayList<HashMap<String, Object>>) argumentsMap.get("documentSteps");
+        ArrayList<HashMap<String, Object>> paramSteps = (ArrayList<HashMap<String, Object>>) argumentsMap
+                .get("documentSteps");
         DocumentDetectorStep[] documentDetectorSteps = new DocumentDetectorStep[paramSteps.size()];
         for (int i = 0; i < paramSteps.size(); i++) {
             HashMap<String, Object> step = paramSteps.get(i);
@@ -88,15 +92,20 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
 
             HashMap<String, Object> stepCustomization = (HashMap<String, Object>) step.get("android");
             if (stepCustomization != null) {
-                Integer stepLabelId = getResourceId((String) stepCustomization.get("stepLabelStringResName"), STRING_RES);
-                Integer illustrationId = getResourceId((String) stepCustomization.get("illustrationDrawableResName"), DRAWABLE_RES);
+                Integer stepLabelId = getResourceId((String) stepCustomization.get("stepLabelStringResName"),
+                        STRING_RES);
+                Integer illustrationId = getResourceId((String) stepCustomization.get("illustrationDrawableResName"),
+                        DRAWABLE_RES);
                 Integer audioId = getResourceId((String) stepCustomization.get("audioRawResName"), RAW_RES);
 
                 DocumentDetectorStep detectorStep = new DocumentDetectorStep(document);
 
-                if(stepLabelId != null) detectorStep.setStepLabel(stepLabelId);
-                if(illustrationId != null) detectorStep.setIllustration(illustrationId);
-                if(audioId != null) detectorStep.setStepAudio(audioId);
+                if (stepLabelId != null)
+                    detectorStep.setStepLabel(stepLabelId);
+                if (illustrationId != null)
+                    detectorStep.setIllustration(illustrationId);
+                if (audioId != null)
+                    detectorStep.setStepAudio(audioId);
 
                 documentDetectorSteps[i] = detectorStep;
             } else {
@@ -116,13 +125,36 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
             mDocumentDetectorBuilder.showPreview(show, title, subTitle, confirmLabel, retryLabel);
         }
 
+        HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
+        if (messageSettingsParam != null) {
+            String fitTheDocumentMessage = (String) messageSettingsParam.get("fitTheDocumentMessage");
+            String holdItMessage = (String) messageSettingsParam.get("holdItMessage");
+            String verifyingQualityMessage = (String) messageSettingsParam.get("verifyingQualityMessage");
+            String lowQualityDocumentMessage = (String) messageSettingsParam.get("lowQualityDocumentMessage");
+            String uploadingImageMessage = (String) messageSettingsParam.get("uploadingImageMessage");
+
+            MessageSettings messageSettings = new MessageSettings();
+            if (fitTheDocumentMessage != null)
+                messageSettings.setFitTheDocumentMessage(fitTheDocumentMessage);
+            if (holdItMessage != null)
+                messageSettings.setHoldItMessage(holdItMessage);
+            if (verifyingQualityMessage != null)
+                messageSettings.setVerifyingQualityMessage(verifyingQualityMessage);
+            if (lowQualityDocumentMessage != null)
+                messageSettings.setLowQualityDocumentMessage(lowQualityDocumentMessage);
+            if (uploadingImageMessage != null)
+                messageSettings.setUploadingImageMessage(uploadingImageMessage);
+
+            mDocumentDetectorBuilder.setMessageSettings(messageSettings);
+        }
 
         // Android specific settings
         HashMap<String, Object> androidSettings = (HashMap<String, Object>) argumentsMap.get("androidSettings");
         if (androidSettings != null) {
 
             // Capture stages
-            ArrayList<HashMap<String, Object>> paramStages = (ArrayList<HashMap<String, Object>>) androidSettings.get("captureStages");
+            ArrayList<HashMap<String, Object>> paramStages = (ArrayList<HashMap<String, Object>>) androidSettings
+                    .get("captureStages");
             if (paramStages != null) {
                 CaptureStage[] captureStages = new CaptureStage[paramStages.size()];
                 for (int i = 0; i < paramStages.size(); i++) {
@@ -131,78 +163,97 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
                     Long durationMillis = ((Number) stage.get("durationMillis")).longValue();
 
                     Boolean wantSensorCheck = (Boolean) stage.get("wantSensorCheck");
-                    if (wantSensorCheck == null) wantSensorCheck = false;
+                    if (wantSensorCheck == null)
+                        wantSensorCheck = false;
 
                     QualitySettings qualitySettings = null;
-                    HashMap<String, Object> qualitySettingsParam = (HashMap<String, Object>) stage.get("qualitySettings");
+                    HashMap<String, Object> qualitySettingsParam = (HashMap<String, Object>) stage
+                            .get("qualitySettings");
                     if (qualitySettingsParam != null) {
                         Double threshold = (Double) qualitySettingsParam.get("threshold");
-                        if (threshold == null) threshold = QualitySettings.RECOMMENDED_THRESHOLD;
+                        if (threshold == null)
+                            threshold = QualitySettings.RECOMMENDED_THRESHOLD;
                         qualitySettings = new QualitySettings(threshold);
                     }
 
                     DetectionSettings detectionSettings = null;
-                    HashMap<String, Object> detectionSettingsParam = (HashMap<String, Object>) stage.get("detectionSettings");
+                    HashMap<String, Object> detectionSettingsParam = (HashMap<String, Object>) stage
+                            .get("detectionSettings");
                     if (detectionSettingsParam != null) {
                         Double threshold = (Double) detectionSettingsParam.get("threshold");
-                        if (threshold == null) threshold = DetectionSettings.RECOMMENDED_THRESHOLD;
+                        if (threshold == null)
+                            threshold = DetectionSettings.RECOMMENDED_THRESHOLD;
                         Integer consecutiveFrames = (Integer) detectionSettingsParam.get("consecutiveFrames");
-                        if (consecutiveFrames == null) consecutiveFrames = 5;
+                        if (consecutiveFrames == null)
+                            consecutiveFrames = 5;
                         detectionSettings = new DetectionSettings(threshold, consecutiveFrames);
                     }
                     CaptureMode captureMode = CaptureMode.valueOf((String) stage.get("captureMode"));
 
-                    captureStages[i] = new CaptureStage(durationMillis, wantSensorCheck, qualitySettings, detectionSettings, captureMode);
+                    captureStages[i] = new CaptureStage(durationMillis, wantSensorCheck, qualitySettings,
+                            detectionSettings, captureMode);
                 }
                 mDocumentDetectorBuilder.setCaptureStages(captureStages);
             }
 
             // Layout customization
-            HashMap<String, Object> customizationAndroid = (HashMap<String, Object>) androidSettings.get("customization");
+            HashMap<String, Object> customizationAndroid = (HashMap<String, Object>) androidSettings
+                    .get("customization");
             if (customizationAndroid != null) {
                 Integer styleId = getResourceId((String) customizationAndroid.get("styleResIdName"), STYLE_RES);
-                if (styleId != null) mDocumentDetectorBuilder.setStyle(styleId);
+                if (styleId != null)
+                    mDocumentDetectorBuilder.setStyle(styleId);
 
                 Integer layoutId = getResourceId((String) customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
-                Integer greenMaskId = getResourceId((String) customizationAndroid.get("greenMaskResIdName"), DRAWABLE_RES);
-                Integer whiteMaskId = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"), DRAWABLE_RES);
+                Integer greenMaskId = getResourceId((String) customizationAndroid.get("greenMaskResIdName"),
+                        DRAWABLE_RES);
+                Integer whiteMaskId = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"),
+                        DRAWABLE_RES);
                 Integer redMaskId = getResourceId((String) customizationAndroid.get("redMaskResIdName"), DRAWABLE_RES);
                 mDocumentDetectorBuilder.setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId);
             }
 
-
             // Sensor settings
             HashMap<String, Object> sensorSettings = (HashMap<String, Object>) androidSettings.get("sensorSettings");
             if (sensorSettings != null) {
-                HashMap<String, Object> sensorLuminosity = (HashMap<String, Object>) sensorSettings.get("sensorLuminositySettings");
+                HashMap<String, Object> sensorLuminosity = (HashMap<String, Object>) sensorSettings
+                        .get("sensorLuminositySettings");
                 if (sensorLuminosity != null) {
-                    Integer sensorMessageId = getResourceId((String) sensorLuminosity.get("messageResourceIdName"), STRING_RES);
+                    Integer sensorMessageId = getResourceId((String) sensorLuminosity.get("messageResourceIdName"),
+                            STRING_RES);
                     Integer luminosityThreshold = (Integer) sensorLuminosity.get("luminosityThreshold");
                     if (sensorMessageId != null && luminosityThreshold != null) {
-                        mDocumentDetectorBuilder.setLuminositySensorSettings(new SensorLuminositySettings(sensorMessageId, luminosityThreshold));
+                        mDocumentDetectorBuilder.setLuminositySensorSettings(
+                                new SensorLuminositySettings(sensorMessageId, luminosityThreshold));
                     }
                 } else {
                     mDocumentDetectorBuilder.setLuminositySensorSettings(null);
                 }
 
-                HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) sensorSettings.get("sensorOrientationSettings");
+                HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) sensorSettings
+                        .get("sensorOrientationSettings");
                 if (sensorOrientation != null) {
-                    Integer sensorMessageId = getResourceId((String) sensorOrientation.get("messageResourceIdName"), STRING_RES);
+                    Integer sensorMessageId = getResourceId((String) sensorOrientation.get("messageResourceIdName"),
+                            STRING_RES);
                     Double orientationThreshold = (Double) sensorOrientation.get("orientationThreshold");
                     if (sensorMessageId != null && orientationThreshold != null) {
-                        mDocumentDetectorBuilder.setOrientationSensorSettings(new SensorOrientationSettings(sensorMessageId, orientationThreshold));
+                        mDocumentDetectorBuilder.setOrientationSensorSettings(
+                                new SensorOrientationSettings(sensorMessageId, orientationThreshold));
                     }
                 } else {
                     mDocumentDetectorBuilder.setOrientationSensorSettings(null);
                 }
 
-                HashMap<String, Object> sensorStability = (HashMap<String, Object>) sensorSettings.get("sensorStabilitySettings");
+                HashMap<String, Object> sensorStability = (HashMap<String, Object>) sensorSettings
+                        .get("sensorStabilitySettings");
                 if (sensorStability != null) {
-                    Integer sensorMessageId = getResourceId((String) sensorStability.get("messageResourceIdName"), STRING_RES);
+                    Integer sensorMessageId = getResourceId((String) sensorStability.get("messageResourceIdName"),
+                            STRING_RES);
                     Integer stabilityStabledMillis = (Integer) sensorStability.get("stabilityStabledMillis");
                     Double stabilityThreshold = (Double) sensorStability.get("stabilityThreshold");
                     if (sensorMessageId != null && stabilityStabledMillis != null && stabilityThreshold != null) {
-                        mDocumentDetectorBuilder.setStabilitySensorSettings(new SensorStabilitySettings(sensorMessageId, stabilityStabledMillis, stabilityThreshold));
+                        mDocumentDetectorBuilder.setStabilitySensorSettings(new SensorStabilitySettings(sensorMessageId,
+                                stabilityStabledMillis, stabilityThreshold));
                     }
                 } else {
                     mDocumentDetectorBuilder.setStabilitySensorSettings(null);
@@ -212,25 +263,28 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
 
         // Popup settings
         Boolean showPopup = (Boolean) argumentsMap.get("popup");
-        if (showPopup != null) mDocumentDetectorBuilder.setPopupSettings(showPopup);
+        if (showPopup != null)
+            mDocumentDetectorBuilder.setPopupSettings(showPopup);
 
         // Sound settings
         Boolean enableSound = (Boolean) argumentsMap.get("sound");
-        if (enableSound != null) mDocumentDetectorBuilder.enableSound(enableSound);
+        if (enableSound != null)
+            mDocumentDetectorBuilder.enableSound(enableSound);
 
         // Network settings
         Integer requestTimeout = (Integer) argumentsMap.get("requestTimeout");
-        if (requestTimeout != null) mDocumentDetectorBuilder.setNetworkSettings(requestTimeout);
+        if (requestTimeout != null)
+            mDocumentDetectorBuilder.setNetworkSettings(requestTimeout);
 
-        //AutoDetection
+        // AutoDetection
         Boolean autoDetectionEnable = (Boolean) argumentsMap.get("autoDetection");
-        if(autoDetectionEnable != null) mDocumentDetectorBuilder.setAutoDetection(autoDetectionEnable);
+        if (autoDetectionEnable != null)
+            mDocumentDetectorBuilder.setAutoDetection(autoDetectionEnable);
 
-        //CurrentStepDoneDelay
+        // CurrentStepDoneDelay
         Boolean showDelay = (Boolean) argumentsMap.get("showDelay");
-        if(showDelay != null){
-            if(argumentsMap.get("delay") != null) {
-                System.out.println("oi");
+        if (showDelay != null) {
+            if (argumentsMap.get("delay") != null) {
                 int delay = (int) argumentsMap.get("delay");
                 mDocumentDetectorBuilder.setCurrentStepDoneDelay(showDelay, delay);
             }
@@ -242,7 +296,8 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private Integer getResourceId(@Nullable String resourceName, String resourceType) {
-        if (resourceName == null || activity == null) return null;
+        if (resourceName == null || activity == null)
+            return null;
         int resId = activity.getResources().getIdentifier(resourceName, resourceType, activity.getPackageName());
         return resId == 0 ? null : resId;
     }
@@ -283,14 +338,15 @@ public class DocumentDetectorPlugin implements FlutterPlugin, MethodCallHandler,
     public synchronized boolean onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK && data != null) {
-                DocumentDetectorResult mDocumentDetectorResult = (DocumentDetectorResult) data.getSerializableExtra(DocumentDetectorResult.PARAMETER_NAME);
+                DocumentDetectorResult mDocumentDetectorResult = (DocumentDetectorResult) data
+                        .getSerializableExtra(DocumentDetectorResult.PARAMETER_NAME);
                 if (mDocumentDetectorResult.wasSuccessful()) {
-                    if (result != null){
+                    if (result != null) {
                         result.success(getSucessResponseMap(mDocumentDetectorResult));
                         result = null;
                     }
                 } else {
-                    if (result != null){
+                    if (result != null) {
                         result.success(getFailureResponseMap(mDocumentDetectorResult.getSdkFailure()));
                         result = null;
                     }

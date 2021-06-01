@@ -30,7 +30,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         
         var documentDetectorSteps : [DocumentDetectorStep] = []
 
-        if let flowData = arguments["documentSteps"] as? [[String: Any]] {
+        if let flowData = arguments["documentSteps"] as? [[String: Any]] ?? nil {
             let bundle = Bundle.init(for: type(of: self))
             for (_, docStep) in flowData.enumerated() {
                 let document = convertToDocument(documentType: docStep["document"] as! String)
@@ -39,15 +39,15 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 var illustration: UIImage?
                 var stepLabel: String?
 
-                if let iosCustomization = docStep["ios"] as? [String: Any] {
-                    stepLabel = iosCustomization["stepLabel"] as? String
+                if let iosCustomization = docStep["ios"] as? [String: Any] ?? nil {
+                    stepLabel = iosCustomization["stepLabel"] as? String ?? nil
                     
-                    if let illustrationString = iosCustomization["illustration"] as? String {
+                    if let illustrationString = iosCustomization["illustration"] as? String ?? nil {
                         let imageURL = URL(fileURLWithPath: bundle.path(forResource: illustrationString, ofType: "png")!)
                         illustration = UIImage(data: NSData(contentsOf: imageURL)! as Data)
                     }
                     
-                    if let audioName = iosCustomization["audioName"] as? String {
+                    if let audioName = iosCustomization["audioName"] as? String ?? nil {
                         audioURL = URL(fileURLWithPath: bundle.path(forResource: audioName, ofType: "mp3")!)
                     }
                 }
@@ -59,102 +59,114 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         var documentDetectorBuilder = DocumentDetector.Builder(mobileToken: mobileToken)
             .setDocumentDetectorFlow(flow: documentDetectorSteps)
 
-        if let useAnalytics = arguments["useAnalytics"] as! Bool? {
+        if let useAnalytics = arguments["useAnalytics"] as? Bool ?? nil {
             documentDetectorBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)
         }
 
-        if let peopleId = arguments["peopleId"] as! String? {
+        if let peopleId = arguments["peopleId"] as? String ?? nil {
             documentDetectorBuilder.setPeopleId(peopleId: peopleId)
         }
         
-        if let showPopup = arguments["popup"] as! Bool? {
+        if let showPopup = arguments["popup"] as? Bool ?? nil {
             documentDetectorBuilder.setPopupSettings(show: showPopup)
         }
 
-        if let hasSound = arguments["sound"] as! Bool? {
+        if let hasSound = arguments["sound"] as? Bool ?? nil {
             documentDetectorBuilder.enableSound(enableSound: hasSound)
         }
 
-        if let requestTimeout = arguments["requestTimeout"] as? TimeInterval {
+        if let requestTimeout = arguments["requestTimeout"] as? TimeInterval ?? nil {
             documentDetectorBuilder.setNetworkSettings(requestTimeout: requestTimeout)
         }
 
-        if let showPreview = arguments["showPreview"] as? [String: Any] {
-            var show = showPreview["show"] as? Bool
-            if(show == nil){
-                show = false
-            }
-            let title = showPreview["title"] as? String
-            let subtitle = showPreview["subTitle"] as? String
-            let confirmLabel = showPreview["confirmLabel"] as? String
-            let retryLabel = showPreview["retryLabel"] as? String
-            documentDetectorBuilder.showPreview(show!, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
+        if let showPreview = arguments["showPreview"] as? [String: Any] ?? nil {
+            var show = showPreview["show"] as? Bool ?? false
+            let title = showPreview["title"] as? String ?? nil
+            let subtitle = showPreview["subTitle"] as? String ?? nil
+            let confirmLabel = showPreview["confirmLabel"] as? String ?? nil
+            let retryLabel = showPreview["retryLabel"] as? String ?? nil
+            documentDetectorBuilder.showPreview(show, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
+         }
+        
+        if let messageSettingsParam = arguments["messageSettings"] as? [String: Any] ?? nil {
+            let fitTheDocumentMessage = messageSettingsParam["fitTheDocumentMessage"] as? String ?? nil
+            let verifyingQualityMessage = messageSettingsParam["verifyingQualityMessage"] as? String ?? nil
+            let lowQualityDocumentMessage = messageSettingsParam["lowQualityDocumentMessage"] as? String ?? nil
+            let uploadingImageMessage = messageSettingsParam["uploadingImageMessage"] as? String ?? nil
+            
+            let messageSettings = MessageSettings()
+            if(fitTheDocumentMessage != nil){ messageSettings.fitTheDocumentMessage = fitTheDocumentMessage}
+            if(verifyingQualityMessage != nil){ messageSettings.verifyingQualityMessage = verifyingQualityMessage}
+            if(lowQualityDocumentMessage != nil){ messageSettings.lowQualityDocumentMessage = lowQualityDocumentMessage}
+            if(uploadingImageMessage != nil){ messageSettings.uploadingImageMessage = uploadingImageMessage}
+            
+            documentDetectorBuilder.setMessageSettings(messageSettings)
          }
 
-        if let iosSettings = arguments["iosSettings"] as? [String: Any] {
-            if let detectionThreshold = iosSettings["detectionThreshold"] as? Float {
+        if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
+            if let detectionThreshold = iosSettings["detectionThreshold"] as? Float ?? nil {
                 documentDetectorBuilder.setDetectionSettings(detectionThreshold: detectionThreshold)
             }
 
-            if let verifyQuality = iosSettings["verifyQuality"] as? Bool {
-                let qualityThreshold = iosSettings["qualityThreshold"] as? Double
+            if let verifyQuality = iosSettings["verifyQuality"] as? Bool ?? nil {
+                let qualityThreshold = iosSettings["qualityThreshold"] as? Double ?? nil
                 documentDetectorBuilder.setQualitySettings(verifyQuality: verifyQuality, qualityThreshold: qualityThreshold)
             }
 
-            if let sensorStability = iosSettings["sensorStability"] as? [String: Any] {
+            if let sensorStability = iosSettings["sensorStability"] as? [String: Any] ?? nil {
 
-                if let sensorLuminosity = iosSettings["sensorLuminosity"] as? [String: Any] {
-                    let message = sensorLuminosity["message"] as! String?
-                    let luminosityThreshold = sensorLuminosity["luminosityThreshold"] as! Float?
+                if let sensorLuminosity = iosSettings["sensorLuminosity"] as? [String: Any] ?? nil {
+                    let message = sensorLuminosity["message"] as? String ?? nil
+                    let luminosityThreshold = sensorLuminosity["luminosityThreshold"] as? Float ?? nil
                     documentDetectorBuilder.setLuminositySensorSettings(message: message, luminosityThreshold: luminosityThreshold)
                 }
 
-                if let sensorOrientation = iosSettings["sensorOrientation"] as? [String: Any] {
-                    let message = sensorOrientation["message"] as! String?
-                    let orientationThreshold = sensorOrientation["orientationThreshold"] as! Double?
+                if let sensorOrientation = iosSettings["sensorOrientation"] as? [String: Any] ?? nil {
+                    let message = sensorOrientation["message"] as? String ?? nil
+                    let orientationThreshold = sensorOrientation["orientationThreshold"] as? Double ?? nil
                     documentDetectorBuilder.setOrientationSensorSettings(message: message, orientationThreshold: orientationThreshold)
                 }
 
                 if let sensorStability = iosSettings["sensorStability"] as? [String: Any] {
-                    let message = sensorStability["message"] as! String?
-                    let stabilityThreshold = sensorStability["stabilityThreshold"] as! Double?
+                    let message = sensorStability["message"] as? String ?? nil
+                    let stabilityThreshold = sensorStability["stabilityThreshold"] as? Double ?? nil
                     documentDetectorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
                 }
 
             }
             
-            if let customization = iosSettings["customization"] as? [String: Any] {
+            if let customization = iosSettings["customization"] as? [String: Any] ?? nil {
 
                 let layout = DocumentDetectorLayout()
 
-                if let colorHex = customization["colorHex"] as? String {
+                if let colorHex = customization["colorHex"] as? String ?? nil {
                     documentDetectorBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
                 }
 
-                if let showStepLabel = customization["showStepLabel"] as? Bool {
+                if let showStepLabel = customization["showStepLabel"] as? Bool ?? nil {
                     documentDetectorBuilder.showStepLabel(show: showStepLabel)
                 }
 
-                if let showStatusLabel = customization["showStatusLabel"] as? Bool {
+                if let showStatusLabel = customization["showStatusLabel"] as? Bool ?? nil {
                     documentDetectorBuilder.showStatusLabel(show: showStatusLabel)
                 }
                 
-                if let closeImageName = customization["closeImageName"] as? String {
+                if let closeImageName = customization["closeImageName"] as? String ?? nil {
                     layout.closeImage = UIImage(named: closeImageName)
                 }
                 
                 var greenMask : UIImage?
-                if let greenMaskImageName = customization["greenMaskImageName"] as? String {
+                if let greenMaskImageName = customization["greenMaskImageName"] as? String ?? nil {
                     greenMask = UIImage(named: greenMaskImageName) 
                 }
                 
                 var whiteMask : UIImage?
-                if let whiteMaskImageName = customization["whiteMaskImageName"] as? String {
+                if let whiteMaskImageName = customization["whiteMaskImageName"] as? String ?? nil {
                     whiteMask = UIImage(named: whiteMaskImageName) 
                 }
                 
                 var redMask : UIImage?
-                if let redMaskImageName = customization["redMaskImageName"] as? String {
+                if let redMaskImageName = customization["redMaskImageName"] as? String ?? nil {
                     redMask = UIImage(named: redMaskImageName) 
                 }
                 
