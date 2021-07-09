@@ -1,3 +1,7 @@
+# 4.4.6
+__Android Native SDK Update to 6.9.6__
+__iOS Native SDK Update to 4.4.7__
+
 # 4.4.5
 - Added: support for ios version 14.5+
 
