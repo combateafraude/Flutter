@@ -30,7 +30,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         var passiveFaceLivenessBuilder = PassiveFaceLiveness.Builder(mobileToken: mobileToken)
 
         if let peopleId = arguments["peopleId"] as? String ?? nil {
-            passiveFaceLivenessBuilder.setPeopleId(peopleId: peopleId)
+            passiveFaceLivenessBuilder.setPersonId(personId: peopleId)
         }
 
         if let useAnalytics = arguments["useAnalytics"] as? Bool ?? nil {
