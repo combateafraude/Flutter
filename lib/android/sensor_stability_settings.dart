@@ -1,7 +1,7 @@
 class SensorStabilitySettingsAndroid {
-  String? messageResourceIdName;
-  int? stabilityStabledMillis;
-  double? stabilityThreshold;
+  String messageResourceIdName;
+  int stabilityStabledMillis;
+  double stabilityThreshold;
 
   SensorStabilitySettingsAndroid(
   {this.messageResourceIdName, this.stabilityStabledMillis, this.stabilityThreshold});

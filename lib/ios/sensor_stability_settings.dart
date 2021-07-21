@@ -1,6 +1,6 @@
 class SensorStabilitySettingsIos {
-  String? message;
-  double? stabilityThreshold;
+  String message;
+  double stabilityThreshold;
 
   SensorStabilitySettingsIos(
   {this.message, this.stabilityThreshold});

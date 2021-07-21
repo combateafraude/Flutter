@@ -1,6 +1,6 @@
 class CaptureAndroidSettings {
-  int? beforePictureMillis;
-  int? afterPictureMillis;
+  int beforePictureMillis;
+  int afterPictureMillis;
 
   CaptureAndroidSettings({this.beforePictureMillis, this.afterPictureMillis});
 

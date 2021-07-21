@@ -1,7 +1,7 @@
 import 'sensor_stability_settings.dart';
 
 class SensorSettingsAndroid {
-  SensorStabilitySettingsAndroid? sensorStabilitySettings;
+  SensorStabilitySettingsAndroid sensorStabilitySettings;
 
   SensorSettingsAndroid(
   {this.sensorStabilitySettings});
