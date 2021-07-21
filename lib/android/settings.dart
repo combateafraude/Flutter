@@ -5,9 +5,9 @@ import 'sensor_settings.dart';
 
 class FaceAuthenticatorAndroidSettings {
 
-  FaceAuthenticatorCustomizationAndroid customization;
-  CaptureAndroidSettings captureSettings;
-  SensorSettingsAndroid sensorSettings;
+  FaceAuthenticatorCustomizationAndroid? customization;
+  CaptureAndroidSettings? captureSettings;
+  SensorSettingsAndroid? sensorSettings;
 
   FaceAuthenticatorAndroidSettings(
   {this.customization, this.captureSettings, this.sensorSettings});
