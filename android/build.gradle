@@ -45,6 +45,6 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:face-authenticator:4.2.0'
+        implementation 'com.combateafraude.sdk:face-authenticator:4.3.0'
     }
 }
