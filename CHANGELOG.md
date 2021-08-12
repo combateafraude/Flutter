@@ -1,3 +1,7 @@
+# 4.5.0
+__Android Native SDK Update to 6.10.0__
+__iOS Native SDK Update to 4.7.0__
+
 # 4.4.6
 __Android Native SDK Update to 6.9.6__
 __iOS Native SDK Update to 4.4.7__

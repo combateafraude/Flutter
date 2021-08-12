@@ -30,8 +30,7 @@ class _MyAppState extends State<MyApp> {
   String _result = "";
   String _description = "";
 
-  String mobileToken =
-      "";
+  String mobileToken = "";
 
   @override
   void initState() {
@@ -54,23 +53,14 @@ class _MyAppState extends State<MyApp> {
 
     ShowPreview showPreview = new ShowPreview(
         show: true,
-        title: "A foto ficou boa?",
-        subTitle:
-            "Veja se todas informações estão legíveis e os documentos sem reflexos",
-        confirmLabel: "Sim, ficou boa!",
-        retryLabel: "Tirar novamente");
-
-    MessageSettings messageSettings = new MessageSettings(
-        holdItMessage: "Segure assim!",
-        lowQualityDocumentMessage: "A qualidade não está boa. Tire outra foto.",
-        uploadingImageMessage: "Salvando...",
-        verifyingQualityMessage: "Verificando qualidade...");
+        titleResIdName: "preview_title",
+        subTitleResIdName: "preview_subtitle",
+        confirmLabelResIdName: "preview_accept",
+        retryLabelResIdName: "preview_try_again");
 
     documentDetector.setShowPreview(showPreview);
 
     documentDetector.setDocumentFlow(documentSteps);
-
-    documentDetector.setMessageSettings(messageSettings);
 
     // Put the others parameters here
 
