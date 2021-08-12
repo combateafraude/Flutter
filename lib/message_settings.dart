@@ -18,7 +18,8 @@ class MessageSettings {
     map["fitTheDocumentMessage"] = fitTheDocumentMessage;
     map["holdItMessage"] = holdItMessage;
     map["verifyingQualityMessage"] = verifyingQualityMessage;
-    map["lowQualityDocumentMessage"] = lowQualityDocumentMessage;
+    map["lowQualityDocumentMessage"] =
+        lowQualityDocumentMessage;
     map["uploadingImageMessage"] = uploadingImageMessage;
 
     return map;
