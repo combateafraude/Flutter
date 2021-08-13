@@ -1,4 +1,5 @@
 import 'package:passive_face_liveness/android/settings.dart';
+import 'package:passive_face_liveness/ios/settings.dart';
 import 'package:passive_face_liveness/show_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:passive_face_liveness/passive_face_liveness.dart';
@@ -42,6 +43,13 @@ class _MyAppState extends State<MyApp> {
 
     PassiveFaceLiveness passiveFaceLiveness =
         new PassiveFaceLiveness(mobileToken: mobileToken);
+
+    PassiveFaceLivenessIosSettings faceLivenessIosSettings = new PassiveFaceLivenessIosSettings(
+      enableManualCapture: true,
+      timeEnableManualCapture: 2
+    );
+
+    passiveFaceLiveness.setIosSettings(faceLivenessIosSettings);
 
     MessageSettings messageSettings = new MessageSettings(
         stepName: "face_register_caf",
