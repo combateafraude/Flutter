@@ -233,6 +233,8 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 | `PassiveFaceLivenessCustomizationIos customization`<br><br>Customização visual do SDK |
 | `int beforePictureMillis`<br><br>Duração em milissegundos entre a primeira detecção do rosto e a efetiva captura da foto |
 | `SensorStabilitySettingsIos sensorStability`<br><br>Configurações do sensor de estabilidade à ser aplicado no SDK |
+| `bool enableManualCapture`<br><br>Habilita modo de captura manual |
+| `double timeEnableManualCapture`<br><br>Define tempo para exibição do botão de captura manual |
 
 | PassiveFaceLivenessCustomizationIos constructor |
 | --------- |
