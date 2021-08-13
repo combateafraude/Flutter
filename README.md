@@ -61,7 +61,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-compatible-v2.3.6
+      ref: passive-face-liveness-compatible-v2.5.0
 ```
 
 ## Utilização
@@ -95,12 +95,103 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 | `.setIosSettings(PassiveFaceLivenessIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
 
 | ShowPreview |
+---
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.
+
+
+| `bool show`
+---
+Habilita/Desabilita preview
+
+| `String title`
+---
+Título
+
+| `String subTitle`
+---
+Subtítulo
+
+| `String confirmLabel`
+---
+Texto do botão de confirmação
+
+| `String retryLabel`
+---
+Texto do botão de capturar novamente 
+
+| Exemplo de uso |
+```dart
+ShowPreview showPreview = new ShowPreview(
+        show: true,
+        title: "preview_title_exemple",
+        subTitle: "preview_subtitle_exemple",
+        confirmLabel: "preview_confirmLabel_exemple",
+        retryLabel: "preview_retryLabel_exemple");
+
+passiveFaceLiveness.setShowPreview(showPreview);
+```
+
+| MessageSettings |
 | --------- |
-| `bool show`<br><br>Habilita/Desabilita preview |
-| `String title`<br><br>Título |
-| `String subTitle`<br><br>Subtítulo |
-| `String confirmLabel`<br><br>Texto do botão de confirmação |
-| `String retryLabel`<br><br>Texto do botão de capturar novamente |
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.
+
+| `bool show` 
+--- 
+Habilita/Desabilita preview
+
+|`String stepName`
+---
+Registro Facial
+
+|`String faceNotFoundMessage`
+---
+"Não encontramos nenhum rosto"
+
+|`String faceTooFarMessage`
+---
+"Aproxime o rosto"</p>
+
+|`String faceTooCloseMessage`
+---
+"Afaste o rosto"</p>
+
+|`String faceNotFittedMessage`
+---
+"Encaixe seu rosto"</p>
+
+|`String multipleFaceDetectedMessage`
+---
+"Mais de um rosto detectado"</p>
+
+|`String verifyingLivenessMessage`
+---
+"Verificando selfie…"</p>
+
+|`String holdItMessage`
+---
+"Segure assim"</p>
+
+|`String invalidFaceMessage`
+---
+"Ops, rosto inválido. Por favor, tente novamente"</p>
+
+| <b>Exemplo de uso </b> |
+
+```dart
+MessageSettings messageSettings = new MessageSettings(
+        stepName: "face_register_exemple",
+        faceNotFoundMessage: "face_not_found_exemple",
+        faceTooFarMessage: "face_too_far_exemple",
+        faceTooCloseMessage: "face_too_close_exemple",
+        faceNotFittedMessage: "fit_your_face_exemple",
+        multipleFaceDetectedMessage: "more_than_one_face_exemple",
+        verifyingLivenessMessage: "verifying_liveness_exemple",
+        holdItMessage: "hold_it_exemple",
+        invalidFaceMessage: "invalid_face_exemple");
+
+passiveFaceLiveness.setMessageSettings(messageSettings);
+
+```
 
 #### Android
 

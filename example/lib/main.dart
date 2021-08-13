@@ -2,6 +2,7 @@ import 'package:passive_face_liveness/android/settings.dart';
 import 'package:passive_face_liveness/show_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:passive_face_liveness/passive_face_liveness.dart';
+import 'package:passive_face_liveness/message_settings.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_success.dart';
@@ -42,17 +43,20 @@ class _MyAppState extends State<MyApp> {
     PassiveFaceLiveness passiveFaceLiveness =
         new PassiveFaceLiveness(mobileToken: mobileToken);
 
-    ShowPreview showPreview = new ShowPreview(show: true,
-        title: "A foto ficou boa?",
-        subTitle: "confira",
-        confirmLabel: "Sim, ficou boa!",
-        retryLabel: "Tirar novamente");
+    MessageSettings messageSettings = new MessageSettings(
+        stepName: "face_register_caf",
+        faceNotFoundMessage: "face_not_found_caf",
+        faceTooFarMessage: "face_too_far_caf",
+        faceTooCloseMessage: "face_too_close_caf",
+        faceNotFittedMessage: "fit_your_face_caf",
+        multipleFaceDetectedMessage: "more_than_one_face_message",
+        verifyingLivenessMessage: "verifying_liveness_caf",
+        holdItMessage: "hold_it_caf",
+        invalidFaceMessage: "invalid_face_caf");
 
     PassiveFaceLivenessAndroidSettings passiveFaceLivenessAndroidSettings =
         new PassiveFaceLivenessAndroidSettings(
             showButtonTime: 50000);
-
-    passiveFaceLiveness.setShowPreview(showPreview);
 
     passiveFaceLiveness.setAndroidSettings(passiveFaceLivenessAndroidSettings);
 
