@@ -8,13 +8,17 @@ class DocumentDetectorIosSettings {
   double? qualityThreshold;
   DocumentDetectorCustomizationIos? customization;
   SensorSettingsIos? sensorSettings;
+  bool? enableManualCapture;
+  double? timeEnableManualCapture;
 
   DocumentDetectorIosSettings(
   {this.detectionThreshold,
     this.verifyQuality,
     this.qualityThreshold,
     this.customization,
-    this.sensorSettings});
+    this.sensorSettings,
+    this.enableManualCapture,
+    this.timeEnableManualCapture});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -23,7 +27,9 @@ class DocumentDetectorIosSettings {
     map["verifyQuality"] = verifyQuality;
     map["qualityThreshold"] = qualityThreshold;
     map["customization"] = customization?.asMap();
-    map["sensorSettings"] = sensorSettings?.asMap();;
+    map["sensorSettings"] = sensorSettings?.asMap();
+    map["enableManualCapture"] = enableManualCapture;
+    map["timeEnableManualCapture"] = timeEnableManualCapture;
 
     return map;
   }

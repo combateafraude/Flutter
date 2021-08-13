@@ -15,6 +15,7 @@ Ao utilizar nosso plugin, certifique-se que você concorda com nossas [Política
 | Flutter             | 1.12+  |
 | Dart                | 2.12+  |
 | Android API         | 21+    |
+| Compile SDK Version | 30+    |
 | iOS                 | 11.0+  |
 | Swift               | 5.4    |
 
@@ -70,7 +71,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v4.5.0
+      ref: document-detector-v4.6.0
 ```
 
 ## Utilização
@@ -216,6 +217,8 @@ passiveFaceLiveness.setShowPreview(showPreview);
 | `double qualityThreshold`<br><br>Limiar de aceitação da qualidade, entre 1.0 e 5.0. 1.8 é o recomendado para um futuro OCR |
 | `DocumentDetectorCustomizationIos customization`<br><br>Customização visual do DocumentDetector |
 | `SensorSettingsIos sensorSettings`<br><br>Configurações personalizadas dos sensores em iOS, null para desabilitar |
+| `Bool enableManualCapture`<br><br>Habilita modo de captura manual |
+| `double timeEnableManualCapture`<br><br>Tempo para habilitar o botão de captura manual |
 
 | DocumentDetectorCustomizationIos constructor |
 | --------- |

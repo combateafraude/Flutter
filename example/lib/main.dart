@@ -51,6 +51,11 @@ class _MyAppState extends State<MyApp> {
     DocumentDetector documentDetector =
         new DocumentDetector(mobileToken: mobileToken);
 
+    DocumentDetectorIosSettings documentDetectorIosSettings = new DocumentDetectorIosSettings(
+      enableManualCapture: true,
+      timeEnableManualCapture: 15000
+    );
+
     ShowPreview showPreview = new ShowPreview(
         show: true,
         titleResIdName: "preview_title",
