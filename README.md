@@ -112,10 +112,44 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | ShowPreview |
 | --------- |
 | `bool show`<br><br>Habilita/Desabilita preview |
-| `String title`<br><br>Título |
-| `String subTitle`<br><br>Subtítulo |
-| `String confirmLabel`<br><br>Texto do botão de confirmação |
-| `String retryLabel`<br><br>Texto do botão de capturar novamente |
+| `String title`<br><br>Nome da String que define o título. Por exemplo, caso deseje mudar o título do SDK, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `preview_title_exemple`|
+| `String subTitle`<br><br> Nome da String que define o subtítulo. Por exemplo, caso deseje mudar o subtítulo do SDK, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `preview_subtitle_exemple`  |
+| `String confirmLabel`<br><br>Nome da String que define o texto do botão de confirmação. Por exemplo, caso deseje mudar o texto do botão de confirmação do SDK, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `preview_confirmLabel_exemple`|
+| `String retryLabel`<br><br> Nome da String que define o texto do botão de capturar novamente. Por exemplo, caso deseje mudar o texto do botão de capturar novamente, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `preview_retryLabel_exemple`|
+
+| Exemplo de uso |
+| --------- |
+```dart
+ShowPreview showPreview = new ShowPreview(
+        show: true,
+        title: "preview_title_exemple",
+        subTitle: "preview_subtitle_exemple",
+        confirmLabel: "preview_confirmLabel_exemple",
+        retryLabel: "preview_retryLabel_exemple");
+
+passiveFaceLiveness.setShowPreview(showPreview);
+```
+
+| MessageSettings |
+| --------- |
+| `String fitTheDocumentMessageResIdName`<br><br>Padrão: "Encaixe o documento na marcação", caso deseje mudar, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `fit_document_exemple`  |
+| `String holdItMessageResIdName (disponível somente para Android)`<br><br>Padrão: "Segure assim", caso deseje mudar, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `hold_it_exemple` |
+| `String verifyingQualityMessageResIdName`<br><br>Padrão: "Verificando qualidade…", caso deseje mudar, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `verifying_quality_exemple` |
+| `String lowQualityDocumentMessageResIdName`<br><br>Padrão: "Ops, não foi possível ler as informações. Por favor, tente novamente", caso deseje mudar, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `low_quality_exemple` |
+| `String uploadingImageMessageResIdName`<br><br>Padrão: "Enviando imagem…", caso deseje mudar, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `upload_image_exemple` |
+
+| Exemplo de uso |
+| --------- |
+```dart
+ MessageSettings messageSettings = new MessageSettings(
+      fitTheDocumentMessageResIdName: "fit_document_exemple",
+      holdItMessageResIdName:"hold_it_exemple",
+      verifyingQualityMessageResIdName: "verifying_quality_exemple"
+      lowQualityDocumentMessageResIdName:"low_quality_exemple" ,
+      uploadingImageMessageResIdName:"upload_image_exemple");
+passiveFaceLiveness.setShowPreview(showPreview);
+```
+
 
 #### Android
 
