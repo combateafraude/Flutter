@@ -43,29 +43,19 @@ class _MyAppState extends State<MyApp> {
     PassiveFaceLiveness passiveFaceLiveness =
         new PassiveFaceLiveness(mobileToken: mobileToken);
 
-    ShowPreview showPreview = new ShowPreview(
-        show: true,
-        title: "A foto ficou boa?",
-        subTitle: "confira",
-        confirmLabel: "Sim, ficou boa!",
-        retryLabel: "Tirar novamente");
-
     MessageSettings messageSettings = new MessageSettings(
-      stepName: "Registro Facial",
-      faceNotFoundMessage: "Não encontramos um rosto",
-      faceTooFarMessage: "Aproxime seu rosto",
-      faceTooCloseMessage: "Afaste seu rosto",
-      faceNotFittedMessage: "Encaixe seu rosto",
-      multipleFaceDetectedMessage: "Mais de um rosto detectado",
-      verifyingLivenessMessage: "Verificando selfie...",
-      holdItMessage: "Segure assim",
-      invalidFaceMessage: "Ops, rosto inválido. Tente novamente"
-    );
+        stepName: "face_register_caf",
+        faceNotFoundMessage: "face_not_found_caf",
+        faceTooFarMessage: "face_too_far_caf",
+        faceTooCloseMessage: "face_too_close_caf",
+        faceNotFittedMessage: "fit_your_face_caf",
+        multipleFaceDetectedMessage: "more_than_one_face_message",
+        verifyingLivenessMessage: "verifying_liveness_caf",
+        holdItMessage: "hold_it_caf",
+        invalidFaceMessage: "invalid_face_caf");
 
     PassiveFaceLivenessAndroidSettings passiveFaceLivenessAndroidSettings =
         new PassiveFaceLivenessAndroidSettings(showButtonTime: 25000);
-
-    passiveFaceLiveness.setShowPreview(showPreview);
 
     passiveFaceLiveness.setAndroidSettings(passiveFaceLivenessAndroidSettings);
 
