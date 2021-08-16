@@ -95,29 +95,13 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 | `.setIosSettings(PassiveFaceLivenessIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
 
 | ShowPreview |
----
-<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.
-
-
-| `bool show`
----
-Habilita/Desabilita preview
-
-| `String title`
----
-Título
-
-| `String subTitle`
----
-Subtítulo
-
-| `String confirmLabel`
----
-Texto do botão de confirmação
-
-| `String retryLabel`
----
-Texto do botão de capturar novamente 
+| --------- |
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.|
+| `bool show`<br><br>Habilita/Desabilita preview
+| `String title`<br><br>Título
+| `String subTitle`<br><br> Subtítulo
+| `String confirmLabel`<br><br>Texto do botão de confirmação
+| `String retryLabel`<br><br>Texto do botão de capturar novamente
 
 | Exemplo de uso |
 ```dart
@@ -133,47 +117,17 @@ passiveFaceLiveness.setShowPreview(showPreview);
 
 | MessageSettings |
 | --------- |
-<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.
-
-| `bool show` 
---- 
-Habilita/Desabilita preview
-
-|`String stepName`
----
-Registro Facial
-
-|`String faceNotFoundMessage`
----
-"Não encontramos nenhum rosto"
-
-|`String faceTooFarMessage`
----
-"Aproxime o rosto"</p>
-
-|`String faceTooCloseMessage`
----
-"Afaste o rosto"</p>
-
-|`String faceNotFittedMessage`
----
-"Encaixe seu rosto"</p>
-
-|`String multipleFaceDetectedMessage`
----
-"Mais de um rosto detectado"</p>
-
-|`String verifyingLivenessMessage`
----
-"Verificando selfie…"</p>
-
-|`String holdItMessage`
----
-"Segure assim"</p>
-
-|`String invalidFaceMessage`
----
-"Ops, rosto inválido. Por favor, tente novamente"</p>
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.| 
+| `bool show`<br><br>Padrão: Habilita/Desabilita preview |
+| `String stepName`<br><br>Padrão: "Registro Facial" |
+| `String holdItMessage`<br><br>Padrão: "Segure assim" |
+| `String faceNotFoundMessage`<br><br>Padrão: "Não encontramos nenhum rosto" |
+| `String faceTooFarMessage`<br><br>Padrão: ""Aproxime o rosto" |
+| `String faceTooCloseMessage`<br><br>Padrão: "Afaste o rosto" |
+| `String faceNotFittedMessage`<br><br>Padrão: "Encaixe seu rosto" |
+| `String multipleFaceDetectedMessage`<br><br>Padrão: "Mais de um rosto detectado" |
+| `String verifyingLivenessMessage`<br><br>Padrão: "Verificando selfie…" |
+| `String invalidFaceMessage`<br><br>Padrão: "Ops, rosto inválido. Por favor, tente novamente" |
 
 | <b>Exemplo de uso </b> |
 
