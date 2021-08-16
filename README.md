@@ -128,7 +128,7 @@ ShowPreview showPreview = new ShowPreview(
         confirmLabel: "preview_confirmLabel_exemple",
         retryLabel: "preview_retryLabel_exemple");
 
-passiveFaceLiveness.setShowPreview(showPreview);
+documentDetector.setShowPreview(showPreview);
 ```
 
 | MessageSettings |
@@ -148,7 +148,7 @@ passiveFaceLiveness.setShowPreview(showPreview);
       verifyingQualityMessageResIdName: "verifying_quality_exemple"
       lowQualityDocumentMessageResIdName:"low_quality_exemple" ,
       uploadingImageMessageResIdName:"upload_image_exemple");
-passiveFaceLiveness.setShowPreview(showPreview);
+documentDetector.setShowPreview(showPreview);
 ```
 
 
