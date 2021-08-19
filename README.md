@@ -112,11 +112,12 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 
 | ShowPreview |
 | --------- |
-| `bool show`<br><br>Habilita/Desabilita preview |
-| `String title`<br><br>Nome da String que define o título. Por exemplo, caso deseje mudar o título do SDK, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `preview_title_exemple`|
-| `String subTitle`<br><br> Nome da String que define o subtítulo. Por exemplo, caso deseje mudar o subtítulo do SDK, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `preview_subtitle_exemple`  |
-| `String confirmLabel`<br><br>Nome da String que define o texto do botão de confirmação. Por exemplo, caso deseje mudar o texto do botão de confirmação do SDK, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `preview_confirmLabel_exemple`|
-| `String retryLabel`<br><br> Nome da String que define o texto do botão de capturar novamente. Por exemplo, caso deseje mudar o texto do botão de capturar novamente, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `preview_retryLabel_exemple`|
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.|
+| `bool show`<br><br>Habilita/Desabilita preview
+| `String title`<br><br>Título
+| `String subTitle`<br><br> Subtítulo
+| `String confirmLabel`<br><br>Texto do botão de confirmação
+| `String retryLabel`<br><br>Texto do botão de capturar novamente
 
 | Exemplo de uso |
 | --------- |
