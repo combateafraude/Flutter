@@ -137,11 +137,12 @@ documentDetector.setShowPreview(showPreview);
 
 | MessageSettings |
 | --------- |
-| `String? fitTheDocumentMessageResIdName`<br><br>Padrão: "Encaixe o documento na marcação", caso deseje mudar, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `fit_document_exemple`  |
-| `String? holdItMessageResIdName (disponível somente para Android)`<br><br>Padrão: "Segure assim", caso deseje mudar, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `hold_it_exemple` |
-| `String? verifyingQualityMessageResIdName`<br><br>Padrão: "Verificando qualidade…", caso deseje mudar, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `verifying_quality_exemple` |
-| `String? lowQualityDocumentMessageResIdName`<br><br>Padrão: "Ops, não foi possível ler as informações. Por favor, tente novamente", caso deseje mudar, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `low_quality_exemple` |
-| `String? uploadingImageMessageResIdName`<br><br>Padrão: "Enviando imagem…", caso deseje mudar, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e use o nome, por exemplo `upload_image_exemple` |
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.| 
+| `String? fitTheDocumentMessageResIdName`<br><br>Padrão: "Encaixe o documento na marcação"|
+| `String? holdItMessageResIdName (disponível somente para Android)`<br><br>Padrão: "Segure assim"|
+| `String? verifyingQualityMessageResIdName`<br><br>Padrão: "Verificando qualidade…"|
+| `String? lowQualityDocumentMessageResIdName`<br><br>Padrão: "Ops, não foi possível ler as informações. Por favor, tente novamente"|
+| `String? uploadingImageMessageResIdName`<br><br>Padrão: "Enviando imagem…"|
 
 | Exemplo de uso |
 | --------- |
