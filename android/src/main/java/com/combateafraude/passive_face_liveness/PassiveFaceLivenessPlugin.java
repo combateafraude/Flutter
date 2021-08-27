@@ -163,6 +163,11 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 int showButtonTime = (int) androidSettings.get("showButtonTime");
                 mPassiveFaceLivenessBuilder.setShowButtonTime(showButtonTime);
             }
+
+            if (androidSettings.get("enableSwitchCameraButton") != null){
+                boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
+                mPassiveFaceLivenessBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
+            }
         }
 
         // Sound settings

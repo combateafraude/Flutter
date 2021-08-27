@@ -23,7 +23,6 @@ class _MyAppState extends State<MyApp> {
   String _description = "";
 
   String mobileToken = "";
-
   @override
   void initState() {
     super.initState();
@@ -44,10 +43,9 @@ class _MyAppState extends State<MyApp> {
     PassiveFaceLiveness passiveFaceLiveness =
         new PassiveFaceLiveness(mobileToken: mobileToken);
 
-    PassiveFaceLivenessIosSettings faceLivenessIosSettings = new PassiveFaceLivenessIosSettings(
-      enableManualCapture: true,
-      timeEnableManualCapture: 2
-    );
+    PassiveFaceLivenessIosSettings faceLivenessIosSettings =
+        new PassiveFaceLivenessIosSettings(
+            enableManualCapture: true, timeEnableManualCapture: 2);
 
     passiveFaceLiveness.setIosSettings(faceLivenessIosSettings);
 
@@ -63,7 +61,8 @@ class _MyAppState extends State<MyApp> {
         invalidFaceMessage: "invalid_face_caf");
 
     PassiveFaceLivenessAndroidSettings passiveFaceLivenessAndroidSettings =
-        new PassiveFaceLivenessAndroidSettings(showButtonTime: 25000);
+        new PassiveFaceLivenessAndroidSettings(
+            showButtonTime: 25000, enableSwitchCameraButton: true);
 
     passiveFaceLiveness.setAndroidSettings(passiveFaceLivenessAndroidSettings);
 

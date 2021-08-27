@@ -55,6 +55,8 @@ Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runne
 <string>To capture the selfie</string>
 ```
 
+Para habilitar texto e voz em Português, em seu projeto, no diretório ROOTPROJECT/ios, abra o arquivo .xcworkspace no Xcode e adicione em Project > Info > Localizations o idioma Portuguese (Brazil).
+
 ### Flutter
 
 Adicione o plugin no seu arquivo `ROOT_PROJECT/pubspec.yaml`:
@@ -64,7 +66,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-v2.5.0
+      ref: passive-face-liveness-v2.5.5
 ```
 
 ## Utilização
@@ -158,6 +160,8 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 | `CaptureSettings captureSettings`<br><br>Configuraçōes de tempos de estabilização para a captura da selfie |
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
 | `int showButtonTime`<br><br>Altera o tempo para a exibição do botão de captura manual. O padrão é `20000` milisegundos |
+| `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
+
 
 | PassiveFaceLivenessCustomizationAndroid constructor |
 | --------- |
