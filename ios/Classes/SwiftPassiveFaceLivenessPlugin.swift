@@ -143,6 +143,8 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             
         }
         
+        passiveFaceLivenessBuilder.enableMultiLanguage(enable: false)
+        
         let controller = UIApplication.shared.keyWindow!.rootViewController!
         
         let scannerVC = PassiveFaceLivenessController(passiveFaceLiveness: passiveFaceLivenessBuilder.build())
