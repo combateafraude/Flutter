@@ -186,6 +186,8 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             }
         }
         
+        documentDetectorBuilder.enableMultiLanguage(enable: false)
+        
         let controller = UIApplication.shared.keyWindow!.rootViewController!
         
         let scannerVC = DocumentDetectorController(documentDetector: documentDetectorBuilder.build())
