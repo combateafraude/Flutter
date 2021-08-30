@@ -61,6 +61,7 @@ Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runne
 <string>To read the documents</string>
 ```
 
+Para habilitar texto e voz em Português, em seu projeto, no diretório ROOTPROJECT/ios, abra o arquivo .xcworkspace no Xcode e adicione em Project > Info > Localizations o idioma Portuguese (Brazil).
 
 ### Flutter
 
@@ -71,7 +72,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v4.6.0
+      ref: document-detector-v4.6.5
 ```
 
 ## Utilização
@@ -171,6 +172,7 @@ documentDetector.setShowPreview(showPreview);
 | `DocumentDetectorCustomizationAndroid customization`<br><br>Customização do layout em Android da activity |
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
 | `List<CaptureStage> captureStages`<br><br>Array de estágios para cada captura. Esse parâmetro é útil caso você deseje modificar a maneira com qual o DocumentDetector é executado, como configurações de detecção, captura automática ou manual, verificar a qualidade da foto, etc |
+| `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
 
 | CaptureStage constructor |
 | --------- |

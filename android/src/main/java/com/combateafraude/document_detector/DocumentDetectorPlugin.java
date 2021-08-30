@@ -232,6 +232,11 @@ public class DocumentDetectorPlugin
                     mDocumentDetectorBuilder.setLuminositySensorSettings(null);
                 }
 
+                if(androidSettings.get("enableSwitchCameraButton") != null){
+                    boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
+                    mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
+                }
+
                 HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) sensorSettings
                         .get("sensorOrientationSettings");
                 if (sensorOrientation != null) {
