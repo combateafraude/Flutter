@@ -1,4 +1,12 @@
 # 4.5.0
+__Android Native SDK Update to 6.10.5__
+__iOS Native SDK Update to 4.7.3__
+- Added: enableSwitchCameraButton
+- Added: support to multilanguage, with autodetection (portuguese and english) of device. You have to add the language on `Project > Info > Location` 
+
+
+
+# 4.5.0
 __Android Native SDK Update to 6.10.0__
 __iOS Native SDK Update to 4.7.0__
 

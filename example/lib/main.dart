@@ -50,10 +50,12 @@ class _MyAppState extends State<MyApp> {
     DocumentDetector documentDetector =
         new DocumentDetector(mobileToken: mobileToken);
 
-    DocumentDetectorIosSettings documentDetectorIosSettings = new DocumentDetectorIosSettings(
-      enableManualCapture: true,
-      timeEnableManualCapture: 15000
-    );
+    DocumentDetectorIosSettings documentDetectorIosSettings =
+        new DocumentDetectorIosSettings(
+            enableManualCapture: true, timeEnableManualCapture: 15000);
+
+    DocumentDetectorAndroidSettings detectorAndroidSettings =
+        new DocumentDetectorAndroidSettings(enableSwitchCameraButton: false);
 
     ShowPreview showPreview = new ShowPreview(
         show: true,
@@ -71,6 +73,8 @@ class _MyAppState extends State<MyApp> {
     documentDetector.setAndroidSettings(androidSettings);
 
     documentDetector.setDocumentFlow(documentSteps);
+
+    documentDetector.setAndroidSettings(detectorAndroidSettings);
 
     // Put the others parameters here
 
