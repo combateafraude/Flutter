@@ -89,6 +89,8 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 | PassiveFaceLiveness |
 | --------- |
 | `.setPeopleId(String peopleId)`<br><br>CPF do usuário que está utilizando o plugin à ser usado para detecção de fraudes via analytics |
+| `.setPersonName(String personName)`<br><br>Vincula uma tentativa de prova de vida a um nome |
+| `.setPersonCPF(String personCPF)`<br><br>Vincula uma tentativa de prova de vida a um cpf |
 | `.setAnalyticsSettings(bool useAnalytics)`<br><br>Habilita/desabilita a coleta de dados para maximização da informação antifraude. O padrão é `true` |
 | `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |

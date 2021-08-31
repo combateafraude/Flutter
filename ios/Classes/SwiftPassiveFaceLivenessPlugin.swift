@@ -33,6 +33,14 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             passiveFaceLivenessBuilder.setPersonId(personId: peopleId)
         }
 
+        if let personName = arguments["personName"] as? String ?? nil{
+            passiveFaceLivenessBuilder.setPersonName(personName: personName)
+        }
+
+        if let personCPF = arguments["personCPF"] as? String ?? nil{
+            passiveFaceLivenessBuilder.setPersonCPF(personCPF: personCPF)
+        }
+
         if let useAnalytics = arguments["useAnalytics"] as? Bool ?? nil {
             passiveFaceLivenessBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)
         }
