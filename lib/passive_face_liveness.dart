@@ -11,13 +11,14 @@ import 'package:passive_face_liveness/result/passive_face_liveness_success.dart'
 import 'package:passive_face_liveness/show_preview.dart';
 import 'package:passive_face_liveness/message_settings.dart';
 
-
 class PassiveFaceLiveness {
   static const MethodChannel _channel =
       const MethodChannel('passive_face_liveness');
 
   String mobileToken;
   String? peopleId;
+  String? personCPF;
+  String? personName;
   bool? useAnalytics;
   bool? sound;
   int? requestTimeout;
@@ -67,11 +68,21 @@ class PassiveFaceLiveness {
     this.delay = delay;
   }
 
+  void setPersonCPF(String personCPF) {
+    this.personCPF = personCPF;
+  }
+
+  void setPersonName(String personName) {
+    this.personName = personName;
+  }
+
   Future<PassiveFaceLivenessResult> start() async {
     Map<String, dynamic> params = new Map();
 
     params["mobileToken"] = mobileToken;
     params["peopleId"] = peopleId;
+    params["personName"] = personName;
+    params["personCPF"] = personCPF;
     params["useAnalytics"] = useAnalytics;
     params["sound"] = sound;
     params["requestTimeout"] = requestTimeout;

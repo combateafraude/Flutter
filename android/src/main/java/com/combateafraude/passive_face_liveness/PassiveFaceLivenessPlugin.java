@@ -66,6 +66,14 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
         String peopleId = (String) argumentsMap.get("peopleId");
         mPassiveFaceLivenessBuilder.setPersonId(peopleId);
 
+        // Person Name
+        String personName = (String) argumentsMap.get("personName");
+        mPassiveFaceLivenessBuilder.setPersonName(personName);
+
+        // Person CPF
+        String personCPF = (String) argumentsMap.get("personCPF");
+        mPassiveFaceLivenessBuilder.setPersonCPF(personCPF);
+
         // Use Analytics
         Boolean useAnalytics = (Boolean) argumentsMap.get("useAnalytics");
         if (useAnalytics != null) mPassiveFaceLivenessBuilder.setAnalyticsSettings(useAnalytics);
