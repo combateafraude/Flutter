@@ -43,12 +43,6 @@ class _MyAppState extends State<MyApp> {
     PassiveFaceLiveness passiveFaceLiveness =
         new PassiveFaceLiveness(mobileToken: mobileToken);
 
-    PassiveFaceLivenessIosSettings faceLivenessIosSettings =
-        new PassiveFaceLivenessIosSettings(
-            enableManualCapture: true, timeEnableManualCapture: 2);
-
-    passiveFaceLiveness.setIosSettings(faceLivenessIosSettings);
-
     MessageSettings messageSettings = new MessageSettings(
         stepName: "face_register_caf",
         faceNotFoundMessage: "face_not_found_caf",
