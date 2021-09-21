@@ -21,7 +21,6 @@ class _MyAppState extends State<MyApp> {
   String _description = "";
 
   String mobileToken = "";
-
   @override
   void initState() {
     super.initState();
@@ -42,20 +41,12 @@ class _MyAppState extends State<MyApp> {
     PassiveFaceLiveness passiveFaceLiveness =
         new PassiveFaceLiveness(mobileToken: mobileToken);
 
-    ShowPreview showPreview = new ShowPreview(show: true,
-        title: "A foto ficou boa?",
-        subTitle: "Dê uma olhada, se quiser, pode tirar outra :)",
-        confirmLabel: "Sim, ficou boa!",
-        retryLabel: "Tirar novamente");
 
     PassiveFaceLivenessAndroidSettings passiveFaceLivenessAndroidSettings =
         new PassiveFaceLivenessAndroidSettings(
-            showButtonTime: 50000);
-
-    passiveFaceLiveness.setShowPreview(showPreview);
+            showButtonTime: 25000, enableSwitchCameraButton: true);
 
     passiveFaceLiveness.setAndroidSettings(passiveFaceLivenessAndroidSettings);
-
     // Put the others parameters here
 
     PassiveFaceLivenessResult passiveFaceLivenessResult =

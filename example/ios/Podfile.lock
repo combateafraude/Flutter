@@ -1,15 +1,15 @@
 PODS:
   - Flutter (1.0.0)
-  - passive_face_liveness (2.0.0):
+  - passive_face_liveness (2.5.10):
     - Flutter
-    - PassiveFaceLiveness (= 3.2.0)
-  - PassiveFaceLiveness (3.2.0):
-    - Sentry (= 5.2.0)
+    - PassiveFaceLiveness (= 3.6.6)
+  - PassiveFaceLiveness (3.6.6):
+    - Sentry (= 7.1.3)
   - "permission_handler (5.0.1+1)":
     - Flutter
-  - Sentry (5.2.0):
-    - Sentry/Core (= 5.2.0)
-  - Sentry/Core (5.2.0)
+  - Sentry (7.1.3):
+    - Sentry/Core (= 7.1.3)
+  - Sentry/Core (7.1.3)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -31,12 +31,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  passive_face_liveness: 8032a26f1931a126f7a7bd037fc795ebd1d7294a
-  PassiveFaceLiveness: c1c2a7b80719602a961600ac1e9757ebb32f5cc5
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  passive_face_liveness: be9d494703523c4636626c06286b19e1133e6fbb
+  PassiveFaceLiveness: 0dd180f5c2771af3ef283d3ae99cb18f75130940
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
-  Sentry: 6e04bc3e11bf771ca79140a112de64dcfbc7d8cb
+  Sentry: 6d963d64804dd06d96e778be729613f481394312
 
-PODFILE CHECKSUM: 4189eac5c970d8dcdd758ef8ed3e4591d4abd2dd
+PODFILE CHECKSUM: 48ed8943beec15aeee7d28a74e100b515836e362
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

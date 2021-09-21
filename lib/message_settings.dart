@@ -1,13 +1,13 @@
 class MessageSettings {
-    String stepName;
-    String faceNotFoundMessage;
-    String faceTooFarMessage;
-    String faceTooCloseMessage;
-    String faceNotFittedMessage;
-    String multipleFaceDetectedMessage;
-    String verifyingLivenessMessage;
-    String holdItMessage;
-    String invalidFaceMessage;
+    String? stepName;
+    String? faceNotFoundMessage;
+    String? faceTooFarMessage;
+    String? faceTooCloseMessage;
+    String? faceNotFittedMessage;
+    String? multipleFaceDetectedMessage;
+    String? verifyingLivenessMessage;
+    String? holdItMessage;
+    String? invalidFaceMessage;
 
   MessageSettings(
       {this.stepName, this.faceNotFoundMessage, this.faceTooFarMessage, this.faceTooCloseMessage, this.faceNotFittedMessage, this.multipleFaceDetectedMessage, this.verifyingLivenessMessage, this.holdItMessage, this.invalidFaceMessage});

@@ -5,7 +5,7 @@
 Pod::Spec.new do |s|
   s.name             = 'passive_face_liveness_nodatabinding'
   s.summary          = 'Flutter plugin for PassiveFaceLiveness'
-  s.version          = '2.3.5'
+  s.version          = '2.5.10'
   s.homepage         = 'https://www.combateafraude.com/'
   s.license          = { :file => 'LICENSE', :type => 'MIT' }
   s.author           = { 'ti@combateafraude.com' => 'ti@combateafraude.com' }
@@ -15,8 +15,8 @@ Pod::Spec.new do |s|
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
-  s.swift_version = '5.0'
+  s.swift_version = '5.3.2'
   
   s.dependency 'Flutter'
-  s.dependency 'PassiveFaceLiveness', '3.3.2'
+  s.dependency 'PassiveFaceLiveness', '3.6.6'
 end

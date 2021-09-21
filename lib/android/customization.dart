@@ -1,9 +1,9 @@
 class PassiveFaceLivenessCustomizationAndroid {
-  String styleResIdName;
-  String layoutResIdName;
-  String greenMaskResIdName;
-  String redMaskResIdName;
-  String whiteMaskResIdName;
+  String? styleResIdName;
+  String? layoutResIdName;
+  String? greenMaskResIdName;
+  String? redMaskResIdName;
+  String? whiteMaskResIdName;
 
   PassiveFaceLivenessCustomizationAndroid(
   {this.styleResIdName,

@@ -1,11 +1,11 @@
 name: passive_face_liveness_nodatabinding
 description: Flutter plugin cross-platform (iOS, Android) for Combate à Fraude's PassiveFaceLiveness (https://github.com/combateafraude).
-version: 2.3.5
+version: 2.5.10
 author: Combate à Fraude
 homepage: https://www.combateafraude.com/
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
   flutter: ">=1.10.0"
 
 dependencies:

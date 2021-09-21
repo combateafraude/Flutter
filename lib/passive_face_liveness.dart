@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:passive_face_liveness_nodatabinding/android/settings.dart';
@@ -14,18 +16,20 @@ class PassiveFaceLiveness {
       const MethodChannel('passive_face_liveness');
 
   String mobileToken;
-  String peopleId;
-  bool useAnalytics;
-  bool sound;
-  int requestTimeout;
-  ShowPreview showPreview;
-  PassiveFaceLivenessAndroidSettings androidSettings;
-  PassiveFaceLivenessIosSettings iosSettings;
-  bool showDelay;
-  int delay;
-  MessageSettings messageSettings;
+  String? peopleId;
+  String? personCPF;
+  String? personName;
+  bool? useAnalytics;
+  bool? sound;
+  int? requestTimeout;
+  ShowPreview? showPreview;
+  PassiveFaceLivenessAndroidSettings? androidSettings;
+  PassiveFaceLivenessIosSettings? iosSettings;
+  bool? showDelay;
+  int? delay;
+  MessageSettings? messageSettings;
 
-  PassiveFaceLiveness({@required this.mobileToken});
+  PassiveFaceLiveness({required this.mobileToken});
 
   void enableSound(bool enable) {
     this.sound = enable;
@@ -64,11 +68,21 @@ class PassiveFaceLiveness {
     this.delay = delay;
   }
 
+  void setPersonCPF(String personCPF) {
+    this.personCPF = personCPF;
+  }
+
+  void setPersonName(String personName) {
+    this.personName = personName;
+  }
+
   Future<PassiveFaceLivenessResult> start() async {
     Map<String, dynamic> params = new Map();
 
     params["mobileToken"] = mobileToken;
     params["peopleId"] = peopleId;
+    params["personName"] = personName;
+    params["personCPF"] = personCPF;
     params["useAnalytics"] = useAnalytics;
     params["sound"] = sound;
     params["requestTimeout"] = requestTimeout;
@@ -80,9 +94,10 @@ class PassiveFaceLiveness {
     params["messageSettings"] = messageSettings?.asMap();
 
     Map<dynamic, dynamic> resultMap =
-        await _channel.invokeMethod('start', params);
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)
+            as Map<dynamic, dynamic>;
 
-    bool success = resultMap["success"];
+    bool? success = resultMap["success"];
     if (success == null) {
       return new PassiveFaceLivenessClosed();
     } else if (success == true) {
@@ -91,7 +106,7 @@ class PassiveFaceLiveness {
           resultMap["imageUrl"],
           resultMap["signedResponse"],
           resultMap["trackingId"]);
-    } else if (success == false) {
+    } else {
       return new PassiveFaceLivenessFailure(
           resultMap["message"], resultMap["type"]);
     }

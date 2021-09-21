@@ -66,31 +66,39 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
         String peopleId = (String) argumentsMap.get("peopleId");
         mPassiveFaceLivenessBuilder.setPersonId(peopleId);
 
+        // Person Name
+        String personName = (String) argumentsMap.get("personName");
+        mPassiveFaceLivenessBuilder.setPersonName(personName);
+
+        // Person CPF
+        String personCPF = (String) argumentsMap.get("personCPF");
+        mPassiveFaceLivenessBuilder.setPersonCPF(personCPF);
+
         // Use Analytics
         Boolean useAnalytics = (Boolean) argumentsMap.get("useAnalytics");
         if (useAnalytics != null) mPassiveFaceLivenessBuilder.setAnalyticsSettings(useAnalytics);
 
         HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
         if (showPreview != null) {
-            String title = (String) showPreview.get("title");
-            String subTitle = (String) showPreview.get("subTitle");
-            String confirmLabel = (String) showPreview.get("confirmLabel");
-            String retryLabel = (String) showPreview.get("retryLabel");
+            Integer title = getResourceId((String) showPreview.get("title"), STRING_RES);
+            Integer subTitle = getResourceId((String) showPreview.get("subTitle"), STRING_RES);
+            Integer confirmLabel = getResourceId((String) showPreview.get("confirmLabel"), STRING_RES);
+            Integer retryLabel = getResourceId((String) showPreview.get("retryLabel"), STRING_RES);
             boolean show = (boolean) showPreview.get("show");
             mPassiveFaceLivenessBuilder.showPreview(show, title, subTitle, confirmLabel, retryLabel);
         }
 
         HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
         if (messageSettingsParam != null) {
-            String stepName = (String) messageSettingsParam.get("stepName");
-            String faceNotFoundMessage = (String) messageSettingsParam.get("faceNotFoundMessage");
-            String faceTooFarMessage = (String) messageSettingsParam.get("faceTooFarMessage");
-            String faceTooCloseMessage = (String) messageSettingsParam.get("faceTooCloseMessage");
-            String faceNotFittedMessage = (String) messageSettingsParam.get("faceNotFittedMessage");
-            String multipleFaceDetectedMessage = (String) messageSettingsParam.get("multipleFaceDetectedMessage");
-            String verifyingLivenessMessage = (String) messageSettingsParam.get("verifyingLivenessMessage");
-            String holdItMessage = (String) messageSettingsParam.get("holdItMessage");
-            String invalidFaceMessage = (String) messageSettingsParam.get("invalidFaceMessage");
+            Integer stepName = getResourceId((String) messageSettingsParam.get("stepName"), STRING_RES);
+            Integer faceNotFoundMessage = getResourceId((String) messageSettingsParam.get("faceNotFoundMessage"), STRING_RES);
+            Integer faceTooFarMessage = getResourceId((String) messageSettingsParam.get("faceTooFarMessage"), STRING_RES);
+            Integer faceTooCloseMessage = getResourceId((String) messageSettingsParam.get("faceTooCloseMessage"), STRING_RES);
+            Integer faceNotFittedMessage = getResourceId((String) messageSettingsParam.get("faceNotFittedMessage"), STRING_RES);
+            Integer multipleFaceDetectedMessage = getResourceId((String) messageSettingsParam.get("multipleFaceDetectedMessage"), STRING_RES);
+            Integer verifyingLivenessMessage = getResourceId((String) messageSettingsParam.get("verifyingLivenessMessage"), STRING_RES);
+            Integer holdItMessage = getResourceId((String) messageSettingsParam.get("holdItMessage"), STRING_RES);
+            Integer invalidFaceMessage = getResourceId((String) messageSettingsParam.get("invalidFaceMessage"), STRING_RES);
 
             MessageSettings messageSettings = new MessageSettings();
             if (stepName != null)
@@ -162,6 +170,11 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
             if (androidSettings.get("showButtonTime") != null){
                 int showButtonTime = (int) androidSettings.get("showButtonTime");
                 mPassiveFaceLivenessBuilder.setShowButtonTime(showButtonTime);
+            }
+
+            if (androidSettings.get("enableSwitchCameraButton") != null){
+                boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
+                mPassiveFaceLivenessBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
             }
         }
 

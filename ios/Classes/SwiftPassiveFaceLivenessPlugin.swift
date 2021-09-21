@@ -30,7 +30,15 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         var passiveFaceLivenessBuilder = PassiveFaceLiveness.Builder(mobileToken: mobileToken)
 
         if let peopleId = arguments["peopleId"] as? String ?? nil {
-            passiveFaceLivenessBuilder.setPeopleId(peopleId: peopleId)
+            passiveFaceLivenessBuilder.setPersonId(personId: peopleId)
+        }
+
+        if let personName = arguments["personName"] as? String ?? nil{
+            passiveFaceLivenessBuilder.setPersonName(personName: personName)
+        }
+
+        if let personCPF = arguments["personCPF"] as? String ?? nil{
+            passiveFaceLivenessBuilder.setPersonCPF(personCPF: personCPF)
         }
 
         if let useAnalytics = arguments["useAnalytics"] as? Bool ?? nil {
@@ -76,6 +84,14 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
          }
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
+
+            if let customization = iosSettings["customization"] as? [String: Any] ?? nil {
+            
+            if let enableManualCapture = iosSettings["enableManualCapture"] as? Bool ?? nil {
+                if let timeEnableManualCapture = iosSettings["timeEnableManualCapture"] as? Double ?? nil {
+                    passiveFaceLivenessBuilder.setManualCaptureSettings(enable: enableManualCapture, time: timeEnableManualCapture)
+                }
+            }
 
             if let customization = iosSettings["customization"] as? [String: Any] ?? nil {
 
@@ -135,6 +151,8 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             }
             
         }
+        
+        passiveFaceLivenessBuilder.enableMultiLanguage(enable: false)
         
         let controller = UIApplication.shared.keyWindow!.rootViewController!
         

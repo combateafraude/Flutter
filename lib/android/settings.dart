@@ -3,16 +3,18 @@ import 'package:passive_face_liveness_nodatabinding/android/customization.dart';
 import 'package:passive_face_liveness_nodatabinding/android/sensor_settings.dart';
 
 class PassiveFaceLivenessAndroidSettings {
-  PassiveFaceLivenessCustomizationAndroid customization;
-  CaptureAndroidSettings captureSettings;
-  SensorSettingsAndroid sensorSettings;
-  int showButtonTime;
+  PassiveFaceLivenessCustomizationAndroid? customization;
+  CaptureAndroidSettings? captureSettings;
+  SensorSettingsAndroid? sensorSettings;
+  int? showButtonTime;
+  bool? enableSwitchCameraButton;
 
   PassiveFaceLivenessAndroidSettings(
       {this.customization,
       this.captureSettings,
       this.sensorSettings,
-      this.showButtonTime});
+      this.showButtonTime,
+      this.enableSwitchCameraButton});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -21,6 +23,7 @@ class PassiveFaceLivenessAndroidSettings {
     map["captureSettings"] = captureSettings?.asMap();
     map["sensorSettings"] = sensorSettings?.asMap();
     map["showButtonTime"] = showButtonTime;
+    map["enableSwitchCameraButton"] = enableSwitchCameraButton;
 
     return map;
   }

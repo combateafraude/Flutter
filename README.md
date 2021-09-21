@@ -11,9 +11,12 @@ Ao utilizar nosso plugin, certifique-se que você concorda com nossas [Política
 | Configuração mínima | Versão |
 | ------------------- | ------ |
 | Flutter             | 1.12+  |
+| Dart                | 2.12+  |
 | Android API         | 21+    |
 | iOS                 | 11.0+  |
-| Swift               | 5      |
+| Swift               | 5.4    |
+
+Caso você utilize Dart em uma versão abaixo de 2.12, confira a versão compatível [aqui](https://github.com/combateafraude/Flutter/tree/passive-face-liveness-compatible).
 
 ## Configurações
 
@@ -52,6 +55,8 @@ Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runne
 <string>To capture the selfie</string>
 ```
 
+Para habilitar texto e voz em Português, em seu projeto, no diretório ROOTPROJECT/ios, abra o arquivo .xcworkspace no Xcode e adicione em Project > Info > Localizations o idioma Portuguese (Brazil).
+
 ### Flutter
 
 Adicione o plugin no seu arquivo `ROOT_PROJECT/pubspec.yaml`:
@@ -61,7 +66,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-nodatabinding-v2.3.5
+      ref: passive-face-liveness-nodatabinding-v2.5.10
 ```
 
 ## Utilização
@@ -87,6 +92,8 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 | PassiveFaceLiveness |
 | --------- |
 | `.setPeopleId(String peopleId)`<br><br>CPF do usuário que está utilizando o plugin à ser usado para detecção de fraudes via analytics |
+| `.setPersonName(String personName)`<br><br>Vincula uma tentativa de prova de vida a um nome |
+| `.setPersonCPF(String personCPF)`<br><br>Vincula uma tentativa de prova de vida a um cpf |
 | `.setAnalyticsSettings(bool useAnalytics)`<br><br>Habilita/desabilita a coleta de dados para maximização da informação antifraude. O padrão é `true` |
 | `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
@@ -96,11 +103,56 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 
 | ShowPreview |
 | --------- |
-| `bool show`<br><br>Habilita/Desabilita preview |
-| `String title`<br><br>Título |
-| `String subTitle`<br><br>Subtítulo |
-| `String confirmLabel`<br><br>Texto do botão de confirmação |
-| `String retryLabel`<br><br>Texto do botão de capturar novamente |
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.|
+| `bool show`<br><br>Habilita/Desabilita preview
+| `String title`<br><br>Título
+| `String subTitle`<br><br> Subtítulo
+| `String confirmLabel`<br><br>Texto do botão de confirmação
+| `String retryLabel`<br><br>Texto do botão de capturar novamente
+
+| Exemplo de uso |
+```dart
+ShowPreview showPreview = new ShowPreview(
+        show: true,
+        title: "preview_title_exemple",
+        subTitle: "preview_subtitle_exemple",
+        confirmLabel: "preview_confirmLabel_exemple",
+        retryLabel: "preview_retryLabel_exemple");
+
+passiveFaceLiveness.setShowPreview(showPreview);
+```
+
+| MessageSettings |
+| --------- |
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.| 
+| `bool show`<br><br>Padrão: Habilita/Desabilita preview |
+| `String stepName`<br><br>Padrão: "Registro Facial" |
+| `String holdItMessage`<br><br>Padrão: "Segure assim" |
+| `String faceNotFoundMessage`<br><br>Padrão: "Não encontramos nenhum rosto" |
+| `String faceTooFarMessage`<br><br>Padrão: ""Aproxime o rosto" |
+| `String faceTooCloseMessage`<br><br>Padrão: "Afaste o rosto" |
+| `String faceNotFittedMessage`<br><br>Padrão: "Encaixe seu rosto" |
+| `String multipleFaceDetectedMessage`<br><br>Padrão: "Mais de um rosto detectado" |
+| `String verifyingLivenessMessage`<br><br>Padrão: "Verificando selfie…" |
+| `String invalidFaceMessage`<br><br>Padrão: "Ops, rosto inválido. Por favor, tente novamente" |
+
+| <b>Exemplo de uso </b> |
+
+```dart
+MessageSettings messageSettings = new MessageSettings(
+        stepName: "face_register_exemple",
+        faceNotFoundMessage: "face_not_found_exemple",
+        faceTooFarMessage: "face_too_far_exemple",
+        faceTooCloseMessage: "face_too_close_exemple",
+        faceNotFittedMessage: "fit_your_face_exemple",
+        multipleFaceDetectedMessage: "more_than_one_face_exemple",
+        verifyingLivenessMessage: "verifying_liveness_exemple",
+        holdItMessage: "hold_it_exemple",
+        invalidFaceMessage: "invalid_face_exemple");
+
+passiveFaceLiveness.setMessageSettings(messageSettings);
+
+```
 
 #### Android
 
@@ -110,6 +162,8 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 | `CaptureSettings captureSettings`<br><br>Configuraçōes de tempos de estabilização para a captura da selfie |
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
 | `int showButtonTime`<br><br>Altera o tempo para a exibição do botão de captura manual. O padrão é `20000` milisegundos |
+| `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
+
 
 | PassiveFaceLivenessCustomizationAndroid constructor |
 | --------- |
@@ -142,6 +196,8 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 | `PassiveFaceLivenessCustomizationIos customization`<br><br>Customização visual do SDK |
 | `int beforePictureMillis`<br><br>Duração em milissegundos entre a primeira detecção do rosto e a efetiva captura da foto |
 | `SensorStabilitySettingsIos sensorStability`<br><br>Configurações do sensor de estabilidade à ser aplicado no SDK |
+| `bool enableManualCapture`<br><br>Habilita modo de captura manual |
+| `double timeEnableManualCapture`<br><br>Define tempo para exibição do botão de captura manual |
 
 | PassiveFaceLivenessCustomizationIos constructor |
 | --------- |
