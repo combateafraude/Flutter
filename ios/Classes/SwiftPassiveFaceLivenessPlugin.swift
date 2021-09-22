@@ -84,8 +84,6 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
          }
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
-
-            if let customization = iosSettings["customization"] as? [String: Any] ?? nil {
             
             if let enableManualCapture = iosSettings["enableManualCapture"] as? Bool ?? nil {
                 if let timeEnableManualCapture = iosSettings["timeEnableManualCapture"] as? Double ?? nil {

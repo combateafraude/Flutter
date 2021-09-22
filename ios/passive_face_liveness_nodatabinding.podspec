@@ -18,5 +18,5 @@ Pod::Spec.new do |s|
   s.swift_version = '5.3.2'
   
   s.dependency 'Flutter'
-  s.dependency 'PassiveFaceLiveness', '3.6.6'
+  s.dependency 'PassiveFaceLiveness', '3.6.7'
 end
