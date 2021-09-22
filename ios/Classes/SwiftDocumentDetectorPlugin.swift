@@ -64,7 +64,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         }
 
         if let peopleId = arguments["peopleId"] as? String ?? nil {
-            documentDetectorBuilder.setPeopleId(peopleId: peopleId)
+            documentDetectorBuilder.setPersonId(personId: peopleId)
         }
         
         if let showPopup = arguments["popup"] as? Bool ?? nil {
@@ -106,6 +106,12 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
             if let detectionThreshold = iosSettings["detectionThreshold"] as? Float ?? nil {
                 documentDetectorBuilder.setDetectionSettings(detectionThreshold: detectionThreshold)
+            }
+            
+            if let enableManualCapture = iosSettings["enableManualCapture"] as? Bool ?? nil {
+                if let timeEnableManualCapture = iosSettings["timeEnableManualCapture"] as? Double ?? nil {
+                    documentDetectorBuilder.setManualCaptureSettings(enable: enableManualCapture, time: timeEnableManualCapture)
+                }
             }
 
             if let verifyQuality = iosSettings["verifyQuality"] as? Bool ?? nil {
@@ -179,6 +185,8 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 documentDetectorBuilder.setLayout(layout: layout)
             }
         }
+        
+        documentDetectorBuilder.enableMultiLanguage(enable: false)
         
         let controller = UIApplication.shared.keyWindow!.rootViewController!
         

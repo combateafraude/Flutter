@@ -114,24 +114,26 @@ public class DocumentDetectorPlugin
         }
         mDocumentDetectorBuilder.setDocumentSteps(documentDetectorSteps);
 
+//Integer layoutId = getResourceId((String) customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
+
         // Preview
         HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
         if (showPreview != null) {
             boolean show = (boolean) showPreview.get("show");
-            String title = (String) showPreview.get("title");
-            String subTitle = (String) showPreview.get("subTitle");
-            String confirmLabel = (String) showPreview.get("confirmLabel");
-            String retryLabel = (String) showPreview.get("retryLabel");
+            Integer title = getResourceId((String) showPreview.get("titleResIdName"), STRING_RES);
+            Integer subTitle = getResourceId((String) showPreview.get("subTitleResIdName"), STRING_RES);
+            Integer confirmLabel = getResourceId((String) showPreview.get("confirmLabelResIdName"), STRING_RES);
+            Integer retryLabel = getResourceId((String) showPreview.get("retryLabelResIdName"), STRING_RES);
             mDocumentDetectorBuilder.showPreview(show, title, subTitle, confirmLabel, retryLabel);
         }
 
         HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
         if (messageSettingsParam != null) {
-            String fitTheDocumentMessage = (String) messageSettingsParam.get("fitTheDocumentMessage");
-            String holdItMessage = (String) messageSettingsParam.get("holdItMessage");
-            String verifyingQualityMessage = (String) messageSettingsParam.get("verifyingQualityMessage");
-            String lowQualityDocumentMessage = (String) messageSettingsParam.get("lowQualityDocumentMessage");
-            String uploadingImageMessage = (String) messageSettingsParam.get("uploadingImageMessage");
+            Integer fitTheDocumentMessage = getResourceId((String) messageSettingsParam.get("fitTheDocumentMessageResIdName"), STRING_RES);
+            Integer holdItMessage = getResourceId((String) messageSettingsParam.get("holdItMessageResIdName"), STRING_RES);
+            Integer verifyingQualityMessage = getResourceId((String) messageSettingsParam.get("verifyingQualityMessageResIdName"), STRING_RES);
+            Integer lowQualityDocumentMessage = getResourceId((String) messageSettingsParam.get("lowQualityDocumentMessageResIdName"),STRING_RES);
+            Integer uploadingImageMessage = getResourceId((String) messageSettingsParam.get("uploadingImageMessageResIdName"),STRING_RES);
 
             MessageSettings messageSettings = new MessageSettings();
             if (fitTheDocumentMessage != null)
@@ -228,6 +230,11 @@ public class DocumentDetectorPlugin
                     }
                 } else {
                     mDocumentDetectorBuilder.setLuminositySensorSettings(null);
+                }
+
+                if(androidSettings.get("enableSwitchCameraButton") != null){
+                    boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
+                    mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
                 }
 
                 HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) sensorSettings

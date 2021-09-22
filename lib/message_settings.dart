@@ -1,25 +1,26 @@
 class MessageSettings {
-  String fitTheDocumentMessage;
-  String holdItMessage;
-  String verifyingQualityMessage;
-  String lowQualityDocumentMessage;
-  String uploadingImageMessage;
+  String? fitTheDocumentMessageResIdName;
+  String? holdItMessageResIdName;
+  String? verifyingQualityMessageResIdName;
+  String? lowQualityDocumentMessageResIdName;
+  String? uploadingImageMessageResIdName;
 
   MessageSettings(
-      {this.fitTheDocumentMessage,
-      this.holdItMessage,
-      this.verifyingQualityMessage,
-      this.lowQualityDocumentMessage,
-      this.uploadingImageMessage});
+      {this.fitTheDocumentMessageResIdName,
+      this.holdItMessageResIdName,
+      this.verifyingQualityMessageResIdName,
+      this.lowQualityDocumentMessageResIdName,
+      this.uploadingImageMessageResIdName});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
 
-    map["fitTheDocumentMessage"] = fitTheDocumentMessage;
-    map["holdItMessage"] = holdItMessage;
-    map["verifyingQualityMessage"] = verifyingQualityMessage;
-    map["lowQualityDocumentMessage"] = lowQualityDocumentMessage;
-    map["uploadingImageMessage"] = uploadingImageMessage;
+    map["fitTheDocumentMessageResIdName"] = fitTheDocumentMessageResIdName;
+    map["holdItMessageResIdName"] = holdItMessageResIdName;
+    map["verifyingQualityMessageResIdName"] = verifyingQualityMessageResIdName;
+    map["lowQualityDocumentMessageResIdName"] =
+        lowQualityDocumentMessageResIdName;
+    map["uploadingImageMessageResIdName"] = uploadingImageMessageResIdName;
 
     return map;
   }

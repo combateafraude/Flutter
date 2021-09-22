@@ -13,9 +13,13 @@ Ao utilizar nosso plugin, certifique-se que você concorda com nossas [Política
 | Configuração mínima | Versão |
 | ------------------- | ------ |
 | Flutter             | 1.12+  |
+| Dart                | 2.12+  |
 | Android API         | 21+    |
+| Compile SDK Version | 30+    |
 | iOS                 | 11.0+  |
-| Swift               | 5      |
+| Swift               | 5.4    |
+
+Caso você utilize Dart em uma versão abaixo de 2.12, confira a versão compatível [aqui](https://github.com/combateafraude/Flutter/tree/document-detector-compatible).
 
 ## Configurações
 
@@ -57,6 +61,7 @@ Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runne
 <string>To read the documents</string>
 ```
 
+Para habilitar texto e voz em Português, em seu projeto, no diretório ROOTPROJECT/ios, abra o arquivo .xcworkspace no Xcode e adicione em Project > Info > Localizations o idioma Portuguese (Brazil).
 
 ### Flutter
 
@@ -67,7 +72,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-nodatabinding-v4.4.5
+      ref: document-detector-nodatabinding-v4.6.7
 ```
 
 ## Utilização
@@ -100,6 +105,7 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
 | `.setShowPreview(ShowPreview showPreview)`<br><br> Preview para verificação da qualidade da foto |
+| `.setMessageSettings(MessageSettings messageSettings)`<br><br> Permite personalizar mensagens exibidas no balão de "status" durante o processo de captura e análise. |
 | `.setAndroidSettings(DocumentDetectorAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(DocumentDetectorIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
 
@@ -111,11 +117,47 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 
 | ShowPreview |
 | --------- |
-| `bool show`<br><br>Habilita/Desabilita preview |
-| `String title`<br><br>Título |
-| `String subTitle`<br><br>Subtítulo |
-| `String confirmLabel`<br><br>Texto do botão de confirmação |
-| `String retryLabel`<br><br>Texto do botão de capturar novamente |
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.|
+| `bool show`<br><br>Habilita/Desabilita preview
+| `String title`<br><br>Título
+| `String subTitle`<br><br> Subtítulo
+| `String confirmLabel`<br><br>Texto do botão de confirmação
+| `String retryLabel`<br><br>Texto do botão de capturar novamente
+
+| Exemplo de uso |
+| --------- |
+```dart
+ShowPreview showPreview = new ShowPreview(
+        show: true,
+        title: "preview_title_exemple",
+        subTitle: "preview_subtitle_exemple",
+        confirmLabel: "preview_confirmLabel_exemple",
+        retryLabel: "preview_retryLabel_exemple");
+
+documentDetector.setShowPreview(showPreview);
+```
+
+| MessageSettings |
+| --------- |
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.| 
+| `String? fitTheDocumentMessageResIdName`<br><br>Padrão: "Encaixe o documento na marcação"|
+| `String? holdItMessageResIdName (disponível somente para Android)`<br><br>Padrão: "Segure assim"|
+| `String? verifyingQualityMessageResIdName`<br><br>Padrão: "Verificando qualidade…"|
+| `String? lowQualityDocumentMessageResIdName`<br><br>Padrão: "Ops, não foi possível ler as informações. Por favor, tente novamente"|
+| `String? uploadingImageMessageResIdName`<br><br>Padrão: "Enviando imagem…"|
+
+| Exemplo de uso |
+| --------- |
+```dart
+ MessageSettings messageSettings = new MessageSettings(
+      fitTheDocumentMessageResIdName: "fit_document_exemple",
+      holdItMessageResIdName:"hold_it_exemple",
+      verifyingQualityMessageResIdName: "verifying_quality_exemple"
+      lowQualityDocumentMessageResIdName:"low_quality_exemple" ,
+      uploadingImageMessageResIdName:"upload_image_exemple");
+documentDetector.setShowPreview(showPreview);
+```
+
 
 #### Android
 
@@ -130,6 +172,7 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `DocumentDetectorCustomizationAndroid customization`<br><br>Customização do layout em Android da activity |
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
 | `List<CaptureStage> captureStages`<br><br>Array de estágios para cada captura. Esse parâmetro é útil caso você deseje modificar a maneira com qual o DocumentDetector é executado, como configurações de detecção, captura automática ou manual, verificar a qualidade da foto, etc |
+| `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
 
 | CaptureStage constructor |
 | --------- |
@@ -178,6 +221,8 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `double qualityThreshold`<br><br>Limiar de aceitação da qualidade, entre 1.0 e 5.0. 1.8 é o recomendado para um futuro OCR |
 | `DocumentDetectorCustomizationIos customization`<br><br>Customização visual do DocumentDetector |
 | `SensorSettingsIos sensorSettings`<br><br>Configurações personalizadas dos sensores em iOS, null para desabilitar |
+| `Bool enableManualCapture`<br><br>Habilita modo de captura manual |
+| `double timeEnableManualCapture`<br><br>Tempo para habilitar o botão de captura manual |
 
 | DocumentDetectorCustomizationIos constructor |
 | --------- |

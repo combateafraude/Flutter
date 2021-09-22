@@ -4,18 +4,14 @@ import 'package:document_detector_nodatabinding/android/capture_stage/quality_se
 import 'package:flutter/cupertino.dart';
 
 class CaptureStage {
-  int durationMillis;
+  int? durationMillis;
   bool wantSensorCheck;
-  QualitySettings qualitySettings;
-  DetectionSettings detectionSettings;
-  CaptureMode captureMode;
+  QualitySettings? qualitySettings;
+  DetectionSettings? detectionSettings;
+  CaptureMode? captureMode;
 
-  CaptureStage(
-      {this.durationMillis,
-      @required this.wantSensorCheck,
-      this.qualitySettings,
-      this.detectionSettings,
-      this.captureMode});
+  CaptureStage({this.durationMillis, required this.wantSensorCheck, this.qualitySettings,
+    this.detectionSettings, this.captureMode});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();

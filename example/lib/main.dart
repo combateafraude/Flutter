@@ -9,6 +9,7 @@ import 'package:document_detector_nodatabinding/result/capture.dart';
 import 'package:document_detector_nodatabinding/result/document_detector_failure.dart';
 import 'package:document_detector_nodatabinding/result/document_detector_result.dart';
 import 'package:document_detector_nodatabinding/result/document_detector_success.dart';
+
 import 'package:flutter/material.dart';
 import 'package:document_detector_nodatabinding/show_preview.dart';
 
@@ -50,26 +51,25 @@ class _MyAppState extends State<MyApp> {
     DocumentDetector documentDetector =
         new DocumentDetector(mobileToken: mobileToken);
 
+    DocumentDetectorIosSettings documentDetectorIosSettings =
+        new DocumentDetectorIosSettings(
+            enableManualCapture: true, timeEnableManualCapture: 15000);
+
+    DocumentDetectorAndroidSettings detectorAndroidSettings =
+        new DocumentDetectorAndroidSettings(enableSwitchCameraButton: false);
+
     ShowPreview showPreview = new ShowPreview(
         show: true,
-        title: "A foto ficou boa?",
-        subTitle:
-            "Veja se todas informações estão legíveis e os documentos sem reflexos",
-        confirmLabel: "Sim, ficou boa!",
-        retryLabel: "Tirar novamente");
-
-    DocumentDetectorAndroidSettings androidSettings =
-        new DocumentDetectorAndroidSettings();
+        titleResIdName: "preview_title",
+        subTitleResIdName: "preview_subtitle",
+        confirmLabelResIdName: "preview_accept",
+        retryLabelResIdName: "preview_try_again");
 
     documentDetector.setShowPreview(showPreview);
 
-    documentDetector.setAndroidSettings(androidSettings);
-
     documentDetector.setDocumentFlow(documentSteps);
 
-    documentDetector.setAutoDetection(true);
-
-    documentDetector.setCurrentStepDoneDelay(true, 2000);
+    documentDetector.setAndroidSettings(detectorAndroidSettings);
 
     // Put the others parameters here
 

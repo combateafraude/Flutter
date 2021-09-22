@@ -3,8 +3,8 @@ import 'package:document_detector_nodatabinding/result/document_detector_result.
 
 class DocumentDetectorSuccess extends DocumentDetectorResult {
   List<Capture> captures;
-  String type;
-  String trackingId;
+  String? type;
+  String? trackingId;
 
   DocumentDetectorSuccess(this.captures, this.type, this.trackingId);
 }
