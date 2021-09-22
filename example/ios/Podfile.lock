@@ -1,0 +1,54 @@
+PODS:
+  - document_detector_nodatabinding (4.6.8):
+    - DocumentDetector (~> 4.7.6)
+    - Flutter
+  - DocumentDetector (4.7.6):
+    - Sentry (= 7.1.3)
+    - TensorFlowLiteSwift (= 2.4.0)
+  - Flutter (1.0.0)
+  - "permission_handler (5.1.0+2)":
+    - Flutter
+  - Sentry (7.1.3):
+    - Sentry/Core (= 7.1.3)
+  - Sentry/Core (7.1.3)
+  - TensorFlowLiteC (2.4.0):
+    - TensorFlowLiteC/Core (= 2.4.0)
+  - TensorFlowLiteC/Core (2.4.0)
+  - TensorFlowLiteSwift (2.4.0):
+    - TensorFlowLiteSwift/Core (= 2.4.0)
+  - TensorFlowLiteSwift/Core (2.4.0):
+    - TensorFlowLiteC (= 2.4.0)
+
+DEPENDENCIES:
+  - document_detector_nodatabinding (from `.symlinks/plugins/document_detector_nodatabinding/ios`)
+  - Flutter (from `Flutter`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+
+SPEC REPOS:
+  https://github.com/combateafraude/iOS.git:
+    - DocumentDetector
+  trunk:
+    - Sentry
+    - TensorFlowLiteC
+    - TensorFlowLiteSwift
+
+EXTERNAL SOURCES:
+  document_detector_nodatabinding:
+    :path: ".symlinks/plugins/document_detector_nodatabinding/ios"
+  Flutter:
+    :path: Flutter
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
+
+SPEC CHECKSUMS:
+  document_detector_nodatabinding: 91e12358e010e0b9a648d59daf249fb008e40843
+  DocumentDetector: bed57f1e26bd4489b664772420d3b7a96dff7cdd
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
+  Sentry: 6d963d64804dd06d96e778be729613f481394312
+  TensorFlowLiteC: 09f8ac75a76caeadb19bcfa694e97454cc1ecf87
+  TensorFlowLiteSwift: f062dc1178120100d825d7799fd9f115b4a37fee
+
+PODFILE CHECKSUM: 48ed8943beec15aeee7d28a74e100b515836e362
+
+COCOAPODS: 1.10.1
