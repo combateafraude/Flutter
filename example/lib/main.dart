@@ -5,6 +5,7 @@ import 'package:document_detector_nodatabinding/android/customization.dart';
 import 'package:document_detector_nodatabinding/document_detector_step.dart';
 import 'package:document_detector_nodatabinding/document_type.dart';
 import 'package:document_detector_nodatabinding/ios/ios_settings.dart';
+import 'package:document_detector_nodatabinding/message_settings.dart';
 import 'package:document_detector_nodatabinding/result/capture.dart';
 import 'package:document_detector_nodatabinding/result/document_detector_failure.dart';
 import 'package:document_detector_nodatabinding/result/document_detector_result.dart';
@@ -59,11 +60,7 @@ class _MyAppState extends State<MyApp> {
         new DocumentDetectorAndroidSettings(enableSwitchCameraButton: false);
 
     ShowPreview showPreview = new ShowPreview(
-        show: true,
-        titleResIdName: "preview_title",
-        subTitleResIdName: "preview_subtitle",
-        confirmLabelResIdName: "preview_accept",
-        retryLabelResIdName: "preview_try_again");
+        show: true);
 
     documentDetector.setShowPreview(showPreview);
 
