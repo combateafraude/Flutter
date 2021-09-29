@@ -39,6 +39,6 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk.nodatabinding:passive-face-liveness:4.10.5.2'
+        implementation 'com.combateafraude.sdk.nodatabinding:passive-face-liveness:4.10.5.5'
     }
 }
