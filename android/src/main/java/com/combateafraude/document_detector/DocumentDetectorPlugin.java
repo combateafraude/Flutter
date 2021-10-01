@@ -14,6 +14,7 @@ import com.combateafraude.documentdetector.input.DetectionSettings;
 import com.combateafraude.documentdetector.input.Document;
 import com.combateafraude.documentdetector.input.DocumentDetector;
 import com.combateafraude.documentdetector.input.DocumentDetectorStep;
+import com.combateafraude.documentdetector.input.PreviewSettings;
 import com.combateafraude.documentdetector.input.QualitySettings;
 import com.combateafraude.documentdetector.input.SensorLuminositySettings;
 import com.combateafraude.documentdetector.input.SensorOrientationSettings;
@@ -120,32 +121,29 @@ public class DocumentDetectorPlugin
         HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
         if (showPreview != null) {
             boolean show = (boolean) showPreview.get("show");
-            Integer title = getResourceId((String) showPreview.get("titleResIdName"), STRING_RES);
-            Integer subTitle = getResourceId((String) showPreview.get("subTitleResIdName"), STRING_RES);
-            Integer confirmLabel = getResourceId((String) showPreview.get("confirmLabelResIdName"), STRING_RES);
-            Integer retryLabel = getResourceId((String) showPreview.get("retryLabelResIdName"), STRING_RES);
-            mDocumentDetectorBuilder.showPreview(show, title, subTitle, confirmLabel, retryLabel);
+            String title = (String) showPreview.get("title");
+            String subtitle = (String) showPreview.get("subtitle");
+            String confirmLabel = (String) showPreview.get("confirmLabel");
+            String retryLabel = (String) showPreview.get("retryLabel");
+
+            mDocumentDetectorBuilder.setPreviewSettings(new PreviewSettings(show, title, subtitle, confirmLabel, retryLabel));
         }
 
         HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
         if (messageSettingsParam != null) {
-            Integer fitTheDocumentMessage = getResourceId((String) messageSettingsParam.get("fitTheDocumentMessageResIdName"), STRING_RES);
-            Integer holdItMessage = getResourceId((String) messageSettingsParam.get("holdItMessageResIdName"), STRING_RES);
-            Integer verifyingQualityMessage = getResourceId((String) messageSettingsParam.get("verifyingQualityMessageResIdName"), STRING_RES);
-            Integer lowQualityDocumentMessage = getResourceId((String) messageSettingsParam.get("lowQualityDocumentMessageResIdName"),STRING_RES);
-            Integer uploadingImageMessage = getResourceId((String) messageSettingsParam.get("uploadingImageMessageResIdName"),STRING_RES);
+            String fitTheDocumentMessage = (String) messageSettingsParam.get("fitTheDocumentMessage");
+            String holdItMessage = (String) messageSettingsParam.get("holdItMessage");
+            String verifyingQualityMessage = (String) messageSettingsParam.get("verifyingQualityMessage");
+            String lowQualityDocumentMessage = (String) messageSettingsParam.get("lowQualityDocumentMessage");
+            String uploadingImageMessage = (String) messageSettingsParam.get("uploadingImageMessage");
 
-            MessageSettings messageSettings = new MessageSettings();
-            if (fitTheDocumentMessage != null)
-                messageSettings.setFitTheDocumentMessage(fitTheDocumentMessage);
-            if (holdItMessage != null)
-                messageSettings.setHoldItMessage(holdItMessage);
-            if (verifyingQualityMessage != null)
-                messageSettings.setVerifyingQualityMessage(verifyingQualityMessage);
-            if (lowQualityDocumentMessage != null)
-                messageSettings.setLowQualityDocumentMessage(lowQualityDocumentMessage);
-            if (uploadingImageMessage != null)
-                messageSettings.setUploadingImageMessage(uploadingImageMessage);
+            MessageSettings messageSettings = new MessageSettings(
+                    fitTheDocumentMessage,
+                    holdItMessage,
+                    verifyingQualityMessage,
+                    lowQualityDocumentMessage,
+                    uploadingImageMessage,
+                    null);
 
             mDocumentDetectorBuilder.setMessageSettings(messageSettings);
         }
@@ -212,7 +210,9 @@ public class DocumentDetectorPlugin
                 Integer whiteMaskId = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"),
                         DRAWABLE_RES);
                 Integer redMaskId = getResourceId((String) customizationAndroid.get("redMaskResIdName"), DRAWABLE_RES);
-                mDocumentDetectorBuilder.setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId);
+                mDocumentDetectorBuilder.setLayout(layoutId);
+
+                mDocumentDetectorBuilder.setMask(greenMaskId, whiteMaskId, redMaskId);
             }
 
             // Sensor settings
