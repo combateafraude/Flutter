@@ -1,25 +1,25 @@
 class ShowPreview {
-  String? titleResIdName;
-  String? subTitleResIdName;
-  String? confirmLabelResIdName;
-  String? retryLabelResIdName;
+  String? title;
+  String? subtitle;
+  String? confirmLabel;
+  String? retryLabel;
   bool? show;
 
   ShowPreview(
       {this.show,
-      this.titleResIdName,
-      this.subTitleResIdName,
-      this.confirmLabelResIdName,
-      this.retryLabelResIdName});
+      this.title,
+      this.subtitle,
+      this.confirmLabel,
+      this.retryLabel});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
 
-    map["titleResIdName"] = titleResIdName;
-    map["subTitleResIdName"] = subTitleResIdName;
-    map["confirmLabelResIdName"] = confirmLabelResIdName;
-    map["retryLabelResIdName"] = retryLabelResIdName;
     map["show"] = show;
+    map["title"] = title;
+    map["subtitle"] = subtitle;
+    map["confirmLabel"] = confirmLabel;
+    map["retryLabel"] = retryLabel;
     return map;
   }
 }

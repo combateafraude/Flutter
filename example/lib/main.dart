@@ -58,14 +58,6 @@ class _MyAppState extends State<MyApp> {
     DocumentDetectorAndroidSettings detectorAndroidSettings =
         new DocumentDetectorAndroidSettings(enableSwitchCameraButton: false);
 
-    ShowPreview showPreview = new ShowPreview(
-        show: true,
-        titleResIdName: "preview_title",
-        subTitleResIdName: "preview_subtitle",
-        confirmLabelResIdName: "preview_accept",
-        retryLabelResIdName: "preview_try_again");
-
-    documentDetector.setShowPreview(showPreview);
 
     documentDetector.setDocumentFlow(documentSteps);
 

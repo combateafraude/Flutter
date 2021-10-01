@@ -59,6 +59,8 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         var documentDetectorBuilder = DocumentDetector.Builder(mobileToken: mobileToken)
             .setDocumentDetectorFlow(flow: documentDetectorSteps)
 
+        documentDetectorBuilder.enableMultiLanguage(enable: false)
+
         if let useAnalytics = arguments["useAnalytics"] as? Bool ?? nil {
             documentDetectorBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)
         }
@@ -82,7 +84,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         if let showPreview = arguments["showPreview"] as? [String: Any] ?? nil {
             var show = showPreview["show"] as? Bool ?? false
             let title = showPreview["title"] as? String ?? nil
-            let subtitle = showPreview["subTitle"] as? String ?? nil
+            let subtitle = showPreview["subtitle"] as? String ?? nil
             let confirmLabel = showPreview["confirmLabel"] as? String ?? nil
             let retryLabel = showPreview["retryLabel"] as? String ?? nil
             documentDetectorBuilder.showPreview(show, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
@@ -95,10 +97,10 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             let uploadingImageMessage = messageSettingsParam["uploadingImageMessage"] as? String ?? nil
             
             let messageSettings = MessageSettings()
-            if(fitTheDocumentMessage != nil){ messageSettings.fitTheDocumentMessage = fitTheDocumentMessage}
-            if(verifyingQualityMessage != nil){ messageSettings.verifyingQualityMessage = verifyingQualityMessage}
-            if(lowQualityDocumentMessage != nil){ messageSettings.lowQualityDocumentMessage = lowQualityDocumentMessage}
-            if(uploadingImageMessage != nil){ messageSettings.uploadingImageMessage = uploadingImageMessage}
+            if(fitTheDocumentMessage != nil){ messageSettings.setFitTheDocumentMessage(message: fitTheDocumentMessage!)}
+            if(verifyingQualityMessage != nil){ messageSettings.setVerifyingQualityMessage(message: verifyingQualityMessage!)}
+            if(lowQualityDocumentMessage != nil){ messageSettings.setLowQualityDocumentMessage(message: lowQualityDocumentMessage!)}
+            if(uploadingImageMessage != nil){ messageSettings.setUploadingImageMessage(message: uploadingImageMessage!)}
             
             documentDetectorBuilder.setMessageSettings(messageSettings)
          }
@@ -185,8 +187,6 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 documentDetectorBuilder.setLayout(layout: layout)
             }
         }
-        
-        documentDetectorBuilder.enableMultiLanguage(enable: false)
         
         let controller = UIApplication.shared.keyWindow!.rootViewController!
         
