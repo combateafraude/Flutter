@@ -43,24 +43,11 @@ class _MyAppState extends State<MyApp> {
     PassiveFaceLiveness passiveFaceLiveness =
         new PassiveFaceLiveness(mobileToken: mobileToken);
 
-    MessageSettings messageSettings = new MessageSettings(
-        stepName: "face_register_caf",
-        faceNotFoundMessage: "face_not_found_caf",
-        faceTooFarMessage: "face_too_far_caf",
-        faceTooCloseMessage: "face_too_close_caf",
-        faceNotFittedMessage: "fit_your_face_caf",
-        multipleFaceDetectedMessage: "more_than_one_face_message",
-        verifyingLivenessMessage: "verifying_liveness_caf",
-        holdItMessage: "hold_it_caf",
-        invalidFaceMessage: "invalid_face_caf");
-
     PassiveFaceLivenessAndroidSettings passiveFaceLivenessAndroidSettings =
         new PassiveFaceLivenessAndroidSettings(
             showButtonTime: 25000, enableSwitchCameraButton: true);
 
     passiveFaceLiveness.setAndroidSettings(passiveFaceLivenessAndroidSettings);
-
-    passiveFaceLiveness.setCurrentStepDoneDelay(false, 2000);
 
     // Put the others parameters here
 
