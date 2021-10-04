@@ -11,6 +11,8 @@ import com.combateafraude.passivefaceliveness.PassiveFaceLivenessActivity;
 import com.combateafraude.passivefaceliveness.input.CaptureSettings;
 import com.combateafraude.passivefaceliveness.input.MessageSettings;
 import com.combateafraude.passivefaceliveness.input.PassiveFaceLiveness;
+import com.combateafraude.passivefaceliveness.input.PreviewSettings;
+import com.combateafraude.passivefaceliveness.input.SensorOrientationSettings;
 import com.combateafraude.passivefaceliveness.input.SensorStabilitySettings;
 import com.combateafraude.passivefaceliveness.output.PassiveFaceLivenessResult;
 import com.combateafraude.passivefaceliveness.output.failure.SDKFailure;
@@ -80,45 +82,54 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
 
         HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
         if (showPreview != null) {
-            Integer title = getResourceId((String) showPreview.get("title"), STRING_RES);
-            Integer subTitle = getResourceId((String) showPreview.get("subTitle"), STRING_RES);
-            Integer confirmLabel = getResourceId((String) showPreview.get("confirmLabel"), STRING_RES);
-            Integer retryLabel = getResourceId((String) showPreview.get("retryLabel"), STRING_RES);
+            String title = (String) showPreview.get("title");
+            String subTitle = (String) showPreview.get("subTitle");
+            String confirmLabel = (String) showPreview.get("confirmLabel");
+            String retryLabel = (String) showPreview.get("retryLabel");
             boolean show = (boolean) showPreview.get("show");
-            mPassiveFaceLivenessBuilder.showPreview(show, title, subTitle, confirmLabel, retryLabel);
+
+            PreviewSettings previewSettings = new PreviewSettings(
+                    true,
+                    title,
+                    subTitle,
+                    confirmLabel,
+                    retryLabel
+            );
+
+            mPassiveFaceLivenessBuilder.setPreviewSettings(previewSettings);
         }
 
         HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
         if (messageSettingsParam != null) {
-            Integer stepName = getResourceId((String) messageSettingsParam.get("stepName"), STRING_RES);
-            Integer faceNotFoundMessage = getResourceId((String) messageSettingsParam.get("faceNotFoundMessage"), STRING_RES);
-            Integer faceTooFarMessage = getResourceId((String) messageSettingsParam.get("faceTooFarMessage"), STRING_RES);
-            Integer faceTooCloseMessage = getResourceId((String) messageSettingsParam.get("faceTooCloseMessage"), STRING_RES);
-            Integer faceNotFittedMessage = getResourceId((String) messageSettingsParam.get("faceNotFittedMessage"), STRING_RES);
-            Integer multipleFaceDetectedMessage = getResourceId((String) messageSettingsParam.get("multipleFaceDetectedMessage"), STRING_RES);
-            Integer verifyingLivenessMessage = getResourceId((String) messageSettingsParam.get("verifyingLivenessMessage"), STRING_RES);
-            Integer holdItMessage = getResourceId((String) messageSettingsParam.get("holdItMessage"), STRING_RES);
-            Integer invalidFaceMessage = getResourceId((String) messageSettingsParam.get("invalidFaceMessage"), STRING_RES);
+            String stepName = (String) messageSettingsParam.get("stepName");
+            String faceNotFoundMessage = (String) messageSettingsParam.get("faceNotFoundMessage");
+            String faceTooFarMessage = (String) messageSettingsParam.get("faceTooFarMessage");
+            String faceTooCloseMessage = (String) messageSettingsParam.get("faceTooCloseMessage");
+            String faceNotFittedMessage = (String) messageSettingsParam.get("faceNotFittedMessage");
+            String multipleFaceDetectedMessage = (String) messageSettingsParam.get("multipleFaceDetectedMessage");
+            String verifyingLivenessMessage = (String) messageSettingsParam.get("verifyingLivenessMessage");
+            String holdItMessage = (String) messageSettingsParam.get("holdItMessage");
+            String invalidFaceMessage = (String) messageSettingsParam.get("invalidFaceMessage");
+            String eyesClosedMessage = (String) messageSettingsParam.get("eyesClosedMessage");
+            String notCenterXMessage = (String) messageSettingsParam.get("notCenterXMessage");
+            String notCenterYMessage = (String) messageSettingsParam.get("notCenterYMessage");
+            String notCenterZMessage = (String) messageSettingsParam.get("notCenterZMessage");
 
-            MessageSettings messageSettings = new MessageSettings();
-            if (stepName != null)
-                messageSettings.setStepName(stepName);
-            if (faceNotFoundMessage != null)
-                messageSettings.setFaceNotFoundMessage(faceNotFoundMessage);
-            if (faceTooFarMessage != null)
-                messageSettings.setFaceTooFarMessage(faceTooFarMessage);
-            if (faceTooCloseMessage != null)
-                messageSettings.setFaceTooCloseMessage(faceTooCloseMessage);
-            if (faceNotFittedMessage != null)
-                messageSettings.setFaceNotFittedMessage(faceNotFittedMessage);
-            if (multipleFaceDetectedMessage != null)
-                messageSettings.setMultipleFaceDetectedMessage(multipleFaceDetectedMessage);
-            if (verifyingLivenessMessage != null)
-                messageSettings.setVerifyingLivenessMessage(verifyingLivenessMessage);
-            if (holdItMessage != null)
-                messageSettings.setHoldItMessage(holdItMessage);
-            if (invalidFaceMessage != null)
-                messageSettings.setInvalidFaceMessage(invalidFaceMessage);
+            MessageSettings messageSettings = new MessageSettings(
+                stepName,
+                faceNotFoundMessage,
+                faceTooFarMessage,
+                faceTooCloseMessage,
+                faceNotFittedMessage,
+                multipleFaceDetectedMessage,
+                verifyingLivenessMessage,
+                holdItMessage,
+                invalidFaceMessage,
+                eyesClosedMessage,
+                notCenterXMessage,
+                notCenterYMessage,
+                notCenterZMessage
+            );
 
             mPassiveFaceLivenessBuilder.setMessageSettings(messageSettings);
         }
@@ -135,10 +146,11 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 if (styleId != null) mPassiveFaceLivenessBuilder.setStyle(styleId);
 
                 Integer layoutId = getResourceId((String) customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
-                Integer greenMaskId = getResourceId((String) customizationAndroid.get("greenMaskResIdName"), DRAWABLE_RES);
-                Integer whiteMaskId = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"), DRAWABLE_RES);
-                Integer redMaskId = getResourceId((String) customizationAndroid.get("redMaskResIdName"), DRAWABLE_RES);
-                mPassiveFaceLivenessBuilder.setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId);
+                Integer greenMask = getResourceId((String) customizationAndroid.get("greenMaskResIdName"), DRAWABLE_RES);
+                Integer whiteMask = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"), DRAWABLE_RES);
+                Integer redMask = getResourceId((String) customizationAndroid.get("redMaskResIdName"), DRAWABLE_RES);
+                mPassiveFaceLivenessBuilder.setLayout(layoutId, greenMask, whiteMask, redMask);
+
             }
 
             // Sensor settings
@@ -155,6 +167,17 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 } else {
                     mPassiveFaceLivenessBuilder.setStabilitySensorSettings(null);
                 }
+          
+            HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) androidSettings.get("sensorOrientationAndroid");
+            if(sensorOrientation != null){
+                Integer messageResourceIdName = (Integer) sensorOrientation.get("messageResourceIdName");
+                Double stabilityThreshold = (Double) sensorOrientation.get("stabilityThreshold");
+                if (messageResourceIdName != null && stabilityThreshold != null){
+                    SensorOrientationSettings sensorOrientationSettings = new SensorOrientationSettings(messageResourceIdName, stabilityThreshold);
+                    mPassiveFaceLivenessBuilder.setOrientationSensorSettings(sensorOrientationSettings);
+                }
+            }
+                
             }
 
             // Capture settings

@@ -66,7 +66,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-v2.5.11
+      ref: passive-face-liveness-v2.7.0
 ```
 
 ## Utilização
@@ -103,7 +103,7 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 
 | ShowPreview |
 | --------- |
-<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.|
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, modifique a String com a mensagem que deseja utilizar.|
 | `bool show`<br><br>Habilita/Desabilita preview
 | `String title`<br><br>Título
 | `String subTitle`<br><br> Subtítulo
@@ -114,17 +114,17 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 ```dart
 ShowPreview showPreview = new ShowPreview(
         show: true,
-        title: "preview_title_exemple",
-        subTitle: "preview_subtitle_exemple",
-        confirmLabel: "preview_confirmLabel_exemple",
-        retryLabel: "preview_retryLabel_exemple");
+        title: "A foto ficou boa?",
+        subTitle: "Veja se a foto está nítida",
+        confirmLabel: "Sim, ficou boa!",
+        retryLabel: "Tirar novamente");
 
 passiveFaceLiveness.setShowPreview(showPreview);
 ```
 
 | MessageSettings |
 | --------- |
-<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.| 
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, modifique a String com a mensagem que deseja utilizar.| 
 | `bool show`<br><br>Padrão: Habilita/Desabilita preview |
 | `String stepName`<br><br>Padrão: "Registro Facial" |
 | `String holdItMessage`<br><br>Padrão: "Segure assim" |
@@ -135,6 +135,12 @@ passiveFaceLiveness.setShowPreview(showPreview);
 | `String multipleFaceDetectedMessage`<br><br>Padrão: "Mais de um rosto detectado" |
 | `String verifyingLivenessMessage`<br><br>Padrão: "Verificando selfie…" |
 | `String invalidFaceMessage`<br><br>Padrão: "Ops, rosto inválido. Por favor, tente novamente" |
+| `String eyesClosedMessage`<br><br>Padrão: "Seus olhos estão fechados" |
+| `String notCenterXMessage`<br><br>Padrão: "Centralize seu rosto na vertical" |
+| `String notCenterYMessage`<br><br>Padrão: "Centralize seu rosto na horizontal" |
+| `String notCenterZMessage`<br><br>Padrão: "Seu rosto não está reto à máscara" |
+
+
 
 | <b>Exemplo de uso </b> |
 
