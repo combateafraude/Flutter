@@ -2,6 +2,8 @@ import 'package:document_detector/android/android_settings.dart';
 import 'package:document_detector/android/capture_stage/capture_mode.dart';
 import 'package:document_detector/android/capture_stage/capture_stage.dart';
 import 'package:document_detector/android/customization.dart';
+import 'package:document_detector/android/maskType.dart';
+import 'package:document_detector/android/resolution.dart';
 import 'package:document_detector/message_settings.dart';
 import 'package:document_detector/show_preview.dart';
 import 'package:document_detector/document_detector_step.dart';
@@ -56,8 +58,19 @@ class _MyAppState extends State<MyApp> {
             enableManualCapture: true, timeEnableManualCapture: 15000);
 
     DocumentDetectorAndroidSettings detectorAndroidSettings =
-        new DocumentDetectorAndroidSettings(enableSwitchCameraButton: false);
+        new DocumentDetectorAndroidSettings(
+            enableSwitchCameraButton: false,
+            compressQuality: 50,
+            resolution: Resolution.QUAD_HD);
 
+    DocumentDetectorCustomizationAndroid documentDetectorCustomizationAndroid =
+        new DocumentDetectorCustomizationAndroid(maskType: MaskType.DETAILED);
+
+    MessageSettings messageSettings = new MessageSettings(
+        openDocumentWrongMessage: "Fecha o documento",
+        showOpenDocumentMessage: true);
+
+    documentDetector.setMessageSettings(messageSettings);
 
     documentDetector.setDocumentFlow(documentSteps);
 
