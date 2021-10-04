@@ -4,15 +4,17 @@ class DocumentDetectorCustomizationAndroid {
   String greenMaskResIdName;
   String redMaskResIdName;
   String whiteMaskResIdName;
+  String maskType;
 
   DocumentDetectorCustomizationAndroid(
-  {this.styleResIdName,
-    this.layoutResIdName,
-    this.greenMaskResIdName,
-    this.redMaskResIdName,
-    this.whiteMaskResIdName});
+      {this.styleResIdName,
+      this.layoutResIdName,
+      this.greenMaskResIdName,
+      this.redMaskResIdName,
+      this.whiteMaskResIdName,
+      this.maskType});
 
-  Map asMap(){
+  Map asMap() {
     Map<String, dynamic> map = new Map();
 
     map["styleResIdName"] = styleResIdName;
@@ -20,6 +22,7 @@ class DocumentDetectorCustomizationAndroid {
     map["greenMaskResIdName"] = greenMaskResIdName;
     map["redMaskResIdName"] = redMaskResIdName;
     map["whiteMaskResIdName"] = whiteMaskResIdName;
+    map["maskType"] = maskType;
 
     return map;
   }

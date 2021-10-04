@@ -14,8 +14,10 @@ import com.combateafraude.documentdetector.input.DetectionSettings;
 import com.combateafraude.documentdetector.input.Document;
 import com.combateafraude.documentdetector.input.DocumentDetector;
 import com.combateafraude.documentdetector.input.DocumentDetectorStep;
+import com.combateafraude.documentdetector.input.MaskType;
 import com.combateafraude.documentdetector.input.PreviewSettings;
 import com.combateafraude.documentdetector.input.QualitySettings;
+import com.combateafraude.documentdetector.input.Resolution;
 import com.combateafraude.documentdetector.input.SensorLuminositySettings;
 import com.combateafraude.documentdetector.input.SensorOrientationSettings;
 import com.combateafraude.documentdetector.input.SensorStabilitySettings;
@@ -136,6 +138,7 @@ public class DocumentDetectorPlugin
             String verifyingQualityMessage = (String) messageSettingsParam.get("verifyingQualityMessage");
             String lowQualityDocumentMessage = (String) messageSettingsParam.get("lowQualityDocumentMessage");
             String uploadingImageMessage = (String) messageSettingsParam.get("uploadingImageMessage");
+            String openDocumentWrongMessage = (String) messageSettingsParam.get("openDocumentWrongMessage");
 
             MessageSettings messageSettings = new MessageSettings(
                     fitTheDocumentMessage,
@@ -143,7 +146,7 @@ public class DocumentDetectorPlugin
                     verifyingQualityMessage,
                     lowQualityDocumentMessage,
                     uploadingImageMessage,
-                    null);
+                    openDocumentWrongMessage);
 
             mDocumentDetectorBuilder.setMessageSettings(messageSettings);
         }
@@ -204,7 +207,12 @@ public class DocumentDetectorPlugin
                 if (styleId != null)
                     mDocumentDetectorBuilder.setStyle(styleId);
 
+                
                 Integer layoutId = getResourceId((String) customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
+                if(layoutId != null){
+                    mDocumentDetectorBuilder.setLayout(layoutId);
+                }
+                
                 Integer greenMaskId = getResourceId((String) customizationAndroid.get("greenMaskResIdName"),
                         DRAWABLE_RES);
                 Integer whiteMaskId = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"),
@@ -213,6 +221,12 @@ public class DocumentDetectorPlugin
                 mDocumentDetectorBuilder.setLayout(layoutId);
 
                 mDocumentDetectorBuilder.setMask(greenMaskId, whiteMaskId, redMaskId);
+
+                String maskType = (String) customizationAndroid.get("maskType");
+                if(maskType != null){
+                    System.out.println("Mask: ");
+                    mDocumentDetectorBuilder.setMask(MaskType.valueOf(maskType));
+                }
             }
 
             // Sensor settings
@@ -237,6 +251,16 @@ public class DocumentDetectorPlugin
                     mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
                 }
 
+                if(androidSettings.get("compressQuality") != null){
+                    int compressQuality = (int) androidSettings.get("compressQuality");
+                    mDocumentDetectorBuilder.setCompressSettings(compressQuality);
+                }
+
+                String resolution = (String) androidSettings.get("resolution");
+                if(resolution != null){
+                    mDocumentDetectorBuilder.setResolutionSettings(Resolution.valueOf(resolution));
+                }
+                
                 HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) sensorSettings
                         .get("sensorOrientationSettings");
                 if (sensorOrientation != null) {

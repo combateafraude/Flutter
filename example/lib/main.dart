@@ -55,22 +55,19 @@ class _MyAppState extends State<MyApp> {
             enableManualCapture: true, timeEnableManualCapture: 15000);
 
     DocumentDetectorAndroidSettings detectorAndroidSettings =
-        new DocumentDetectorAndroidSettings(enableSwitchCameraButton: false);
+        new DocumentDetectorAndroidSettings(
+            enableSwitchCameraButton: false,
+            compressQuality: 50,
+            resolution: Resolution.QUAD_HD);
 
-    ShowPreview showPreview = new ShowPreview(
-        show: true,
-        title: "A foto ficou boa?",
-        subTitle:
-            "Veja se todas informações estão legíveis e os documentos sem reflexos",
-        confirmLabel: "Sim, ficou boa!",
-        retryLabel: "Tirar novamente");
+    DocumentDetectorCustomizationAndroid documentDetectorCustomizationAndroid =
+        new DocumentDetectorCustomizationAndroid(maskType: MaskType.DETAILED);
 
-    DocumentDetectorAndroidSettings androidSettings =
-        new DocumentDetectorAndroidSettings();
+    MessageSettings messageSettings = new MessageSettings(
+        openDocumentWrongMessage: "Feche o documento",
+        showOpenDocumentMessage: true);
 
-    documentDetector.setShowPreview(showPreview);
-
-    documentDetector.setAndroidSettings(androidSettings);
+    documentDetector.setMessageSettings(messageSettings);
 
     documentDetector.setDocumentFlow(documentSteps);
 

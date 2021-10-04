@@ -69,7 +69,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-compatible-v4.6.8
+      ref: document-detector-compatible-v4.8.0
 ```
 
 ## Utilização
@@ -113,7 +113,7 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 
 | ShowPreview |
 | --------- |
-<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.|
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, modifique a String com a mensagem que deseja utilizar.|
 | `bool show`<br><br>Habilita/Desabilita preview
 | `String title`<br><br>Título
 | `String subTitle`<br><br> Subtítulo
@@ -121,36 +121,39 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `String retryLabel`<br><br>Texto do botão de capturar novamente
 
 | Exemplo de uso |
-| --------- |
 ```dart
 ShowPreview showPreview = new ShowPreview(
         show: true,
-        title: "preview_title_exemple",
-        subTitle: "preview_subtitle_exemple",
-        confirmLabel: "preview_confirmLabel_exemple",
-        retryLabel: "preview_retryLabel_exemple");
+        title: "A foto ficou boa?",
+        subTitle: "Veja se a foto está nítida",
+        confirmLabel: "Sim, ficou boa!",
+        retryLabel: "Tirar novamente");
 
 documentDetector.setShowPreview(showPreview);
 ```
 
 | MessageSettings |
 | --------- |
-<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.| 
-| `String? fitTheDocumentMessageResIdName`<br><br>Padrão: "Encaixe o documento na marcação"|
-| `String? holdItMessageResIdName (disponível somente para Android)`<br><br>Padrão: "Segure assim"|
-| `String? verifyingQualityMessageResIdName`<br><br>Padrão: "Verificando qualidade…"|
-| `String? lowQualityDocumentMessageResIdName`<br><br>Padrão: "Ops, não foi possível ler as informações. Por favor, tente novamente"|
-| `String? uploadingImageMessageResIdName`<br><br>Padrão: "Enviando imagem…"|
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, modifique a String com a mensagem que deseja utilizar.| 
+| `String? fitTheDocumentMessage`<br><br>Padrão: "Encaixe o documento na marcação"|
+| `String? holdItMessage (disponível somente para Android)`<br><br>Padrão: "Segure assim"|
+| `String? verifyingQuality`<br><br>Padrão: "Verificando qualidade…"|
+| `String? lowQualityDocument`<br><br>Padrão: "Ops, não foi possível ler as informações. Por favor, tente novamente"|
+| `String? uploadingImage`<br><br>Padrão: "Enviando imagem…"|
+| `String? openDocumentWrongMessage`<br><br>Padrão: "Esse é o {'document'} aberto, você deve fecha-lo"|
+| `bool showOpenDocumentMessage`<br><br>Padrão: true|
 
 | Exemplo de uso |
 | --------- |
 ```dart
  MessageSettings messageSettings = new MessageSettings(
-      fitTheDocumentMessageResIdName: "fit_document_exemple",
-      holdItMessageResIdName:"hold_it_exemple",
-      verifyingQualityMessageResIdName: "verifying_quality_exemple"
-      lowQualityDocumentMessageResIdName:"low_quality_exemple" ,
-      uploadingImageMessageResIdName:"upload_image_exemple");
+      fitTheDocumentMessageResIdName: "Mensagem de exemplo",
+      holdItMessageResIdName:"Mensagem de exemplo",
+      verifyingQualityMessageResIdName: "Mensagem de exemplo"
+      lowQualityDocumentMessageResIdName:"Mensagem de exemplo" ,
+      uploadingImageMessageResIdName:"Mensagem de exemplo",
+      openDocumentWrongMessage: "Mensagem de exemplo",
+      showOpenDocumentMessage: true);
 documentDetector.setShowPreview(showPreview);
 ```
 
