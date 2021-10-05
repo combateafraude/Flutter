@@ -139,6 +139,17 @@ public class DocumentDetectorPlugin
             String lowQualityDocumentMessage = (String) messageSettingsParam.get("lowQualityDocumentMessage");
             String uploadingImageMessage = (String) messageSettingsParam.get("uploadingImageMessage");
             String openDocumentWrongMessage = (String) messageSettingsParam.get("openDocumentWrongMessage");
+            String unsupportedDocumentMessage = (String) messageSettingsParam.get("unsupportedDocumentMessage");
+
+            Document.RG_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_FRONT");
+            Document.RG_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_BACK");
+            Document.RG_FULL.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_FULL");
+            Document.CNH_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_CNH_FRONT");
+            Document.CNH_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_CNH_BACK");
+            Document.CNH_FULL.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_CNH_FULL");
+            Document.CRLV.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_CRLV");
+            Document.RNE_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RNE_FRONT");
+            Document.RNE_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RNE_BACK");
 
             MessageSettings messageSettings = new MessageSettings(
                     fitTheDocumentMessage,
@@ -146,7 +157,8 @@ public class DocumentDetectorPlugin
                     verifyingQualityMessage,
                     lowQualityDocumentMessage,
                     uploadingImageMessage,
-                    openDocumentWrongMessage);
+                    openDocumentWrongMessage,
+                    unsupportedDocumentMessage);
 
             mDocumentDetectorBuilder.setMessageSettings(messageSettings);
         }

@@ -72,7 +72,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v4.8.0
+      ref: document-detector-v4.8.5
 ```
 
 ## Utilização
@@ -140,12 +140,22 @@ documentDetector.setShowPreview(showPreview);
 | --------- |
 <b>Como Modificar: </b> Caso deseje modificar o texto selecionado, modifique a String com a mensagem que deseja utilizar.| 
 | `String? fitTheDocumentMessage`<br><br>Padrão: "Encaixe o documento na marcação"|
-| `String? holdItMessage (disponível somente para Android)`<br><br>Padrão: "Segure assim"|
+| `String? holdItMessage (somente para Android)`<br><br>Padrão: "Segure assim"|
 | `String? verifyingQuality`<br><br>Padrão: "Verificando qualidade…"|
 | `String? lowQualityDocument`<br><br>Padrão: "Ops, não foi possível ler as informações. Por favor, tente novamente"|
 | `String? uploadingImage`<br><br>Padrão: "Enviando imagem…"|
 | `String? openDocumentWrongMessage`<br><br>Padrão: "Esse é o {'document'} aberto, você deve fecha-lo"|
-| `bool showOpenDocumentMessage`<br><br>Padrão: true|
+| `String? showOpenDocumentMessage`<br><br>Padrão: ""|
+| `String? unsupportedDocumentMessage`<br><br>Padrão: "Ops, parece que este documento não é suportado. Contate-nos!"|
+| `String? wrongDocumentMessage_RG_FRONT (somente para Android)`<br><br>Padrão: "Ops, esta é a frente do RG"|
+| `String? wrongDocumentMessage_RG_BACK (somente para Android)`<br><br>Padrão: "Ops, este é o verso do RG"|
+| `String? wrongDocumentMessage_RG_FULL (somente para Android)`<br><br>Padrão: "Ops, este é o RG aberto"|
+| `String? wrongDocumentMessage_CNH_FRONT (somente para Android)`<br><br>Padrão: "Ops, esta é a frente da CNH"|
+| `String? wrongDocumentMessage_CNH_BACK (somente para Android)`<br><br>Padrão: "Ops, este é o verso da CNH"|
+| `String? wrongDocumentMessage_CNH_FULL (somente para Android)`<br><br>Padrão: "Ops, esta é a CNH aberta"|
+| `String? wrongDocumentMessage_CRLV (somente para Android)`<br><br>Padrão: "Ops, este é o CRLV"|
+| `String? wrongDocumentMessage_RNE_FRONT (somente para Android)`<br><br>Padrão: "Ops, esta é a frente do RNE"|
+| `String? wrongDocumentMessage_RNE_BACK (somente para Android)`<br><br>Padrão: "Ops, este é o verso do RNE"|
 
 | Exemplo de uso |
 | --------- |
