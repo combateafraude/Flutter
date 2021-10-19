@@ -72,7 +72,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v4.8.5
+      ref: document-detector-v4.9.0
 ```
 
 ## Utilização
@@ -239,6 +239,8 @@ documentDetector.setShowPreview(showPreview);
 
 | DocumentDetectorCustomizationIos constructor |
 | --------- |
+| `String storyboardName`<br><br>Nome do arquivo de Storyboard |
+| `String viewControllerIdentifier`<br><br>Identi |
 | `String colorHex`<br><br>Cor tema do SDK. Por exemplo, caso deseje usar a cor preta, utilize "#000000" |
 | `String greenMaskImageName`<br><br>Nome da imagem à substituir a máscara verde padrão. Lembre de adicionar a imagem em `Assets Catalog Document` no seu projeto do XCode |
 | `String whiteMaskImageName`<br><br>Nome da imagem à substituir a máscara branca padrão. Lembre de adicionar a imagem em `Assets Catalog Document` no seu projeto do XCode |
@@ -304,3 +306,13 @@ Os tipos de falha existentes são:
 - `SecurityReason`: quando o dispositivo não é seguro para executar o SDK. Se esta falha ocorrer, avise-nos;
 - `StorageReason`: quando o dispositivo não possui espaço suficiente para a captura de alguma foto. Pode ocorrer em produção;
 - `LibraryReason`: quando alguma falha interna impossibilitou a execução do SDK. Pode ocorrer devico à erros de configuração do projeto, não deve ocorrer em produção;
+
+
+### Customização de view iOS
+1. No diretório `ROOT_PROJECT/ios/Runner`, crie dois arquivos:
+   - `Storyboard`, para criação da interface;
+   - `ViewController`, para vinculação e chamada à SDK.
+
+2. Siga esse guia nativo https://docs.combateafraude.com/docs/mobile/ios/customization/ para implementação dos dois arquivos.
+
+3. Em Flutter, na classe `DocumentDetectorCustomizationIos`, informe `storyboardName` e `viewControllerIdentifier`. E pronto, view em iOS customizada!

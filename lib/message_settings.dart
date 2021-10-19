@@ -1,4 +1,5 @@
 class MessageSettings {
+  String? waitMessage;
   String? fitTheDocumentMessage;
   String? holdItMessage;
   String? verifyingQualityMessage;
@@ -20,7 +21,8 @@ class MessageSettings {
 
 
   MessageSettings(
-      {this.fitTheDocumentMessage,
+      {this.waitMessage,  
+      this.fitTheDocumentMessage,
       this.holdItMessage,
       this.verifyingQualityMessage,
       this.lowQualityDocumentMessage,
@@ -41,6 +43,7 @@ class MessageSettings {
   Map asMap() {
     Map<String, dynamic> map = new Map();
 
+    map["waitMessage"] = waitMessage;
     map["fitTheDocumentMessage"] = fitTheDocumentMessage;
     map["holdItMessage"] = holdItMessage;
     map["verifyingQualityMessage"] = verifyingQualityMessage;

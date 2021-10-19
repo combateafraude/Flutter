@@ -133,6 +133,7 @@ public class DocumentDetectorPlugin
 
         HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
         if (messageSettingsParam != null) {
+            String waitMessage = (String) messageSettingsParam.get("waitMessage");
             String fitTheDocumentMessage = (String) messageSettingsParam.get("fitTheDocumentMessage");
             String holdItMessage = (String) messageSettingsParam.get("holdItMessage");
             String verifyingQualityMessage = (String) messageSettingsParam.get("verifyingQualityMessage");
@@ -152,6 +153,7 @@ public class DocumentDetectorPlugin
             Document.RNE_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RNE_BACK");
 
             MessageSettings messageSettings = new MessageSettings(
+                    waitMessage,
                     fitTheDocumentMessage,
                     holdItMessage,
                     verifyingQualityMessage,

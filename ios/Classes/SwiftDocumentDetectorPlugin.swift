@@ -55,11 +55,12 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 documentDetectorSteps.append(DocumentDetectorStep(document: document, stepLabel: stepLabel, illustration: illustration, audio: audioURL))
             }
         }
-
+        
         var documentDetectorBuilder = DocumentDetector.Builder(mobileToken: mobileToken)
-            .setDocumentDetectorFlow(flow: documentDetectorSteps)
-
+        
         documentDetectorBuilder.enableMultiLanguage(enable: false)
+
+        documentDetectorBuilder.setDocumentDetectorFlow(flow: documentDetectorSteps)
 
         if let useAnalytics = arguments["useAnalytics"] as? Bool ?? nil {
             documentDetectorBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)
@@ -91,19 +92,20 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
          }
         
         if let messageSettingsParam = arguments["messageSettings"] as? [String: Any] ?? nil {
+            let waitMessage = messageSettingsParam["waitMessage"] as? String ?? nil
             let fitTheDocumentMessage = messageSettingsParam["fitTheDocumentMessage"] as? String ?? nil
             let verifyingQualityMessage = messageSettingsParam["verifyingQualityMessage"] as? String ?? nil
             let lowQualityDocumentMessage = messageSettingsParam["lowQualityDocumentMessage"] as? String ?? nil
             let uploadingImageMessage = messageSettingsParam["uploadingImageMessage"] as? String ?? nil
             
-            let messageSettings = MessageSettings()
-            if(fitTheDocumentMessage != nil){ messageSettings.setFitTheDocumentMessage(message: fitTheDocumentMessage!)}
-            if(verifyingQualityMessage != nil){ messageSettings.setVerifyingQualityMessage(message: verifyingQualityMessage!)}
-            if(lowQualityDocumentMessage != nil){ messageSettings.setLowQualityDocumentMessage(message: lowQualityDocumentMessage!)}
-            if(uploadingImageMessage != nil){ messageSettings.setUploadingImageMessage(message: uploadingImageMessage!)}
-            
-            documentDetectorBuilder.setMessageSettings(messageSettings)
+            documentDetectorBuilder.setMessageSettings(waitMessage: waitMessage,
+                                                       fitTheDocumentMessage: fitTheDocumentMessage,
+                                                       verifyingQualityMessage: verifyingQualityMessage,
+                                                       lowQualityDocumentMessage: lowQualityDocumentMessage,
+                                                       uploadingImageMessage: uploadingImageMessage)
          }
+        
+        let controller = UIApplication.shared.keyWindow!.rootViewController!
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
             if let detectionThreshold = iosSettings["detectionThreshold"] as? Float ?? nil {
@@ -142,6 +144,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 }
 
             }
+            
             
             if let customization = iosSettings["customization"] as? [String: Any] ?? nil {
 
@@ -185,10 +188,18 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
 
                 
                 documentDetectorBuilder.setLayout(layout: layout)
+                
+                if let storyboardName = customization["storyboardName"] as? String ?? nil {
+                    if let viewControllerIdentifier = customization["viewControllerIdentifier"] as? String ?? nil {
+                        let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+                        let viewController = storyboard.instantiateViewController(withIdentifier: viewControllerIdentifier)
+                        
+                        controller.present(viewController, animated: true)
+                        return
+                    }
+                }
             }
         }
-        
-        let controller = UIApplication.shared.keyWindow!.rootViewController!
         
         let scannerVC = DocumentDetectorController(documentDetector: documentDetectorBuilder.build())
         scannerVC.documentDetectorDelegate = self
