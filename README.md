@@ -247,3 +247,9 @@ Os tipos de falha existentes são:
 - `SecurityReason`: quando o dispositivo não é seguro para executar o SDK. Se esta falha ocorrer, avise-nos;
 - `StorageReason`: quando o dispositivo não possui espaço suficiente para a captura de alguma foto. Pode ocorrer em produção;
 - `LibraryReason`: quando alguma falha interna impossibilitou a execução do SDK. Pode ocorrer devico à erros de configuração do projeto, não deve ocorrer em produção;
+
+### Customizando view iOS
+
+Para customização iOS, é necessário que os plugins Flutter estejam adicionados localmente no projeto. A customizção é realizada nativamente com a abordagem ViewCode.
+
+[Clique aqui](https://github.com/combateafraude/Flutter/tree/ios-customization-example) e acesse o exemplo com um guia para utilização desse recurso.
