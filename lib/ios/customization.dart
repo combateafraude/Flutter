@@ -8,7 +8,8 @@ class DocumentDetectorCustomizationIos {
   bool? showStatusLabel;
 
   DocumentDetectorCustomizationIos(
-  {this.colorHex,
+  {
+    this.colorHex,
     this.greenMaskImageName,
     this.whiteMaskImageName,
     this.redMaskImageName,

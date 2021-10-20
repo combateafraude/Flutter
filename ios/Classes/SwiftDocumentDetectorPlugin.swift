@@ -55,9 +55,12 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 documentDetectorSteps.append(DocumentDetectorStep(document: document, stepLabel: stepLabel, illustration: illustration, audio: audioURL))
             }
         }
-
+        
         var documentDetectorBuilder = DocumentDetector.Builder(mobileToken: mobileToken)
-            .setDocumentDetectorFlow(flow: documentDetectorSteps)
+        
+        documentDetectorBuilder.enableMultiLanguage(enable: false)
+
+        documentDetectorBuilder.setDocumentDetectorFlow(flow: documentDetectorSteps)
 
         if let useAnalytics = arguments["useAnalytics"] as? Bool ?? nil {
             documentDetectorBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)
@@ -82,25 +85,45 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         if let showPreview = arguments["showPreview"] as? [String: Any] ?? nil {
             var show = showPreview["show"] as? Bool ?? false
             let title = showPreview["title"] as? String ?? nil
-            let subtitle = showPreview["subTitle"] as? String ?? nil
+            let subtitle = showPreview["subtitle"] as? String ?? nil
             let confirmLabel = showPreview["confirmLabel"] as? String ?? nil
             let retryLabel = showPreview["retryLabel"] as? String ?? nil
             documentDetectorBuilder.showPreview(show, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
          }
         
         if let messageSettingsParam = arguments["messageSettings"] as? [String: Any] ?? nil {
+            let waitMessage = messageSettingsParam["waitMessage"] as? String ?? nil
             let fitTheDocumentMessage = messageSettingsParam["fitTheDocumentMessage"] as? String ?? nil
             let verifyingQualityMessage = messageSettingsParam["verifyingQualityMessage"] as? String ?? nil
             let lowQualityDocumentMessage = messageSettingsParam["lowQualityDocumentMessage"] as? String ?? nil
             let uploadingImageMessage = messageSettingsParam["uploadingImageMessage"] as? String ?? nil
             
-            let messageSettings = MessageSettings()
-            if(fitTheDocumentMessage != nil){ messageSettings.fitTheDocumentMessage = fitTheDocumentMessage}
-            if(verifyingQualityMessage != nil){ messageSettings.verifyingQualityMessage = verifyingQualityMessage}
-            if(lowQualityDocumentMessage != nil){ messageSettings.lowQualityDocumentMessage = lowQualityDocumentMessage}
-            if(uploadingImageMessage != nil){ messageSettings.uploadingImageMessage = uploadingImageMessage}
+            let unsupportedDocumentMessage = messageSettingsParam["unsupportedDocumentMessage"] as? String ?? nil
+            let wrongDocumentMessage_RG_FRONT = messageSettingsParam["wrongDocumentMessage_RG_FRONT"] as? String ?? nil
+            let wrongDocumentMessage_RG_BACK = messageSettingsParam["wrongDocumentMessage_RG_BACK"] as? String ?? nil
+            let wrongDocumentMessage_RG_FULL = messageSettingsParam["wrongDocumentMessage_RG_FULL"] as? String ?? nil
+            let wrongDocumentMessage_CNH_FRONT = messageSettingsParam["wrongDocumentMessage_CNH_FRONT"] as? String ?? nil
+            let wrongDocumentMessage_CNH_BACK = messageSettingsParam["wrongDocumentMessage_CNH_BACK"] as? String ?? nil
+            let wrongDocumentMessage_CNH_FULL = messageSettingsParam["wrongDocumentMessage_CNH_FULL"] as? String ?? nil
+            let wrongDocumentMessage_CRLV = messageSettingsParam["wrongDocumentMessage_CRLV"] as? String ?? nil
+            let wrongDocumentMessage_RNE_FRONT = messageSettingsParam["wrongDocumentMessage_RNE_FRONT"] as? String ?? nil
+            let wrongDocumentMessage_RNE_BACK = messageSettingsParam["wrongDocumentMessage_RNE_BACK"] as? String ?? nil
             
-            documentDetectorBuilder.setMessageSettings(messageSettings)
+            documentDetectorBuilder.setMessageSettings(waitMessage: waitMessage,
+                                                       fitTheDocumentMessage: fitTheDocumentMessage,
+                                                       verifyingQualityMessage: verifyingQualityMessage,
+                                                       lowQualityDocumentMessage: lowQualityDocumentMessage,
+                                                       uploadingImageMessage: uploadingImageMessage,
+                                                       unsupportedDocumentMessage: unsupportedDocumentMessage,
+                                                       wrongDocumentMessage_RG_FRONT: wrongDocumentMessage_RG_FRONT,
+                                                       wrongDocumentMessage_RG_BACK: wrongDocumentMessage_RG_BACK,
+                                                       wrongDocumentMessage_RG_FULL: wrongDocumentMessage_RG_FULL,
+                                                       wrongDocumentMessage_CNH_FRONT: wrongDocumentMessage_CNH_FRONT,
+                                                       wrongDocumentMessage_CNH_BACK: wrongDocumentMessage_CNH_BACK,
+                                                       wrongDocumentMessage_CNH_FULL: wrongDocumentMessage_CNH_FULL,
+                                                       wrongDocumentMessage_CRLV: wrongDocumentMessage_CRLV,
+                                                       wrongDocumentMessage_RNE_FRONT: wrongDocumentMessage_RNE_FRONT,
+                                                       wrongDocumentMessage_RNE_BACK: wrongDocumentMessage_RNE_BACK)
          }
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
@@ -140,6 +163,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 }
 
             }
+            
             
             if let customization = iosSettings["customization"] as? [String: Any] ?? nil {
 
@@ -185,11 +209,11 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 documentDetectorBuilder.setLayout(layout: layout)
             }
         }
-        
-        documentDetectorBuilder.enableMultiLanguage(enable: false)
+
+        //documentDetectorBuilder.setOverlay(overlay: DocumentDetectorOverlay())
         
         let controller = UIApplication.shared.keyWindow!.rootViewController!
-        
+
         let scannerVC = DocumentDetectorController(documentDetector: documentDetectorBuilder.build())
         scannerVC.documentDetectorDelegate = self
         controller.present(scannerVC, animated: true, completion: nil)
