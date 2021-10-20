@@ -5,7 +5,7 @@
 Pod::Spec.new do |s|
   s.name             = 'passive_face_liveness'
   s.summary          = 'Flutter plugin for PassiveFaceLiveness'
-  s.version          = '2.7.0'
+  s.version          = '2.8.0'
   s.homepage         = 'https://www.combateafraude.com/'
   s.license          = { :file => 'LICENSE', :type => 'MIT' }
   s.author           = { 'ti@combateafraude.com' => 'ti@combateafraude.com' }
@@ -18,5 +18,5 @@ Pod::Spec.new do |s|
   s.swift_version = '5.3.2'
   
   s.dependency 'Flutter'
-  s.dependency 'PassiveFaceLiveness', '3.6.7'
+  s.dependency 'PassiveFaceLiveness', '3.7.2'
 end

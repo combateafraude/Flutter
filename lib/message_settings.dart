@@ -1,5 +1,6 @@
 class MessageSettings {
     String stepName;
+    String waitMessage;
     String faceNotFoundMessage;
     String faceTooFarMessage;
     String faceTooCloseMessage;
@@ -15,6 +16,7 @@ class MessageSettings {
 
   MessageSettings(
       {this.stepName,
+      this.waitMessage,
       this.faceNotFoundMessage,
       this.faceTooFarMessage,
       this.faceTooCloseMessage,
@@ -32,6 +34,7 @@ class MessageSettings {
     Map<String, dynamic> map = new Map();
 
     map["stepName"] = stepName;
+    map["waitMessage"] = waitMessage;
     map["faceNotFoundMessage"] = faceNotFoundMessage;
     map["faceTooFarMessage"] = faceTooFarMessage;
     map["faceTooCloseMessage"] = faceTooCloseMessage;
