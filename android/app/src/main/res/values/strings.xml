@@ -1,0 +1,5 @@
+<resources>
+    <string name="document_detector_orientation_message">Mantenha o dispositivo na horizontal</string>
+    <string name="document_detector_stability_message">Estabilize o dispositivo</string>
+
+</resources>

@@ -1,18 +1,25 @@
-<div align="center">
-  
-  [<img width="400px" src="/resources/combateafraude_logo.png?raw=true">](https://combateafraude.com)
+# customization_ios_example
 
-  # Combate à Fraude - Flutter Plugins
-</div>
+Esse repositório apresenta a implementação de um exemplo com a customização de view em SDK's iOS. Para executar o exemplo, informe o [mobile token](https://docs.combateafraude.com/docs/mobile/introduction/mobile-token/) em `lib/main.dart`.
 
-<hr>
+## Informações inicias
 
-Este repositório contém documentações e publicações dos plugins Flutter para nossos SDKs. Cada plugin está em uma [branch](https://github.com/combateafraude/Flutter/branches) própria, e as últimas versões podem ser conferidas [aqui](https://github.com/combateafraude/Flutter/releases)
+1. Para customização iOS, é necessário que os plugins Flutter estejam adicionados localmente no projeto.
+2. A customizção é realizada nativamente com a abordagem ViewCode.
+3. Esse exemplo utiliza `document_detector` como base, mas os passos são os mesmos para `passive_face_liveness`.
 
-| SDK | Objetivo | Demonstração |
-| :--: | :--: | :--: |
-| [DocumentDetector](https://github.com/combateafraude/Flutter/tree/document-detector) | SDK responsável por capturar uma RG, CNH e outros documentos genéricos de identificação com qualidade e garantia para a extração dos dados documentais | [Demonstração](https://youtu.be/QZrxPC65aPk) |
-| [PassiveFaceLiveness](https://github.com/combateafraude/Flutter/tree/passive-face-liveness) | Câmera inteligente que captura uma selfie confiável do seu usuário utilizando inteligência artificial. É capaz de detectar e reprovar fotos de foto e gravações | [Demonstração](https://youtu.be/HrEt-DVkCJE) |
-| [ActiveFaceLiveness](https://github.com/combateafraude/Flutter/tree/active-face-liveness) | Câmera inteligente que captura uma selfie confiável do seu usuário utilizando movimentos faciais | [Demonstração](https://youtu.be/RjUTagXgotQ) |
-| [FaceAuthenticator](https://github.com/combateafraude/Flutter/tree/face-authenticator) | Facematch com prova de vida do usuário do seu app | [Demonstração](https://youtu.be/tuA_oUcFLYg) |
-| [AddressCheck](https://github.com/combateafraude/Flutter/tree/address-check) | Descubra se o seu usuário realmente mora onde informou | |
+## Customizando
+
+1. Na pasta root do projeto, crie o diretório `document_detector`
+2. Realize o download dos arquivos dos pacotes a serem utilizados em https://github.com/combateafraude/Flutter e insira em seu respectivo repositório
+3. Declare o pacote como uma [dependência local](https://flutter.dev/docs/development/packages-and-plugins/using-packages#dependencies-on-unpublished-packages) e execute `flutter pub get`
+```yml
+dependencies:  
+  document_detector:
+    path: ./document_detector
+```
+4. No diretório `document_detector/ios/Classes` crie o arquivo `DocumentDetectorOverlay.swift` (o nome é opcional) e siga o guia nativo para customização https://docs.combateafraude.com/docs/mobile/ios/customization/
+
+5. No arquivo `SwiftDocumentDetectorPlugin` em `document_detector/ios/Classes`, descomente a `linha 213` que realiza a vinculação da classe utilizada para personalização no builder.
+
+6. Por último, caso seja necessário, execute o comando `pod install` em `ROOT_PROJECT/ios/`. 
