@@ -102,6 +102,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
         HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
         if (messageSettingsParam != null) {
             String stepName = (String) messageSettingsParam.get("stepName");
+            String waitMessage = (String) messageSettingsParam.get("waitMessage");
             String faceNotFoundMessage = (String) messageSettingsParam.get("faceNotFoundMessage");
             String faceTooFarMessage = (String) messageSettingsParam.get("faceTooFarMessage");
             String faceTooCloseMessage = (String) messageSettingsParam.get("faceTooCloseMessage");
@@ -117,6 +118,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
 
             MessageSettings messageSettings = new MessageSettings(
                 stepName,
+                waitMessage,
                 faceNotFoundMessage,
                 faceTooFarMessage,
                 faceTooCloseMessage,

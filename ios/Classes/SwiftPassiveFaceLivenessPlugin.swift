@@ -29,6 +29,8 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         
         var passiveFaceLivenessBuilder = PassiveFaceLiveness.Builder(mobileToken: mobileToken)
 
+        passiveFaceLivenessBuilder.enableMultiLanguage(enable: false)
+
         if let peopleId = arguments["peopleId"] as? String ?? nil {
             passiveFaceLivenessBuilder.setPersonId(personId: peopleId)
         }
@@ -64,6 +66,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
 
          if let messageSettingsParam = arguments["messageSettings"] as? [String: Any] ?? nil {
             let stepName = messageSettingsParam["stepName"] as? String ?? nil
+            let waitMessage = messageSettingsParam["waitMessage"] as? String ?? nil
             let faceNotFoundMessage = messageSettingsParam["faceNotFoundMessage"] as? String ?? nil
             let faceTooFarMessage = messageSettingsParam["faceTooFarMessage"] as? String ?? nil
             let faceNotFittedMessage = messageSettingsParam["faceNotFittedMessage"] as? String ?? nil
@@ -71,16 +74,15 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             let holdItMessage = messageSettingsParam["holdItMessage"] as? String ?? nil
             let invalidFaceMessage = messageSettingsParam["invalidFaceMessage"] as? String ?? nil
             
-            let messageSettings = MessageSettings()
-            if(stepName != nil){ messageSettings.stepName = stepName}
-            if(faceNotFoundMessage != nil){ messageSettings.faceNotFoundMessage = faceNotFoundMessage}
-            if(faceTooFarMessage != nil){ messageSettings.faceTooFarMessage = faceTooFarMessage}
-            if(faceNotFittedMessage != nil){ messageSettings.faceNotFittedMessage = faceNotFittedMessage}
-            if(multipleFaceDetectedMessage != nil){ messageSettings.multipleFaceDetectedMessage = multipleFaceDetectedMessage}
-            if(holdItMessage != nil){ messageSettings.holdItMessage = holdItMessage}
-            if(invalidFaceMessage != nil){ messageSettings.invalidFaceMessage = invalidFaceMessage}
-            
-            passiveFaceLivenessBuilder.setMessageSettings(messageSettings)
+             passiveFaceLivenessBuilder.setMessageSettings(
+                waitMessage: waitMessage,
+                stepName: stepName,
+                faceNotFoundMessage: faceNotFoundMessage,
+                faceTooFarMessage: faceTooFarMessage,
+                faceNotFittedMessage: faceNotFittedMessage,
+                holdItMessage: holdItMessage,
+                invalidFaceMessage: invalidFaceMessage,
+                multipleFaceDetectedMessage: multipleFaceDetectedMessage)
          }
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
@@ -150,8 +152,8 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             }
             
         }
-        
-        passiveFaceLivenessBuilder.enableMultiLanguage(enable: false)
+
+        //passiveFaceLivenessBuilder.setOverlay(overlay: PassiveFaceLivenessOverlay())
         
         let controller = UIApplication.shared.keyWindow!.rootViewController!
         

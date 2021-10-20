@@ -66,7 +66,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-v2.7.0
+      ref: passive-face-liveness-v2.8.0
 ```
 
 ## Utilização
@@ -103,7 +103,6 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 
 | ShowPreview |
 | --------- |
-<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, modifique a String com a mensagem que deseja utilizar.|
 | `bool show`<br><br>Habilita/Desabilita preview
 | `String title`<br><br>Título
 | `String subTitle`<br><br> Subtítulo
@@ -123,38 +122,35 @@ passiveFaceLiveness.setShowPreview(showPreview);
 ```
 
 | MessageSettings |
-| --------- |
-<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, modifique a String com a mensagem que deseja utilizar.| 
+| --------- | 
 | `bool show`<br><br>Padrão: Habilita/Desabilita preview |
 | `String stepName`<br><br>Padrão: "Registro Facial" |
 | `String holdItMessage`<br><br>Padrão: "Segure assim" |
 | `String faceNotFoundMessage`<br><br>Padrão: "Não encontramos nenhum rosto" |
-| `String faceTooFarMessage`<br><br>Padrão: ""Aproxime o rosto" |
-| `String faceTooCloseMessage`<br><br>Padrão: "Afaste o rosto" |
+| `String faceTooFarMessage`<br><br>Padrão: "Aproxime o rosto" |
+| `String faceTooCloseMessage (somente para Android)`<br><br>Padrão: "Afaste o rosto" |
 | `String faceNotFittedMessage`<br><br>Padrão: "Encaixe seu rosto" |
 | `String multipleFaceDetectedMessage`<br><br>Padrão: "Mais de um rosto detectado" |
 | `String verifyingLivenessMessage`<br><br>Padrão: "Verificando selfie…" |
 | `String invalidFaceMessage`<br><br>Padrão: "Ops, rosto inválido. Por favor, tente novamente" |
-| `String eyesClosedMessage`<br><br>Padrão: "Seus olhos estão fechados" |
-| `String notCenterXMessage`<br><br>Padrão: "Centralize seu rosto na vertical" |
-| `String notCenterYMessage`<br><br>Padrão: "Centralize seu rosto na horizontal" |
-| `String notCenterZMessage`<br><br>Padrão: "Seu rosto não está reto à máscara" |
-
-
+| `String eyesClosedMessage (somente para Android)`<br><br>Padrão: "Seus olhos estão fechados" |
+| `String notCenterXMessage (somente para Android)`<br><br>Padrão: "Centralize seu rosto na vertical" |
+| `String notCenterYMessage (somente para Android)`<br><br>Padrão: "Centralize seu rosto na horizontal" |
+| `String notCenterZMessage (somente para Android)`<br><br>Padrão: "Seu rosto não está reto à máscara" |
 
 | <b>Exemplo de uso </b> |
 
 ```dart
 MessageSettings messageSettings = new MessageSettings(
-        stepName: "face_register_exemple",
-        faceNotFoundMessage: "face_not_found_exemple",
-        faceTooFarMessage: "face_too_far_exemple",
-        faceTooCloseMessage: "face_too_close_exemple",
-        faceNotFittedMessage: "fit_your_face_exemple",
-        multipleFaceDetectedMessage: "more_than_one_face_exemple",
-        verifyingLivenessMessage: "verifying_liveness_exemple",
-        holdItMessage: "hold_it_exemple",
-        invalidFaceMessage: "invalid_face_exemple");
+        stepName: "Mensagem de exemplo",
+        faceNotFoundMessage: "Mensagem de exemplo",
+        faceTooFarMessage: "Mensagem de exemplo",
+        faceTooCloseMessage: "Mensagem de exemplo",
+        faceNotFittedMessage: "Mensagem de exemplo",
+        multipleFaceDetectedMessage: "Mensagem de exemplo",
+        verifyingLivenessMessage: "Mensagem de exemplo",
+        holdItMessage: "Mensagem de exemplo",
+        invalidFaceMessage: "Mensagem de exemplo");
 
 passiveFaceLiveness.setMessageSettings(messageSettings);
 
