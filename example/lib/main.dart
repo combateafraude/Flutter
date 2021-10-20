@@ -67,8 +67,9 @@ class _MyAppState extends State<MyApp> {
         new DocumentDetectorCustomizationAndroid(maskType: MaskType.DETAILED);
 
     MessageSettings messageSettings = new MessageSettings(
-        openDocumentWrongMessage: "Fecha o documento",
-        showOpenDocumentMessage: true);
+        openDocumentWrongMessage: "Feche o documento",
+        showOpenDocumentMessage: true,
+        unsupportedDocumentMessage: "Ops, esse documento não é suportado");
 
     documentDetector.setMessageSettings(messageSettings);
 

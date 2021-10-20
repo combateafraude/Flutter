@@ -98,14 +98,33 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             let lowQualityDocumentMessage = messageSettingsParam["lowQualityDocumentMessage"] as? String ?? nil
             let uploadingImageMessage = messageSettingsParam["uploadingImageMessage"] as? String ?? nil
             
+            let unsupportedDocumentMessage = messageSettingsParam["unsupportedDocumentMessage"] as? String ?? nil
+            let wrongDocumentMessage_RG_FRONT = messageSettingsParam["wrongDocumentMessage_RG_FRONT"] as? String ?? nil
+            let wrongDocumentMessage_RG_BACK = messageSettingsParam["wrongDocumentMessage_RG_BACK"] as? String ?? nil
+            let wrongDocumentMessage_RG_FULL = messageSettingsParam["wrongDocumentMessage_RG_FULL"] as? String ?? nil
+            let wrongDocumentMessage_CNH_FRONT = messageSettingsParam["wrongDocumentMessage_CNH_FRONT"] as? String ?? nil
+            let wrongDocumentMessage_CNH_BACK = messageSettingsParam["wrongDocumentMessage_CNH_BACK"] as? String ?? nil
+            let wrongDocumentMessage_CNH_FULL = messageSettingsParam["wrongDocumentMessage_CNH_FULL"] as? String ?? nil
+            let wrongDocumentMessage_CRLV = messageSettingsParam["wrongDocumentMessage_CRLV"] as? String ?? nil
+            let wrongDocumentMessage_RNE_FRONT = messageSettingsParam["wrongDocumentMessage_RNE_FRONT"] as? String ?? nil
+            let wrongDocumentMessage_RNE_BACK = messageSettingsParam["wrongDocumentMessage_RNE_BACK"] as? String ?? nil
+            
             documentDetectorBuilder.setMessageSettings(waitMessage: waitMessage,
                                                        fitTheDocumentMessage: fitTheDocumentMessage,
                                                        verifyingQualityMessage: verifyingQualityMessage,
                                                        lowQualityDocumentMessage: lowQualityDocumentMessage,
-                                                       uploadingImageMessage: uploadingImageMessage)
+                                                       uploadingImageMessage: uploadingImageMessage,
+                                                       unsupportedDocumentMessage: unsupportedDocumentMessage,
+                                                       wrongDocumentMessage_RG_FRONT: wrongDocumentMessage_RG_FRONT,
+                                                       wrongDocumentMessage_RG_BACK: wrongDocumentMessage_RG_BACK,
+                                                       wrongDocumentMessage_RG_FULL: wrongDocumentMessage_RG_FULL,
+                                                       wrongDocumentMessage_CNH_FRONT: wrongDocumentMessage_CNH_FRONT,
+                                                       wrongDocumentMessage_CNH_BACK: wrongDocumentMessage_CNH_BACK,
+                                                       wrongDocumentMessage_CNH_FULL: wrongDocumentMessage_CNH_FULL,
+                                                       wrongDocumentMessage_CRLV: wrongDocumentMessage_CRLV,
+                                                       wrongDocumentMessage_RNE_FRONT: wrongDocumentMessage_RNE_FRONT,
+                                                       wrongDocumentMessage_RNE_BACK: wrongDocumentMessage_RNE_BACK)
          }
-        
-        let controller = UIApplication.shared.keyWindow!.rootViewController!
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
             if let detectionThreshold = iosSettings["detectionThreshold"] as? Float ?? nil {
@@ -188,19 +207,13 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
 
                 
                 documentDetectorBuilder.setLayout(layout: layout)
-                
-                if let storyboardName = customization["storyboardName"] as? String ?? nil {
-                    if let viewControllerIdentifier = customization["viewControllerIdentifier"] as? String ?? nil {
-                        let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
-                        let viewController = storyboard.instantiateViewController(withIdentifier: viewControllerIdentifier)
-                        
-                        controller.present(viewController, animated: true)
-                        return
-                    }
-                }
             }
         }
+
+        //documentDetectorBuilder.setOverlay(overlay: DocumentDetectorOverlay())
         
+        let controller = UIApplication.shared.keyWindow!.rootViewController!
+
         let scannerVC = DocumentDetectorController(documentDetector: documentDetectorBuilder.build())
         scannerVC.documentDetectorDelegate = self
         controller.present(scannerVC, animated: true, completion: nil)

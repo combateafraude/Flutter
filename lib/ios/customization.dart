@@ -1,6 +1,4 @@
 class DocumentDetectorCustomizationIos {
-  String? storyboardName;
-  String? viewControllerIdentifier;
   String? colorHex;
   String? greenMaskImageName;
   String? whiteMaskImageName;
@@ -11,8 +9,6 @@ class DocumentDetectorCustomizationIos {
 
   DocumentDetectorCustomizationIos(
   {
-    this.storyboardName,
-    this.viewControllerIdentifier,
     this.colorHex,
     this.greenMaskImageName,
     this.whiteMaskImageName,
@@ -31,8 +27,6 @@ class DocumentDetectorCustomizationIos {
     map["closeImageName"] = closeImageName;
     map["showStepLabel"] = showStepLabel;
     map["showStatusLabel"] = showStatusLabel;
-    map["storyboardName"] = storyboardName;
-    map["viewControllerIdentifier"] = viewControllerIdentifier;
 
     return map;
   }
