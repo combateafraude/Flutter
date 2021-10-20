@@ -65,7 +65,8 @@ class _MyAppState extends State<MyApp> {
 
     MessageSettings messageSettings = new MessageSettings(
         openDocumentWrongMessage: "Feche o documento",
-        showOpenDocumentMessage: true);
+        showOpenDocumentMessage: true,
+        unsupportedDocumentMessage: "Ops, esse documento não é suportado");
 
     documentDetector.setMessageSettings(messageSettings);
 
