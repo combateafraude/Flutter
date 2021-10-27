@@ -27,6 +27,7 @@ android {
 
     defaultConfig {
         minSdkVersion 21
+        targetSdkVersion 30
     }
 
     dataBinding.enabled = true
@@ -45,6 +46,6 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:face-authenticator:4.4.0'
+        implementation 'com.combateafraude.sdk:face-authenticator:4.5.0'
     }
 }
