@@ -7,16 +7,16 @@ class MessageSettings {
   String openDocumentWrongMessage;
   bool showOpenDocumentMessage;
 
-  String? unsupportedDocumentMessage;
-  String? wrongDocumentMessage_RG_FRONT;
-  String? wrongDocumentMessage_RG_BACK;
-  String? wrongDocumentMessage_RG_FULL;
-  String? wrongDocumentMessage_CNH_FRONT;
-  String? wrongDocumentMessage_CNH_BACK;
-  String? wrongDocumentMessage_CNH_FULL;
-  String? wrongDocumentMessage_CRLV;
-  String? wrongDocumentMessage_RNE_FRONT;
-  String? wrongDocumentMessage_RNE_BACK;
+  String unsupportedDocumentMessage;
+  String wrongDocumentMessage_RG_FRONT;
+  String wrongDocumentMessage_RG_BACK;
+  String wrongDocumentMessage_RG_FULL;
+  String wrongDocumentMessage_CNH_FRONT;
+  String wrongDocumentMessage_CNH_BACK;
+  String wrongDocumentMessage_CNH_FULL;
+  String wrongDocumentMessage_CRLV;
+  String wrongDocumentMessage_RNE_FRONT;
+  String wrongDocumentMessage_RNE_BACK;
 
 
   MessageSettings(

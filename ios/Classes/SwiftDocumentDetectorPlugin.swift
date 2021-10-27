@@ -91,6 +91,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
          }
         
         if let messageSettingsParam = arguments["messageSettings"] as? [String: Any] ?? nil {
+            let waitMessage = messageSettingsParam["waitMessage"] as? String ?? nil
             let fitTheDocumentMessage = messageSettingsParam["fitTheDocumentMessage"] as? String ?? nil
             let verifyingQualityMessage = messageSettingsParam["verifyingQualityMessage"] as? String ?? nil
             let lowQualityDocumentMessage = messageSettingsParam["lowQualityDocumentMessage"] as? String ?? nil
