@@ -61,7 +61,7 @@ dependencies:
   face_authenticator:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: face-authenticator-compatible-v1.8.0
+      ref: face-authenticator-compatible-v1.9.0
 ```
 
 ## Utilização
@@ -176,4 +176,5 @@ Os tipos de falha existentes são:
 - `SecurityReason`: quando o dispositivo não é seguro para executar o SDK. Se esta falha ocorrer, avise-nos;
 - `StorageReason`: quando o dispositivo não possui espaço suficiente para a captura de alguma foto. Pode ocorrer em produção;
 - `LibraryReason`: quando alguma falha interna impossibilitou a execução do SDK. Pode ocorrer devico à erros de configuração do projeto, não deve ocorrer em produção;
+- `InvalidFaceReason`: quando alguma não existe um registro facial para o peopleId informado.
 

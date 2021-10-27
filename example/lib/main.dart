@@ -1,4 +1,5 @@
 import 'package:face_authenticator/face_authenticator.dart';
+import 'package:face_authenticator/ios/settings.dart';
 import 'package:face_authenticator/result/face_authenticator_failure.dart';
 import 'package:face_authenticator/result/face_authenticator_result.dart';
 import 'package:face_authenticator/result/face_authenticator_success.dart';
@@ -41,7 +42,16 @@ class _MyAppState extends State<MyApp> {
 
     FaceAuthenticator faceAuthenticator =
         new FaceAuthenticator(mobileToken: mobileToken);
+
+
     faceAuthenticator.setPeopleId(peopleId);
+
+    FaceAuthenticatorIosSettings iosSettings = new FaceAuthenticatorIosSettings(
+      enableManualCapture: true,
+      manualCaptureTime: 10
+    );
+
+    faceAuthenticator.setIosSettings(iosSettings);
 
     // Put the others parameters here
 

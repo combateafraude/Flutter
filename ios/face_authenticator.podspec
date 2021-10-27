@@ -5,7 +5,7 @@
 Pod::Spec.new do |s|
   s.name             = 'face_authenticator'
   s.summary          = 'Flutter plugin for Combate à Fraudes FaceAuthenticator'
-  s.version          = '1.7.1'
+  s.version          = '1.9.0'
   s.homepage         = 'https://www.combateafraude.com/'
   s.license          = { :file => 'LICENSE', :type => 'MIT' }
   s.author           = { 'ti@combateafraude.com' => 'ti@combateafraude.com' }
@@ -18,5 +18,5 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
 
   s.dependency 'Flutter'
-  s.dependency 'FaceAuthenticator', '~> 2.3.2'
+  s.dependency 'FaceAuthenticator', '~> 2.5.0'
 end

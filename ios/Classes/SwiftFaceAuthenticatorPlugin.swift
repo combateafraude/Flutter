@@ -33,7 +33,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
             let peopleId = arguments["peopleId"] as! String
 
             var faceAuthenticatorBuilder = FaceAuthenticator.Builder(mobileToken: mobileToken)
-            faceAuthenticatorBuilder.setPeopleId(peopleId)
+            faceAuthenticatorBuilder.setPersonId(peopleId)
 
             if let useAnalytics = arguments["useAnalytics"] as? Bool ?? nil {
                 faceAuthenticatorBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)
@@ -97,12 +97,17 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
                     faceAuthenticatorBuilder.setCaptureSettings(beforePictureInterval: beforePictureMillis)
                 }
 
-
                 if let sensorStability = iosSettings["sensorStability"] as? [String: Any] ?? nil {
                     if let sensorStability = sensorStability["sensorStability"] as? [String: Any] ?? nil {
                         let message = sensorStability["message"] as? String ?? nil
                         let stabilityThreshold = sensorStability["stabilityThreshold"] as? Double ?? nil
                         faceAuthenticatorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
+                    }
+                }
+
+                if let enableManualCapture = iosSettings["enableManualCapture"] as? Bool ?? nil {
+                    if let manualCaptureTime = iosSettings["manualCaptureTime"] as? TimeInterval ?? nil {
+                        faceAuthenticatorBuilder.setManualCaptureSettings(enable: enableManualCapture, time: manualCaptureTime)
                     }
                 }
 
