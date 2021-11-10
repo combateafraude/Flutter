@@ -186,6 +186,8 @@ documentDetector.setShowPreview(showPreview);
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
 | `List<CaptureStage> captureStages`<br><br>Array de estágios para cada captura. Esse parâmetro é útil caso você deseje modificar a maneira com qual o DocumentDetector é executado, como configurações de detecção, captura automática ou manual, verificar a qualidade da foto, etc |
 | `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
+| `Resolution resolution`<br><br>Permite configurar a resolução de captura. O método espera como parâmetro uma Resolution que fornece as opções HD, FULL_HD, QUAD_HD e ULTRA_HD. O padrão é `Resolution.ULTRA_HD` |
+
 
 | CaptureStage constructor |
 | --------- |
@@ -202,6 +204,9 @@ documentDetector.setShowPreview(showPreview);
 | `String greenMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara verde padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_green_mask.png` e parametrize "my_custom_green_mask" |
 | `String redMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara vermelha padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_red_mask.png` e parametrize "my_custom_red_mask" |
 | `String whiteMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara branca padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_white_mask.png` e parametrize "my_custom_white_mask" |
+| `MaskType maskType`<br><br>Define o tipo de máscara utilizada nas capturas. Existem dois tipos: MaskType.DEFAULT, com o padrão pontilhado e MaskType.DETAILED, que detalha cada documento. O padrão é `MaskType.DEFAULT` |
+
+
 
 | SensorSettingsAndroid constructor |
 | --------- |
