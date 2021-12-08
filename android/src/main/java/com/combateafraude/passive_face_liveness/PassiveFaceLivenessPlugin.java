@@ -90,39 +90,45 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
 
         HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
         if (messageSettingsParam != null) {
-            Integer stepName = getResourceId((String) messageSettingsParam.get("stepName"), STRING_RES);
-            Integer faceNotFoundMessage = getResourceId((String) messageSettingsParam.get("faceNotFoundMessage"), STRING_RES);
-            Integer faceTooFarMessage = getResourceId((String) messageSettingsParam.get("faceTooFarMessage"), STRING_RES);
-            Integer faceTooCloseMessage = getResourceId((String) messageSettingsParam.get("faceTooCloseMessage"), STRING_RES);
-            Integer faceNotFittedMessage = getResourceId((String) messageSettingsParam.get("faceNotFittedMessage"), STRING_RES);
-            Integer multipleFaceDetectedMessage = getResourceId((String) messageSettingsParam.get("multipleFaceDetectedMessage"), STRING_RES);
-            Integer verifyingLivenessMessage = getResourceId((String) messageSettingsParam.get("verifyingLivenessMessage"), STRING_RES);
-            Integer holdItMessage = getResourceId((String) messageSettingsParam.get("holdItMessage"), STRING_RES);
-            Integer invalidFaceMessage = getResourceId((String) messageSettingsParam.get("invalidFaceMessage"), STRING_RES);
+            String stepName = (String) messageSettingsParam.get("stepName");
+            String waitMessage = (String) messageSettingsParam.get("waitMessage");
+            String faceNotFoundMessage = (String) messageSettingsParam.get("faceNotFoundMessage");
+            String faceTooFarMessage = (String) messageSettingsParam.get("faceTooFarMessage");
+            String faceTooCloseMessage = (String) messageSettingsParam.get("faceTooCloseMessage");
+            String faceNotFittedMessage = (String) messageSettingsParam.get("faceNotFittedMessage");
+            String multipleFaceDetectedMessage = (String) messageSettingsParam.get("multipleFaceDetectedMessage");
+            String verifyingLivenessMessage = (String) messageSettingsParam.get("verifyingLivenessMessage");
+            String holdItMessage = (String) messageSettingsParam.get("holdItMessage");
+            String invalidFaceMessage = (String) messageSettingsParam.get("invalidFaceMessage");
+            String eyesClosedMessage = (String) messageSettingsParam.get("eyesClosedMessage");
+            String notCenterXMessage = (String) messageSettingsParam.get("notCenterXMessage");
+            String notCenterYMessage = (String) messageSettingsParam.get("notCenterYMessage");
+            String notCenterZMessage = (String) messageSettingsParam.get("notCenterZMessage");
 
-            MessageSettings messageSettings = new MessageSettings();
-            if (stepName != null)
-                messageSettings.setStepName(stepName);
-            if (faceNotFoundMessage != null)
-                messageSettings.setFaceNotFoundMessage(faceNotFoundMessage);
-            if (faceTooFarMessage != null)
-                messageSettings.setFaceTooFarMessage(faceTooFarMessage);
-            if (faceTooCloseMessage != null)
-                messageSettings.setFaceTooCloseMessage(faceTooCloseMessage);
-            if (faceNotFittedMessage != null)
-                messageSettings.setFaceNotFittedMessage(faceNotFittedMessage);
-            if (multipleFaceDetectedMessage != null)
-                messageSettings.setMultipleFaceDetectedMessage(multipleFaceDetectedMessage);
-            if (verifyingLivenessMessage != null)
-                messageSettings.setVerifyingLivenessMessage(verifyingLivenessMessage);
-            if (holdItMessage != null)
-                messageSettings.setHoldItMessage(holdItMessage);
-            if (invalidFaceMessage != null)
-                messageSettings.setInvalidFaceMessage(invalidFaceMessage);
+            String sensorStabilityMessage = (String) messageSettingsParam.get("sensorStabilityMessage");
+
+            MessageSettings messageSettings = new MessageSettings(
+                stepName,
+                waitMessage,
+                faceNotFoundMessage,
+                faceTooFarMessage,
+                faceTooCloseMessage,
+                faceNotFittedMessage,
+                multipleFaceDetectedMessage,
+                verifyingLivenessMessage,
+                holdItMessage,
+                invalidFaceMessage,
+                eyesClosedMessage,
+                notCenterXMessage,
+                notCenterYMessage,
+                notCenterZMessage,
+                null,
+                null,
+                sensorStabilityMessage
+            );
 
             mPassiveFaceLivenessBuilder.setMessageSettings(messageSettings);
         }
-
 
         // Android specific settings
         HashMap<String, Object> androidSettings = (HashMap<String, Object>) argumentsMap.get("androidSettings");
@@ -138,7 +144,8 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 Integer greenMaskId = getResourceId((String) customizationAndroid.get("greenMaskResIdName"), DRAWABLE_RES);
                 Integer whiteMaskId = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"), DRAWABLE_RES);
                 Integer redMaskId = getResourceId((String) customizationAndroid.get("redMaskResIdName"), DRAWABLE_RES);
-                mPassiveFaceLivenessBuilder.setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId);
+                mPassiveFaceLivenessBuilder.setLayout(layoutId);
+                mPassiveFaceLivenessBuilder.setMask(greenMaskId, whiteMaskId, redMaskId);
             }
 
             // Sensor settings
@@ -146,11 +153,10 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
             if (sensorSettings != null) {
                 HashMap<String, Object> sensorStability = (HashMap<String, Object>) sensorSettings.get("sensorStabilitySettings");
                 if (sensorStability != null) {
-                    Integer sensorMessageId = getResourceId((String) sensorStability.get("messageResourceIdName"), STRING_RES);
                     Integer stabilityStabledMillis = (Integer) sensorStability.get("stabilityStabledMillis");
                     Double stabilityThreshold = (Double) sensorStability.get("stabilityThreshold");
-                    if (sensorMessageId != null && stabilityStabledMillis != null && stabilityThreshold != null) {
-                        mPassiveFaceLivenessBuilder.setStabilitySensorSettings(new SensorStabilitySettings(sensorMessageId, stabilityStabledMillis, stabilityThreshold));
+                    if (stabilityStabledMillis != null && stabilityThreshold != null) {
+                        mPassiveFaceLivenessBuilder.setStabilitySensorSettings(new SensorStabilitySettings(stabilityStabledMillis, stabilityThreshold));
                     }
                 } else {
                     mPassiveFaceLivenessBuilder.setStabilitySensorSettings(null);
@@ -175,6 +181,11 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
             if (androidSettings.get("enableSwitchCameraButton") != null){
                 boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
                 mPassiveFaceLivenessBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
+            }
+
+            if (androidSettings.get("enableGoogleServices") != null){
+                boolean enableGoogleServices = (boolean) androidSettings.get("enableGoogleServices");
+                mPassiveFaceLivenessBuilder.enableGoogleServices(enableGoogleServices);
             }
         }
 
