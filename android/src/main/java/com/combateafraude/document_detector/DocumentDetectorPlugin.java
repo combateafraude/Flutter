@@ -141,6 +141,10 @@ public class DocumentDetectorPlugin
             String uploadingImageMessage = (String) messageSettingsParam.get("uploadingImageMessage");
             String openDocumentWrongMessage = (String) messageSettingsParam.get("openDocumentWrongMessage");
             String unsupportedDocumentMessage = (String) messageSettingsParam.get("unsupportedDocumentMessage");
+            String documentNotFoundMessage = (String) messageSettingsParam.get("documentNotFoundMessage");
+            String sensorLuminosityMessage = (String) messageSettingsParam.get("sensorLuminosityMessage");
+            String sensorOrientationMessage = (String) messageSettingsParam.get("sensorOrientationMessage");
+            String sensorStabilityMessage = (String) messageSettingsParam.get("sensorStabilityMessage");
 
             Document.RG_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_FRONT");
             Document.RG_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_BACK");
@@ -160,7 +164,11 @@ public class DocumentDetectorPlugin
                     lowQualityDocumentMessage,
                     uploadingImageMessage,
                     openDocumentWrongMessage,
-                    unsupportedDocumentMessage);
+                    unsupportedDocumentMessage,
+                    documentNotFoundMessage,
+                    sensorLuminosityMessage,
+                    sensorOrientationMessage,
+                    sensorStabilityMessage);
 
             mDocumentDetectorBuilder.setMessageSettings(messageSettings);
         }
@@ -249,12 +257,10 @@ public class DocumentDetectorPlugin
                 HashMap<String, Object> sensorLuminosity = (HashMap<String, Object>) sensorSettings
                         .get("sensorLuminositySettings");
                 if (sensorLuminosity != null) {
-                    Integer sensorMessageId = getResourceId((String) sensorLuminosity.get("messageResourceIdName"),
-                            STRING_RES);
                     Integer luminosityThreshold = (Integer) sensorLuminosity.get("luminosityThreshold");
-                    if (sensorMessageId != null && luminosityThreshold != null) {
+                    if (luminosityThreshold != null) {
                         mDocumentDetectorBuilder.setLuminositySensorSettings(
-                                new SensorLuminositySettings(sensorMessageId, luminosityThreshold));
+                                new SensorLuminositySettings(luminosityThreshold));
                     }
                 } else {
                     mDocumentDetectorBuilder.setLuminositySensorSettings(null);
@@ -278,12 +284,10 @@ public class DocumentDetectorPlugin
                 HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) sensorSettings
                         .get("sensorOrientationSettings");
                 if (sensorOrientation != null) {
-                    Integer sensorMessageId = getResourceId((String) sensorOrientation.get("messageResourceIdName"),
-                            STRING_RES);
                     Double orientationThreshold = (Double) sensorOrientation.get("orientationThreshold");
-                    if (sensorMessageId != null && orientationThreshold != null) {
+                    if (orientationThreshold != null) {
                         mDocumentDetectorBuilder.setOrientationSensorSettings(
-                                new SensorOrientationSettings(sensorMessageId, orientationThreshold));
+                                new SensorOrientationSettings(orientationThreshold));
                     }
                 } else {
                     mDocumentDetectorBuilder.setOrientationSensorSettings(null);
@@ -292,13 +296,10 @@ public class DocumentDetectorPlugin
                 HashMap<String, Object> sensorStability = (HashMap<String, Object>) sensorSettings
                         .get("sensorStabilitySettings");
                 if (sensorStability != null) {
-                    Integer sensorMessageId = getResourceId((String) sensorStability.get("messageResourceIdName"),
-                            STRING_RES);
                     Integer stabilityStabledMillis = (Integer) sensorStability.get("stabilityStabledMillis");
                     Double stabilityThreshold = (Double) sensorStability.get("stabilityThreshold");
-                    if (sensorMessageId != null && stabilityStabledMillis != null && stabilityThreshold != null) {
-                        mDocumentDetectorBuilder.setStabilitySensorSettings(new SensorStabilitySettings(sensorMessageId,
-                                stabilityStabledMillis, stabilityThreshold));
+                    if (stabilityStabledMillis != null && stabilityThreshold != null) {
+                        mDocumentDetectorBuilder.setStabilitySensorSettings(new SensorStabilitySettings(stabilityStabledMillis, stabilityThreshold));
                     }
                 } else {
                     mDocumentDetectorBuilder.setStabilitySensorSettings(null);

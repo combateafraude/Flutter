@@ -11,6 +11,7 @@ class DocumentDetectorAndroidSettings {
   bool? enableSwitchCameraButton;
   int? compressQuality;
   String? resolution;
+  bool? enableGoogleServices;
 
   DocumentDetectorAndroidSettings(
       {this.customization,
@@ -18,7 +19,8 @@ class DocumentDetectorAndroidSettings {
       this.captureStages,
       this.enableSwitchCameraButton,
       this.compressQuality,
-      this.resolution});
+      this.resolution,
+      this.enableGoogleServices});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -28,6 +30,7 @@ class DocumentDetectorAndroidSettings {
     map["enableSwitchCameraButton"] = enableSwitchCameraButton;
     map["compressQuality"] = compressQuality;
     map["resolution"] = resolution;
+    map["enableGoogleServices"] = enableGoogleServices;
 
     if (captureStages != null) {
       List<Map<String, dynamic>> stagesMap = [];
