@@ -72,7 +72,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-nodatabinding-v4.7.1
+      ref: document-detector-nodatabinding-v4.9.0
 ```
 
 ## Utilização
@@ -139,22 +139,40 @@ documentDetector.setShowPreview(showPreview);
 
 | MessageSettings |
 | --------- |
-<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, crie um arquivo de Strings em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml`, com o nome que desejar e utilize no construtor.| 
-| `String? fitTheDocumentMessageResIdName`<br><br>Padrão: "Encaixe o documento na marcação"|
-| `String? holdItMessageResIdName (disponível somente para Android)`<br><br>Padrão: "Segure assim"|
-| `String? verifyingQualityMessageResIdName`<br><br>Padrão: "Verificando qualidade…"|
-| `String? lowQualityDocumentMessageResIdName`<br><br>Padrão: "Ops, não foi possível ler as informações. Por favor, tente novamente"|
-| `String? uploadingImageMessageResIdName`<br><br>Padrão: "Enviando imagem…"|
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, modifique a String com a mensagem que deseja utilizar.| 
+| `String? fitTheDocumentMessage`<br><br>Padrão: "Encaixe o documento na marcação"|
+| `String? holdItMessage (somente para Android)`<br><br>Padrão: "Segure assim"|
+| `String? verifyingQuality`<br><br>Padrão: "Verificando qualidade…"|
+| `String? lowQualityDocument`<br><br>Padrão: "Ops, não foi possível ler as informações. Por favor, tente novamente"|
+| `String? uploadingImage`<br><br>Padrão: "Enviando imagem…"|
+| `String? openDocumentWrongMessage`<br><br>Padrão: "Esse é o {'document'} aberto, você deve fecha-lo"|
+| `String? showOpenDocumentMessage`<br><br>Padrão: ""|
+| `String? documentNotFoundMessage`<br><br>Padrão: "Não encontramos um documento"|;
+| `String? sensorLuminosityMessage`<br><br>Padrão: "Ambiente muito escuro"|;
+| `String? sensorOrientationMessage`<br><br>Padrão: "Celular não está na vertical"|;
+| `String? sensorStabilityMessage`<br><br>Padrão: "Mantenha o celular parado"|;
+| `String? unsupportedDocumentMessage`<br><br>Padrão: "Ops, parece que este documento não é suportado. Contate-nos!"|
+| `String? wrongDocumentMessage_RG_FRONT (somente para Android)`<br><br>Padrão: "Ops, esta é a frente do RG"|
+| `String? wrongDocumentMessage_RG_BACK (somente para Android)`<br><br>Padrão: "Ops, este é o verso do RG"|
+| `String? wrongDocumentMessage_RG_FULL (somente para Android)`<br><br>Padrão: "Ops, este é o RG aberto"|
+| `String? wrongDocumentMessage_CNH_FRONT (somente para Android)`<br><br>Padrão: "Ops, esta é a frente da CNH"|
+| `String? wrongDocumentMessage_CNH_BACK (somente para Android)`<br><br>Padrão: "Ops, este é o verso da CNH"|
+| `String? wrongDocumentMessage_CNH_FULL (somente para Android)`<br><br>Padrão: "Ops, esta é a CNH aberta"|
+| `String? wrongDocumentMessage_CRLV (somente para Android)`<br><br>Padrão: "Ops, este é o CRLV"|
+| `String? wrongDocumentMessage_RNE_FRONT (somente para Android)`<br><br>Padrão: "Ops, esta é a frente do RNE"|
+| `String? wrongDocumentMessage_RNE_BACK (somente para Android)`<br><br>Padrão: "Ops, este é o verso do RNE"|
 
 | Exemplo de uso |
 | --------- |
 ```dart
  MessageSettings messageSettings = new MessageSettings(
-      fitTheDocumentMessageResIdName: "fit_document_exemple",
-      holdItMessageResIdName:"hold_it_exemple",
-      verifyingQualityMessageResIdName: "verifying_quality_exemple"
-      lowQualityDocumentMessageResIdName:"low_quality_exemple" ,
-      uploadingImageMessageResIdName:"upload_image_exemple");
+      fitTheDocumentMessageResIdName: "Mensagem de exemplo",
+      holdItMessageResIdName:"Mensagem de exemplo",
+      verifyingQualityMessageResIdName: "Mensagem de exemplo"
+      lowQualityDocumentMessageResIdName:"Mensagem de exemplo" ,
+      uploadingImageMessageResIdName:"Mensagem de exemplo",
+      openDocumentWrongMessage: "Mensagem de exemplo",
+      showOpenDocumentMessage: true);
 documentDetector.setShowPreview(showPreview);
 ```
 
