@@ -1,23 +1,28 @@
+import 'package:face_authenticator/android/image_capture.dart';
+import 'package:face_authenticator/android/video_capture.dart';
 
-import 'capture_settings.dart';
 import 'customization.dart';
 import 'sensor_settings.dart';
 
 class FaceAuthenticatorAndroidSettings {
-
   FaceAuthenticatorCustomizationAndroid customization;
-  CaptureAndroidSettings captureSettings;
+  ImageCapture imageCapture;
+  VideoCapture videoCapture;
   SensorSettingsAndroid sensorSettings;
 
   FaceAuthenticatorAndroidSettings(
-  {this.customization, this.captureSettings, this.sensorSettings});
+      {this.customization,
+      this.videoCapture,
+      this.imageCapture,
+      this.sensorSettings});
 
-  Map asMap(){
+  Map asMap() {
     Map<String, dynamic> map = new Map();
 
     map["customization"] = customization?.asMap();
-    map["captureSettings"] = captureSettings?.asMap();
     map["sensorSettings"] = sensorSettings?.asMap();
+    map["imageCapture"] = imageCapture?.asMap();
+    map["videoCapture"] = videoCapture?.asMap();
 
     return map;
   }

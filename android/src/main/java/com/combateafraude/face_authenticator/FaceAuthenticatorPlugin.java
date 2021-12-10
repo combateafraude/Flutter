@@ -11,7 +11,9 @@ import androidx.annotation.NonNull;
 import com.combateafraude.faceauthenticator.FaceAuthenticatorActivity;
 import com.combateafraude.faceauthenticator.input.CaptureSettings;
 import com.combateafraude.faceauthenticator.input.FaceAuthenticator;
+import com.combateafraude.faceauthenticator.input.ImageCapture;
 import com.combateafraude.faceauthenticator.input.SensorStabilitySettings;
+import com.combateafraude.faceauthenticator.input.VideoCapture;
 import com.combateafraude.faceauthenticator.output.FaceAuthenticatorResult;
 import com.combateafraude.faceauthenticator.output.failure.SDKFailure;
 
@@ -89,7 +91,8 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
                 Integer greenMaskId = getResourceId((String) customizationAndroid.get("greenMaskResIdName"), DRAWABLE_RES);
                 Integer whiteMaskId = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"), DRAWABLE_RES);
                 Integer redMaskId = getResourceId((String) customizationAndroid.get("redMaskResIdName"), DRAWABLE_RES);
-                mFaceAuthenticatorBuilder.setLayout(layoutId, greenMaskId, whiteMaskId, redMaskId);
+                mFaceAuthenticatorBuilder.setLayout(layoutId);
+                mFaceAuthenticatorBuilder.setMask(greenMaskId, whiteMaskId, redMaskId);
             }
 
             // Sensor settings
@@ -108,14 +111,36 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
                 }
             }
 
-            // Capture settings
-            HashMap<String, Object> captureSettings = (HashMap<String, Object>) androidSettings.get("captureSettings");
-            if (captureSettings != null) {
-                Integer beforePictureMillis = (Integer) captureSettings.get("beforePictureMillis");
-                Integer afterPictureMillis = (Integer) captureSettings.get("afterPictureMillis");
-                if (beforePictureMillis != null && afterPictureMillis != null) {
-                    mFaceAuthenticatorBuilder.setCaptureSettings(new CaptureSettings(beforePictureMillis, afterPictureMillis));
+            //ImageCapture
+            HashMap<String, Object> imageCapture = (HashMap<String, Object>) androidSettings.get("imageCapture");
+            if(imageCapture != null){
+                boolean use = (Boolean) imageCapture.get("use");
+                Integer afterPictureMillis = (Integer) imageCapture.get("afterPictureMillis");
+                Integer beforePictureMillis = (Integer) imageCapture.get("beforePictureMillis");
+
+                if(use){
+                    if(afterPictureMillis != null && beforePictureMillis != null){
+                        mFaceAuthenticatorBuilder.setCaptureSettings(new ImageCapture(afterPictureMillis, beforePictureMillis));
+                    }else{
+                        mFaceAuthenticatorBuilder.setCaptureSettings(new ImageCapture());
+                    }
+                } 
+            }
+
+            //VideoCapture
+            HashMap<String, Object> videoCapture = (HashMap<String, Object>) androidSettings.get("videoCapture");
+            if(videoCapture != null){
+                boolean use = (Boolean) videoCapture.get("use");
+                Integer time = (Integer) videoCapture.get("time");
+
+                if(use){
+                    if(time != null){
+                        mFaceAuthenticatorBuilder.setCaptureSettings(new VideoCapture(time));
+                    }else{
+                        mFaceAuthenticatorBuilder.setCaptureSettings(new VideoCapture());
+                    }
                 }
+                 
             }
         }
 
