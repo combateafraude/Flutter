@@ -110,39 +110,39 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
                     mFaceAuthenticatorBuilder.setStabilitySensorSettings(null);
                 }
             }
-
-            //ImageCapture
-            HashMap<String, Object> imageCapture = (HashMap<String, Object>) androidSettings.get("imageCapture");
-            if(imageCapture != null){
-                boolean use = (Boolean) imageCapture.get("use");
-                Integer afterPictureMillis = (Integer) imageCapture.get("afterPictureMillis");
-                Integer beforePictureMillis = (Integer) imageCapture.get("beforePictureMillis");
-
-                if(use){
-                    if(afterPictureMillis != null && beforePictureMillis != null){
-                        mFaceAuthenticatorBuilder.setCaptureSettings(new ImageCapture(afterPictureMillis, beforePictureMillis));
-                    }else{
-                        mFaceAuthenticatorBuilder.setCaptureSettings(new ImageCapture());
-                    }
-                } 
-            }
-
-            //VideoCapture
-            HashMap<String, Object> videoCapture = (HashMap<String, Object>) androidSettings.get("videoCapture");
-            if(videoCapture != null){
-                boolean use = (Boolean) videoCapture.get("use");
-                Integer time = (Integer) videoCapture.get("time");
-
-                if(use){
-                    if(time != null){
-                        mFaceAuthenticatorBuilder.setCaptureSettings(new VideoCapture(time));
-                    }else{
-                        mFaceAuthenticatorBuilder.setCaptureSettings(new VideoCapture());
-                    }
-                }
-                 
-            }
         }
+
+
+        //VideoCapture
+        HashMap<String, Object> videoCapture = (HashMap<String, Object>) argumentsMap.get("videoCapture");
+        if(videoCapture != null){
+            boolean use = (Boolean) videoCapture.get("use");
+            Integer time = (Integer) videoCapture.get("time");
+
+            if(use){
+                if(time != null){
+                    mFaceAuthenticatorBuilder.setCaptureSettings(new VideoCapture(time));
+                }else{
+                    mFaceAuthenticatorBuilder.setCaptureSettings(new VideoCapture());
+                }
+            }       
+        }
+
+        //ImageCapture
+        HashMap<String, Object> imageCapture = (HashMap<String, Object>) argumentsMap.get("imageCapture");
+        if(imageCapture != null){
+            boolean use = (Boolean) imageCapture.get("use");
+            Integer afterPictureMillis = (Integer) imageCapture.get("afterPictureMillis");
+            Integer beforePictureMillis = (Integer) imageCapture.get("beforePictureMillis");
+
+            if(use){
+                if(afterPictureMillis != null && beforePictureMillis != null){
+                    mFaceAuthenticatorBuilder.setCaptureSettings(new ImageCapture(afterPictureMillis, beforePictureMillis));
+                }else{
+                    mFaceAuthenticatorBuilder.setCaptureSettings(new ImageCapture());
+                }
+            } 
+        } 
 
         // Sound settings
         Boolean enableSound = (Boolean) argumentsMap.get("sound");
