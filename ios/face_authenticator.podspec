@@ -18,5 +18,5 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
 
   s.dependency 'Flutter'
-  s.dependency 'FaceAuthenticator', '~> 2.5.0'
+  s.dependency 'FaceAuthenticator', '~> 3.0.0'
 end

@@ -93,10 +93,6 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
                     faceAuthenticatorBuilder.setLayout(layout: layout)
                 }
 
-                if let beforePictureMillis = iosSettings["beforePictureMillis"] as? TimeInterval ?? nil {
-                    faceAuthenticatorBuilder.setCaptureSettings(beforePictureInterval: beforePictureMillis)
-                }
-
                 if let sensorStability = iosSettings["sensorStability"] as? [String: Any] ?? nil {
                     if let sensorStability = sensorStability["sensorStability"] as? [String: Any] ?? nil {
                         let message = sensorStability["message"] as? String ?? nil
@@ -107,10 +103,20 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
 
                 if let enableManualCapture = iosSettings["enableManualCapture"] as? Bool ?? nil {
                     if let manualCaptureTime = iosSettings["manualCaptureTime"] as? TimeInterval ?? nil {
-                        faceAuthenticatorBuilder.setManualCaptureSettings(enable: enableManualCapture, time: manualCaptureTime)
+                        let beforePictureMillis = iosSettings["beforePictureMillis"] as? TimeInterval ?? nil
+                            
+                            faceAuthenticatorBuilder.setImageCaptureSettings(beforePictureInterval: beforePictureMillis, enableManualCapture: enableManualCapture, timeManualCapture: manualCaptureTime)
                     }
                 }
 
+            }
+            
+            if let videoCapture = arguments["videoCapture"] as? [String: Any] ?? nil {
+                if let use = videoCapture["use"] as? Bool ?? nil {
+                    if let time = videoCapture["time"] as? TimeInterval ?? nil {
+                        faceAuthenticatorBuilder.setVideoCaptureSettings(time: time)
+                    }
+                }
             }
 
             let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController

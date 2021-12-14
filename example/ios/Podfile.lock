@@ -1,8 +1,8 @@
 PODS:
   - face_authenticator (1.9.0):
-    - FaceAuthenticator (~> 2.5.0)
+    - FaceAuthenticator (~> 3.0.0)
     - Flutter
-  - FaceAuthenticator (2.5.0):
+  - FaceAuthenticator (3.0.0):
     - Sentry (= 7.1.3)
   - Flutter (1.0.0)
   - "permission_handler (5.0.1+1)":
@@ -31,8 +31,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  face_authenticator: 12f9373f57bf8b2c1396f06a5c99a223ad3bdb73
-  FaceAuthenticator: 198ac79c5844c07cff38f0ffe61a182acaa6dab0
+  face_authenticator: 46da6eade1d01b3c131427feafbcc82272db1b82
+  FaceAuthenticator: 2e9f5afafe0a5422110e98c458aabd7d9d4a421e
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
   Sentry: 6d963d64804dd06d96e778be729613f481394312

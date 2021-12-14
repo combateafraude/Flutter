@@ -1,3 +1,4 @@
+import 'package:face_authenticator/android/video_capture.dart';
 import 'package:face_authenticator/face_authenticator.dart';
 import 'package:face_authenticator/ios/settings.dart';
 import 'package:face_authenticator/result/face_authenticator_failure.dart';
@@ -52,6 +53,8 @@ class _MyAppState extends State<MyApp> {
     );
 
     faceAuthenticator.setIosSettings(iosSettings);
+
+    faceAuthenticator.setCaptureMode(videoCapture: VideoCapture(use: true, time: 5));
 
     // Put the others parameters here
 
