@@ -116,6 +116,10 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
             String notCenterYMessage = (String) messageSettingsParam.get("notCenterYMessage");
             String notCenterZMessage = (String) messageSettingsParam.get("notCenterZMessage");
 
+            String sensorLuminosityMessage = (String) messageSettingsParam.get("sensorLuminosityMessage");
+            String sensorOrientationMessage = (String) messageSettingsParam.get("sensorOrientationMessage");
+            String sensorStabilityMessage = (String) messageSettingsParam.get("sensorStabilityMessage");
+
             MessageSettings messageSettings = new MessageSettings(
                 stepName,
                 waitMessage,
@@ -130,7 +134,10 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 eyesClosedMessage,
                 notCenterXMessage,
                 notCenterYMessage,
-                notCenterZMessage
+                notCenterZMessage,
+                sensorLuminosityMessage,
+                sensorOrientationMessage,
+                sensorStabilityMessage
             );
 
             mPassiveFaceLivenessBuilder.setMessageSettings(messageSettings);
@@ -151,8 +158,8 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 Integer greenMask = getResourceId((String) customizationAndroid.get("greenMaskResIdName"), DRAWABLE_RES);
                 Integer whiteMask = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"), DRAWABLE_RES);
                 Integer redMask = getResourceId((String) customizationAndroid.get("redMaskResIdName"), DRAWABLE_RES);
-                mPassiveFaceLivenessBuilder.setLayout(layoutId, greenMask, whiteMask, redMask);
-
+                mPassiveFaceLivenessBuilder.setLayout(layoutId);
+                mPassiveFaceLivenessBuilder.setMask(greenMask, whiteMask, redMask);
             }
 
             // Sensor settings
@@ -164,7 +171,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                     Integer stabilityStabledMillis = (Integer) sensorStability.get("stabilityStabledMillis");
                     Double stabilityThreshold = (Double) sensorStability.get("stabilityThreshold");
                     if (sensorMessageId != null && stabilityStabledMillis != null && stabilityThreshold != null) {
-                        mPassiveFaceLivenessBuilder.setStabilitySensorSettings(new SensorStabilitySettings(sensorMessageId, stabilityStabledMillis, stabilityThreshold));
+                        mPassiveFaceLivenessBuilder.setStabilitySensorSettings(new SensorStabilitySettings(stabilityStabledMillis, stabilityThreshold));
                     }
                 } else {
                     mPassiveFaceLivenessBuilder.setStabilitySensorSettings(null);
@@ -175,7 +182,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 Integer messageResourceIdName = (Integer) sensorOrientation.get("messageResourceIdName");
                 Double stabilityThreshold = (Double) sensorOrientation.get("stabilityThreshold");
                 if (messageResourceIdName != null && stabilityThreshold != null){
-                    SensorOrientationSettings sensorOrientationSettings = new SensorOrientationSettings(messageResourceIdName, stabilityThreshold);
+                    SensorOrientationSettings sensorOrientationSettings = new SensorOrientationSettings(stabilityThreshold);
                     mPassiveFaceLivenessBuilder.setOrientationSensorSettings(sensorOrientationSettings);
                 }
             }
@@ -201,6 +208,20 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
                 mPassiveFaceLivenessBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
             }
+
+            if (androidSettings.get("enableGoogleServices") != null){
+                boolean enableGoogleServices = (boolean) androidSettings.get("enableGoogleServices");
+                mPassiveFaceLivenessBuilder.enableGoogleServices(enableGoogleServices);
+            }
+
+            if(androidSettings.get("enableEmulator") != null){
+                    boolean enableEmulator = (boolean) androidSettings.get("enableEmulator");
+                    mPassiveFaceLivenessBuilder.setUseEmulator(enableEmulator);
+                }
+                if(androidSettings.get("enableRootDevices") != null){
+                    boolean enableRootDevices = (boolean) androidSettings.get("enableRootDevices");
+                    mPassiveFaceLivenessBuilder.setUseRoot(enableRootDevices);
+                }
         }
 
         // Sound settings

@@ -63,7 +63,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-compatible-v2.8.0
+      ref: passive-face-liveness-compatible-v3.0.0
 ```
 
 ## Utilização
@@ -132,12 +132,13 @@ passiveFaceLiveness.setShowPreview(showPreview);
 | `String multipleFaceDetectedMessage`<br><br>Padrão: "Mais de um rosto detectado" |
 | `String verifyingLivenessMessage`<br><br>Padrão: "Verificando selfie…" |
 | `String invalidFaceMessage`<br><br>Padrão: "Ops, rosto inválido. Por favor, tente novamente" |
-| `String eyesClosedMessage`<br><br>Padrão: "Seus olhos estão fechados" |
-| `String notCenterXMessage`<br><br>Padrão: "Centralize seu rosto na vertical" |
-| `String notCenterYMessage`<br><br>Padrão: "Centralize seu rosto na horizontal" |
-| `String notCenterZMessage`<br><br>Padrão: "Seu rosto não está reto à máscara" |
-
-
+| `String? sensorLuminosityMessage`<br><br>Padrão: "Ambiente muito escuro"|;
+| `String? sensorOrientationMessage`<br><br>Padrão: "Celular não está na vertical"|;
+| `String? sensorStabilityMessage`<br><br>Padrão: "Mantenha o celular parado"|;
+| `String eyesClosedMessage (somente para Android)`<br><br>Padrão: "Seus olhos estão fechados" |
+| `String notCenterXMessage (somente para Android)`<br><br>Padrão: "Centralize seu rosto na vertical" |
+| `String notCenterYMessage (somente para Android)`<br><br>Padrão: "Centralize seu rosto na horizontal" |
+| `String notCenterZMessage (somente para Android)`<br><br>Padrão: "Seu rosto não está reto à máscara" |
 
 | <b>Exemplo de uso </b> |
 
@@ -166,7 +167,9 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
 | `int showButtonTime`<br><br>Altera o tempo para a exibição do botão de captura manual. O padrão é `20000` milisegundos |
 | `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
-
+| `bool enableGoogleServices`<br><br>Permite habilitar/desabilitar recursos do SDK que consomem GoogleServices no SDK, não recomendamos desabilitar os serviços por conta da perda de segurança. O padrão é `True` |
+| `bool enableEmulator`<br><br>Permite o uso de emulador quando `true` |
+| `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
 
 | PassiveFaceLivenessCustomizationAndroid constructor |
 | --------- |
@@ -188,7 +191,6 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 
 | SensorStabilitySettingsAndroid constructor |
 | --------- |
-| `String messageResourceIdName`<br><br>Nome do string resource à ser mostrado quando o celular não estiver estável. A mensagem padrão é "Mantenha o celular parado". Por exemplo, caso deseje mostrar a String "Teste", crie uma String em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml` com o nome `R.string.my_custom_stability_string` e valor "Teste" e parametrize "my_custom_stability_string" |
 | `int stabilityStabledMillis`<br><br>Quantos milissegundos o celular deve se manter no limiar correto para ser considerado estável. O padrão é `2000` ms |
 | `double stabilityThreshold`<br><br>Limiar inferior entre estável/instável, em variação de m/s² entre as últimas duas coletas do sensor. O padrão é `0.5` m/s² |
 

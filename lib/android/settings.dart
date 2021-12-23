@@ -8,13 +8,19 @@ class PassiveFaceLivenessAndroidSettings {
   SensorSettingsAndroid sensorSettings;
   int showButtonTime;
   bool enableSwitchCameraButton;
+  bool enableGoogleServices;
+  bool enableEmulator;
+  bool enableRootDevices;
 
   PassiveFaceLivenessAndroidSettings(
       {this.customization,
       this.captureSettings,
       this.sensorSettings,
       this.showButtonTime,
-      this.enableSwitchCameraButton});
+      this.enableSwitchCameraButton,
+      this.enableGoogleServices,
+      this.enableEmulator,
+      this.enableRootDevices});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -24,6 +30,9 @@ class PassiveFaceLivenessAndroidSettings {
     map["sensorSettings"] = sensorSettings?.asMap();
     map["showButtonTime"] = showButtonTime;
     map["enableSwitchCameraButton"] = enableSwitchCameraButton;
+    map["enableGoogleServices"] = enableGoogleServices;
+    map["enableEmulator"] = enableEmulator;
+    map["enableRootDevices"] = enableRootDevices;
 
     return map;
   }
