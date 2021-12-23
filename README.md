@@ -72,7 +72,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v4.11.0
+      ref: document-detector-v5.0.0
 ```
 
 ## Utilização
@@ -193,7 +193,8 @@ documentDetector.setShowPreview(showPreview);
 | `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
 | `Resolution resolution`<br><br>Permite configurar a resolução de captura. O método espera como parâmetro uma Resolution que fornece as opções HD, FULL_HD, QUAD_HD e ULTRA_HD. O padrão é `Resolution.ULTRA_HD` |
 | `bool enableGoogleServices`<br><br>Permite habilitar/desabilitar recursos do SDK que consomem GoogleServices no SDK, não recomendamos desabilitar os serviços por conta da perda de segurança. O padrão é `True` |
-
+| `bool enableEmulator`<br><br>Permite o uso de emulador quando `true` |
+| `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
 
 
 | CaptureStage constructor |

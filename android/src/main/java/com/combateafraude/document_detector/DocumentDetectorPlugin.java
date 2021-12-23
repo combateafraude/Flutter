@@ -265,21 +265,6 @@ public class DocumentDetectorPlugin
                 } else {
                     mDocumentDetectorBuilder.setLuminositySensorSettings(null);
                 }
-
-                if(androidSettings.get("enableSwitchCameraButton") != null){
-                    boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
-                    mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
-                }
-
-                if(androidSettings.get("compressQuality") != null){
-                    int compressQuality = (int) androidSettings.get("compressQuality");
-                    mDocumentDetectorBuilder.setCompressSettings(compressQuality);
-                }
-
-                String resolution = (String) androidSettings.get("resolution");
-                if(resolution != null){
-                    mDocumentDetectorBuilder.setResolutionSettings(Resolution.valueOf(resolution));
-                }
                 
                 HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) sensorSettings
                         .get("sensorOrientationSettings");
@@ -305,6 +290,31 @@ public class DocumentDetectorPlugin
                     mDocumentDetectorBuilder.setStabilitySensorSettings(null);
                 }
             }
+        }
+
+        if(androidSettings.get("compressQuality") != null){
+            int compressQuality = (int) androidSettings.get("compressQuality");
+            mDocumentDetectorBuilder.setCompressSettings(compressQuality);
+        }
+
+        String resolution = (String) androidSettings.get("resolution");
+            if(resolution != null){
+            mDocumentDetectorBuilder.setResolutionSettings(Resolution.valueOf(resolution));
+        }
+
+        if (androidSettings.get("useEmulator") != null){
+            Boolean useEmulator = (Boolean) androidSettings.get("useEmulator");
+            mDocumentDetectorBuilder.setUseEmulator(useEmulator);
+        }
+
+        if(androidSettings.get("useRoot") != null){
+            Boolean useRoot = (Boolean) androidSettings.get("useRoot");
+            mDocumentDetectorBuilder.setUseRoot(useRoot);
+        }
+
+        if(androidSettings.get("enableSwitchCameraButton") != null){
+            boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
+            mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
         }
 
         // Popup settings
