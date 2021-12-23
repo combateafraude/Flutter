@@ -213,6 +213,16 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 boolean enableGoogleServices = (boolean) androidSettings.get("enableGoogleServices");
                 mPassiveFaceLivenessBuilder.enableGoogleServices(enableGoogleServices);
             }
+
+            if (androidSettings.get("useEmulator") != null){
+                boolean useEmulator = (boolean) androidSettings.get("useEmulator");
+                mPassiveFaceLivenessBuilder.setUseEmulator(useEmulator);
+            }
+
+            if (androidSettings.get("useRoot") != null){
+                boolean useRoot = (boolean) androidSettings.get("useRoot");
+                mPassiveFaceLivenessBuilder.setUseRoot(useRoot);
+            }
         }
 
         // Sound settings
