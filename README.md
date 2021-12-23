@@ -61,7 +61,7 @@ dependencies:
   face_authenticator:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: face-authenticator-compatible-v2.0.0
+      ref: face-authenticator-compatible-v3.0.0
 ```
 
 ## Utilização
@@ -101,6 +101,8 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 | `FaceAuthenticatorCustomizationAndroid customization`<br><br>Customização do layout em Android da activity |
 | `CaptureSettings captureSettings`<br><br>Configuraçōes de tempos de estabilização para a captura da selfie |
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
+| `bool enableEmulator`<br><br>Permite o uso de emulador quando `true` |
+| `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
 
 | FaceAuthenticatorCustomizationAndroid constructor |
 | --------- |
