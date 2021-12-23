@@ -133,6 +133,7 @@ public class DocumentDetectorPlugin
 
         HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
         if (messageSettingsParam != null) {
+            String waitMessage = (String) messageSettingsParam.get("waitMessage");
             String fitTheDocumentMessage = (String) messageSettingsParam.get("fitTheDocumentMessage");
             String holdItMessage = (String) messageSettingsParam.get("holdItMessage");
             String verifyingQualityMessage = (String) messageSettingsParam.get("verifyingQualityMessage");
@@ -140,6 +141,10 @@ public class DocumentDetectorPlugin
             String uploadingImageMessage = (String) messageSettingsParam.get("uploadingImageMessage");
             String openDocumentWrongMessage = (String) messageSettingsParam.get("openDocumentWrongMessage");
             String unsupportedDocumentMessage = (String) messageSettingsParam.get("unsupportedDocumentMessage");
+            String documentNotFoundMessage = (String) messageSettingsParam.get("documentNotFoundMessage");
+            String sensorLuminosityMessage = (String) messageSettingsParam.get("sensorLuminosityMessage");
+            String sensorOrientationMessage = (String) messageSettingsParam.get("sensorOrientationMessage");
+            String sensorStabilityMessage = (String) messageSettingsParam.get("sensorStabilityMessage");
 
             Document.RG_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_FRONT");
             Document.RG_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_BACK");
@@ -152,13 +157,18 @@ public class DocumentDetectorPlugin
             Document.RNE_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RNE_BACK");
 
             MessageSettings messageSettings = new MessageSettings(
+                    waitMessage,
                     fitTheDocumentMessage,
                     holdItMessage,
                     verifyingQualityMessage,
                     lowQualityDocumentMessage,
                     uploadingImageMessage,
                     openDocumentWrongMessage,
-                    unsupportedDocumentMessage);
+                    unsupportedDocumentMessage,
+                    documentNotFoundMessage,
+                    sensorLuminosityMessage,
+                    sensorOrientationMessage,
+                    sensorStabilityMessage);
 
             mDocumentDetectorBuilder.setMessageSettings(messageSettings);
         }
@@ -247,41 +257,27 @@ public class DocumentDetectorPlugin
                 HashMap<String, Object> sensorLuminosity = (HashMap<String, Object>) sensorSettings
                         .get("sensorLuminositySettings");
                 if (sensorLuminosity != null) {
-                    Integer sensorMessageId = getResourceId((String) sensorLuminosity.get("messageResourceIdName"),
-                            STRING_RES);
                     Integer luminosityThreshold = (Integer) sensorLuminosity.get("luminosityThreshold");
-                    if (sensorMessageId != null && luminosityThreshold != null) {
+                    if (luminosityThreshold != null) {
                         mDocumentDetectorBuilder.setLuminositySensorSettings(
-                                new SensorLuminositySettings(sensorMessageId, luminosityThreshold));
+                                new SensorLuminositySettings(luminosityThreshold));
                     }
                 } else {
                     mDocumentDetectorBuilder.setLuminositySensorSettings(null);
-                }
-
-                if(androidSettings.get("enableSwitchCameraButton") != null){
-                    boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
-                    mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
                 }
 
                 if(androidSettings.get("compressQuality") != null){
                     int compressQuality = (int) androidSettings.get("compressQuality");
                     mDocumentDetectorBuilder.setCompressSettings(compressQuality);
                 }
-
-                String resolution = (String) androidSettings.get("resolution");
-                if(resolution != null){
-                    mDocumentDetectorBuilder.setResolutionSettings(Resolution.valueOf(resolution));
-                }
                 
                 HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) sensorSettings
                         .get("sensorOrientationSettings");
                 if (sensorOrientation != null) {
-                    Integer sensorMessageId = getResourceId((String) sensorOrientation.get("messageResourceIdName"),
-                            STRING_RES);
                     Double orientationThreshold = (Double) sensorOrientation.get("orientationThreshold");
-                    if (sensorMessageId != null && orientationThreshold != null) {
+                    if (orientationThreshold != null) {
                         mDocumentDetectorBuilder.setOrientationSensorSettings(
-                                new SensorOrientationSettings(sensorMessageId, orientationThreshold));
+                                new SensorOrientationSettings(orientationThreshold));
                     }
                 } else {
                     mDocumentDetectorBuilder.setOrientationSensorSettings(null);
@@ -290,19 +286,36 @@ public class DocumentDetectorPlugin
                 HashMap<String, Object> sensorStability = (HashMap<String, Object>) sensorSettings
                         .get("sensorStabilitySettings");
                 if (sensorStability != null) {
-                    Integer sensorMessageId = getResourceId((String) sensorStability.get("messageResourceIdName"),
-                            STRING_RES);
                     Integer stabilityStabledMillis = (Integer) sensorStability.get("stabilityStabledMillis");
                     Double stabilityThreshold = (Double) sensorStability.get("stabilityThreshold");
-                    if (sensorMessageId != null && stabilityStabledMillis != null && stabilityThreshold != null) {
-                        mDocumentDetectorBuilder.setStabilitySensorSettings(new SensorStabilitySettings(sensorMessageId,
-                                stabilityStabledMillis, stabilityThreshold));
+                    if (stabilityStabledMillis != null && stabilityThreshold != null) {
+                        mDocumentDetectorBuilder.setStabilitySensorSettings(new SensorStabilitySettings(stabilityStabledMillis, stabilityThreshold));
                     }
                 } else {
                     mDocumentDetectorBuilder.setStabilitySensorSettings(null);
                 }
             }
         }
+
+        if(androidSettings.get("enableSwitchCameraButton") != null){
+            boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
+            mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
+        }
+
+        if(androidSettings.get("enableEmulator") != null){
+            boolean enableEmulator = (boolean) androidSettings.get("enableEmulator");
+            mDocumentDetectorBuilder.setUseEmulator(enableEmulator);
+            
+        }
+        if(androidSettings.get("enableRootDevices") != null){
+            boolean enableRootDevices = (boolean) androidSettings.get("enableRootDevices");
+            mDocumentDetectorBuilder.setUseRoot(enableRootDevices);
+        }
+
+        String resolution = (String) androidSettings.get("resolution");
+        if(resolution != null){
+            mDocumentDetectorBuilder.setResolutionSettings(Resolution.valueOf(resolution));
+        }                
 
         // Popup settings
         Boolean showPopup = (Boolean) argumentsMap.get("popup");

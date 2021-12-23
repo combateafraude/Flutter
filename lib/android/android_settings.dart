@@ -11,6 +11,9 @@ class DocumentDetectorAndroidSettings {
   bool enableSwitchCameraButton;
   int compressQuality;
   String resolution;
+  bool enableGoogleServices;
+  bool enableEmulator;
+  bool enableRootDevices;
 
   DocumentDetectorAndroidSettings(
       {this.customization,
@@ -18,7 +21,10 @@ class DocumentDetectorAndroidSettings {
       this.captureStages,
       this.enableSwitchCameraButton,
       this.compressQuality,
-      this.resolution});
+      this.resolution,
+      this.enableGoogleServices,
+      this.enableEmulator,
+      this.enableRootDevices});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -28,6 +34,9 @@ class DocumentDetectorAndroidSettings {
     map["enableSwitchCameraButton"] = enableSwitchCameraButton;
     map["compressQuality"] = compressQuality;
     map["resolution"] = resolution;
+    map["enableGoogleServices"] = enableGoogleServices;
+    map["enableEmulator"] = enableEmulator;
+    map["enableRootDevices"] = enableRootDevices;
 
     if (captureStages != null) {
       List<Map<String, dynamic>> stagesMap = [];

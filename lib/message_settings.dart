@@ -1,4 +1,5 @@
 class MessageSettings {
+  String waitMessage;
   String fitTheDocumentMessage;
   String holdItMessage;
   String verifyingQualityMessage;
@@ -6,6 +7,10 @@ class MessageSettings {
   String uploadingImageMessage;
   String openDocumentWrongMessage;
   bool showOpenDocumentMessage;
+  String documentNotFoundMessage;
+  String sensorLuminosityMessage;
+  String sensorOrientationMessage;
+  String sensorStabilityMessage;
 
   String unsupportedDocumentMessage;
   String wrongDocumentMessage_RG_FRONT;
@@ -18,15 +23,19 @@ class MessageSettings {
   String wrongDocumentMessage_RNE_FRONT;
   String wrongDocumentMessage_RNE_BACK;
 
-
   MessageSettings(
-      {this.fitTheDocumentMessage,
+      {this.waitMessage,
+      this.fitTheDocumentMessage,
       this.holdItMessage,
       this.verifyingQualityMessage,
       this.lowQualityDocumentMessage,
       this.uploadingImageMessage,
       this.openDocumentWrongMessage,
       this.showOpenDocumentMessage,
+      this.documentNotFoundMessage,
+      this.sensorLuminosityMessage,
+      this.sensorOrientationMessage,
+      this.sensorStabilityMessage,
       this.unsupportedDocumentMessage,
       this.wrongDocumentMessage_RG_FRONT,
       this.wrongDocumentMessage_RG_BACK,
@@ -48,7 +57,10 @@ class MessageSettings {
     map["uploadingImageMessage"] = uploadingImageMessage;
     map["openDocumentWrongMessage"] = openDocumentWrongMessage;
     map["showOpenDocumentMessage"] = showOpenDocumentMessage;
-
+    map["documentNotFoundMessage"] = documentNotFoundMessage;
+    map["sensorLuminosityMessage"] = sensorLuminosityMessage;
+    map["sensorOrientationMessage"] = sensorOrientationMessage;
+    map["sensorStabilityMessage"] = sensorStabilityMessage;
     map["unsupportedDocumentMessage"] = unsupportedDocumentMessage;
     map["wrongDocumentMessage_RG_FRONT"] = wrongDocumentMessage_RG_FRONT;
     map["wrongDocumentMessage_RG_BACK"] = wrongDocumentMessage_RG_BACK;

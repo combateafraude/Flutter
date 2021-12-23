@@ -69,7 +69,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-compatible-v4.9.2
+      ref: document-detector-compatible-v5.0.0
 ```
 
 ## Utilização
@@ -142,6 +142,10 @@ documentDetector.setShowPreview(showPreview);
 | `String? uploadingImage`<br><br>Padrão: "Enviando imagem…"|
 | `String? openDocumentWrongMessage`<br><br>Padrão: "Esse é o {'document'} aberto, você deve fecha-lo"|
 | `String? showOpenDocumentMessage`<br><br>Padrão: ""|
+| `String? documentNotFoundMessage`<br><br>Padrão: "Não encontramos um documento"|;
+| `String? sensorLuminosityMessage`<br><br>Padrão: "Ambiente muito escuro"|;
+| `String? sensorOrientationMessage`<br><br>Padrão: "Celular não está na vertical"|;
+| `String? sensorStabilityMessage`<br><br>Padrão: "Mantenha o celular parado"|;
 | `String? unsupportedDocumentMessage`<br><br>Padrão: "Ops, parece que este documento não é suportado. Contate-nos!"|
 | `String? wrongDocumentMessage_RG_FRONT (somente para Android)`<br><br>Padrão: "Ops, esta é a frente do RG"|
 | `String? wrongDocumentMessage_RG_BACK (somente para Android)`<br><br>Padrão: "Ops, este é o verso do RG"|
@@ -152,6 +156,7 @@ documentDetector.setShowPreview(showPreview);
 | `String? wrongDocumentMessage_CRLV (somente para Android)`<br><br>Padrão: "Ops, este é o CRLV"|
 | `String? wrongDocumentMessage_RNE_FRONT (somente para Android)`<br><br>Padrão: "Ops, esta é a frente do RNE"|
 | `String? wrongDocumentMessage_RNE_BACK (somente para Android)`<br><br>Padrão: "Ops, este é o verso do RNE"|
+
 
 | Exemplo de uso |
 | --------- |
@@ -182,6 +187,10 @@ documentDetector.setShowPreview(showPreview);
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
 | `List<CaptureStage> captureStages`<br><br>Array de estágios para cada captura. Esse parâmetro é útil caso você deseje modificar a maneira com qual o DocumentDetector é executado, como configurações de detecção, captura automática ou manual, verificar a qualidade da foto, etc |
 | `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
+| `Resolution resolution`<br><br>Permite configurar a resolução de captura. O método espera como parâmetro uma Resolution que fornece as opções HD, FULL_HD, QUAD_HD e ULTRA_HD. O padrão é `Resolution.ULTRA_HD` |
+| `bool enableGoogleServices`<br><br>Permite habilitar/desabilitar recursos do SDK que consomem GoogleServices no SDK, não recomendamos desabilitar os serviços por conta da perda de segurança. O padrão é `True` |
+| `bool enableEmulator`<br><br>Permite o uso de emulador quando `true` |
+| `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
 
 | CaptureStage constructor |
 | --------- |
@@ -207,17 +216,14 @@ documentDetector.setShowPreview(showPreview);
 
 | SensorLuminositySettingsAndroid constructor |
 | --------- |
-| `String messageResourceIdName`<br><br>Nome do string resource à ser mostrado quando o ambiente estiver escuro. A mensagem padrão é "Ambiente muito escuro". Por exemplo, caso deseje mostrar a String "Teste", crie uma String em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml` com o nome `R.string.my_custom_luminosity_string` e valor "Teste" e parametrize "my_custom_luminosity_string" |
 | `int luminosityThreshold`<br><br>Limiar inferior entre luminosidade aceitável/não aceitável, em lx. O padrão é `5` lx |
 
 | SensorOrientationSettingsAndroid constructor |
 | --------- |
-| `String messageResourceIdName`<br><br>Nome do string resource à ser mostrado quando o celular não estiver na horizontal. A mensagem padrão é "Celular não está na horizontal". Por exemplo, caso deseje mostrar a String "Teste", crie uma String em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml` com o nome `R.string.my_custom_orientation_string` e valor "Teste" e parametrize "my_custom_orientation_string" |
 | `double orientationThreshold`<br><br>Limiar inferior entre orientação correta/incorreta, em variação de m/s² da orientação totalmente horizontal. O padrão é `3` m/s² |
 
 | SensorStabilitySettingsAndroid constructor |
 | --------- |
-| `String messageResourceIdName`<br><br>Nome do string resource à ser mostrado quando o celular não estiver estável. A mensagem padrão é "Mantenha o celular parado". Por exemplo, caso deseje mostrar a String "Teste", crie uma String em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml` com o nome `R.string.my_custom_stability_string` e valor "Teste" e parametrize "my_custom_stability_string" |
 | `int stabilityStabledMillis`<br><br>Quantos milissegundos o celular deve se manter no limiar correto para ser considerado estável. O padrão é `2000` ms |
 | `double stabilityThreshold`<br><br>Limiar inferior entre estável/instável, em variação de m/s² entre as últimas duas coletas do sensor. O padrão é `0.5` m/s² |
 
