@@ -73,8 +73,9 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             let multipleFaceDetectedMessage = messageSettingsParam["multipleFaceDetectedMessage"] as? String ?? nil
             let holdItMessage = messageSettingsParam["holdItMessage"] as? String ?? nil
             let invalidFaceMessage = messageSettingsParam["invalidFaceMessage"] as? String ?? nil
-            
-             passiveFaceLivenessBuilder.setMessageSettings(
+            let sensorStabilityMessage = messageSettingsParam["sensorStabilityMessage"] as? String ?? nil
+
+            _ = passiveFaceLivenessBuilder.setMessageSettings(
                 waitMessage: waitMessage,
                 stepName: stepName,
                 faceNotFoundMessage: faceNotFoundMessage,
@@ -82,7 +83,8 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 faceNotFittedMessage: faceNotFittedMessage,
                 holdItMessage: holdItMessage,
                 invalidFaceMessage: invalidFaceMessage,
-                multipleFaceDetectedMessage: multipleFaceDetectedMessage)
+                multipleFaceDetectedMessage: multipleFaceDetectedMessage,
+                sensorStabilityMessage: sensorStabilityMessage)
          }
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
@@ -145,9 +147,8 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             
             if let sensorStability = iosSettings["sensorStability"] as? [String: Any] ?? nil {
                 if let sensorStability = sensorStability["sensorStability"] as? [String: Any] ?? nil {
-                    let message = sensorStability["message"] as? String ?? nil
                     let stabilityThreshold = sensorStability["stabilityThreshold"] as? Double ?? nil
-                    passiveFaceLivenessBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
+                    passiveFaceLivenessBuilder.setStabilitySensorSettings(stabilityThreshold: stabilityThreshold)
                 }
             }
             

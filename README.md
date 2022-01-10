@@ -13,7 +13,7 @@ Ao utilizar nosso plugin, certifique-se que você concorda com nossas [Política
 | Flutter             | 1.12+  |
 | Android API         | 21+    |
 | iOS                 | 11.0+  |
-| Swift               | 5      |
+| Swift               | 5.5.2  |
 
 ## Configurações
 
@@ -63,7 +63,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-compatible-v4.0.0
+      ref: passive-face-liveness-compatible-v4.1.0
 ```
 
 ## Utilização
@@ -132,9 +132,9 @@ passiveFaceLiveness.setShowPreview(showPreview);
 | `String multipleFaceDetectedMessage`<br><br>Padrão: "Mais de um rosto detectado" |
 | `String verifyingLivenessMessage`<br><br>Padrão: "Verificando selfie…" |
 | `String invalidFaceMessage`<br><br>Padrão: "Ops, rosto inválido. Por favor, tente novamente" |
-| `String? sensorLuminosityMessage`<br><br>Padrão: "Ambiente muito escuro"|;
-| `String? sensorOrientationMessage`<br><br>Padrão: "Celular não está na vertical"|;
 | `String? sensorStabilityMessage`<br><br>Padrão: "Mantenha o celular parado"|;
+| `String? sensorLuminosityMessage (somente para Android)`<br><br>Padrão: "Ambiente muito escuro"|;
+| `String? sensorOrientationMessage (somente para Android)`<br><br>Padrão: "Celular não está na vertical"|;
 | `String eyesClosedMessage (somente para Android)`<br><br>Padrão: "Seus olhos estão fechados" |
 | `String notCenterXMessage (somente para Android)`<br><br>Padrão: "Centralize seu rosto na vertical" |
 | `String notCenterYMessage (somente para Android)`<br><br>Padrão: "Centralize seu rosto na horizontal" |
