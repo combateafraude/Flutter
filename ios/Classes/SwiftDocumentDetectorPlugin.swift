@@ -108,6 +108,12 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             let wrongDocumentMessage_RNE_FRONT = messageSettingsParam["wrongDocumentMessage_RNE_FRONT"] as? String ?? nil
             let wrongDocumentMessage_RNE_BACK = messageSettingsParam["wrongDocumentMessage_RNE_BACK"] as? String ?? nil
             
+            let sensorLuminosityMessage = messageSettingsParam["sensorLuminosityMessage"] as? String ?? nil
+            
+            let sensorOrientationMessage = messageSettingsParam["sensorOrientationMessage"] as? String ?? nil
+            
+            let sensorStabilityMessage = messageSettingsParam["sensorStabilityMessage"] as? String ?? nil
+            
             documentDetectorBuilder.setMessageSettings(waitMessage: waitMessage,
                                                        fitTheDocumentMessage: fitTheDocumentMessage,
                                                        verifyingQualityMessage: verifyingQualityMessage,
@@ -122,7 +128,10 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                                                        wrongDocumentMessage_CNH_FULL: wrongDocumentMessage_CNH_FULL,
                                                        wrongDocumentMessage_CRLV: wrongDocumentMessage_CRLV,
                                                        wrongDocumentMessage_RNE_FRONT: wrongDocumentMessage_RNE_FRONT,
-                                                       wrongDocumentMessage_RNE_BACK: wrongDocumentMessage_RNE_BACK)
+                                                       wrongDocumentMessage_RNE_BACK: wrongDocumentMessage_RNE_BACK,
+                                                       sensorLuminosityMessage: sensorLuminosityMessage,
+                                                       sensorOrientationMessage: sensorOrientationMessage,
+                                                       sensorStabilityMessage: sensorStabilityMessage)
          }
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
@@ -144,21 +153,18 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             if let sensorStability = iosSettings["sensorStability"] as? [String: Any] ?? nil {
 
                 if let sensorLuminosity = iosSettings["sensorLuminosity"] as? [String: Any] ?? nil {
-                    let message = sensorLuminosity["message"] as? String ?? nil
                     let luminosityThreshold = sensorLuminosity["luminosityThreshold"] as? Float ?? nil
-                    documentDetectorBuilder.setLuminositySensorSettings(message: message, luminosityThreshold: luminosityThreshold)
+                    documentDetectorBuilder.setLuminositySensorSettings(luminosityThreshold: luminosityThreshold)
                 }
 
                 if let sensorOrientation = iosSettings["sensorOrientation"] as? [String: Any] ?? nil {
-                    let message = sensorOrientation["message"] as? String ?? nil
                     let orientationThreshold = sensorOrientation["orientationThreshold"] as? Double ?? nil
-                    documentDetectorBuilder.setOrientationSensorSettings(message: message, orientationThreshold: orientationThreshold)
+                    documentDetectorBuilder.setOrientationSensorSettings(orientationThreshold: orientationThreshold)
                 }
 
                 if let sensorStability = iosSettings["sensorStability"] as? [String: Any] {
-                    let message = sensorStability["message"] as? String ?? nil
                     let stabilityThreshold = sensorStability["stabilityThreshold"] as? Double ?? nil
-                    documentDetectorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
+                    documentDetectorBuilder.setStabilitySensorSettings(stabilityThreshold: stabilityThreshold)
                 }
 
             }
