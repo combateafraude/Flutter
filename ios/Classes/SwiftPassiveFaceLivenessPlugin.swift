@@ -70,17 +70,18 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             let multipleFaceDetectedMessage = messageSettingsParam["multipleFaceDetectedMessage"] as? String ?? nil
             let holdItMessage = messageSettingsParam["holdItMessage"] as? String ?? nil
             let invalidFaceMessage = messageSettingsParam["invalidFaceMessage"] as? String ?? nil
-            
-            let messageSettings = MessageSettings()
-            if(stepName != nil){ messageSettings.stepName = stepName}
-            if(faceNotFoundMessage != nil){ messageSettings.faceNotFoundMessage = faceNotFoundMessage}
-            if(faceTooFarMessage != nil){ messageSettings.faceTooFarMessage = faceTooFarMessage}
-            if(faceNotFittedMessage != nil){ messageSettings.faceNotFittedMessage = faceNotFittedMessage}
-            if(multipleFaceDetectedMessage != nil){ messageSettings.multipleFaceDetectedMessage = multipleFaceDetectedMessage}
-            if(holdItMessage != nil){ messageSettings.holdItMessage = holdItMessage}
-            if(invalidFaceMessage != nil){ messageSettings.invalidFaceMessage = invalidFaceMessage}
-            
-            passiveFaceLivenessBuilder.setMessageSettings(messageSettings)
+            let sensorStabilityMessage = messageSettingsParam["sensorStabilityMessage"] as? String ?? nil
+
+            _ = passiveFaceLivenessBuilder.setMessageSettings(
+                waitMessage: waitMessage,
+                stepName: stepName,
+                faceNotFoundMessage: faceNotFoundMessage,
+                faceTooFarMessage: faceTooFarMessage,
+                faceNotFittedMessage: faceNotFittedMessage,
+                holdItMessage: holdItMessage,
+                invalidFaceMessage: invalidFaceMessage,
+                multipleFaceDetectedMessage: multipleFaceDetectedMessage,
+                sensorStabilityMessage: sensorStabilityMessage)
          }
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
@@ -144,7 +145,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 if let sensorStability = sensorStability["sensorStability"] as? [String: Any] ?? nil {
                     let message = sensorStability["message"] as? String ?? nil
                     let stabilityThreshold = sensorStability["stabilityThreshold"] as? Double ?? nil
-                    passiveFaceLivenessBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
+                    passiveFaceLivenessBuilder.setStabilitySensorSettings(stabilityThreshold: stabilityThreshold)
                 }
             }
             
