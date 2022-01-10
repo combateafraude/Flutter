@@ -6,7 +6,7 @@ PODS:
     - Sentry (= 7.1.3)
     - TensorFlowLiteSwift (= 2.4.0)
   - Flutter (1.0.0)
-  - permission_handler (5.0.0):
+  - "permission_handler (5.1.0+2)":
     - Flutter
   - Sentry (7.1.3):
     - Sentry/Core (= 7.1.3)
@@ -44,11 +44,11 @@ SPEC CHECKSUMS:
   document_detector: f5d6f79cefde231cd8d93160ff55d19a20c036b3
   DocumentDetector: c2a4c612b463ff66c264f07b48dfc19ce0cf702e
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  permission_handler: c136c8d87d3438c7fad2754fe144e5f712c536b2
+  permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   Sentry: 6d963d64804dd06d96e778be729613f481394312
   TensorFlowLiteC: 09f8ac75a76caeadb19bcfa694e97454cc1ecf87
   TensorFlowLiteSwift: f062dc1178120100d825d7799fd9f115b4a37fee
 
-PODFILE CHECKSUM: 48ed8943beec15aeee7d28a74e100b515836e362
+PODFILE CHECKSUM: 6e0dc356b34505295c4fa2d888145b6eb54536a9
 
 COCOAPODS: 1.10.1
