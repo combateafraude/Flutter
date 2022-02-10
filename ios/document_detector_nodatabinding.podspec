@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
-  s.name             = 'document_detector'
-  s.version          = '5.1.1'
+  s.name             = 'document_detector_nodatabinding'
+  s.version          = '6.0.0'
   s.summary          = 'Flutter plugin for DocumentDetector'
   s.homepage         = 'https://www.combateafraude.com/'
   s.license          = { :file => 'LICENSE', :type => 'MIT' }
@@ -14,5 +14,5 @@ Pod::Spec.new do |s|
   s.swift_version = '5.3.2'
   
   s.dependency 'Flutter'
-  s.dependency 'DocumentDetector', '5.1.0'
+  s.dependency 'DocumentDetector', '6.0.0'
 end

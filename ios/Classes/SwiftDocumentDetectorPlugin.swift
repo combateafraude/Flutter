@@ -56,7 +56,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             }
         }
         
-        var documentDetectorBuilder = DocumentDetector.Builder(mobileToken: mobileToken)
+        var documentDetectorBuilder = DocumentDetectorSdk.Builder(mobileToken: mobileToken)
         
         documentDetectorBuilder.enableMultiLanguage(enable: false)
 

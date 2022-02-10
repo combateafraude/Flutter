@@ -1,8 +1,8 @@
 PODS:
-  - document_detector (5.1.0):
-    - DocumentDetector (= 5.1.0)
+  - document_detector_nodatabinding (6.0.0):
+    - DocumentDetector (= 6.0.0)
     - Flutter
-  - DocumentDetector (5.1.0):
+  - DocumentDetector (6.0.0):
     - Sentry (= 7.1.3)
     - TensorFlowLiteSwift (= 2.4.0)
   - Flutter (1.0.0)
@@ -20,7 +20,7 @@ PODS:
     - TensorFlowLiteC (= 2.4.0)
 
 DEPENDENCIES:
-  - document_detector (from `.symlinks/plugins/document_detector/ios`)
+  - document_detector_nodatabinding (from `.symlinks/plugins/document_detector_nodatabinding/ios`)
   - Flutter (from `Flutter`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
 
@@ -33,16 +33,16 @@ SPEC REPOS:
     - TensorFlowLiteSwift
 
 EXTERNAL SOURCES:
-  document_detector:
-    :path: ".symlinks/plugins/document_detector/ios"
+  document_detector_nodatabinding:
+    :path: ".symlinks/plugins/document_detector_nodatabinding/ios"
   Flutter:
     :path: Flutter
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  document_detector: f5d6f79cefde231cd8d93160ff55d19a20c036b3
-  DocumentDetector: c2a4c612b463ff66c264f07b48dfc19ce0cf702e
+  document_detector_nodatabinding: b76cdf44390f616e41597fe78991a4ea99015cd5
+  DocumentDetector: 7465d721fdcc0fd83df7099ea3a76b97a42c8925
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   permission_handler: c136c8d87d3438c7fad2754fe144e5f712c536b2
   Sentry: 6d963d64804dd06d96e778be729613f481394312
@@ -51,4 +51,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 48ed8943beec15aeee7d28a74e100b515836e362
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

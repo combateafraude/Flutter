@@ -1,21 +1,21 @@
-import 'package:document_detector/android/android_settings.dart';
-import 'package:document_detector/android/capture_stage/capture_mode.dart';
-import 'package:document_detector/android/capture_stage/capture_stage.dart';
-import 'package:document_detector/android/customization.dart';
-import 'package:document_detector/android/maskType.dart';
-import 'package:document_detector/android/resolution.dart';
-import 'package:document_detector/message_settings.dart';
-import 'package:document_detector/show_preview.dart';
-import 'package:document_detector/document_detector_step.dart';
-import 'package:document_detector/document_type.dart';
-import 'package:document_detector/ios/ios_settings.dart';
-import 'package:document_detector/result/capture.dart';
-import 'package:document_detector/result/document_detector_failure.dart';
-import 'package:document_detector/result/document_detector_result.dart';
-import 'package:document_detector/result/document_detector_success.dart';
+import 'package:document_detector_nodatabinding/android/android_settings.dart';
+import 'package:document_detector_nodatabinding/android/capture_stage/capture_mode.dart';
+import 'package:document_detector_nodatabinding/android/capture_stage/capture_stage.dart';
+import 'package:document_detector_nodatabinding/android/customization.dart';
+import 'package:document_detector_nodatabinding/android/maskType.dart';
+import 'package:document_detector_nodatabinding/android/resolution.dart';
+import 'package:document_detector_nodatabinding/message_settings.dart';
+import 'package:document_detector_nodatabinding/show_preview.dart';
+import 'package:document_detector_nodatabinding/document_detector_step.dart';
+import 'package:document_detector_nodatabinding/document_type.dart';
+import 'package:document_detector_nodatabinding/ios/ios_settings.dart';
+import 'package:document_detector_nodatabinding/result/capture.dart';
+import 'package:document_detector_nodatabinding/result/document_detector_failure.dart';
+import 'package:document_detector_nodatabinding/result/document_detector_result.dart';
+import 'package:document_detector_nodatabinding/result/document_detector_success.dart';
 import 'package:flutter/material.dart';
 
-import 'package:document_detector/document_detector.dart';
+import 'package:document_detector_nodatabinding/document_detector.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -57,15 +57,6 @@ class _MyAppState extends State<MyApp> {
         new DocumentDetectorIosSettings(
             enableManualCapture: true, timeEnableManualCapture: 15000);
 
-    DocumentDetectorAndroidSettings detectorAndroidSettings =
-        new DocumentDetectorAndroidSettings(
-            enableSwitchCameraButton: false,
-            compressQuality: 50,
-            resolution: Resolution.QUAD_HD);
-
-    DocumentDetectorCustomizationAndroid documentDetectorCustomizationAndroid =
-        new DocumentDetectorCustomizationAndroid(maskType: MaskType.DETAILED);
-
     MessageSettings messageSettings = new MessageSettings(
         openDocumentWrongMessage: "Feche o documento",
         showOpenDocumentMessage: true,
@@ -74,8 +65,6 @@ class _MyAppState extends State<MyApp> {
     documentDetector.setMessageSettings(messageSettings);
 
     documentDetector.setDocumentFlow(documentSteps);
-
-    documentDetector.setAndroidSettings(detectorAndroidSettings);
 
     // Put the others parameters here
 
