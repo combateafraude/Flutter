@@ -27,7 +27,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         
         let mobileToken = arguments["mobileToken"] as! String
         
-        var passiveFaceLivenessBuilder = PassiveFaceLiveness.Builder(mobileToken: mobileToken)
+        var passiveFaceLivenessBuilder = PassiveFaceLivenessSdk.Builder(mobileToken: mobileToken)
 
         if let peopleId = arguments["peopleId"] as? String ?? nil {
             passiveFaceLivenessBuilder.setPersonId(personId: peopleId)
@@ -63,6 +63,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
          }
 
          if let messageSettingsParam = arguments["messageSettings"] as? [String: Any] ?? nil {
+            let waitMessage = messageSettingsParam["waitMessage"] as? String ?? nil
             let stepName = messageSettingsParam["stepName"] as? String ?? nil
             let faceNotFoundMessage = messageSettingsParam["faceNotFoundMessage"] as? String ?? nil
             let faceTooFarMessage = messageSettingsParam["faceTooFarMessage"] as? String ?? nil
