@@ -151,6 +151,7 @@ documentDetector.setShowPreview(showPreview);
 | `String? sensorOrientationMessage`<br><br>Padrão: "Celular não está na vertical"|;
 | `String? sensorStabilityMessage`<br><br>Padrão: "Mantenha o celular parado"|;
 | `String? unsupportedDocumentMessage`<br><br>Padrão: "Ops, parece que este documento não é suportado. Contate-nos!"|
+| `String? popupDocumentSubtitleMessage`<br><br>Padrão: "Posicione o documento em uma mesa, centralize-o na marcação e aguarde a captura automática."|
 | `String? wrongDocumentMessage_RG_FRONT (somente para Android)`<br><br>Padrão: "Ops, esta é a frente do RG"|
 | `String? wrongDocumentMessage_RG_BACK (somente para Android)`<br><br>Padrão: "Ops, este é o verso do RG"|
 | `String? wrongDocumentMessage_RG_FULL (somente para Android)`<br><br>Padrão: "Ops, este é o RG aberto"|
@@ -212,7 +213,7 @@ documentDetector.setShowPreview(showPreview);
 | `String greenMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara verde padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_green_mask.png` e parametrize "my_custom_green_mask" |
 | `String redMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara vermelha padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_red_mask.png` e parametrize "my_custom_red_mask" |
 | `String whiteMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara branca padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_white_mask.png` e parametrize "my_custom_white_mask" |
-| `MaskType maskType`<br><br>Define o tipo de máscara utilizada nas capturas. Existem dois tipos: MaskType.DEFAULT, com o padrão pontilhado e MaskType.DETAILED, que detalha cada documento. O padrão é `MaskType.DEFAULT` |
+| `MaskType maskType`<br><br>Define o tipo de máscara utilizada nas capturas. Existem três tipos: MaskType.DEFAULT, com o padrão pontilhado, MaskType.DETAILED, que detalha cada documento e MaskType.NONE, que remove completamente a máscara. O padrão é `MaskType.DEFAULT` |
 
 
 
