@@ -4,6 +4,7 @@ import 'package:document_detector/android/capture_stage/capture_stage.dart';
 import 'package:document_detector/android/customization.dart';
 import 'package:document_detector/android/maskType.dart';
 import 'package:document_detector/android/resolution.dart';
+import 'package:document_detector/ios/ios_resolution.dart';
 import 'package:document_detector/message_settings.dart';
 import 'package:document_detector/show_preview.dart';
 import 'package:document_detector/document_detector_step.dart';
@@ -70,6 +71,13 @@ class _MyAppState extends State<MyApp> {
         openDocumentWrongMessage: "Feche o documento",
         showOpenDocumentMessage: true,
         unsupportedDocumentMessage: "Ops, esse documento não é suportado");
+
+    DocumentDetectorIosSettings iosSettings = new DocumentDetectorIosSettings(
+      resolution: IosResolution.HD1280x720,
+      compressQuality: 1
+    );
+
+    documentDetector.setIosSettings(iosSettings);
 
     documentDetector.setMessageSettings(messageSettings);
 

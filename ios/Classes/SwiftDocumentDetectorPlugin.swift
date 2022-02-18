@@ -56,7 +56,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             }
         }
         
-        var documentDetectorBuilder = DocumentDetector.Builder(mobileToken: mobileToken)
+        var documentDetectorBuilder = DocumentDetectorSdk.Builder(mobileToken: mobileToken)
         
         documentDetectorBuilder.enableMultiLanguage(enable: false)
 
@@ -170,6 +170,14 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
 
             }
             
+            if let resolution = iosSettings["resolution"] as? String ?? nil {
+                documentDetectorBuilder.setResolutionSettings(resolution: getResolutionByString(resolution: resolution))
+            }
+                        
+            if let compressionQuality = iosSettings["compressionQuality"] as? Double ?? nil {
+                documentDetectorBuilder.setCompressSettings(compressionQuality: compressionQuality)
+            }
+            
             
             if let customization = iosSettings["customization"] as? [String: Any] ?? nil {
 
@@ -224,6 +232,36 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         scannerVC.documentDetectorDelegate = self
         controller.present(scannerVC, animated: true, completion: nil)
     }
+    
+    public func getResolutionByString(resolution: String) -> Resolution {
+            if(resolution == "LOW"){
+                return .low
+            }else if(resolution == "MEDIUM"){
+                return .medium
+            }else if(resolution == "HIGH"){
+                return .high
+            }else if(resolution == "PHOTO"){
+                return .photo
+            }else if(resolution == "INPUT_PRIORITY"){
+                return .inputPriority
+            }else if(resolution == "hd1280x720"){
+                return .hd1280x720
+            }else if(resolution == "hd1920x1080"){
+                return .hd1920x1080
+            }else if(resolution == "hd4K3840x2160"){
+                return .hd4K3840x2160
+            }else if(resolution == "iFrame960x540"){
+                return .iFrame960x540
+            }else if(resolution == "iFrame1280x720"){
+                return .iFrame1280x720
+            }else if(resolution == "VGA640x480"){
+                return .vga640x480
+            }else if(resolution == "CIF352x288"){
+                return .cif352x288
+            }else{
+                return .hd1280x720
+            }
+        }
 
     func convertToDocument (documentType: String) -> Document {
         switch documentType {
