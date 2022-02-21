@@ -62,11 +62,11 @@ class DocumentDetector {
     this.showPreview = showPreview;
   }
 
-  void setAutoDetection(bool enable){
+  void setAutoDetection(bool enable) {
     this.autoDetection = enable;
   }
 
-  void setCurrentStepDoneDelay(bool showDelay, int delay){
+  void setCurrentStepDoneDelay(bool showDelay, int delay) {
     this.showDelay = showDelay;
     this.delay = delay;
   }
@@ -102,7 +102,7 @@ class DocumentDetector {
 
     List<Map<String, dynamic>> stepsMap = [];
     for (var step in documentDetectorSteps) {
-      stepsMap.add(step.asMap());
+      stepsMap.add(step?.asMap());
     }
     params["documentSteps"] = stepsMap;
 

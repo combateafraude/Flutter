@@ -22,9 +22,9 @@ class CaptureStage {
 
     map["durationMillis"] = durationMillis;
     map["wantSensorCheck"] = wantSensorCheck;
-    map["qualitySettings"] = qualitySettings.asMap();
-    map["detectionSettings"] = detectionSettings.asMap();
-    map["captureMode"] = captureMode.toString().split(".")[1];
+    map["qualitySettings"] = qualitySettings?.asMap();
+    map["detectionSettings"] = detectionSettings?.asMap();
+    map["captureMode"] = captureMode?.toString()?.split(".")[1];
 
     return map;
   }

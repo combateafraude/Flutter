@@ -41,7 +41,7 @@ class DocumentDetectorAndroidSettings {
     if (captureStages != null) {
       List<Map<String, dynamic>> stagesMap = [];
       for (var stage in captureStages) {
-        stagesMap.add(stage.asMap());
+        stagesMap.add(stage?.asMap());
       }
       map["captureStages"] = stagesMap;
     }
