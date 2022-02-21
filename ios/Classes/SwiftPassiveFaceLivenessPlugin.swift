@@ -151,6 +151,18 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             }
         }
         
+        
+        if let videoCapture = arguments["videoCapture"] as? [String: Any] ?? nil {
+            if let use = videoCapture["use"] as? Bool ?? nil {
+                if(use){
+                    if let time = videoCapture["time"] as? TimeInterval ?? nil {
+                        passiveFaceLivenessBuilder.setVideoCaptureSettings(time: time)
+                    }
+                    
+                }
+            }
+        }
+        
         if let imageCapture = arguments["imageCapture"] as? [String: Any] ?? nil {
             if let use = imageCapture["use"] as? Bool ?? nil {
                 if(use){
@@ -203,11 +215,20 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
     
     public func passiveFaceLivenessController(_ passiveFacelivenessController: PassiveFaceLivenessController, didFinishWithResults results: PassiveFaceLivenessResult) {
         let response : NSMutableDictionary! = [:]
+        
 
         if let image = results.image {
             let imagePath = saveImageToDocumentsDirectory(image: image, withName: "selfie.jpg")
             response["success"] = NSNumber(value: true)
             response["imagePath"] = imagePath
+            response["imageUrl"] = results.imageUrl
+            response["signedResponse"] = results.signedResponse
+            response["trackingId"] = results.trackingId
+
+            flutterResult!(response)
+        }else{
+            response["success"] = NSNumber(value: true)
+            response["imagePath"] = "undefined"
             response["imageUrl"] = results.imageUrl
             response["signedResponse"] = results.signedResponse
             response["trackingId"] = results.trackingId
