@@ -32,7 +32,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
 
             let peopleId = arguments["peopleId"] as! String
 
-            var faceAuthenticatorBuilder = FaceAuthenticator.Builder(mobileToken: mobileToken)
+            var faceAuthenticatorBuilder = FaceAuthenticatorSdk.Builder(mobileToken: mobileToken)
             faceAuthenticatorBuilder.setPersonId(peopleId)
 
             if let useAnalytics = arguments["useAnalytics"] as? Bool ?? nil {
@@ -113,8 +113,10 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
             
             if let videoCapture = arguments["videoCapture"] as? [String: Any] ?? nil {
                 if let use = videoCapture["use"] as? Bool ?? nil {
-                    if let time = videoCapture["time"] as? TimeInterval ?? nil {
-                        faceAuthenticatorBuilder.setVideoCaptureSettings(time: time)
+                    if(use){
+                        if let time = videoCapture["time"] as? TimeInterval ?? nil {
+                            faceAuthenticatorBuilder.setVideoCaptureSettings(time: time)
+                        }
                     }
                 }
             }

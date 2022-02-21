@@ -47,15 +47,6 @@ class _MyAppState extends State<MyApp> {
 
     faceAuthenticator.setPeopleId(peopleId);
 
-    FaceAuthenticatorIosSettings iosSettings = new FaceAuthenticatorIosSettings(
-      enableManualCapture: true,
-      manualCaptureTime: 10
-    );
-
-    faceAuthenticator.setIosSettings(iosSettings);
-
-    faceAuthenticator.setCaptureMode(videoCapture: VideoCapture(use: true, time: 5));
-
     // Put the others parameters here
 
     try {
