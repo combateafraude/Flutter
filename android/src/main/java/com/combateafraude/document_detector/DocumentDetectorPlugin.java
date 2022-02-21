@@ -145,6 +145,7 @@ public class DocumentDetectorPlugin
             String sensorLuminosityMessage = (String) messageSettingsParam.get("sensorLuminosityMessage");
             String sensorOrientationMessage = (String) messageSettingsParam.get("sensorOrientationMessage");
             String sensorStabilityMessage = (String) messageSettingsParam.get("sensorStabilityMessage");
+            String popupDocumentSubtitleMessage = (String) messageSettingsParam.get("popupDocumentSubtitleMessage");
 
             Document.RG_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_FRONT");
             Document.RG_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_BACK");
@@ -168,7 +169,8 @@ public class DocumentDetectorPlugin
                     documentNotFoundMessage,
                     sensorLuminosityMessage,
                     sensorOrientationMessage,
-                    sensorStabilityMessage);
+                    sensorStabilityMessage,
+                    popupDocumentSubtitleMessage);
 
             mDocumentDetectorBuilder.setMessageSettings(messageSettings);
         }

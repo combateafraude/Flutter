@@ -13,10 +13,13 @@ Ao utilizar nosso plugin, certifique-se que você concorda com nossas [Política
 | Configuração mínima | Versão |
 | ------------------- | ------ |
 | Flutter             | 1.12+  |
+| Dart                | 2.12+  |
 | Android API         | 21+    |
 | Compile SDK Version | 30+    |
 | iOS                 | 11.0+  |
 | Swift               | 5.5.2  |
+
+Caso você utilize Dart em uma versão abaixo de 2.12, confira a versão compatível [aqui](https://github.com/combateafraude/Flutter/tree/document-detector-compatible).
 
 ## Configurações
 
@@ -69,7 +72,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-compatible-v5.2.0
+      ref: document-detector-compatible-v5.5.0
 ```
 
 ## Utilização
@@ -102,6 +105,7 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
 | `.setShowPreview(ShowPreview showPreview)`<br><br> Preview para verificação da qualidade da foto |
+| `.setMessageSettings(MessageSettings messageSettings)`<br><br> Permite personalizar mensagens exibidas no balão de "status" durante o processo de captura e análise. |
 | `.setAndroidSettings(DocumentDetectorAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(DocumentDetectorIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
 
@@ -147,6 +151,7 @@ documentDetector.setShowPreview(showPreview);
 | `String? sensorOrientationMessage`<br><br>Padrão: "Celular não está na vertical"|;
 | `String? sensorStabilityMessage`<br><br>Padrão: "Mantenha o celular parado"|;
 | `String? unsupportedDocumentMessage`<br><br>Padrão: "Ops, parece que este documento não é suportado. Contate-nos!"|
+| `String? popupDocumentSubtitleMessage`<br><br>Padrão: "Posicione o documento em uma mesa, centralize-o na marcação e aguarde a captura automática."|
 | `String? wrongDocumentMessage_RG_FRONT (somente para Android)`<br><br>Padrão: "Ops, esta é a frente do RG"|
 | `String? wrongDocumentMessage_RG_BACK (somente para Android)`<br><br>Padrão: "Ops, este é o verso do RG"|
 | `String? wrongDocumentMessage_RG_FULL (somente para Android)`<br><br>Padrão: "Ops, este é o RG aberto"|
@@ -192,6 +197,7 @@ documentDetector.setShowPreview(showPreview);
 | `bool enableEmulator`<br><br>Permite o uso de emulador quando `true` |
 | `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
 
+
 | CaptureStage constructor |
 | --------- |
 | `int durationMillis`<br><br>Duração em milissegundos deste respectivo passo antes de passar para o próximo, se houver. `null` para infinito |
@@ -207,6 +213,9 @@ documentDetector.setShowPreview(showPreview);
 | `String greenMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara verde padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_green_mask.png` e parametrize "my_custom_green_mask" |
 | `String redMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara vermelha padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_red_mask.png` e parametrize "my_custom_red_mask" |
 | `String whiteMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara branca padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_white_mask.png` e parametrize "my_custom_white_mask" |
+| `MaskType maskType`<br><br>Define o tipo de máscara utilizada nas capturas. Existem três tipos: MaskType.DEFAULT, com o padrão pontilhado, MaskType.DETAILED, que detalha cada documento e MaskType.NONE, que remove completamente a máscara. O padrão é `MaskType.DEFAULT` |
+
+
 
 | SensorSettingsAndroid constructor |
 | --------- |
@@ -306,3 +315,9 @@ Os tipos de falha existentes são:
 - `SecurityReason`: quando o dispositivo não é seguro para executar o SDK. Se esta falha ocorrer, avise-nos;
 - `StorageReason`: quando o dispositivo não possui espaço suficiente para a captura de alguma foto. Pode ocorrer em produção;
 - `LibraryReason`: quando alguma falha interna impossibilitou a execução do SDK. Pode ocorrer devico à erros de configuração do projeto, não deve ocorrer em produção;
+
+### Customizando view iOS
+
+Para customização iOS, é necessário que os plugins Flutter estejam adicionados localmente no projeto. A customizção é realizada nativamente com a abordagem ViewCode.
+
+[Clique aqui](https://github.com/combateafraude/Flutter/tree/ios-customization-example) e acesse um exemplo com um guia para utilização desse recurso.

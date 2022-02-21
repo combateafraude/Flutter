@@ -10,16 +10,20 @@ class CaptureStage {
   DetectionSettings detectionSettings;
   CaptureMode captureMode;
 
-  CaptureStage({this.durationMillis, @required this.wantSensorCheck, this.qualitySettings,
-    this.detectionSettings, this.captureMode});
+  CaptureStage(
+      {this.durationMillis,
+      @required this.wantSensorCheck,
+      this.qualitySettings,
+      this.detectionSettings,
+      this.captureMode});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
 
     map["durationMillis"] = durationMillis;
     map["wantSensorCheck"] = wantSensorCheck;
-    map["qualitySettings"] = qualitySettings?.asMap();
-    map["detectionSettings"] = detectionSettings?.asMap();
+    map["qualitySettings"] = qualitySettings.asMap();
+    map["detectionSettings"] = detectionSettings.asMap();
     map["captureMode"] = captureMode.toString().split(".")[1];
 
     return map;
