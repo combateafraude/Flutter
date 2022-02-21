@@ -27,7 +27,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         
         let mobileToken = arguments["mobileToken"] as! String
         
-        var passiveFaceLivenessBuilder = PassiveFaceLiveness.Builder(mobileToken: mobileToken)
+        var passiveFaceLivenessBuilder = PassiveFaceLivenessSdk.Builder(mobileToken: mobileToken)
 
         passiveFaceLivenessBuilder.enableMultiLanguage(enable: false)
 
@@ -88,12 +88,6 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
          }
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
-            
-            if let enableManualCapture = iosSettings["enableManualCapture"] as? Bool ?? nil {
-                if let timeEnableManualCapture = iosSettings["timeEnableManualCapture"] as? Double ?? nil {
-                    passiveFaceLivenessBuilder.setManualCaptureSettings(enable: enableManualCapture, time: timeEnableManualCapture)
-                }
-            }
 
             if let customization = iosSettings["customization"] as? [String: Any] ?? nil {
                 
@@ -139,11 +133,6 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 
                 passiveFaceLivenessBuilder.setLayout(layout: layout)
             }
-
-            if let beforePictureMillis = iosSettings["beforePictureMillis"] as? TimeInterval ?? nil {
-                passiveFaceLivenessBuilder.setCaptureSettings(beforePictureInterval: beforePictureMillis)
-            }
-
             
             if let sensorStability = iosSettings["sensorStability"] as? [String: Any] ?? nil {
                 if let sensorStability = sensorStability["sensorStability"] as? [String: Any] ?? nil {
@@ -152,6 +141,36 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 }
             }
             
+            if let resolution = iosSettings["resolution"] as? String ?? nil {
+                passiveFaceLivenessBuilder.setResolutionSettings(resolution: getResolutionByString(resolution: resolution))
+            }
+            
+            if let compressionQuality = iosSettings["compressionQuality"] as? Double ?? nil {
+                passiveFaceLivenessBuilder.setCompressSettings(compressionQuality: compressionQuality)
+            }
+        }
+        
+        
+        if let videoCapture = arguments["videoCapture"] as? [String: Any] ?? nil {
+            if let use = videoCapture["use"] as? Bool ?? nil {
+                if(use){
+                    if let time = videoCapture["time"] as? TimeInterval ?? nil {
+                        passiveFaceLivenessBuilder.setVideoCaptureSettings(time: time)
+                    }
+                    
+                }
+            }
+        }
+        
+        if let imageCapture = arguments["imageCapture"] as? [String: Any] ?? nil {
+            if let use = imageCapture["use"] as? Bool ?? nil {
+                if(use){
+                    if let beforePictureMillis = imageCapture["beforePictureMillis"] as? TimeInterval ?? nil {
+                        passiveFaceLivenessBuilder.setImageCaptureSettings(beforePictureInterval: beforePictureMillis, enableManualCapture: true, timeManualCapture: 10)
+                    }
+                    
+                }
+            }
         }
 
         //passiveFaceLivenessBuilder.setOverlay(overlay: PassiveFaceLivenessOverlay())
@@ -163,17 +182,58 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         controller.present(scannerVC, animated: true, completion: nil)
     }
     
+    public func getResolutionByString(resolution: String) -> Resolution {
+        if(resolution == "LOW"){
+            return .low
+        }else if(resolution == "MEDIUM"){
+            return .medium
+        }else if(resolution == "HIGH"){
+            return .high
+        }else if(resolution == "PHOTO"){
+            return .photo
+        }else if(resolution == "INPUT_PRIORITY"){
+            return .inputPriority
+        }else if(resolution == "hd1280x720"){
+            return .hd1280x720
+        }else if(resolution == "hd1920x1080"){
+            return .hd1920x1080
+        }else if(resolution == "hd4K3840x2160"){
+            return .hd4K3840x2160
+        }else if(resolution == "iFrame960x540"){
+            return .iFrame960x540
+        }else if(resolution == "iFrame1280x720"){
+            return .iFrame1280x720
+        }else if(resolution == "VGA640x480"){
+            return .vga640x480
+        }else if(resolution == "CIF352x288"){
+            return .cif352x288
+        }else{
+            return .hd1280x720
+        }
+    }
+    
     public func passiveFaceLivenessController(_ passiveFacelivenessController: PassiveFaceLivenessController, didFinishWithResults results: PassiveFaceLivenessResult) {
         let response : NSMutableDictionary! = [:]
+        
 
-        let imagePath = saveImageToDocumentsDirectory(image: results.image, withName: "selfie.jpg")
-        response["success"] = NSNumber(value: true)
-        response["imagePath"] = imagePath
-        response["imageUrl"] = results.imageUrl
-        response["signedResponse"] = results.signedResponse
-        response["trackingId"] = results.trackingId
+        if let image = results.image {
+            let imagePath = saveImageToDocumentsDirectory(image: image, withName: "selfie.jpg")
+            response["success"] = NSNumber(value: true)
+            response["imagePath"] = imagePath
+            response["imageUrl"] = results.imageUrl
+            response["signedResponse"] = results.signedResponse
+            response["trackingId"] = results.trackingId
 
-        flutterResult!(response)
+            flutterResult!(response)
+        }else{
+            response["success"] = NSNumber(value: true)
+            response["imagePath"] = "undefined"
+            response["imageUrl"] = results.imageUrl
+            response["signedResponse"] = results.signedResponse
+            response["trackingId"] = results.trackingId
+
+            flutterResult!(response)
+        }
     }
     
     public func passiveFaceLivenessControllerDidCancel(_ passiveFacelivenessController: PassiveFaceLivenessController) {

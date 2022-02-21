@@ -11,9 +11,12 @@ Ao utilizar nosso plugin, certifique-se que você concorda com nossas [Política
 | Configuração mínima | Versão |
 | ------------------- | ------ |
 | Flutter             | 1.12+  |
+| Dart                | 2.12+  |
 | Android API         | 21+    |
 | iOS                 | 11.0+  |
 | Swift               | 5.5.2  |
+
+Caso você utilize Dart em uma versão abaixo de 2.12, confira a versão compatível [aqui](https://github.com/combateafraude/Flutter/tree/passive-face-liveness-compatible).
 
 ## Configurações
 
@@ -63,7 +66,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-compatible-v4.1.0
+      ref: passive-face-liveness-compatible-v4.5.5
 ```
 
 ## Utilização
@@ -95,12 +98,12 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 | `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
 | `.setShowPreview(ShowPreview showPreview)`<br><br> Preview para verificação de qualidade da foto |
+| `.setCaptureMode(VideoCapture videoCapture, ImageCapture imageCapture)`<br><br> Define as configurações de captura |
 | `.setAndroidSettings(PassiveFaceLivenessAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(PassiveFaceLivenessIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
 
 | ShowPreview |
 | --------- |
-<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, modifique a String com a mensagem que deseja utilizar.|
 | `bool show`<br><br>Habilita/Desabilita preview
 | `String title`<br><br>Título
 | `String subTitle`<br><br> Subtítulo
@@ -120,14 +123,13 @@ passiveFaceLiveness.setShowPreview(showPreview);
 ```
 
 | MessageSettings |
-| --------- |
-<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, modifique a String com a mensagem que deseja utilizar.| 
+| --------- | 
 | `bool show`<br><br>Padrão: Habilita/Desabilita preview |
 | `String stepName`<br><br>Padrão: "Registro Facial" |
 | `String holdItMessage`<br><br>Padrão: "Segure assim" |
 | `String faceNotFoundMessage`<br><br>Padrão: "Não encontramos nenhum rosto" |
-| `String faceTooFarMessage`<br><br>Padrão: ""Aproxime o rosto" |
-| `String faceTooCloseMessage`<br><br>Padrão: "Afaste o rosto" |
+| `String faceTooFarMessage`<br><br>Padrão: "Aproxime o rosto" |
+| `String faceTooCloseMessage (somente para Android)`<br><br>Padrão: "Afaste o rosto" |
 | `String faceNotFittedMessage`<br><br>Padrão: "Encaixe seu rosto" |
 | `String multipleFaceDetectedMessage`<br><br>Padrão: "Mais de um rosto detectado" |
 | `String verifyingLivenessMessage`<br><br>Padrão: "Verificando selfie…" |
@@ -138,21 +140,21 @@ passiveFaceLiveness.setShowPreview(showPreview);
 | `String eyesClosedMessage (somente para Android)`<br><br>Padrão: "Seus olhos estão fechados" |
 | `String notCenterXMessage (somente para Android)`<br><br>Padrão: "Centralize seu rosto na vertical" |
 | `String notCenterYMessage (somente para Android)`<br><br>Padrão: "Centralize seu rosto na horizontal" |
-| `String notCenterZMessage (somente para Android)`<br><br>Padrão: "Seu rosto não está reto à máscara" |
+| `String notCenterZMessage (somente para Android)`<br><br>Padrão: "Seu rosto não está ajustado à máscara" |
 
 | <b>Exemplo de uso </b> |
 
 ```dart
 MessageSettings messageSettings = new MessageSettings(
-        stepName: "face_register_exemple",
-        faceNotFoundMessage: "face_not_found_exemple",
-        faceTooFarMessage: "face_too_far_exemple",
-        faceTooCloseMessage: "face_too_close_exemple",
-        faceNotFittedMessage: "fit_your_face_exemple",
-        multipleFaceDetectedMessage: "more_than_one_face_exemple",
-        verifyingLivenessMessage: "verifying_liveness_exemple",
-        holdItMessage: "hold_it_exemple",
-        invalidFaceMessage: "invalid_face_exemple");
+        stepName: "Mensagem de exemplo",
+        faceNotFoundMessage: "Mensagem de exemplo",
+        faceTooFarMessage: "Mensagem de exemplo",
+        faceTooCloseMessage: "Mensagem de exemplo",
+        faceNotFittedMessage: "Mensagem de exemplo",
+        multipleFaceDetectedMessage: "Mensagem de exemplo",
+        verifyingLivenessMessage: "Mensagem de exemplo",
+        holdItMessage: "Mensagem de exemplo",
+        invalidFaceMessage: "Mensagem de exemplo");
 
 passiveFaceLiveness.setMessageSettings(messageSettings);
 
@@ -168,8 +170,8 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 | `int showButtonTime`<br><br>Altera o tempo para a exibição do botão de captura manual. O padrão é `20000` milisegundos |
 | `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
 | `bool enableGoogleServices`<br><br>Permite habilitar/desabilitar recursos do SDK que consomem GoogleServices no SDK, não recomendamos desabilitar os serviços por conta da perda de segurança. O padrão é `True` |
-| `bool enableEmulator`<br><br>Permite o uso de emulador quando `true` |
-| `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
+| `bool emulatorSettings`<br><br>Permite habilitar/desabilitar o uso de dispositivos emulados no SDK, recomendamos desabilitar o uso dos emuladores por questões de segurança. O padrão é `False` |
+| `bool rootSettings`<br><br>Permite habilitar/desabilitar o uso de dispositivos com root no SDK, recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `False` |
 
 | PassiveFaceLivenessCustomizationAndroid constructor |
 | --------- |
@@ -178,6 +180,8 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 | `String greenMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara verde padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_green_mask.png` e parametrize "my_custom_green_mask" |
 | `String redMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara vermelha padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_red_mask.png` e parametrize "my_custom_red_mask" |
 | `String whiteMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara branca padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_white_mask.png` e parametrize "my_custom_white_mask" |
+| `MaskType maskType`<br><br>Define o tipo de máscara utilizada nas capturas. Existem dois tipos: MaskType.DEFAULT, com o padrão pontilhado e MaskType.NONE, que remove completamente a máscara. O padrão é `MaskType.DEFAULT` |
+
 
 | CaptureSettings constructor |
 | --------- |
@@ -247,3 +251,9 @@ Os tipos de falha existentes são:
 - `SecurityReason`: quando o dispositivo não é seguro para executar o SDK. Se esta falha ocorrer, avise-nos;
 - `StorageReason`: quando o dispositivo não possui espaço suficiente para a captura de alguma foto. Pode ocorrer em produção;
 - `LibraryReason`: quando alguma falha interna impossibilitou a execução do SDK. Pode ocorrer devico à erros de configuração do projeto, não deve ocorrer em produção;
+
+### Customizando view iOS
+
+Para customização iOS, é necessário que os plugins Flutter estejam adicionados localmente no projeto. A customizção é realizada nativamente com a abordagem ViewCode.
+
+[Clique aqui](https://github.com/combateafraude/Flutter/tree/ios-customization-example) e acesse o exemplo com um guia para utilização desse recurso.

@@ -1,4 +1,6 @@
 import 'package:passive_face_liveness/android/settings.dart';
+import 'package:passive_face_liveness/android/video_capture.dart';
+import 'package:passive_face_liveness/ios/ios_resolution.dart';
 import 'package:passive_face_liveness/ios/settings.dart';
 import 'package:passive_face_liveness/show_preview.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +48,12 @@ class _MyAppState extends State<MyApp> {
     PassiveFaceLivenessAndroidSettings passiveFaceLivenessAndroidSettings =
         new PassiveFaceLivenessAndroidSettings(
             showButtonTime: 25000, enableSwitchCameraButton: true);
+
+    passiveFaceLiveness.setCaptureMode(videoCapture: VideoCapture(use: true, time: 3));
+
+    PassiveFaceLivenessIosSettings iosSettings = new PassiveFaceLivenessIosSettings(resolution: IosResolution.HD1280x720, compressionQuality: 1);
+
+    passiveFaceLiveness.setIosSettings(iosSettings);
 
     passiveFaceLiveness.setAndroidSettings(passiveFaceLivenessAndroidSettings);
 
