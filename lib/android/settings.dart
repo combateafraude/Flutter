@@ -23,8 +23,8 @@ class PassiveFaceLivenessAndroidSettings {
   Map asMap() {
     Map<String, dynamic> map = new Map();
 
-    map["customization"] = customization.asMap();
-    map["sensorSettings"] = sensorSettings.asMap();
+    map["customization"] = customization?.asMap();
+    map["sensorSettings"] = sensorSettings?.asMap();
     map["showButtonTime"] = showButtonTime;
     map["enableSwitchCameraButton"] = enableSwitchCameraButton;
     map["enableGoogleServices"] = enableGoogleServices;

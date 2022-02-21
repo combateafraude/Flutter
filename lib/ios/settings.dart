@@ -22,9 +22,9 @@ class PassiveFaceLivenessIosSettings {
   Map asMap() {
     Map<String, dynamic> map = new Map();
 
-    map["customization"] = customization.asMap();
+    map["customization"] = customization?.asMap();
     map["beforePictureMillis"] = beforePictureMillis;
-    map["sensorStability"] = sensorStability.asMap();
+    map["sensorStability"] = sensorStability?.asMap();
     map["enableManualCapture"] = enableManualCapture;
     map["timeEnableManualCapture"] = timeEnableManualCapture;
     map["resolution"] = resolution;

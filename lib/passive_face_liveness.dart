@@ -33,7 +33,7 @@ class PassiveFaceLiveness {
   ImageCapture imageCapture;
   VideoCapture videoCapture;
 
-  PassiveFaceLiveness({this.mobileToken});
+  PassiveFaceLiveness({@required this.mobileToken});
 
   void enableSound(bool enable) {
     this.sound = enable;
