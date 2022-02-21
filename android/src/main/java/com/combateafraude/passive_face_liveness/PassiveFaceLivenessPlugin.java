@@ -18,6 +18,8 @@ import com.combateafraude.passivefaceliveness.input.SensorStabilitySettings;
 import com.combateafraude.passivefaceliveness.input.VideoCapture;
 import com.combateafraude.passivefaceliveness.output.PassiveFaceLivenessResult;
 import com.combateafraude.passivefaceliveness.output.failure.SDKFailure;
+import com.combateafraude.passivefaceliveness.input.MaskType;
+
 
 
 import java.util.HashMap;
@@ -163,6 +165,12 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 Integer redMask = getResourceId((String) customizationAndroid.get("redMaskResIdName"), DRAWABLE_RES);
                 mPassiveFaceLivenessBuilder.setLayout(layoutId);
                 mPassiveFaceLivenessBuilder.setMask(greenMask, whiteMask, redMask);
+
+
+                String mask = (String) customizationAndroid.get("maskType");
+                if(mask != null){
+                    mPassiveFaceLivenessBuilder.setMask(MaskType.valueOf(mask));
+                }
             }
 
             // Sensor settings
