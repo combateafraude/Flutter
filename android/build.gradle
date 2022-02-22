@@ -46,6 +46,6 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:document-detector:6.16.5'
+        implementation 'com.combateafraude.sdk:document-detector:6.18.0'
     }
 }
