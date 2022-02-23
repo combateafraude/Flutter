@@ -146,7 +146,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 passiveFaceLivenessBuilder.setResolutionSettings(resolution: getResolutionByString(resolution: resolution))
             }
             
-            if let compressionQuality = iosSettings["compressionQuality"] as? Double ?? nil {
+            if let compressionQuality = iosSettings["compressQuality"] as? Double ?? nil {
                 passiveFaceLivenessBuilder.setCompressSettings(compressionQuality: compressionQuality)
             }
         }
