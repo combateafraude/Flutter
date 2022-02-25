@@ -173,6 +173,10 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 }
             }
         }
+        
+        if let stage = arguments["stage"] as? String ?? nil {
+            passiveFaceLivenessBuilder.setStage(stage: getStageByString(stage: stage))
+        }
 
         //passiveFaceLivenessBuilder.setOverlay(overlay: PassiveFaceLivenessOverlay())
         
@@ -181,6 +185,16 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         let scannerVC = PassiveFaceLivenessController(passiveFaceLiveness: passiveFaceLivenessBuilder.build())
         scannerVC.passiveFaceLivenessDelegate = self
         controller.present(scannerVC, animated: true, completion: nil)
+    }
+    
+    public func getStageByString(stage: String) -> CAFStage {
+        if(stage == "BETA"){
+            return .BETA
+        }else if(stage == "OTHER"){
+            return .OTHER
+        }else{
+            return .PROD
+        }
     }
     
     public func getResolutionByString(resolution: String) -> Resolution {

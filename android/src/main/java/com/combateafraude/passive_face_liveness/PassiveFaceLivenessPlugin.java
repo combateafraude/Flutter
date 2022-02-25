@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.combateafraude.passivefaceliveness.PassiveFaceLivenessActivity;
+import com.combateafraude.passivefaceliveness.input.CafStage;
 import com.combateafraude.passivefaceliveness.input.CaptureSettings;
 import com.combateafraude.passivefaceliveness.input.ImageCapture;
 import com.combateafraude.passivefaceliveness.input.MessageSettings;
@@ -273,6 +274,11 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
         // Network settings
         Integer requestTimeout = (Integer) argumentsMap.get("requestTimeout");
         if (requestTimeout != null) mPassiveFaceLivenessBuilder.setNetworkSettings(requestTimeout);
+
+        String stage = (String) argumentsMap.get("stage");
+        if(stage != null){
+            mPassiveFaceLivenessBuilder.setStage(CafStage.valueOf(stage));
+        }
 
         Intent mIntent = new Intent(context, PassiveFaceLivenessActivity.class);
         mIntent.putExtra(PassiveFaceLiveness.PARAMETER_NAME, mPassiveFaceLivenessBuilder.build());
