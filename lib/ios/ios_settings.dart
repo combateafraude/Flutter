@@ -34,7 +34,7 @@ class DocumentDetectorIosSettings {
     map["enableManualCapture"] = enableManualCapture;
     map["timeEnableManualCapture"] = timeEnableManualCapture;
     map["resolution"] = resolution;
-    map["compressQuality"] = compressQuality;
+    map["compressionQuality"] = compressQuality;
 
     return map;
   }

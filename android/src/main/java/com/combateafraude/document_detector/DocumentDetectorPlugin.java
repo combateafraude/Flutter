@@ -304,6 +304,11 @@ public class DocumentDetectorPlugin
             mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
         }
 
+        if(androidSettings.get("enableGoogleServices") != null){
+            boolean enableGoogleServices = (boolean) androidSettings.get("enableGoogleServices");
+            mDocumentDetectorBuilder.enableGoogleServices(enableGoogleServices);
+        }
+
         if(androidSettings.get("enableEmulator") != null){
             boolean enableEmulator = (boolean) androidSettings.get("enableEmulator");
             mDocumentDetectorBuilder.setUseEmulator(enableEmulator);
