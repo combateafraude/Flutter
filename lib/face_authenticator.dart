@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:face_authenticator/android/image_capture.dart';
+import 'package:face_authenticator/android/video_capture.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
@@ -21,11 +23,19 @@ class FaceAuthenticator {
   int? requestTimeout;
   FaceAuthenticatorAndroidSettings? androidSettings;
   FaceAuthenticatorIosSettings? iosSettings;
+  ImageCapture? imageCapture;
+  VideoCapture? videoCapture;
 
   FaceAuthenticator({required this.mobileToken});
 
   void enableSound(bool enable) {
     this.sound = enable;
+  }
+
+  void setCaptureMode(
+      {VideoCapture? videoCapture, ImageCapture? imageCapture}) {
+    this.videoCapture = videoCapture;
+    this.imageCapture = imageCapture;
   }
 
   void setPeopleId(String peopleId) {
@@ -58,6 +68,8 @@ class FaceAuthenticator {
     params["requestTimeout"] = requestTimeout;
     params["androidSettings"] = androidSettings?.asMap();
     params["iosSettings"] = iosSettings?.asMap();
+    params["imageCapture"] = imageCapture?.asMap();
+    params["videoCapture"] = videoCapture?.asMap();
 
     Map<dynamic, dynamic> resultMap =
         await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)

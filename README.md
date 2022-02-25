@@ -64,7 +64,7 @@ dependencies:
   face_authenticator:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: face-authenticator-v1.8.0
+      ref: face-authenticator-v2.0.0
 ```
 
 ## Utilização
@@ -94,16 +94,19 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 | `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
 | `.setAnalyticsSettings(bool useAnalytics)`<br><br>Habilita/desabilita a coleta de dados para maximização da informação antifraude. O padrão é `true` |
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
+| `.setCaptureMode(VideoCapture videoCapture, ImageCapture imageCapture)`<br><br> Define as configurações de captura |
 | `.setAndroidSettings(FaceAuthenticatorAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(FaceAuthenticatorIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
+
 
 #### Android
 
 | FaceAuthenticatorAndroidSettings constructor |
 | --------- |
 | `FaceAuthenticatorCustomizationAndroid customization`<br><br>Customização do layout em Android da activity |
-| `CaptureSettings captureSettings`<br><br>Configuraçōes de tempos de estabilização para a captura da selfie |
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
+| `bool enableEmulator`<br><br>Permite o uso de emulador quando `true` |
+| `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
 
 | FaceAuthenticatorCustomizationAndroid constructor |
 | --------- |
@@ -112,11 +115,6 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 | `String greenMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara verde padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_green_mask.png` e parametrize "my_custom_green_mask" |
 | `String redMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara vermelha padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_red_mask.png` e parametrize "my_custom_red_mask" |
 | `String whiteMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara branca padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_white_mask.png` e parametrize "my_custom_white_mask" |
-
-| CaptureSettings constructor |
-| --------- |
-| `int beforePictureMillis`<br><br>Duração em milissegundos entre a primeira detecção do rosto e a efetiva captura da foto |
-| `int afterPictureMillis`<br><br>Duração em milissegundos entre a captura da foto e o envio para o servidor para o mantimento do rosto e dos sensores válidos |
 
 
 | SensorSettingsAndroid constructor |
