@@ -11,7 +11,13 @@ class PassiveFaceLivenessIosSettings {
   double? compressionQuality;
 
   PassiveFaceLivenessIosSettings(
-  {this.customization, this.beforePictureMillis, this.sensorStability, this.enableManualCapture, this.timeEnableManualCapture, this.resolution, this.compressionQuality});
+      {this.customization,
+      this.beforePictureMillis,
+      this.sensorStability,
+      this.enableManualCapture,
+      this.timeEnableManualCapture,
+      this.resolution,
+      this.compressionQuality});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -22,7 +28,7 @@ class PassiveFaceLivenessIosSettings {
     map["enableManualCapture"] = enableManualCapture;
     map["timeEnableManualCapture"] = timeEnableManualCapture;
     map["resolution"] = resolution;
-    map["compressionQuality"] = compressionQuality;
+    map["compressQuality"] = compressionQuality;
 
     return map;
   }
