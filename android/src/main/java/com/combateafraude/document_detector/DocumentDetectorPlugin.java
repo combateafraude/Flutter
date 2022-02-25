@@ -319,6 +319,11 @@ public class DocumentDetectorPlugin
             mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
         }
 
+        if(androidSettings.get("enableGoogleServices") != null){
+            boolean enableGoogleServices = (boolean) androidSettings.get("enableGoogleServices");
+            mDocumentDetectorBuilder.enableGoogleServices(enableGoogleServices);
+        }
+
         // Popup settings
         Boolean showPopup = (Boolean) argumentsMap.get("popup");
         if (showPopup != null)
