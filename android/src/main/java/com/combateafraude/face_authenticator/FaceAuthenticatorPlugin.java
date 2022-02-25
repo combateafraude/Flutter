@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 
 import com.combateafraude.faceauthenticator.FaceAuthenticatorActivity;
+import com.combateafraude.faceauthenticator.input.CafStage;
 import com.combateafraude.faceauthenticator.input.CaptureSettings;
 import com.combateafraude.faceauthenticator.input.FaceAuthenticator;
 import com.combateafraude.faceauthenticator.input.ImageCapture;
@@ -160,6 +161,11 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
         // Network settings
         Integer requestTimeout = (Integer) argumentsMap.get("requestTimeout");
         if (requestTimeout != null) mFaceAuthenticatorBuilder.setNetworkSettings(requestTimeout);
+
+        String stage = (String) argumentsMap.get("stage");
+        if(stage != null){
+            mFaceAuthenticatorBuilder.setStage(CafStage.valueOf(stage));
+        }
 
         Intent mIntent = new Intent(context, FaceAuthenticatorActivity.class);
         mIntent.putExtra(FaceAuthenticator.PARAMETER_NAME, mFaceAuthenticatorBuilder.build());

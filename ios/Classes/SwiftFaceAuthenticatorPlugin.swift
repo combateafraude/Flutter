@@ -32,8 +32,8 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
 
             let peopleId = arguments["peopleId"] as! String
 
-            var faceAuthenticatorBuilder = FaceAuthenticator.Builder(mobileToken: mobileToken)
-            faceAuthenticatorBuilder.setPeopleId(peopleId)
+            var faceAuthenticatorBuilder = FaceAuthenticatorSdk.Builder(mobileToken: mobileToken)
+            faceAuthenticatorBuilder.setPersonId(peopleId)
 
             if let useAnalytics = arguments["useAnalytics"] as? Bool ?? nil {
                 faceAuthenticatorBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)
@@ -93,11 +93,6 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
                     faceAuthenticatorBuilder.setLayout(layout: layout)
                 }
 
-                if let beforePictureMillis = iosSettings["beforePictureMillis"] as? TimeInterval ?? nil {
-                    faceAuthenticatorBuilder.setCaptureSettings(beforePictureInterval: beforePictureMillis)
-                }
-
-
                 if let sensorStability = iosSettings["sensorStability"] as? [String: Any] ?? nil {
                     if let sensorStability = sensorStability["sensorStability"] as? [String: Any] ?? nil {
                         let message = sensorStability["message"] as? String ?? nil
@@ -107,12 +102,25 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
                 }
 
             }
+            
+            if let stage = arguments["stage"] as? String ?? nil {
+                faceAuthenticatorBuilder.setStage(stage: getStageByString(stage: stage))
+            }
 
             let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
 
             let scannerVC = FaceAuthenticatorController(faceAuthenticator: faceAuthenticatorBuilder.build())
             scannerVC.faceAuthenticatorDelegate = self
             controller.present(scannerVC, animated: true, completion: nil)
+        }
+    public func getStageByString(stage: String) -> CAFStage {
+            if(stage == "BETA"){
+                return .BETA
+            }else if(stage == "OTHER"){
+                return .OTHER
+            }else{
+                return .PROD
+            }
         }
 
         public func faceAuthenticatorController(_ faceAuthenticatorController: FaceAuthenticatorController, didFinishWithResults results: FaceAuthenticatorResult) {

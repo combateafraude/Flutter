@@ -25,6 +25,7 @@ class FaceAuthenticator {
   FaceAuthenticatorIosSettings? iosSettings;
   ImageCapture? imageCapture;
   VideoCapture? videoCapture;
+  String? stage;
 
   FaceAuthenticator({required this.mobileToken});
 
@@ -58,6 +59,10 @@ class FaceAuthenticator {
     this.iosSettings = iosSettings;
   }
 
+  void setStage(String stage){
+    this.stage = stage;
+  }
+
   Future<FaceAuthenticatorResult> start() async {
     Map<String, dynamic> params = new Map();
 
@@ -70,6 +75,7 @@ class FaceAuthenticator {
     params["iosSettings"] = iosSettings?.asMap();
     params["imageCapture"] = imageCapture?.asMap();
     params["videoCapture"] = videoCapture?.asMap();
+    params["stage"] = stage;
 
     Map<dynamic, dynamic> resultMap =
         await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)
