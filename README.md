@@ -17,7 +17,6 @@ Ao utilizar nosso plugin, certifique-se que você concorda com nossas [Política
 | Android API         | 21+    |
 | Compile SDK Version | 30+    |
 | iOS                 | 11.0+  |
-| Swift               | 5.5.2  |
 
 Caso você utilize Dart em uma versão abaixo de 2.12, confira a versão compatível [aqui](https://github.com/combateafraude/Flutter/tree/document-detector-compatible).
 
@@ -72,7 +71,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v5.5.5
+      ref: document-detector-v5.6.0
 ```
 
 ## Utilização
