@@ -157,8 +157,11 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 if(use){
                     if let time = videoCapture["time"] as? TimeInterval ?? nil {
                         passiveFaceLivenessBuilder.setVideoCaptureSettings(time: time)
+                    }else{
+                        if let time = videoCapture["time"] as? TimeInterval ?? nil {
+                            passiveFaceLivenessBuilder.setVideoCaptureSettings(time: 3)
+                        }
                     }
-                    
                 }
             }
         }
@@ -242,7 +245,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             flutterResult!(response)
         }else{
             response["success"] = NSNumber(value: true)
-            response["imagePath"] = "undefined"
+            response["imagePath"] = results.capturePath
             response["imageUrl"] = results.imageUrl
             response["signedResponse"] = results.signedResponse
             response["trackingId"] = results.trackingId

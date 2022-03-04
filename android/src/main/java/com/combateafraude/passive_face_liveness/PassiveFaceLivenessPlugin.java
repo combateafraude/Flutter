@@ -294,7 +294,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
     private HashMap<String, Object> getSucessResponseMap(PassiveFaceLivenessResult mPassiveFaceLivenessResult) {
         HashMap<String, Object> responseMap = new HashMap<>();
         responseMap.put("success", Boolean.TRUE);
-        responseMap.put("imagePath", mPassiveFaceLivenessResult.getImagePath());
+        responseMap.put("imagePath", mPassiveFaceLivenessResult.getCapturePath());
         responseMap.put("imageUrl", mPassiveFaceLivenessResult.getImageUrl());
         responseMap.put("signedResponse", mPassiveFaceLivenessResult.getSignedResponse());
         responseMap.put("trackingId", mPassiveFaceLivenessResult.getTrackingId());

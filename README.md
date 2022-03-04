@@ -14,7 +14,6 @@ Ao utilizar nosso plugin, certifique-se que você concorda com nossas [Política
 | Dart                | 2.12+  |
 | Android API         | 21+    |
 | iOS                 | 11.0+  |
-| Swift               | 5.5.2  |
 
 Caso você utilize Dart em uma versão abaixo de 2.12, confira a versão compatível [aqui](https://github.com/combateafraude/Flutter/tree/passive-face-liveness-compatible).
 
@@ -66,7 +65,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-v4.6.0
+      ref: passive-face-liveness-v4.8.0
 ```
 
 ## Utilização
