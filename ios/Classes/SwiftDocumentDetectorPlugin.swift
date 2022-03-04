@@ -174,7 +174,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 documentDetectorBuilder.setResolutionSettings(resolution: getResolutionByString(resolution: resolution))
             }
                         
-            if let compressionQuality = iosSettings["compressionQuality"] as? Double ?? nil {
+            if let compressionQuality = iosSettings["compressQuality"] as? Double ?? nil {
                 documentDetectorBuilder.setCompressSettings(compressionQuality: compressionQuality)
             }
             
