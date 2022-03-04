@@ -43,8 +43,6 @@ class _MyAppState extends State<MyApp> {
     String result = "";
     String description = "";
 
-    https://mobile-prod-liveness-attempts.s3.amazonaws.com/35c8ac41-b556-4b90-a631-36b75ce7b597/not_identified/liveness/attempt_1646421617562.jpg?AWSAccessKeyId=ASIAS6F2XPA7QBS4MYYO&Expires=1646421918&Signature=E3Pk4NvR4rb4r%2BmpbDgAJ9YaDf8%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEPz%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJIMEYCIQDAdth2UKpk%2B8nHd%2FFpSiSebQOXXw2yemf3DVxzKtArlAIhAJREm%2Bx6ekH3ftZi%2B1iRJZCCF%2BrQYUb5atjG7KBh1fQdKqECCGQQAhoMMjAyMjU1MDcxMjk1IgwKfidj%2BTsfiGkGeygq%2FgF6XoL7HkI3LkCV3nDkjbXqbDGcjl6MEKUauSDVLMDZ7O1UhDDOKK3yyxtJcON0YDARqbFv5%2FhOlte%2Fn0pCsf78Ip3BFLKk3hG4jAGOZ4HD06Ue8dmiIsDgcdHIK0J1IfK8iUaeHPR8Nw%2FMZl5l75fbTZcQA8XtjavlyjX42xn67aC1neBaEzvoagv9iATstRVw1U0a8gQXk9Uep3d92XvWDUzmwq%2F%2Bv5kro1SHHky7vmiidA97OJRjb44s4%2F8rl6XQM1%2FCxSTOQAh73BMlgBkmw2Rh2ZIz3D%2FyEAnA%2B%2FKZw49DXr5838hRhfZ8hQiJkSZP6DKL0VDJIGgTTdXqFjCLyomRBjqZAeKj4jogG1fELPVJ4abW3D2X7SszyBH26Mpd9zYodEDwNSxh46Rr%2FYrKlxFXn3BugO9GkjE94eHj%2FuA2U6mnY1Winvom1AL4p6bdwZnt6JhgcGGWq8%2FGsoAbEvrHmkDvRZ8J7AR6TiBInIsBk5H1naq7GuCdWmTNPTsystjLzpVAaRa4GIYP9QvHiO8DXuh8IdLZeTVSB957Rw%3D%3D
-
     PassiveFaceLiveness passiveFaceLiveness =
         new PassiveFaceLiveness(mobileToken: mobileToken);
 
