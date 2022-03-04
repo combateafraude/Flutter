@@ -1,9 +1,9 @@
 PODS:
   - Flutter (1.0.0)
-  - passive_face_liveness (4.5.0):
+  - passive_face_liveness (4.6.0):
     - Flutter
-    - PassiveFaceLiveness (= 5.5.3)
-  - PassiveFaceLiveness (5.5.3):
+    - PassiveFaceLiveness (= 5.7.0)
+  - PassiveFaceLiveness (5.7.0):
     - Sentry (= 7.1.3)
   - "permission_handler (5.0.1+1)":
     - Flutter
@@ -32,11 +32,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  passive_face_liveness: 66212b9654c51379ce279022e7005bd206115195
-  PassiveFaceLiveness: acbec195232d9b52b2f927bd281b16e96f30d590
+  passive_face_liveness: fdf50554a488c4578ad88fe0042108a2b00c91e3
+  PassiveFaceLiveness: 9f7ac77cedf3c7855da5bab8e37b08dedc69caa3
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
   Sentry: 6d963d64804dd06d96e778be729613f481394312
 
-PODFILE CHECKSUM: 48ed8943beec15aeee7d28a74e100b515836e362
+PODFILE CHECKSUM: ca5910164258af6050d32f87cfb2b68e1534c096
 
 COCOAPODS: 1.11.2

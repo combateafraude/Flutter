@@ -145,7 +145,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 passiveFaceLivenessBuilder.setResolutionSettings(resolution: getResolutionByString(resolution: resolution))
             }
             
-            if let compressionQuality = iosSettings["compressionQuality"] as? Double ?? nil {
+            if let compressionQuality = iosSettings["compressQuality"] as? Double ?? nil {
                 passiveFaceLivenessBuilder.setCompressSettings(compressionQuality: compressionQuality)
             }
         }
@@ -156,8 +156,9 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 if(use){
                     if let time = videoCapture["time"] as? TimeInterval ?? nil {
                         passiveFaceLivenessBuilder.setVideoCaptureSettings(time: time)
+                    }else{
+                        passiveFaceLivenessBuilder.setVideoCaptureSettings(time: 3)
                     }
-                    
                 }
             }
         }
@@ -172,6 +173,10 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 }
             }
         }
+        
+        if let stage = arguments["stage"] as? String ?? nil {
+            passiveFaceLivenessBuilder.setStage(stage: getStageByString(stage: stage))
+        }
 
         //passiveFaceLivenessBuilder.setOverlay(overlay: PassiveFaceLivenessOverlay())
         
@@ -180,6 +185,16 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         let scannerVC = PassiveFaceLivenessController(passiveFaceLiveness: passiveFaceLivenessBuilder.build())
         scannerVC.passiveFaceLivenessDelegate = self
         controller.present(scannerVC, animated: true, completion: nil)
+    }
+    
+    public func getStageByString(stage: String) -> CAFStage {
+        if(stage == "BETA"){
+            return .BETA
+        }else if(stage == "OTHER"){
+            return .OTHER
+        }else{
+            return .PROD
+        }
     }
     
     public func getResolutionByString(resolution: String) -> Resolution {
@@ -223,15 +238,15 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             response["imageUrl"] = results.imageUrl
             response["signedResponse"] = results.signedResponse
             response["trackingId"] = results.trackingId
-
+            
             flutterResult!(response)
         }else{
             response["success"] = NSNumber(value: true)
-            response["imagePath"] = "undefined"
+            response["imagePath"] = results.capturePath
             response["imageUrl"] = results.imageUrl
             response["signedResponse"] = results.signedResponse
             response["trackingId"] = results.trackingId
-
+            
             flutterResult!(response)
         }
     }

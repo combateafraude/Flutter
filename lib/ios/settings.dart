@@ -28,7 +28,7 @@ class PassiveFaceLivenessIosSettings {
     map["enableManualCapture"] = enableManualCapture;
     map["timeEnableManualCapture"] = timeEnableManualCapture;
     map["resolution"] = resolution;
-    map["compressionQuality"] = compressionQuality;
+    map["compressQuality"] = compressionQuality;
 
     return map;
   }

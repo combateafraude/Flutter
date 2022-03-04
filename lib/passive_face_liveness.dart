@@ -32,6 +32,7 @@ class PassiveFaceLiveness {
   MessageSettings messageSettings;
   ImageCapture imageCapture;
   VideoCapture videoCapture;
+  String stage;
 
   PassiveFaceLiveness({@required this.mobileToken});
 
@@ -85,6 +86,10 @@ class PassiveFaceLiveness {
     this.personName = personName;
   }
 
+  void setStage(String stage) {
+    this.stage = stage;
+  }
+
   Future<PassiveFaceLivenessResult> start() async {
     Map<String, dynamic> params = new Map();
 
@@ -103,6 +108,7 @@ class PassiveFaceLiveness {
     params["messageSettings"] = messageSettings?.asMap();
     params["imageCapture"] = imageCapture?.asMap();
     params["videoCapture"] = videoCapture?.asMap();
+    params["stage"] = stage;
 
     Map<dynamic, dynamic> resultMap =
         await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)

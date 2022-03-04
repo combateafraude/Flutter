@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.combateafraude.passivefaceliveness.PassiveFaceLivenessActivity;
+import com.combateafraude.passivefaceliveness.input.CafStage;
 import com.combateafraude.passivefaceliveness.input.CaptureSettings;
 import com.combateafraude.passivefaceliveness.input.ImageCapture;
 import com.combateafraude.passivefaceliveness.input.MessageSettings;
@@ -269,6 +270,11 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
             }
         }
 
+        String stage = (String) argumentsMap.get("stage");
+        if(stage != null){
+            mPassiveFaceLivenessBuilder.setStage(CafStage.valueOf(stage));
+        }
+
         // Network settings
         Integer requestTimeout = (Integer) argumentsMap.get("requestTimeout");
         if (requestTimeout != null) mPassiveFaceLivenessBuilder.setNetworkSettings(requestTimeout);
@@ -287,7 +293,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
     private HashMap<String, Object> getSucessResponseMap(PassiveFaceLivenessResult mPassiveFaceLivenessResult) {
         HashMap<String, Object> responseMap = new HashMap<>();
         responseMap.put("success", Boolean.TRUE);
-        responseMap.put("imagePath", mPassiveFaceLivenessResult.getImagePath());
+        responseMap.put("imagePath", mPassiveFaceLivenessResult.getCapturePath());
         responseMap.put("imageUrl", mPassiveFaceLivenessResult.getImageUrl());
         responseMap.put("signedResponse", mPassiveFaceLivenessResult.getSignedResponse());
         responseMap.put("trackingId", mPassiveFaceLivenessResult.getTrackingId());
