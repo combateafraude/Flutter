@@ -116,6 +116,8 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
                     if(use){
                         if let time = videoCapture["time"] as? TimeInterval ?? nil {
                             faceAuthenticatorBuilder.setVideoCaptureSettings(time: time)
+                        }else{
+                            faceAuthenticatorBuilder.setVideoCaptureSettings(time: 3)
                         }
                     }
                 }
