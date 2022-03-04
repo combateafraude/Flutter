@@ -1,5 +1,5 @@
 PODS:
-  - face_authenticator (2.0.0):
+  - face_authenticator (3.0.0):
     - FaceAuthenticator (= 5.1.0)
     - Flutter
   - FaceAuthenticator (5.1.0):
@@ -31,7 +31,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  face_authenticator: b6b3917868b58886605e5d877d6bd1877e3e3c52
+  face_authenticator: c00ee61979df731aefdf1a810d07219833c37c25
   FaceAuthenticator: 6ecbe6fb6cb1491b8570aef41518d4aecf47adbe
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6

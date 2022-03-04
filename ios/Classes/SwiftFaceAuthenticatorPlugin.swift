@@ -106,6 +106,18 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
             if let stage = arguments["stage"] as? String ?? nil {
                 faceAuthenticatorBuilder.setStage(stage: getStageByString(stage: stage))
             }
+            
+            if let videoCapture = arguments["videoCapture"] as? [String: Any] ?? nil {
+                if let use = videoCapture["use"] as? Bool ?? nil {
+                    if(use){
+                        if let time = videoCapture["time"] as? TimeInterval ?? nil {
+                            faceAuthenticatorBuilder.setVideoCaptureSettings(time: time)
+                        }else{
+                            faceAuthenticatorBuilder.setVideoCaptureSettings(time: 3)
+                        }
+                    }
+                }
+            }
 
             let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
 
