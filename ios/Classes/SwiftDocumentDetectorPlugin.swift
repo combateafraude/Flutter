@@ -141,8 +141,12 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             }
             
             if let enableManualCapture = iosSettings["enableManualCapture"] as? Bool ?? nil {
-                if let timeEnableManualCapture = iosSettings["timeEnableManualCapture"] as? Double ?? nil {
-                    documentDetectorBuilder.setManualCaptureSettings(enable: enableManualCapture, time: timeEnableManualCapture)
+                if(enableManualCapture){
+                    if let timeEnableManualCapture = iosSettings["timeEnableManualCapture"] as? Double ?? nil {
+                        documentDetectorBuilder.setManualCaptureSettings(enable: enableManualCapture, time: timeEnableManualCapture)
+                    }else{
+                        documentDetectorBuilder.setManualCaptureSettings(enable: enableManualCapture, time: 0)
+                    }
                 }
             }
 
