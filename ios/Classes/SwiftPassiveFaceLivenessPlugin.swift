@@ -89,6 +89,16 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
 
+            if let enableManualCapture = iosSettings["enableManualCapture"] as? Bool ?? nil {
+                if(enableManualCapture){
+                    if let timeEnableManualCapture = iosSettings["timeEnableManualCapture"] as? TimeInterval ?? nil {
+                        passiveFaceLivenessBuilder.setImageCaptureSettings(beforePictureInterval: 2, enableManualCapture: enableManualCapture, timeManualCapture: timeEnableManualCapture)
+                    }else{
+                        passiveFaceLivenessBuilder.setImageCaptureSettings(beforePictureInterval: 2, enableManualCapture: enableManualCapture, timeManualCapture: 0)
+                    }
+                }
+            }
+
             if let customization = iosSettings["customization"] as? [String: Any] ?? nil {
                 
 
@@ -150,6 +160,15 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             }
         }
         
+        if let imageCapture = arguments["imageCapture"] as? [String: Any] ?? nil {
+            if let use = imageCapture["use"] as? Bool ?? nil {
+                if(use){
+                    if let beforePictureMillis = imageCapture["beforePictureMillis"] as? TimeInterval ?? nil {
+                        passiveFaceLivenessBuilder.setImageCaptureSettings(beforePictureInterval: beforePictureMillis, enableManualCapture: true, timeManualCapture: 10)
+                    }
+                }
+            }
+        }
         
         if let videoCapture = arguments["videoCapture"] as? [String: Any] ?? nil {
             if let use = videoCapture["use"] as? Bool ?? nil {
@@ -159,17 +178,6 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                     }else{
                         passiveFaceLivenessBuilder.setVideoCaptureSettings(time: 3)
                     }
-                }
-            }
-        }
-        
-        if let imageCapture = arguments["imageCapture"] as? [String: Any] ?? nil {
-            if let use = imageCapture["use"] as? Bool ?? nil {
-                if(use){
-                    if let beforePictureMillis = imageCapture["beforePictureMillis"] as? TimeInterval ?? nil {
-                        passiveFaceLivenessBuilder.setImageCaptureSettings(beforePictureInterval: beforePictureMillis, enableManualCapture: true, timeManualCapture: 10)
-                    }
-                    
                 }
             }
         }
