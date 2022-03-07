@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - passive_face_liveness (4.7.0):
+  - passive_face_liveness (4.8.0):
     - Flutter
     - PassiveFaceLiveness (= 5.7.0)
   - PassiveFaceLiveness (5.7.0):
@@ -32,7 +32,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  passive_face_liveness: fafbb4868b25e063459618f97fd2e61461932acc
+  passive_face_liveness: 17faf4e1fb4d0c69fd11eb75a7a1fe8c1b9f9511
   PassiveFaceLiveness: 9f7ac77cedf3c7855da5bab8e37b08dedc69caa3
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
   Sentry: 6d963d64804dd06d96e778be729613f481394312
