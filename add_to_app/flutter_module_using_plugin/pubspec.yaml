@@ -12,10 +12,10 @@ dependencies:
   provider: ^4.1.0
   url_launcher: ^5.2.5
 
-  document_detector_nodatabinding:
+  document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-nodatabinding-v3.8.3
+      ref: document-detector-nodatabinding-v1.0.1
 
 dev_dependencies:
   flutter_test:
