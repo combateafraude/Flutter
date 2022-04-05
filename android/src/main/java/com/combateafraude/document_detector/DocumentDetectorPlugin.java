@@ -84,6 +84,11 @@ public class DocumentDetectorPlugin
         if (useAnalytics != null)
             mDocumentDetectorBuilder.setAnalyticsSettings(useAnalytics);
 
+        String expireTime = (String) argumentsMap.get("expireTime");
+        if(expireTime != null){
+            mDocumentDetectorBuilder.setGetImageUrlExpireTime(expireTime);
+        }
+
         // Document steps
         ArrayList<HashMap<String, Object>> paramSteps = (ArrayList<HashMap<String, Object>>) argumentsMap
                 .get("documentSteps");

@@ -31,6 +31,7 @@ class DocumentDetector {
   int? delay;
   bool? autoDetection;
   MessageSettings? messageSettings;
+  String? expireTime;
 
   DocumentDetector({required this.mobileToken});
 
@@ -83,6 +84,10 @@ class DocumentDetector {
     this.iosSettings = iosSettings;
   }
 
+   void setGetImageUrlExpireTime(String expireTime) {
+    this.expireTime = expireTime;
+  }
+
   Future<DocumentDetectorResult> start() async {
     Map<String, dynamic> params = new Map();
 
@@ -99,6 +104,7 @@ class DocumentDetector {
     params["delay"] = delay;
     params["autoDetection"] = autoDetection;
     params["messageSettings"] = messageSettings?.asMap();
+    params["expireTime"] = expireTime;
 
     List<Map<String, dynamic>> stepsMap = [];
     for (var step in documentDetectorSteps) {

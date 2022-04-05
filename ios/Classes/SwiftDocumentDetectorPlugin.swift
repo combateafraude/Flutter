@@ -58,7 +58,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         
         var documentDetectorBuilder = DocumentDetectorSdk.Builder(mobileToken: mobileToken)
         
-        documentDetectorBuilder.enableMultiLanguage(enable: false)
+        documentDetectorBuilder.enableMultiLanguage(false)
 
         documentDetectorBuilder.setDocumentDetectorFlow(flow: documentDetectorSteps)
 
@@ -81,9 +81,13 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         if let requestTimeout = arguments["requestTimeout"] as? TimeInterval ?? nil {
             documentDetectorBuilder.setNetworkSettings(requestTimeout: requestTimeout)
         }
+        
+        if let expireTime = arguments["expireTime"] as? String ?? nil {
+            documentDetectorBuilder.setGetImageUrlExpireTime(expireTime)
+        }
 
         if let showPreview = arguments["showPreview"] as? [String: Any] ?? nil {
-            var show = showPreview["show"] as? Bool ?? false
+            let show = showPreview["show"] as? Bool ?? false
             let title = showPreview["title"] as? String ?? nil
             let subtitle = showPreview["subtitle"] as? String ?? nil
             let confirmLabel = showPreview["confirmLabel"] as? String ?? nil
