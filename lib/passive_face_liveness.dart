@@ -33,6 +33,7 @@ class PassiveFaceLiveness {
   ImageCapture? imageCapture;
   VideoCapture? videoCapture;
   String? stage;
+  String? expireTime;
 
   PassiveFaceLiveness({required this.mobileToken});
 
@@ -91,6 +92,10 @@ class PassiveFaceLiveness {
     this.stage = stage;
   }
 
+  void setGetImageUrlExpireTime(String expireTime) {
+    this.expireTime = expireTime;
+  }
+
   Future<PassiveFaceLivenessResult> start() async {
     Map<String, dynamic> params = new Map();
 
@@ -110,6 +115,7 @@ class PassiveFaceLiveness {
     params["imageCapture"] = imageCapture?.asMap();
     params["videoCapture"] = videoCapture?.asMap();
     params["stage"] = stage;
+    params["expireTime"] = expireTime;
 
     Map<dynamic, dynamic> resultMap =
         await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)

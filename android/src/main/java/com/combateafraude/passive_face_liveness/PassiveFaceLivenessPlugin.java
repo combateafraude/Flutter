@@ -86,6 +86,11 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
         Boolean useAnalytics = (Boolean) argumentsMap.get("useAnalytics");
         if (useAnalytics != null) mPassiveFaceLivenessBuilder.setAnalyticsSettings(useAnalytics);
 
+        String expireTime = (String) argumentsMap.get("expireTime");
+        if(expireTime != null){
+            mPassiveFaceLivenessBuilder.setGetImageUrlExpireTime(expireTime);
+        }
+
         HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
         if (showPreview != null) {
             String title = (String) showPreview.get("title");

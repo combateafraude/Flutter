@@ -29,7 +29,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         
         var passiveFaceLivenessBuilder = PassiveFaceLivenessSdk.Builder(mobileToken: mobileToken)
 
-        passiveFaceLivenessBuilder.enableMultiLanguage(enable: false)
+        passiveFaceLivenessBuilder.enableMultiLanguage(false)
 
         if let peopleId = arguments["peopleId"] as? String ?? nil {
             passiveFaceLivenessBuilder.setPersonId(personId: peopleId)
@@ -53,6 +53,10 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
 
         if let requestTimeout = arguments["requestTimeout"] as? TimeInterval ?? nil {
             passiveFaceLivenessBuilder.setNetworkSettings(requestTimeout: requestTimeout)
+        }
+
+        if let expireTime = arguments["expireTime"] as? String ?? nil {
+            passiveFaceLivenessBuilder.setGetImageUrlExpireTime(expireTime)
         }
 
         if let showPreview = arguments["showPreview"] as? [String: Any] ?? nil {
