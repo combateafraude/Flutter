@@ -105,6 +105,7 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
 | `.setShowPreview(ShowPreview showPreview)`<br><br> Preview para verificação da qualidade da foto |
 | `.setMessageSettings(MessageSettings messageSettings)`<br><br> Permite personalizar mensagens exibidas no balão de "status" durante o processo de captura e análise. |
+| `.setGetImageUrlExpireTime(String expireTime)`<br><br> Define o tempo de duração da URL da imagem no servidor até ser expirada. Espera receber um intervalo de tempo entre "30m" à "30d". O padrão é `3h` |
 | `.setAndroidSettings(DocumentDetectorAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(DocumentDetectorIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
 
