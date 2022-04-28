@@ -5,7 +5,7 @@
 Pod::Spec.new do |s|
   s.name             = 'passive_face_liveness_nodatabinding'
   s.summary          = 'Flutter plugin for PassiveFaceLiveness'
-  s.version          = '4.0.0'
+  s.version          = '4.1.0'
   s.homepage         = 'https://www.combateafraude.com/'
   s.license          = { :file => 'LICENSE', :type => 'MIT' }
   s.author           = { 'ti@combateafraude.com' => 'ti@combateafraude.com' }

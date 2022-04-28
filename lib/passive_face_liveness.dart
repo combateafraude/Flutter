@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:passive_face_liveness_nodatabinding/android/settings.dart';
+import 'package:passive_face_liveness_nodatabinding/android/image_capture.dart';
+import 'package:passive_face_liveness_nodatabinding/android/video_capture.dart';
 import 'package:passive_face_liveness_nodatabinding/ios/settings.dart';
 import 'package:passive_face_liveness_nodatabinding/result/passive_face_liveness_closed.dart';
 import 'package:passive_face_liveness_nodatabinding/result/passive_face_liveness_failure.dart';
@@ -28,8 +30,16 @@ class PassiveFaceLiveness {
   bool? showDelay;
   int? delay;
   MessageSettings? messageSettings;
+  ImageCapture? imageCapture;
+  VideoCapture? videoCapture;
 
   PassiveFaceLiveness({required this.mobileToken});
+
+  void setCaptureMode(
+      {VideoCapture? videoCapture, ImageCapture? imageCapture}) {
+    this.videoCapture = videoCapture;
+    this.imageCapture = imageCapture;
+  }
 
   void enableSound(bool enable) {
     this.sound = enable;
@@ -92,6 +102,8 @@ class PassiveFaceLiveness {
     params["showDelay"] = showDelay;
     params["delay"] = delay;
     params["messageSettings"] = messageSettings?.asMap();
+    params["imageCapture"] = imageCapture?.asMap();
+    params["videoCapture"] = videoCapture?.asMap();
 
     Map<dynamic, dynamic> resultMap =
         await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)

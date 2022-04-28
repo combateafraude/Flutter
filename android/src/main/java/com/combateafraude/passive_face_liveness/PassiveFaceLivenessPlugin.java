@@ -9,7 +9,10 @@ import androidx.annotation.Nullable;
 
 import com.combateafraude.passivefaceliveness.PassiveFaceLivenessActivity;
 import com.combateafraude.passivefaceliveness.input.CaptureSettings;
+import com.combateafraude.passivefaceliveness.input.ImageCapture;
+import com.combateafraude.passivefaceliveness.input.VideoCapture;
 import com.combateafraude.passivefaceliveness.input.MessageSettings;
+import com.combateafraude.passivefaceliveness.input.PreviewSettings;
 import com.combateafraude.passivefaceliveness.input.PassiveFaceLiveness;
 import com.combateafraude.passivefaceliveness.input.SensorStabilitySettings;
 import com.combateafraude.passivefaceliveness.output.PassiveFaceLivenessResult;
@@ -80,12 +83,13 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
 
         HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
         if (showPreview != null) {
-            Integer title = getResourceId((String) showPreview.get("title"), STRING_RES);
-            Integer subTitle = getResourceId((String) showPreview.get("subTitle"), STRING_RES);
-            Integer confirmLabel = getResourceId((String) showPreview.get("confirmLabel"), STRING_RES);
-            Integer retryLabel = getResourceId((String) showPreview.get("retryLabel"), STRING_RES);
             boolean show = (boolean) showPreview.get("show");
-            mPassiveFaceLivenessBuilder.showPreview(show, title, subTitle, confirmLabel, retryLabel);
+            String title = (String) showPreview.get("title");
+            String subtitle = (String) showPreview.get("subtitle");
+            String confirmLabel = (String) showPreview.get("confirmLabel");
+            String retryLabel = (String) showPreview.get("retryLabel");
+
+            mPassiveFaceLivenessBuilder.setPreviewSettings(new PreviewSettings(show, title, subtitle, confirmLabel, retryLabel));
         }
 
         HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
@@ -163,14 +167,35 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 }
             }
 
-            // Capture settings
-            HashMap<String, Object> captureSettings = (HashMap<String, Object>) androidSettings.get("captureSettings");
-            if (captureSettings != null) {
-                Integer beforePictureMillis = (Integer) captureSettings.get("beforePictureMillis");
-                Integer afterPictureMillis = (Integer) captureSettings.get("afterPictureMillis");
-                if (beforePictureMillis != null && afterPictureMillis != null) {
-                    mPassiveFaceLivenessBuilder.setCaptureSettings(new CaptureSettings(beforePictureMillis, afterPictureMillis));
-                }
+            //VideoCapture
+            HashMap<String, Object> videoCapture = (HashMap<String, Object>) argumentsMap.get("videoCapture");
+            if(videoCapture != null){
+                boolean use = (Boolean) videoCapture.get("use");
+                Integer time = (Integer) videoCapture.get("time");
+
+                if(use){
+                    if(time != null){
+                        mPassiveFaceLivenessBuilder.setCaptureSettings(new VideoCapture(time));
+                    }else{
+                        mPassiveFaceLivenessBuilder.setCaptureSettings(new VideoCapture());
+                    }
+                }       
+            }
+
+            //ImageCapture
+            HashMap<String, Object> imageCapture = (HashMap<String, Object>) argumentsMap.get("imageCapture");
+            if(imageCapture != null){
+                boolean use = (Boolean) imageCapture.get("use");
+                Integer afterPictureMillis = (Integer) imageCapture.get("afterPictureMillis");
+                Integer beforePictureMillis = (Integer) imageCapture.get("beforePictureMillis");
+
+                if(use){
+                    if(afterPictureMillis != null && beforePictureMillis != null){
+                        mPassiveFaceLivenessBuilder.setCaptureSettings(new ImageCapture(afterPictureMillis, beforePictureMillis));
+                    }else{
+                        mPassiveFaceLivenessBuilder.setCaptureSettings(new ImageCapture());
+                    }
+                } 
             }
 
             if (androidSettings.get("showButtonTime") != null){
