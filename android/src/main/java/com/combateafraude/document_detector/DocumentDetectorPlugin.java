@@ -19,6 +19,7 @@ import com.combateafraude.documentdetector.input.SensorLuminositySettings;
 import com.combateafraude.documentdetector.input.SensorOrientationSettings;
 import com.combateafraude.documentdetector.input.SensorStabilitySettings;
 import com.combateafraude.documentdetector.input.MessageSettings;
+import com.combateafraude.documentdetector.input.PreviewSettings;
 import com.combateafraude.documentdetector.output.Capture;
 import com.combateafraude.documentdetector.output.DocumentDetectorResult;
 import com.combateafraude.documentdetector.output.failure.SDKFailure;
@@ -120,11 +121,12 @@ public class DocumentDetectorPlugin
         HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
         if (showPreview != null) {
             boolean show = (boolean) showPreview.get("show");
-            Integer title = getResourceId((String) showPreview.get("titleResIdName"), STRING_RES);
-            Integer subTitle = getResourceId((String) showPreview.get("subTitleResIdName"), STRING_RES);
-            Integer confirmLabel = getResourceId((String) showPreview.get("confirmLabelResIdName"), STRING_RES);
-            Integer retryLabel = getResourceId((String) showPreview.get("retryLabelResIdName"), STRING_RES);
-            mDocumentDetectorBuilder.showPreview(show, title, subTitle, confirmLabel, retryLabel);
+            String title = (String) showPreview.get("title");
+            String subtitle = (String) showPreview.get("subtitle");
+            String confirmLabel = (String) showPreview.get("confirmLabel");
+            String retryLabel = (String) showPreview.get("retryLabel");
+
+            mDocumentDetectorBuilder.setPreviewSettings(new PreviewSettings(show, title, subtitle, confirmLabel, retryLabel));
         }
 
         HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
@@ -141,6 +143,7 @@ public class DocumentDetectorPlugin
             String sensorLuminosityMessage = (String) messageSettingsParam.get("sensorLuminosityMessage");
             String sensorOrientationMessage = (String) messageSettingsParam.get("sensorOrientationMessage");
             String sensorStabilityMessage = (String) messageSettingsParam.get("sensorStabilityMessage");
+            String popupDocumentSubtitleMessage = (String) messageSettingsParam.get("popupDocumentSubtitleMessage");
             
 
             Document.RG_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_FRONT");
@@ -165,7 +168,8 @@ public class DocumentDetectorPlugin
                     documentNotFoundMessage,
                     sensorLuminosityMessage,
                     sensorOrientationMessage,
-                    sensorStabilityMessage);
+                    sensorStabilityMessage,
+                    popupDocumentSubtitleMessage);
 
             mDocumentDetectorBuilder.setMessageSettings(messageSettings);
         }

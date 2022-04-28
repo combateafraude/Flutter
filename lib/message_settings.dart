@@ -11,6 +11,7 @@ class MessageSettings {
   String? sensorLuminosityMessage;
   String? sensorOrientationMessage;
   String? sensorStabilityMessage;
+  String? popupDocumentSubtitleMessage;
   String? unsupportedDocumentMessage;
   String? wrongDocumentMessage_RG_FRONT;
   String? wrongDocumentMessage_RG_BACK;
@@ -36,6 +37,7 @@ class MessageSettings {
       this.sensorLuminosityMessage,
       this.sensorOrientationMessage,
       this.sensorStabilityMessage,
+      this.popupDocumentSubtitleMessage,
       this.wrongDocumentMessage_RG_FRONT,
       this.wrongDocumentMessage_RG_BACK,
       this.wrongDocumentMessage_RG_FULL,
@@ -61,6 +63,7 @@ class MessageSettings {
     map["sensorLuminosityMessage"] = sensorLuminosityMessage;
     map["sensorOrientationMessage"] = sensorOrientationMessage;
     map["sensorStabilityMessage"] = sensorStabilityMessage;
+    map["popupDocumentSubtitleMessage"] = popupDocumentSubtitleMessage;
 
     map["unsupportedDocumentMessage"] = unsupportedDocumentMessage;
     map["wrongDocumentMessage_RG_FRONT"] = wrongDocumentMessage_RG_FRONT;
