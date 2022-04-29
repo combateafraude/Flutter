@@ -104,6 +104,8 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
 | `.setShowPreview(ShowPreview showPreview)`<br><br> Preview para verificação da qualidade da foto |
+| `.setAutoDetection(bool enable)`<br><br>Habilita/desabilita a autodetecção e verificações de sensores. Utilize `false` para desabilitar todas as verificações no dispositivo. Assim, todas validações serão executadas no backend, após a captura. O padrão é `true`|
+| `.setCurrentStepDoneDelay(bool showDelay, int delay)`<br><br> Aplica delay na activity após a finalização de cada etapa. Esse método pode ser utilizado para exibir uma mensagem de sucesso na própria tela após a captura, por exemplo. O padrão é `false`|
 | `.setMessageSettings(MessageSettings messageSettings)`<br><br> Permite personalizar mensagens exibidas no balão de "status" durante o processo de captura e análise. |
 | `.setGetImageUrlExpireTime(String expireTime)`<br><br> Define o tempo de duração da URL da imagem no servidor até ser expirada. Espera receber um intervalo de tempo entre "30m" à "30d". O padrão é `3h` |
 | `.setAndroidSettings(DocumentDetectorAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
@@ -129,7 +131,7 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 ShowPreview showPreview = new ShowPreview(
         show: true,
         title: "A foto ficou boa?",
-        subTitle: "Veja se a foto está nítida",
+        subtitle: "Veja se a foto está nítida",
         confirmLabel: "Sim, ficou boa!",
         retryLabel: "Tirar novamente");
 
@@ -144,8 +146,8 @@ documentDetector.setShowPreview(showPreview);
 | `String? verifyingQuality`<br><br>Padrão: "Verificando qualidade…"|
 | `String? lowQualityDocument`<br><br>Padrão: "Ops, não foi possível ler as informações. Por favor, tente novamente"|
 | `String? uploadingImage`<br><br>Padrão: "Enviando imagem…"|
+| `boolean? showOpenDocumentMessage`<br><br>Padrão: `true`|
 | `String? openDocumentWrongMessage`<br><br>Padrão: "Esse é o {'document'} aberto, você deve fecha-lo"|
-| `String? showOpenDocumentMessage`<br><br>Padrão: ""|
 | `String? documentNotFoundMessage`<br><br>Padrão: "Não encontramos um documento"|;
 | `String? sensorLuminosityMessage`<br><br>Padrão: "Ambiente muito escuro"|;
 | `String? sensorOrientationMessage`<br><br>Padrão: "Celular não está na vertical"|;
@@ -174,7 +176,7 @@ documentDetector.setShowPreview(showPreview);
       uploadingImageMessageResIdName:"Mensagem de exemplo",
       openDocumentWrongMessage: "Mensagem de exemplo",
       showOpenDocumentMessage: true);
-documentDetector.setShowPreview(showPreview);
+documentDetector.setMessageSettings(messageSettings);
 ```
 
 
@@ -191,6 +193,7 @@ documentDetector.setShowPreview(showPreview);
 | `DocumentDetectorCustomizationAndroid customization`<br><br>Customização do layout em Android da activity |
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
 | `List<CaptureStage> captureStages`<br><br>Array de estágios para cada captura. Esse parâmetro é útil caso você deseje modificar a maneira com qual o DocumentDetector é executado, como configurações de detecção, captura automática ou manual, verificar a qualidade da foto, etc |
+| `Integer compressQuality`<br><br>Permite configurar a qualidade no processo de compressão. Por padrão, todas capturas passam por compressão. O método espera como parâmetro valores entre 50 e 100, sendo 100 a compressão com melhor qualidade (recomendado). O padrão é 100 |
 | `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
 | `Resolution resolution`<br><br>Permite configurar a resolução de captura. O método espera como parâmetro uma Resolution que fornece as opções HD, FULL_HD, QUAD_HD e ULTRA_HD. O padrão é `Resolution.ULTRA_HD` |
 | `bool enableGoogleServices`<br><br>Permite habilitar/desabilitar recursos do SDK que consomem GoogleServices no SDK, não recomendamos desabilitar os serviços por conta da perda de segurança. O padrão é `True` |
@@ -213,8 +216,7 @@ documentDetector.setShowPreview(showPreview);
 | `String greenMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara verde padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_green_mask.png` e parametrize "my_custom_green_mask" |
 | `String redMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara vermelha padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_red_mask.png` e parametrize "my_custom_red_mask" |
 | `String whiteMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara branca padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_white_mask.png` e parametrize "my_custom_white_mask" |
-| `MaskType maskType`<br><br>Define o tipo de máscara utilizada nas capturas. Existem três tipos: MaskType.DEFAULT, com o padrão pontilhado, MaskType.DETAILED, que detalha cada documento e MaskType.NONE, que remove completamente a máscara. O padrão é `MaskType.DEFAULT` |
-
+| `MaskType maskType`<br><br>Define o tipo de máscara utilizada nas capturas. Existem três tipos: `MaskType.DEFAULT`, com o padrão pontilhado no formato do documento; `MaskType.DETAILED`, que apresenta uma ilustração do documento solicitado, junto com a máscara pontilhada; `MaskType.NONE`, que remove totalmente a máscara. O padrão é `MaskType.DEFAULT` |
 
 
 | SensorSettingsAndroid constructor |
@@ -247,6 +249,20 @@ documentDetector.setShowPreview(showPreview);
 | `SensorSettingsIos sensorSettings`<br><br>Configurações personalizadas dos sensores em iOS, null para desabilitar |
 | `Bool enableManualCapture`<br><br>Habilita modo de captura manual |
 | `double timeEnableManualCapture`<br><br>Tempo para habilitar o botão de captura manual |
+| `double compressQuality`<br><br>Permite configurar a qualidade no processo de compressão. Por padrão, todas capturas passam por compressão. O método espera como parâmetro valores entre 0 e 1.0, sendo 1.0 a compressão com melhor qualidade (recomendado).O padrão é 1.0 |
+| `String resolution`<br><br>Permite configurar a resolução de captura. O método espera como parâmetro uma `String IosResolution` (O padrão é `hd1280x720`), que possui as seguintes opções:|
+
+| Resolution | Descrição |
+| :--: | :--: |
+| `low` |Especifica as configurações de captura adequadas para vídeo de saída e taxas de bits de áudio adequadas para compartilhamento em 3G|
+| `medium` | Especifica as configurações de captura adequadas para as taxas de bits de áudio e vídeo de saída adequadas para compartilhamento via WiFi|
+| `high` | Especifica as configurações de captura adequadas para saída de áudio e vídeo de alta qualidade |
+| `photo` | Especifica as configurações de captura adequadas para saída de qualidade de foto de alta resolução |
+| `inputPriority` | Especifica as configurações de captura adequadas para saída de qualidade de foto de alta resolução |
+| `hd1280x720` | Especifica as configurações de captura adequadas para saída de vídeo com qualidade de 720p (1280 x 720 pixels)|
+| `hd1920x1080` | Configurações de captura adequadas para saída de vídeo com qualidade 1080p (1920 x 1080 pixels)|
+| `hd4K3840x2160` | Configurações de captura adequadas para saída de vídeo com qualidade 2160p (3840 x 2160 pixels) |
+|
 
 | DocumentDetectorCustomizationIos constructor |
 | --------- |
