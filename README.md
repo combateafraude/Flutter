@@ -98,8 +98,22 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
 | `.setShowPreview(ShowPreview showPreview)`<br><br> Preview para verificação de qualidade da foto |
 | `.setCaptureMode(VideoCapture videoCapture, ImageCapture imageCapture)`<br><br> Define as configurações de captura |
-| `.setGetImageUrlExpireTime(String expireTime)`<br><br> Define o tempo de duração da URL da imagem no servidor até ser expirada. Espera receber um intervalo de tempo entre "30m" à "30d". O padrão é `3h` || `.setAndroidSettings(PassiveFaceLivenessAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
+| `.setGetImageUrlExpireTime(String expireTime)`<br><br> Define o tempo de duração da URL da imagem no servidor até ser expirada. Espera receber um intervalo de tempo entre "30m" à "30d". O padrão é `3h` |
+| `.setMessageSettings(MessageSettings messageSettings)`<br><br> Permite personalizar as mensagens exibidas no balão de "status" durante o processo de captura e análise |
+| `.setCurrentStepDoneDelay(bool showDelay, int delay)`<br><br> Aplica delay na activity após a finalização de cada etapa. Esse método pode ser utilizado para exibir uma mensagem de sucesso na própria tela após a captura, por exemplo. O padrão é `false` |
+| `.setAndroidSettings(PassiveFaceLivenessAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(PassiveFaceLivenessIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
+
+| ImageCapture constructor |
+| --------- |
+| `bool use`<br><br>Habilita/desabilita a captura de um frame. O padrão é `true` |
+| `int beforePictureMillis`<br><br>Duração em milissegundos entre a primeira detecção do rosto e a efetiva captura da foto. O padrão é 0 ms |
+| `int afterPictureMillis`<br><br>Duração em milissegundos entre a captura da foto e o envio para o servidor para o mantimento do rosto e dos sensores válidos. O padrão é 2000 ms |
+
+| VideoCapture constructor |
+| --------- |
+| `bool use`<br><br>Habilita/desabilita a captura por vídeo. O padrão é `false` |
+| `int time`<br><br>Estabelece o tempo do vídeo que será capturado. O padrão é 3s|
 
 | ShowPreview |
 | --------- |
@@ -164,7 +178,6 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 | PassiveFaceLivenessAndroidSettings constructor |
 | --------- |
 | `PassiveFaceLivenessCustomizationAndroid customization`<br><br>Customização do layout em Android da activity |
-| `CaptureSettings captureSettings`<br><br>Configuraçōes de tempos de estabilização para a captura da selfie |
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
 | `int showButtonTime`<br><br>Altera o tempo para a exibição do botão de captura manual. O padrão é `20000` milisegundos |
 | `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
@@ -181,21 +194,20 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 | `String whiteMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara branca padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_white_mask.png` e parametrize "my_custom_white_mask" |
 | `MaskType maskType`<br><br>Define o tipo de máscara utilizada nas capturas. Existem dois tipos: MaskType.DEFAULT, com o padrão pontilhado e MaskType.NONE, que remove completamente a máscara. O padrão é `MaskType.DEFAULT` |
 
-
-| CaptureSettings constructor |
-| --------- |
-| `int beforePictureMillis`<br><br>Duração em milissegundos entre a primeira detecção do rosto e a efetiva captura da foto |
-| `int afterPictureMillis`<br><br>Duração em milissegundos entre a captura da foto e o envio para o servidor para o mantimento do rosto e dos sensores válidos |
-
-
 | SensorSettingsAndroid constructor |
 | --------- |
-| `SensorStabilitySettingsAndroid sensorStabilitySettings`<br><br>Configurações do sensor de orientação à ser aplicado em todos os passos do SDK |
+| `SensorStabilitySettingsAndroid sensorStabilitySettings`<br><br>Configurações do sensor de estabilidade à ser aplicado em todos os passos do SDK |
+| `SensorOrientationAndroid sensorOrientationAndroid`<br><br>Configurações do sensor de orientação à ser aplicado em todos os passos do SDK |
 
 | SensorStabilitySettingsAndroid constructor |
 | --------- |
-| `int stabilityStabledMillis`<br><br>Quantos milissegundos o celular deve se manter no limiar correto para ser considerado estável. O padrão é `2000` ms |
-| `double stabilityThreshold`<br><br>Limiar inferior entre estável/instável, em variação de m/s² entre as últimas duas coletas do sensor. O padrão é `0.5` m/s² |
+| `int stabilityStabledMillis`<br><br>Quantos milissegundos o celular deve se manter no limiar correto para ser considerado estável. O padrão é `1500` ms |
+| `double stabilityThreshold`<br><br>Limiar entre estável/instável, em variação de m/s² entre as últimas duas coletas do sensor. O padrão é `0.7` m/s² |
+
+| SensorOrientationAndroid constructor |
+| --------- |
+| `double stabilityThreshold`<br><br>Limiar entre estável/instável, em variação de m/s² entre as últimas duas coletas do sensor. O padrão é `4` m/s² |
+
 
 #### iOS
 
@@ -206,6 +218,20 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 | `SensorStabilitySettingsIos sensorStability`<br><br>Configurações do sensor de estabilidade à ser aplicado no SDK |
 | `bool enableManualCapture`<br><br>Habilita modo de captura manual |
 | `double timeEnableManualCapture`<br><br>Define tempo para exibição do botão de captura manual |
+| `double compressionQuality`<br><br>Permite configurar a qualidade no processo de compressão. Por padrão, todas capturas passam por compressão. O método espera como parâmetro valores entre 0 e 1.0, sendo 1.0 a compressão com melhor qualidade (recomendado).O padrão é 1.0 |
+| `String resolution`<br><br>Permite configurar a resolução de captura. O método espera como parâmetro uma `String IosResolution` (O padrão é `hd1280x720`), que possui as seguintes opções:|
+
+| Resolution | Descrição |
+| :--: | :--: |
+| `low` |Especifica as configurações de captura adequadas para vídeo de saída e taxas de bits de áudio adequadas para compartilhamento em 3G|
+| `medium` | Especifica as configurações de captura adequadas para as taxas de bits de áudio e vídeo de saída adequadas para compartilhamento via WiFi|
+| `high` | Especifica as configurações de captura adequadas para saída de áudio e vídeo de alta qualidade |
+| `photo` | Especifica as configurações de captura adequadas para saída de qualidade de foto de alta resolução |
+| `inputPriority` | Especifica as configurações de captura adequadas para saída de qualidade de foto de alta resolução |
+| `hd1280x720` | Especifica as configurações de captura adequadas para saída de vídeo com qualidade de 720p (1280 x 720 pixels)|
+| `hd1920x1080` | Configurações de captura adequadas para saída de vídeo com qualidade 1080p (1920 x 1080 pixels)|
+| `hd4K3840x2160` | Configurações de captura adequadas para saída de vídeo com qualidade 2160p (3840 x 2160 pixels) |
+|
 
 | PassiveFaceLivenessCustomizationIos constructor |
 | --------- |
@@ -217,7 +243,7 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 | `bool showStepLabel`<br><br>Flag que indica se deseja mostrar o label do passo atual |
 | `bool showStatusLabel`<br><br>Flag que indica se deseja mostrar o label do status atual |
 
-| SensorStabilitySettingsAndroid constructor |
+| SensorStabilitySettingsIos constructor |
 | --------- |
 | `String message`<br><br>String à ser mostrada quando o celular não estiver estável |
 | `double stabilityThreshold`<br><br>Limiar inferior entre estável/instável, em variação de m/s² entre as últimas duas coletas do sensor. O padrão é `0.3` m/s² |
