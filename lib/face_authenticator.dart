@@ -19,7 +19,8 @@ class FaceAuthenticator {
   String mobileToken;
   String? peopleId;
   bool? useAnalytics;
-  bool? sound;
+  String? sound;
+  bool? enableSound;
   int? requestTimeout;
   FaceAuthenticatorAndroidSettings? androidSettings;
   FaceAuthenticatorIosSettings? iosSettings;
@@ -29,8 +30,9 @@ class FaceAuthenticator {
 
   FaceAuthenticator({required this.mobileToken});
 
-  void enableSound(bool enable) {
-    this.sound = enable;
+  void setAudioSettings(bool enable, {String? soundResId}) {
+    this.enableSound = enable;
+    this.sound = soundResId;
   }
 
   void setCaptureMode(
@@ -59,7 +61,7 @@ class FaceAuthenticator {
     this.iosSettings = iosSettings;
   }
 
-  void setStage(String stage){
+  void setStage(String stage) {
     this.stage = stage;
   }
 
@@ -70,6 +72,7 @@ class FaceAuthenticator {
     params["peopleId"] = peopleId;
     params["useAnalytics"] = useAnalytics;
     params["sound"] = sound;
+    params["enableSound"] = enableSound;
     params["requestTimeout"] = requestTimeout;
     params["androidSettings"] = androidSettings?.asMap();
     params["iosSettings"] = iosSettings?.asMap();
