@@ -58,7 +58,11 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         if let expireTime = arguments["expireTime"] as? String ?? nil {
             passiveFaceLivenessBuilder.setGetImageUrlExpireTime(expireTime)
         }
-
+        
+        if let delay = arguments["delay"] as? TimeInterval ?? nil {
+            passiveFaceLivenessBuilder.setCurrentStepDoneDelay(currentStepDoneDelay: delay)
+        }
+        
         if let showPreview = arguments["showPreview"] as? [String: Any] ?? nil {
             let show = showPreview["show"] as? Bool ?? false
             let title = showPreview["title"] as? String ?? nil
@@ -78,6 +82,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             let holdItMessage = messageSettingsParam["holdItMessage"] as? String ?? nil
             let invalidFaceMessage = messageSettingsParam["invalidFaceMessage"] as? String ?? nil
             let sensorStabilityMessage = messageSettingsParam["sensorStabilityMessage"] as? String ?? nil
+            let verifyingLivenessMessage = messageSettingsParam["verifyingLivenessMessage"] as? String ?? nil
             
             _ = passiveFaceLivenessBuilder.setMessageSettings(
                 waitMessage: waitMessage,
@@ -88,7 +93,8 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 holdItMessage: holdItMessage,
                 invalidFaceMessage: invalidFaceMessage,
                 multipleFaceDetectedMessage: multipleFaceDetectedMessage,
-                sensorStabilityMessage: sensorStabilityMessage)
+                sensorStabilityMessage: sensorStabilityMessage,
+                verifyingLivenessMessage: verifyingLivenessMessage)
          }
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
