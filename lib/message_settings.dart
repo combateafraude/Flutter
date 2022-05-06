@@ -12,6 +12,7 @@ class MessageSettings {
   String? sensorOrientationMessage;
   String? sensorStabilityMessage;
   String? popupDocumentSubtitleMessage;
+  String? positiveButtonMessage;
 
   String? unsupportedDocumentMessage;
   String? wrongDocumentMessage_RG_FRONT;
@@ -39,6 +40,7 @@ class MessageSettings {
       this.sensorStabilityMessage,
       this.unsupportedDocumentMessage,
       this.popupDocumentSubtitleMessage,
+      this.positiveButtonMessage,
       this.wrongDocumentMessage_RG_FRONT,
       this.wrongDocumentMessage_RG_BACK,
       this.wrongDocumentMessage_RG_FULL,
@@ -75,6 +77,7 @@ class MessageSettings {
     map["wrongDocumentMessage_CRLV"] = wrongDocumentMessage_CRLV;
     map["wrongDocumentMessage_RNE_FRONT"] = wrongDocumentMessage_RNE_FRONT;
     map["wrongDocumentMessage_RNE_BACK"] = wrongDocumentMessage_RNE_BACK;
+    map["positiveButtonMessage"] = positiveButtonMessage;
 
     return map;
   }

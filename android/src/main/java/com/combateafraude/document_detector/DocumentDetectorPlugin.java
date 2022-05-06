@@ -151,6 +151,8 @@ public class DocumentDetectorPlugin
             String sensorOrientationMessage = (String) messageSettingsParam.get("sensorOrientationMessage");
             String sensorStabilityMessage = (String) messageSettingsParam.get("sensorStabilityMessage");
             String popupDocumentSubtitleMessage = (String) messageSettingsParam.get("popupDocumentSubtitleMessage");
+            String positiveButtonMessage = (String) messageSettingsParam.get("positiveButtonMessage");
+
 
             Document.RG_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_FRONT");
             Document.RG_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_BACK");
@@ -175,7 +177,8 @@ public class DocumentDetectorPlugin
                     sensorLuminosityMessage,
                     sensorOrientationMessage,
                     sensorStabilityMessage,
-                    popupDocumentSubtitleMessage);
+                    popupDocumentSubtitleMessage,
+                    positiveButtonMessage);
 
             mDocumentDetectorBuilder.setMessageSettings(messageSettings);
         }
@@ -337,7 +340,7 @@ public class DocumentDetectorPlugin
         // Sound settings
         Boolean enableSound = (Boolean) argumentsMap.get("sound");
         if (enableSound != null)
-            mDocumentDetectorBuilder.enableSound(enableSound);
+            mDocumentDetectorBuilder.setAudioSettings(enableSound);
 
         // Network settings
         Integer requestTimeout = (Integer) argumentsMap.get("requestTimeout");
