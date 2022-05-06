@@ -22,7 +22,8 @@ class PassiveFaceLiveness {
   String? personCPF;
   String? personName;
   bool? useAnalytics;
-  bool? sound;
+  String? sound;
+  bool? enableSound;
   int? requestTimeout;
   ShowPreview? showPreview;
   PassiveFaceLivenessAndroidSettings? androidSettings;
@@ -37,8 +38,9 @@ class PassiveFaceLiveness {
 
   PassiveFaceLiveness({required this.mobileToken});
 
-  void enableSound(bool enable) {
-    this.sound = enable;
+  void setAudioSettings(bool enable, String? soundResId) {
+    this.enableSound = enable;
+    this.sound = soundResId;
   }
 
   void setCaptureMode(
@@ -105,6 +107,7 @@ class PassiveFaceLiveness {
     params["personCPF"] = personCPF;
     params["useAnalytics"] = useAnalytics;
     params["sound"] = sound;
+    params["enableSound"] = enableSound;
     params["requestTimeout"] = requestTimeout;
     params["showPreview"] = showPreview?.asMap();
     params["androidSettings"] = androidSettings?.asMap();

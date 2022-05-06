@@ -230,6 +230,11 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 boolean useRoot = (boolean) androidSettings.get("useRoot");
                 mPassiveFaceLivenessBuilder.setUseRoot(useRoot);
             }
+
+            if(androidSettings.get("enableBrightnessIncrease") != null){
+                boolean enableBrightnessIncrease = (boolean) androidSettings.get("enableBrightnessIncrease");
+                mPassiveFaceLivenessBuilder.enableBrightnessIncrease(enableBrightnessIncrease);
+            }
         }
 
         //VideoCapture
@@ -264,8 +269,11 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
         }
 
         // Sound settings
-        Boolean enableSound = (Boolean) argumentsMap.get("sound");
-        if (enableSound != null) mPassiveFaceLivenessBuilder.enableSound(enableSound);
+        Boolean enableSound = (Boolean) argumentsMap.get("enableSound");
+        if (enableSound != null) mPassiveFaceLivenessBuilder.setAudioSettings(enableSound);
+
+        Integer soundResId = getResourceId((String) argumentsMap.get("sound"), RAW_RES);
+        if (soundResId != null) mPassiveFaceLivenessBuilder.setAudioSettings(soundResId);
 
         //CurrentStepDoneDelay
         Boolean showDelay = (Boolean) argumentsMap.get("showDelay");

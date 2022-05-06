@@ -10,6 +10,7 @@ class PassiveFaceLivenessAndroidSettings {
   bool? enableGoogleServices;
   bool? emulatorSettings;
   bool? rootSettings;
+  bool? enableBrightnessIncrease;
 
   PassiveFaceLivenessAndroidSettings(
       {this.customization,
@@ -18,7 +19,8 @@ class PassiveFaceLivenessAndroidSettings {
       this.enableSwitchCameraButton,
       this.enableGoogleServices,
       this.emulatorSettings,
-      this.rootSettings});
+      this.rootSettings,
+      this.enableBrightnessIncrease});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -30,6 +32,7 @@ class PassiveFaceLivenessAndroidSettings {
     map["enableGoogleServices"] = enableGoogleServices;
     map["useEmulator"] = emulatorSettings;
     map["useRoot"] = rootSettings;
+    map["enableBrightnessIncrease"] = enableBrightnessIncrease;
 
     return map;
   }
