@@ -87,25 +87,28 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 
 ### Customizações gerais
 
+### Customizações gerais
+
 | FaceAuthenticator |
 | --------- |
 | `.setPeopleId(String peopleId)`<br><br>CPF do usuário que irá se autenticar |
-| `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
+| `.setAudioSettings(bool enable, String audioResIdName)`<br><br>Habilita/desabilita os sons. Permite customizar o áudio utilizado pelo SDK. Caso deseje mudar o áudio do SDK, adicione o arquivo de audio em `ROOT_PROJECT/android/app/src/main/res/raw/` com o nome desejado seguindo e o parametrize |
 | `.setAnalyticsSettings(bool useAnalytics)`<br><br>Habilita/desabilita a coleta de dados para maximização da informação antifraude. O padrão é `true` |
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
-| `.setCaptureMode(VideoCapture videoCapture, ImageCapture imageCapture)`<br><br> Define as configurações de captura |
 | `.setAndroidSettings(FaceAuthenticatorAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(FaceAuthenticatorIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
-
 
 #### Android
 
 | FaceAuthenticatorAndroidSettings constructor |
 | --------- |
 | `FaceAuthenticatorCustomizationAndroid customization`<br><br>Customização do layout em Android da activity |
+| `CaptureSettings captureSettings`<br><br>Configuraçōes de tempos de estabilização para a captura da selfie |
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
 | `bool enableEmulator`<br><br>Permite o uso de emulador quando `true` |
 | `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
+| `bool enableBrightnessIncrease`<br><br>Habilita/desabilita o incremento de brilho do dispositivo do dispositivo na abertura do SDK |
+
 
 | FaceAuthenticatorCustomizationAndroid constructor |
 | --------- |
