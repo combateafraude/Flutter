@@ -119,6 +119,14 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
                 boolean enableRootDevices = (boolean) androidSettings.get("enableRootDevices");
                 mFaceAuthenticatorBuilder.setUseRoot(enableRootDevices);
             }
+            if(androidSettings.get("enableBrightnessIncrease") != null){
+                boolean enableBrightnessIncrease = (boolean) androidSettings.get("enableBrightnessIncrease");
+                mFaceAuthenticatorBuilder.enableBrightnessIncrease(enableBrightnessIncrease);
+            }
+            if(androidSettings.get("enableSwitchCameraButton") != null){
+                boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
+                mFaceAuthenticatorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
+            }
         }
 
 
@@ -154,8 +162,11 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
         } 
 
         // Sound settings
-        Boolean enableSound = (Boolean) argumentsMap.get("sound");
-        if (enableSound != null) mFaceAuthenticatorBuilder.enableSound(enableSound);
+        Boolean enableSound = (Boolean) argumentsMap.get("enableSound");
+        if (enableSound != null) mFaceAuthenticatorBuilder.setAudioSettings(enableSound);
+
+        Integer soundResId = getResourceId((String) argumentsMap.get("sound"), RAW_RES);
+        if (soundResId != null) mFaceAuthenticatorBuilder.setAudioSettings(soundResId);
 
         // Network settings
         Integer requestTimeout = (Integer) argumentsMap.get("requestTimeout");
