@@ -29,7 +29,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         
         var passiveFaceLivenessBuilder = PassiveFaceLivenessSdk.Builder(mobileToken: mobileToken)
 
-        passiveFaceLivenessBuilder.enableMultiLanguage(enable: false)
+        passiveFaceLivenessBuilder.enableMultiLanguage(false)
 
         if let peopleId = arguments["peopleId"] as? String ?? nil {
             passiveFaceLivenessBuilder.setPersonId(personId: peopleId)
@@ -54,6 +54,10 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         if let requestTimeout = arguments["requestTimeout"] as? TimeInterval ?? nil {
             passiveFaceLivenessBuilder.setNetworkSettings(requestTimeout: requestTimeout)
         }
+        
+        if let delay = arguments["delay"] as? TimeInterval ?? nil {
+            passiveFaceLivenessBuilder.setCurrentStepDoneDelay(currentStepDoneDelay: delay)
+        }
 
         if let showPreview = arguments["showPreview"] as? [String: Any] ?? nil {
             let show = showPreview["show"] as? Bool ?? false
@@ -74,7 +78,8 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             let holdItMessage = messageSettingsParam["holdItMessage"] as? String ?? nil
             let invalidFaceMessage = messageSettingsParam["invalidFaceMessage"] as? String ?? nil
             let sensorStabilityMessage = messageSettingsParam["sensorStabilityMessage"] as? String ?? nil
-
+            let verifyingLivenessMessage = messageSettingsParam["verifyingLivenessMessage"] as? String ?? nil
+             
             _ = passiveFaceLivenessBuilder.setMessageSettings(
                 waitMessage: waitMessage,
                 stepName: stepName,
@@ -84,7 +89,8 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 holdItMessage: holdItMessage,
                 invalidFaceMessage: invalidFaceMessage,
                 multipleFaceDetectedMessage: multipleFaceDetectedMessage,
-                sensorStabilityMessage: sensorStabilityMessage)
+                sensorStabilityMessage: sensorStabilityMessage,
+                verifyingLivenessMessage: verifyingLivenessMessage)
          }
 
         if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
