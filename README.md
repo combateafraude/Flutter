@@ -107,6 +107,7 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
 | `bool enableEmulator`<br><br>Permite o uso de emulador quando `true` |
 | `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
+| `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
 | `bool enableBrightnessIncrease`<br><br>Habilita/desabilita o incremento de brilho do dispositivo do dispositivo na abertura do SDK |
 
 
