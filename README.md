@@ -2,7 +2,7 @@
 
 Plugin que chama os SDKs nativos em [Android](https://docs.combateafraude.com/docs/mobile/android/document-detector/) e [iOS](https://docs.combateafraude.com/docs/mobile/ios/document-detector/). Caso tenha alguma dúvida, envie um email para o nosso [Head of Mobile](mailto:daniel.seitenfus@combateafraude.com)
 
-Atualmente, os documentos suportados são RG, CNH, RNE e CRLV. Caso tenha alguma sugestão de outro documento, contate-nos!
+Atualmente, os documentos suportados são RG, CNH, RNE, CRLV, CTPS, Passaporte. Caso tenha alguma sugestão de outro documento, contate-nos!
 
 # Políticas de privacidade e termos e condições de uso
 
@@ -152,6 +152,7 @@ documentDetector.setShowPreview(showPreview);
 | `String? sensorStabilityMessage`<br><br>Padrão: "Mantenha o celular parado"|;
 | `String? unsupportedDocumentMessage`<br><br>Padrão: "Ops, parece que este documento não é suportado. Contate-nos!"|
 | `String? popupDocumentSubtitleMessage`<br><br>Padrão: "Posicione o documento em uma mesa, centralize-o na marcação e aguarde a captura automática."|
+| `String? setPositiveButtonMessage`<br><br>Padrão: "Ok, entendi!"|
 | `String? wrongDocumentMessage_RG_FRONT (somente para Android)`<br><br>Padrão: "Ops, esta é a frente do RG"|
 | `String? wrongDocumentMessage_RG_BACK (somente para Android)`<br><br>Padrão: "Ops, este é o verso do RG"|
 | `String? wrongDocumentMessage_RG_FULL (somente para Android)`<br><br>Padrão: "Ops, este é o RG aberto"|
