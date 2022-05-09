@@ -58,7 +58,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         
         var documentDetectorBuilder = DocumentDetectorSdk.Builder(mobileToken: mobileToken)
         
-        documentDetectorBuilder.enableMultiLanguage(enable: false)
+        documentDetectorBuilder.enableMultiLanguage(false)
 
         documentDetectorBuilder.setDocumentDetectorFlow(flow: documentDetectorSteps)
 
@@ -81,6 +81,10 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         if let requestTimeout = arguments["requestTimeout"] as? TimeInterval ?? nil {
             documentDetectorBuilder.setNetworkSettings(requestTimeout: requestTimeout)
         }
+        
+        if let delay = arguments["delay"] as? TimeInterval ?? nil {
+            documentDetectorBuilder.setCurrentStepDoneDelay(currentStepDoneDelay: delay)
+        }
 
         if let showPreview = arguments["showPreview"] as? [String: Any] ?? nil {
             var show = showPreview["show"] as? Bool ?? false
@@ -97,6 +101,8 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             let verifyingQualityMessage = messageSettingsParam["verifyingQualityMessage"] as? String ?? nil
             let lowQualityDocumentMessage = messageSettingsParam["lowQualityDocumentMessage"] as? String ?? nil
             let uploadingImageMessage = messageSettingsParam["uploadingImageMessage"] as? String ?? nil
+            
+            let popupDocumentSubtitleMessage = messageSettingsParam["popupDocumentSubtitleMessage"] as? String ?? nil
             
             let unsupportedDocumentMessage = messageSettingsParam["unsupportedDocumentMessage"] as? String ?? nil
             let wrongDocumentMessage_RG_FRONT = messageSettingsParam["wrongDocumentMessage_RG_FRONT"] as? String ?? nil
@@ -120,6 +126,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                                                        verifyingQualityMessage: verifyingQualityMessage,
                                                        lowQualityDocumentMessage: lowQualityDocumentMessage,
                                                        uploadingImageMessage: uploadingImageMessage,
+                                                       popupDocumentSubtitleMessage: popupDocumentSubtitleMessage,
                                                        unsupportedDocumentMessage: unsupportedDocumentMessage,
                                                        wrongDocumentMessage_RG_FRONT: wrongDocumentMessage_RG_FRONT,
                                                        wrongDocumentMessage_RG_BACK: wrongDocumentMessage_RG_BACK,
@@ -287,6 +294,12 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             return Document.RNE_FRONT
         case "RNE_BACK":
             return Document.RNE_BACK
+        case "PASSPORT":
+            return Document.PASSPORT
+        case "CTPS_FRONT":
+            return Document.CTPS_FRONT
+        case "CTPS_BACK":
+            return Document.CTPS_BACK
         default:
             return Document.OTHERS
         }
