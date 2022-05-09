@@ -94,8 +94,7 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 | `.setPersonName(String personName)`<br><br>Vincula uma tentativa de prova de vida a um nome |
 | `.setPersonCPF(String personCPF)`<br><br>Vincula uma tentativa de prova de vida a um cpf |
 | `.setAnalyticsSettings(bool useAnalytics)`<br><br>Habilita/desabilita a coleta de dados para maximização da informação antifraude. O padrão é `true` |
-| `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
-| `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
+| `.setAudioSettings(bool enable, String audioResIdName)`<br><br>Habilita/desabilita os sons. Permite customizar o áudio utilizado pelo SDK. Caso deseje mudar o áudio do SDK, adicione o arquivo de audio em `ROOT_PROJECT/android/app/src/main/res/raw/` com o nome desejado seguindo e o parametrize || `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
 | `.setShowPreview(ShowPreview showPreview)`<br><br> Preview para verificação de qualidade da foto |
 | `.setCaptureMode(VideoCapture videoCapture, ImageCapture imageCapture)`<br><br> Define as configurações de captura |
 | `.setGetImageUrlExpireTime(String expireTime)`<br><br> Define o tempo de duração da URL da imagem no servidor até ser expirada. Espera receber um intervalo de tempo entre "30m" à "30d". O padrão é `3h` |
@@ -184,6 +183,7 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 | `bool enableGoogleServices`<br><br>Permite habilitar/desabilitar recursos do SDK que consomem GoogleServices no SDK, não recomendamos desabilitar os serviços por conta da perda de segurança. O padrão é `True` |
 | `bool emulatorSettings`<br><br>Permite habilitar/desabilitar o uso de dispositivos emulados no SDK, recomendamos desabilitar o uso dos emuladores por questões de segurança. O padrão é `False` |
 | `bool rootSettings`<br><br>Permite habilitar/desabilitar o uso de dispositivos com root no SDK, recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `False` |
+| `bool enableBrightnessIncrease`<br><br>Habilita/desabilita o incremento de brilho do dispositivo do dispositivo na abertura do SDK |
 
 | PassiveFaceLivenessCustomizationAndroid constructor |
 | --------- |
