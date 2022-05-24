@@ -255,6 +255,31 @@ public class DocumentDetectorPlugin
                 }
             }
 
+            if(androidSettings.get("enableSwitchCameraButton") != null){
+                boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
+                mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
+            }
+    
+            if(androidSettings.get("enableGoogleServices") != null){
+                boolean enableGoogleServices = (boolean) androidSettings.get("enableGoogleServices");
+                mDocumentDetectorBuilder.enableGoogleServices(enableGoogleServices);
+            }
+    
+            if(androidSettings.get("enableEmulator") != null){
+                boolean enableEmulator = (boolean) androidSettings.get("enableEmulator");
+                mDocumentDetectorBuilder.setUseEmulator(enableEmulator);
+                
+            }
+            if(androidSettings.get("enableRootDevices") != null){
+                boolean enableRootDevices = (boolean) androidSettings.get("enableRootDevices");
+                mDocumentDetectorBuilder.setUseRoot(enableRootDevices);
+            }
+    
+            String resolution = (String) androidSettings.get("resolution");
+            if(resolution != null){
+                mDocumentDetectorBuilder.setResolutionSettings(Resolution.valueOf(resolution));
+            }       
+
             // Sensor settings
             HashMap<String, Object> sensorSettings = (HashMap<String, Object>) androidSettings.get("sensorSettings");
             if (sensorSettings != null) {
@@ -299,32 +324,7 @@ public class DocumentDetectorPlugin
                     mDocumentDetectorBuilder.setStabilitySensorSettings(null);
                 }
             }
-        }
-
-        if(androidSettings.get("enableSwitchCameraButton") != null){
-            boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
-            mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
-        }
-
-        if(androidSettings.get("enableGoogleServices") != null){
-            boolean enableGoogleServices = (boolean) androidSettings.get("enableGoogleServices");
-            mDocumentDetectorBuilder.enableGoogleServices(enableGoogleServices);
-        }
-
-        if(androidSettings.get("enableEmulator") != null){
-            boolean enableEmulator = (boolean) androidSettings.get("enableEmulator");
-            mDocumentDetectorBuilder.setUseEmulator(enableEmulator);
-            
-        }
-        if(androidSettings.get("enableRootDevices") != null){
-            boolean enableRootDevices = (boolean) androidSettings.get("enableRootDevices");
-            mDocumentDetectorBuilder.setUseRoot(enableRootDevices);
-        }
-
-        String resolution = (String) androidSettings.get("resolution");
-        if(resolution != null){
-            mDocumentDetectorBuilder.setResolutionSettings(Resolution.valueOf(resolution));
-        }                
+        }         
 
         // Popup settings
         Boolean showPopup = (Boolean) argumentsMap.get("popup");
