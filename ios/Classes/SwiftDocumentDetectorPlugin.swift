@@ -378,6 +378,8 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             return Document.CTPS_FRONT
         case "CTPS_BACK":
             return Document.CTPS_BACK
+        case "ANY":
+            return Document.ANY
         default:
             return Document.OTHERS
         }
