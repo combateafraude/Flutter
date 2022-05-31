@@ -11,7 +11,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         let instance = SwiftPassiveFaceLivenessPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
-
+    
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         if call.method == "start" {
             flutterResult = result;
@@ -20,41 +20,41 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             result(FlutterMethodNotImplemented);
         }
     }
-
+    
     private func start(call: FlutterMethodCall) {
-
+        
         let arguments = call.arguments as! [String: Any?]
         
         let mobileToken = arguments["mobileToken"] as! String
         
         var passiveFaceLivenessBuilder = PassiveFaceLivenessSdk.Builder(mobileToken: mobileToken)
-
+        
         passiveFaceLivenessBuilder.enableMultiLanguage(false)
-
+        
         if let peopleId = arguments["peopleId"] as? String ?? nil {
             passiveFaceLivenessBuilder.setPersonId(personId: peopleId)
         }
-
+        
         if let personName = arguments["personName"] as? String ?? nil{
             passiveFaceLivenessBuilder.setPersonName(personName: personName)
         }
-
+        
         if let personCPF = arguments["personCPF"] as? String ?? nil{
             passiveFaceLivenessBuilder.setPersonCPF(personCPF: personCPF)
         }
-
+        
         if let useAnalytics = arguments["useAnalytics"] as? Bool ?? nil {
             passiveFaceLivenessBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)
         }
-
+        
         if let hasSound = arguments["sound"] as? Bool ?? nil {
             passiveFaceLivenessBuilder.enableSound(enableSound: hasSound)
         }
-
+        
         if let requestTimeout = arguments["requestTimeout"] as? TimeInterval ?? nil {
             passiveFaceLivenessBuilder.setNetworkSettings(requestTimeout: requestTimeout)
         }
-
+        
         if let expireTime = arguments["expireTime"] as? String ?? nil {
             passiveFaceLivenessBuilder.setGetImageUrlExpireTime(expireTime)
         }
@@ -70,9 +70,9 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             let confirmLabel = showPreview["confirmLabel"] as? String ?? nil
             let retryLabel = showPreview["retryLabel"] as? String ?? nil
             passiveFaceLivenessBuilder.showPreview(show, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
-         }
-
-         if let messageSettingsParam = arguments["messageSettings"] as? [String: Any] ?? nil {
+        }
+        
+        if let messageSettingsParam = arguments["messageSettings"] as? [String: Any] ?? nil {
             let stepName = messageSettingsParam["stepName"] as? String ?? nil
             let waitMessage = messageSettingsParam["waitMessage"] as? String ?? nil
             let faceNotFoundMessage = messageSettingsParam["faceNotFoundMessage"] as? String ?? nil
@@ -95,8 +95,8 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 multipleFaceDetectedMessage: multipleFaceDetectedMessage,
                 sensorStabilityMessage: sensorStabilityMessage,
                 verifyingLivenessMessage: verifyingLivenessMessage)
-         }
-
+        }
+        
         if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
             
             if let enableManualCapture = iosSettings["enableManualCapture"] as? Bool ?? nil {
@@ -108,20 +108,20 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                     }
                 }
             }
-
+            
             if let customization = iosSettings["customization"] as? [String: Any] ?? nil {
                 
-
+                
                 let layout = PassiveFaceLivenessLayout()
-
+                
                 if let colorHex = customization["colorHex"] as? String ?? nil {
                     passiveFaceLivenessBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
                 }
-
+                
                 if let showStepLabel = customization["showStepLabel"] as? Bool ?? nil {
                     passiveFaceLivenessBuilder.showStepLabel(show: showStepLabel)
                 }
-
+                
                 if let showStatusLabel = customization["showStatusLabel"] as? Bool ?? nil {
                     passiveFaceLivenessBuilder.showStatusLabel(show: showStatusLabel)
                 }
@@ -132,24 +132,33 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                 
                 var greenMask : UIImage?
                 if let greenMaskImageName = customization["greenMaskImageName"] as? String ?? nil {
-                    greenMask = UIImage(named: greenMaskImageName) 
+                    greenMask = UIImage(named: greenMaskImageName)
                 }
                 
                 var whiteMask : UIImage?
                 if let whiteMaskImageName = customization["whiteMaskImageName"] as? String ?? nil {
-                    whiteMask = UIImage(named: whiteMaskImageName) 
+                    whiteMask = UIImage(named: whiteMaskImageName)
                 }
                 
                 var redMask : UIImage?
                 if let redMaskImageName = customization["redMaskImageName"] as? String ?? nil {
-                    redMask = UIImage(named: redMaskImageName) 
+                    redMask = UIImage(named: redMaskImageName)
                 }
                 
                 layout.changeMaskImages(
                     greenMask: greenMask,
                     whiteMask: whiteMask,
                     redMask: redMask)
-
+                
+                if let buttonSize = customization["buttonSize"] as? Double ?? nil {
+                    layout.buttonSize = CGFloat(buttonSize)
+                }
+                
+                if let contentModeParam = customization["buttonContentMode"] as? String ?? nil {
+                    if let contentMode = getContentModeByString(contentModeParam){
+                        layout.buttonContentMode = contentMode
+                    }
+                }
                 
                 passiveFaceLivenessBuilder.setLayout(layout: layout)
             }
@@ -199,7 +208,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         if let stage = arguments["stage"] as? String ?? nil {
             passiveFaceLivenessBuilder.setStage(stage: getStageByString(stage: stage))
         }
-
+        
         //passiveFaceLivenessBuilder.setOverlay(overlay: PassiveFaceLivenessOverlay())
         
         let controller = UIApplication.shared.keyWindow!.rootViewController!
@@ -207,6 +216,36 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         let scannerVC = PassiveFaceLivenessController(passiveFaceLiveness: passiveFaceLivenessBuilder.build())
         scannerVC.passiveFaceLivenessDelegate = self
         controller.present(scannerVC, animated: true, completion: nil)
+    }
+    
+    func getContentModeByString(_ contentModeParam: String) -> UIView.ContentMode? {
+        if(contentModeParam == "scaleToFill"){
+            return .scaleToFill
+        }else if(contentModeParam == "scaleAspectFit"){
+            return .scaleAspectFit
+        }else if(contentModeParam == "scaleAspectFill"){
+            return .scaleAspectFill
+        }else if(contentModeParam == "redraw"){
+            return .redraw
+        }else if(contentModeParam == "center"){
+            return .center
+        }else if(contentModeParam == "top"){
+            return .top
+        }else if(contentModeParam == "bottom"){
+            return .bottom
+        }else if(contentModeParam == "left"){
+            return .left
+        }else if(contentModeParam == "topLeft"){
+            return .topLeft
+        }else if(contentModeParam == "topRight"){
+            return .topRight
+        }else if(contentModeParam == "bottomLeft"){
+            return .bottomLeft
+        }else if(contentModeParam == "bottomRight"){
+            return .bottomRight
+        }
+        
+        return nil
     }
     
     public func getStageByString(stage: String) -> CAFStage {
@@ -252,7 +291,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
     public func passiveFaceLivenessController(_ passiveFacelivenessController: PassiveFaceLivenessController, didFinishWithResults results: PassiveFaceLivenessResult) {
         let response : NSMutableDictionary! = [:]
         
-
+        
         if let image = results.image {
             let imagePath = saveImageToDocumentsDirectory(image: image, withName: "selfie.jpg")
             response["success"] = NSNumber(value: true)
@@ -260,7 +299,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             response["imageUrl"] = results.imageUrl
             response["signedResponse"] = results.signedResponse
             response["trackingId"] = results.trackingId
-
+            
             flutterResult!(response)
         }else{
             response["success"] = NSNumber(value: true)
@@ -268,26 +307,26 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             response["imageUrl"] = results.imageUrl
             response["signedResponse"] = results.signedResponse
             response["trackingId"] = results.trackingId
-
+            
             flutterResult!(response)
         }
     }
     
     public func passiveFaceLivenessControllerDidCancel(_ passiveFacelivenessController: PassiveFaceLivenessController) {
         let response : NSMutableDictionary! = [:]
-
+        
         response["success"] = nil
-
+        
         flutterResult!(response)
     }
     
     public func passiveFaceLivenessController(_ passiveFacelivenessController: PassiveFaceLivenessController, didFailWithError error: PassiveFaceLivenessFailure) {
         let response : NSMutableDictionary! = [:]
-
+        
         response["success"] = NSNumber(value: false)
         response["message"] = error.message
         response["type"] = String(describing: type(of: error))
-
+        
         flutterResult!(response)
     }
     
