@@ -10,6 +10,7 @@ import 'package:document_detector/result/document_detector_result.dart';
 import 'package:document_detector/result/document_detector_success.dart';
 import 'package:document_detector/show_preview.dart';
 import 'package:document_detector/message_settings.dart';
+import 'package:document_detector/upload_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -32,6 +33,7 @@ class DocumentDetector {
   bool? autoDetection;
   MessageSettings? messageSettings;
   String? expireTime;
+  UploadSettings? uploadSettings;
 
   DocumentDetector({required this.mobileToken});
 
@@ -84,8 +86,12 @@ class DocumentDetector {
     this.iosSettings = iosSettings;
   }
 
-   void setGetImageUrlExpireTime(String expireTime) {
+  void setGetImageUrlExpireTime(String expireTime) {
     this.expireTime = expireTime;
+  }
+
+  void setUploadSettings(UploadSettings settings) {
+    this.uploadSettings = settings;
   }
 
   Future<DocumentDetectorResult> start() async {
@@ -105,6 +111,7 @@ class DocumentDetector {
     params["autoDetection"] = autoDetection;
     params["messageSettings"] = messageSettings?.asMap();
     params["expireTime"] = expireTime;
+    params["uploadSettings"] = uploadSettings?.asMap();
 
     List<Map<String, dynamic>> stepsMap = [];
     for (var step in documentDetectorSteps) {

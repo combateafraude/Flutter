@@ -11,5 +11,6 @@ enum DocumentType {
   PASSPORT,
   CTPS_FRONT,
   CTPS_BACK,
+  ANY,
   OTHERS
 }

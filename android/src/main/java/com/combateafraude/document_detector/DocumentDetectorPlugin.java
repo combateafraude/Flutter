@@ -14,6 +14,7 @@ import com.combateafraude.documentdetector.input.DetectionSettings;
 import com.combateafraude.documentdetector.input.Document;
 import com.combateafraude.documentdetector.input.DocumentDetector;
 import com.combateafraude.documentdetector.input.DocumentDetectorStep;
+import com.combateafraude.documentdetector.input.FileFormat;
 import com.combateafraude.documentdetector.input.MaskType;
 import com.combateafraude.documentdetector.input.PreviewSettings;
 import com.combateafraude.documentdetector.input.QualitySettings;
@@ -22,6 +23,7 @@ import com.combateafraude.documentdetector.input.SensorLuminositySettings;
 import com.combateafraude.documentdetector.input.SensorOrientationSettings;
 import com.combateafraude.documentdetector.input.SensorStabilitySettings;
 import com.combateafraude.documentdetector.input.MessageSettings;
+import com.combateafraude.documentdetector.input.UploadSettings;
 import com.combateafraude.documentdetector.output.Capture;
 import com.combateafraude.documentdetector.output.DocumentDetectorResult;
 import com.combateafraude.documentdetector.output.failure.SDKFailure;
@@ -86,7 +88,7 @@ public class DocumentDetectorPlugin
 
         String expireTime = (String) argumentsMap.get("expireTime");
         if(expireTime != null){
-            mDocumentDetectorBuilder.setGetImageUrlExpireTime(expireTime);
+         //   mDocumentDetectorBuilder.setGetImageUrlExpireTime(expireTime);
         }
 
         // Document steps
@@ -178,9 +180,59 @@ public class DocumentDetectorPlugin
                     sensorOrientationMessage,
                     sensorStabilityMessage,
                     popupDocumentSubtitleMessage,
-                    positiveButtonMessage);
+                    positiveButtonMessage,
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "");
 
             mDocumentDetectorBuilder.setMessageSettings(messageSettings);
+        }
+
+        HashMap<String, Object> uploadSettingsParam = (HashMap<String, Object>) argumentsMap.get("uploadSettings");
+        if(uploadSettingsParam != null){
+            UploadSettings uploadSettings = new UploadSettings();
+
+            Integer activityLayout = getResourceId((String) uploadSettingsParam.get("activityLayout"), LAYOUT_RES);
+            Integer popUpLayout = getResourceId((String) uploadSettingsParam.get("popUpLayout"), LAYOUT_RES);
+            Boolean compress = (Boolean) uploadSettingsParam.get("compress");
+            ArrayList<String> fileFormatsParam = (ArrayList<String>) uploadSettingsParam.get("fileFormats");
+            Integer maxFileSize = (Integer) uploadSettingsParam.get("maxFileSize");
+            String intent = (String) uploadSettingsParam.get("intent");
+
+            if(compress != null){
+                uploadSettings.setCompress(compress);
+            }    
+            if(intent != null){
+                uploadSettings.setIntent(intent);
+            }
+            if(maxFileSize != null){
+                uploadSettings.setMaxFileSize(maxFileSize);
+            }
+            if(popUpLayout != null){
+                uploadSettings.setPopUpLayout(popUpLayout);
+            }
+            if(activityLayout != null){
+                uploadSettings.setActivityLayout(activityLayout);
+            }
+            if (fileFormatsParam != null){
+                FileFormat[] fileFormats = new FileFormat[fileFormatsParam.size()];
+                for (int i = 0; i < fileFormats.length; i++ ) {
+                    FileFormat fileFormat = FileFormat.valueOf(fileFormatsParam.get(i));
+                    if (fileFormat != null) fileFormats[i] = fileFormat;
+                }
+                uploadSettings.setFileFormats(fileFormats);
+            }
+        
+            
+            mDocumentDetectorBuilder.setUploadSettings(uploadSettings);
         }
 
         // Android specific settings
