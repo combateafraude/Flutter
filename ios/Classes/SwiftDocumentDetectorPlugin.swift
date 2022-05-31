@@ -215,28 +215,47 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 
                 var greenMask : UIImage?
                 if let greenMaskImageName = customization["greenMaskImageName"] as? String ?? nil {
-                    greenMask = UIImage(named: greenMaskImageName) 
+                    greenMask = UIImage(named: greenMaskImageName)
                 }
                 
                 var whiteMask : UIImage?
                 if let whiteMaskImageName = customization["whiteMaskImageName"] as? String ?? nil {
-                    whiteMask = UIImage(named: whiteMaskImageName) 
+                    whiteMask = UIImage(named: whiteMaskImageName)
                 }
                 
                 var redMask : UIImage?
                 if let redMaskImageName = customization["redMaskImageName"] as? String ?? nil {
-                    redMask = UIImage(named: redMaskImageName) 
+                    redMask = UIImage(named: redMaskImageName)
                 }
                 
                 layout.changeMaskImages(
                     greenMask: greenMask,
                     whiteMask: whiteMask,
                     redMask: redMask)
-
+                
+                if let buttonSize = customization["buttonSize"] as? Double ?? nil {
+                    layout.buttonSize = CGFloat(buttonSize)
+                }
+                
+                if let contentModeParam = customization["buttonContentMode"] as? String ?? nil {
+                    if let contentMode = getContentModeByString(contentModeParam){
+                        layout.buttonContentMode = contentMode
+                    }
+                }
                 
                 documentDetectorBuilder.setLayout(layout: layout)
             }
         }
+        
+        if let uploadSettingsParam = arguments["uploadSettings"] as? [String: Any] ?? nil {
+            let compress = uploadSettingsParam["compress"] as? Bool ?? true
+            let fileFormatsParam = uploadSettingsParam["fileFormats"] as? [String] ?? nil
+            let fileFormats = getFileFormatsArrayByStringArray(fileFormatsParam: fileFormatsParam) ?? [.jpeg, .png, .pdf]
+            let maxFileSize = uploadSettingsParam["maxFileSize"] as? Int ?? 10000000
+            
+            _ = documentDetectorBuilder.setUploadSettings(uploadSettings: UploadSettings(enable: true, compress: compress, fileFormats: fileFormats, maximumFileSize: maxFileSize))
+        }
+        
 
         //documentDetectorBuilder.setOverlay(overlay: DocumentDetectorOverlay())
         
@@ -247,7 +266,63 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         controller.present(scannerVC, animated: true, completion: nil)
     }
     
-    public func getResolutionByString(resolution: String) -> Resolution {
+    func getContentModeByString(_ contentModeParam: String) -> UIView.ContentMode? {
+        if(contentModeParam == "scaleToFill"){
+            return .scaleToFill
+        }else if(contentModeParam == "scaleAspectFit"){
+            return .scaleAspectFit
+        }else if(contentModeParam == "scaleAspectFill"){
+            return .scaleAspectFill
+        }else if(contentModeParam == "redraw"){
+            return .redraw
+        }else if(contentModeParam == "center"){
+            return .center
+        }else if(contentModeParam == "top"){
+            return .top
+        }else if(contentModeParam == "bottom"){
+            return .bottom
+        }else if(contentModeParam == "left"){
+            return .left
+        }else if(contentModeParam == "topLeft"){
+            return .topLeft
+        }else if(contentModeParam == "topRight"){
+            return .topRight
+        }else if(contentModeParam == "bottomLeft"){
+            return .bottomLeft
+        }else if(contentModeParam == "bottomRight"){
+            return .bottomRight
+        }
+        
+        return nil
+    }
+    
+    func getFileFormatsArrayByStringArray(fileFormatsParam: [String]?) -> [FileFormat]? {
+        
+        var fileFormats: [FileFormat]? = nil
+        
+        if let fileFormatsParam = fileFormatsParam {
+            fileFormats = []
+            for format in fileFormatsParam {
+                fileFormats?.append(getFileFormatByString(fileFormatString: format))
+            }
+        }
+        
+        return fileFormats
+    }
+    
+    func getFileFormatByString(fileFormatString: String) -> FileFormat {
+        if(fileFormatString == "PNG"){
+            return .png
+        }else if(fileFormatString == "JPG" || fileFormatString == "JPEG"){
+            return .jpeg
+        }else if(fileFormatString == "PDF"){
+            return .pdf
+        }
+        
+        return .jpeg
+    }
+    
+    func getResolutionByString(resolution: String) -> Resolution {
             if(resolution == "LOW"){
                 return .low
             }else if(resolution == "MEDIUM"){
@@ -272,9 +347,9 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 return .vga640x480
             }else if(resolution == "CIF352x288"){
                 return .cif352x288
-            }else{
-                return .hd1280x720
             }
+        
+            return .hd1280x720
         }
 
     func convertToDocument (documentType: String) -> Document {
