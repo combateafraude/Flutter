@@ -110,12 +110,21 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `.setGetImageUrlExpireTime(String expireTime)`<br><br> Define o tempo de duração da URL da imagem no servidor até ser expirada. Espera receber um intervalo de tempo entre "30m" à "30d". O padrão é `3h` |
 | `.setAndroidSettings(DocumentDetectorAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(DocumentDetectorIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
+| `.setUploadSettings(UploadSettings uploadSettings)`<br><br>Define as configurações para o upload de documentos. Ativando esta opção, o fluxo do SDK irá solicitar que o usuário envie os arquivos do documento ao invés de realizar a captura com a câmera do dispositivo. Esta opção também inclui as verificações de qualidade do documento. Por padrão, esta opção de fluxo não está habilitada |
 
 | DocumentDetectorStep constructor |
 | --------- |
 | `DocumentType document`<br><br>Documento a ser escaneado neste respectivo passo |
 | `DocumentDetectorStepCustomizationAndroid android`<br><br>Customizações visuais do respectivo passo aplicados em Android |
 | `DocumentDetectorStepCustomizationIos ios`<br><br>Customizações visuais do respectivo passo aplicados em iOS |
+
+| UploadSettings constructor|
+| --------- |
+| `bool compress`<br><br>Habilita/desabilita a compressão do arquivo antes de realizar o upload. O padrão é `true` |
+| `int maxFileSize`<br><br>Define o tamanho máximo em KB do arquivo para upload. O limite padrão é 20000 KB (20MB) |
+| `List<String> fileFormats`<br><br>Define o(os) formatos de arquivos que serão aceitos para upload. Por padrão são aceitos: .PDF , .JPG, .JPEG, .PNG, .HEIF |
+| `String activityLayout`<br><br>Define o layout de plano de fundo do upload de documentos |
+| `String popUpLayout`<br><br>Define o layout do popup de solicitação do documento para upload |
 
 | ShowPreview |
 | --------- |
