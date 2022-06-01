@@ -6,15 +6,19 @@ class PassiveFaceLivenessCustomizationIos {
   String closeImageName;
   bool showStepLabel;
   bool showStatusLabel;
+  double buttonSize;
+  String buttonContentMode;
 
   PassiveFaceLivenessCustomizationIos(
-  {this.colorHex,
-    this.greenMaskImageName,
-    this.whiteMaskImageName,
-    this.redMaskImageName,
-    this.closeImageName,
-    this.showStepLabel,
-    this.showStatusLabel});
+      {this.colorHex,
+      this.greenMaskImageName,
+      this.whiteMaskImageName,
+      this.redMaskImageName,
+      this.closeImageName,
+      this.showStepLabel,
+      this.showStatusLabel,
+      this.buttonSize,
+      this.buttonContentMode});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -26,6 +30,8 @@ class PassiveFaceLivenessCustomizationIos {
     map["closeImageName"] = closeImageName;
     map["showStepLabel"] = showStepLabel;
     map["showStatusLabel"] = showStatusLabel;
+    map["buttonSize"] = buttonSize;
+    map["buttonContentMode"] = buttonContentMode;
 
     return map;
   }
