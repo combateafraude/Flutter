@@ -65,7 +65,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-v4.15.0
+      ref: passive-face-liveness-v4.20.0
 ```
 
 ## Utilização
@@ -235,13 +235,15 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 
 | PassiveFaceLivenessCustomizationIos constructor |
 | --------- |
-| `String colorHex`<br><br>Cor tema do SDK. Por exemplo, caso deseje usar a cor preta, utilize "#000000" |
-| `String greenMaskImageName`<br><br>Nome da imagem à substituir a máscara verde padrão. Lembre de adicionar a imagem em `Assets Catalog Document` no seu projeto do XCode |
-| `String whiteMaskImageName`<br><br>Nome da imagem à substituir a máscara branca padrão. Lembre de adicionar a imagem em `Assets Catalog Document` no seu projeto do XCode |
-| `String redMaskImageName`<br><br>Nome da imagem à substituir a máscara vermelha padrão. Lembre de adicionar a imagem em `Assets Catalog Document` no seu projeto do XCode |
-| `String closeImageName`<br><br>Nome da imagem à substituir o botão de fechar o SDK. Lembre de adicionar a imagem em `Assets Catalog Document` no seu projeto do XCode |
-| `bool showStepLabel`<br><br>Flag que indica se deseja mostrar o label do passo atual |
-| `bool showStatusLabel`<br><br>Flag que indica se deseja mostrar o label do status atual |
+| `String? colorHex`<br><br>Cor tema do SDK. Por exemplo, caso deseje usar a cor preta, utilize "#000000" |
+| `String? greenMaskImageName`<br><br>Nome da imagem à substituir a máscara verde padrão. Lembre de adicionar a imagem em `Assets Catalog Document` no seu projeto do XCode |
+| `String? whiteMaskImageName`<br><br>Nome da imagem à substituir a máscara branca padrão. Lembre de adicionar a imagem em `Assets Catalog Document` no seu projeto do XCode |
+| `String? redMaskImageName`<br><br>Nome da imagem à substituir a máscara vermelha padrão. Lembre de adicionar a imagem em `Assets Catalog Document` no seu projeto do XCode |
+| `String? closeImageName`<br><br>Nome da imagem à substituir o botão de fechar o SDK. Lembre de adicionar a imagem em `Assets Catalog Document` no seu projeto do XCode |
+| `bool? showStepLabel`<br><br>Flag que indica se deseja mostrar o label do passo atual |
+| `bool? showStatusLabel`<br><br>Flag que indica se deseja mostrar o label do status atual |
+| `double? buttonSize`<br><br>Valor que define o tamanho do botão de "fechar" o SDK |
+| `String? buttonContentMode`<br><br>Atributo que define o content mode do botão de "fechar" o SDK. Escolha entre [esses valores](https://docs.combateafraude.com/docs/mobile/flutter/release-notes/#27-de-maio-de-2022). |
 
 | SensorStabilitySettingsIos constructor |
 | --------- |
