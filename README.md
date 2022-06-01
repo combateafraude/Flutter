@@ -287,6 +287,8 @@ documentDetector.setMessageSettings(messageSettings);
 | `String closeImageName`<br><br>Nome da imagem à substituir o botão de fechar o SDK. Lembre de adicionar a imagem em `Assets Catalog Document` no seu projeto do XCode |
 | `bool showStepLabel`<br><br>Flag que indica se deseja mostrar o label do passo atual |
 | `bool showStatusLabel`<br><br>Flag que indica se deseja mostrar o label do status atual |
+| `double? buttonSize`<br><br>Valor que define o tamanho do botão de "fechar" o SDK |
+| `String? buttonContentMode`<br><br>Atributo que define o content mode do botão de "fechar" o SDK. Escolha entre [esses valores](https://docs.combateafraude.com/docs/mobile/flutter/release-notes/#27-de-maio-de-2022). |
 
 | SensorSettingsIos constructor |
 | --------- |
