@@ -54,11 +54,15 @@ source 'https://github.com/combateafraude/iOS.git'
 source 'https://cdn.cocoapods.org/' # ou 'https://github.com/CocoaPods/Specs' se o CDN estiver fora do ar
 ```
 
-Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runner/Info.plist`:
+Por último, adicione as permissões no arquivo `ROOT_PROJECT/ios/Runner/Info.plist`:
 
 ```
 <key>NSCameraUsageDescription</key>
 <string>To read the documents</string>
+
+// Obrigatória somente para o fluxo de upload de documento
+<key>NSPhotoLibraryUsageDescription</key>
+	<string>To select images</string>
 ```
 
 Para habilitar texto e voz em Português, em seu projeto, no diretório ROOTPROJECT/ios, abra o arquivo .xcworkspace no Xcode e adicione em Project > Info > Localizations o idioma Portuguese (Brazil).
@@ -72,7 +76,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-compatible-v5.7.5
+      ref: document-detector-compatible-v5.20.0
 ```
 
 ## Utilização
