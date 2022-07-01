@@ -430,12 +430,14 @@ public class DocumentDetectorPlugin
         responseMap.put("success", Boolean.TRUE);
         ArrayList<HashMap<String, Object>> captures = new ArrayList<>();
         for (Capture capture : mDocumentDetectorResult.getCaptures()) {
-            HashMap<String, Object> captureResponse = new HashMap<>();
-            captureResponse.put("imagePath", capture.getImagePath());
-            captureResponse.put("imageUrl", capture.getImageUrl());
-            captureResponse.put("label", capture.getLabel());
-            captureResponse.put("quality", capture.getQuality());
-            captures.add(captureResponse);
+            if (capture != null) {
+                HashMap<String, Object> captureResponse = new HashMap<>();
+                captureResponse.put("imagePath", capture.getImagePath());
+                captureResponse.put("imageUrl", capture.getImageUrl());
+                captureResponse.put("label", capture.getLabel());
+                captureResponse.put("quality", capture.getQuality());
+                captures.add(captureResponse);
+            }
         }
         responseMap.put("captures", captures);
         responseMap.put("type", mDocumentDetectorResult.getType());
