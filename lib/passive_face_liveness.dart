@@ -38,7 +38,7 @@ class PassiveFaceLiveness {
 
   PassiveFaceLiveness({required this.mobileToken});
 
-  void setAudioSettings(bool enable, String? soundResId) {
+  void setAudioSettings(bool enable, {String? soundResId}) {
     this.enableSound = enable;
     this.sound = soundResId;
   }
