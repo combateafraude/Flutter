@@ -197,9 +197,8 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
                     if let time = videoCapture["time"] as? TimeInterval ?? nil {
                         passiveFaceLivenessBuilder.setVideoCaptureSettings(time: time)
                     }else{
-                        if let time = videoCapture["time"] as? TimeInterval ?? nil {
-                            passiveFaceLivenessBuilder.setVideoCaptureSettings(time: 3)
-                        }
+                        passiveFaceLivenessBuilder.setVideoCaptureSettings(time: 3)
+                        
                     }
                 }
             }
@@ -291,25 +290,18 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
     public func passiveFaceLivenessController(_ passiveFacelivenessController: PassiveFaceLivenessController, didFinishWithResults results: PassiveFaceLivenessResult) {
         let response : NSMutableDictionary! = [:]
         
-        
         if let image = results.image {
             let imagePath = saveImageToDocumentsDirectory(image: image, withName: "selfie.jpg")
-            response["success"] = NSNumber(value: true)
             response["imagePath"] = imagePath
-            response["imageUrl"] = results.imageUrl
-            response["signedResponse"] = results.signedResponse
-            response["trackingId"] = results.trackingId
-            
-            flutterResult!(response)
-        }else{
-            response["success"] = NSNumber(value: true)
-            response["imagePath"] = results.capturePath
-            response["imageUrl"] = results.imageUrl
-            response["signedResponse"] = results.signedResponse
-            response["trackingId"] = results.trackingId
-            
-            flutterResult!(response)
         }
+        
+        response["success"] = NSNumber(value: true)
+        response["capturePath"] = results.capturePath
+        response["imageUrl"] = results.imageUrl
+        response["signedResponse"] = results.signedResponse
+        response["trackingId"] = results.trackingId
+        
+        flutterResult!(response)
     }
     
     public func passiveFaceLivenessControllerDidCancel(_ passiveFacelivenessController: PassiveFaceLivenessController) {

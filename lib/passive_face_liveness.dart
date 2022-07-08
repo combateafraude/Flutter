@@ -129,10 +129,11 @@ class PassiveFaceLiveness {
       return new PassiveFaceLivenessClosed();
     } else if (success == true) {
       return new PassiveFaceLivenessSuccess(
-          resultMap["imagePath"],
-          resultMap["imageUrl"],
-          resultMap["signedResponse"],
-          resultMap["trackingId"]);
+          imagePath: resultMap["imagePath"],
+          capturePath: resultMap["capturePath"],
+          imageUrl: resultMap["imageUrl"],
+          signedResponse: resultMap["signedResponse"],
+          trackingId: resultMap["trackingId"]);
     } else {
       return new PassiveFaceLivenessFailure(
           resultMap["message"], resultMap["type"]);
