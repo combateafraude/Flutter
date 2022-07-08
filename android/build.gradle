@@ -23,7 +23,7 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
 
     defaultConfig {
         minSdkVersion 21
@@ -45,7 +45,7 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:passive-face-liveness:5.12.0'
+        implementation 'com.combateafraude.sdk:passive-face-liveness:5.20.0'
     }
 
 }
