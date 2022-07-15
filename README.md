@@ -136,7 +136,6 @@ passiveFaceLiveness.setShowPreview(showPreview);
 
 | MessageSettings |
 | --------- | 
-| `bool show`<br><br>Padrão: Habilita/Desabilita preview |
 | `String stepName`<br><br>Padrão: "Registro Facial" |
 | `String holdItMessage`<br><br>Padrão: "Segure assim" |
 | `String faceNotFoundMessage`<br><br>Padrão: "Não encontramos nenhum rosto" |
