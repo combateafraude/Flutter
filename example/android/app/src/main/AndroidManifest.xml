@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:name="io.flutter.app.FlutterApplication"
+        android:name="${applicationName}"
         android:label="face_authenticator_example"
         android:icon="@mipmap/ic_launcher">
         <activity
