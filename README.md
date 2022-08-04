@@ -216,7 +216,7 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 | `int beforePictureMillis`<br><br>Duração em milissegundos entre a primeira detecção do rosto e a efetiva captura da foto |
 | `SensorStabilitySettingsIos sensorStability`<br><br>Configurações do sensor de estabilidade à ser aplicado no SDK |
 | `bool enableManualCapture`<br><br>Habilita modo de captura manual |
-| `double timeEnableManualCapture`<br><br>Define tempo para exibição do botão de captura manual |
+| `double timeEnableManualCapture`<br><br>Define tempo (em segundos) para exibição do botão de captura manual |
 | `double compressionQuality`<br><br>Permite configurar a qualidade no processo de compressão. Por padrão, todas capturas passam por compressão. O método espera como parâmetro valores entre 0 e 1.0, sendo 1.0 a compressão com melhor qualidade (recomendado).O padrão é 1.0 |
 | `String resolution`<br><br>Permite configurar a resolução de captura. O método espera como parâmetro uma `String IosResolution` (O padrão é `hd1280x720`), que possui as seguintes opções:|
 
