@@ -34,8 +34,7 @@ class _MyAppState extends State<MyApp> {
   String _result = "";
   String _description = "";
 
-  String mobileToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1ZmMxM2U5MDE2YTgxODAwMDczNzNlMWYifQ._jdY1z1N1dfaFIq88Qk0akEgOk-taH2OxoW3oT1eLl0";
+  String mobileToken = "";
 
   @override
   void initState() {
@@ -78,11 +77,6 @@ class _MyAppState extends State<MyApp> {
         resolution: IosResolution.HD1280x720, compressQuality: 1);
 
     List<String> formats = ["PDF", "PNG"];
-
-    UploadSettings uploadSettings = new UploadSettings(
-        compress: true, maxFileSize: 4000, fileFormats: formats);
-
-    documentDetector.setUploadSettings(uploadSettings);
 
     documentDetector.setIosSettings(iosSettings);
 
