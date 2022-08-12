@@ -14,6 +14,8 @@ class DocumentDetectorAndroidSettings {
   bool? enableGoogleServices;
   bool? useRoot;
   bool? useEmulator;
+  bool? useDeveloperMode;
+  bool? useAdb;
 
   DocumentDetectorAndroidSettings(
       {this.customization,
@@ -24,7 +26,9 @@ class DocumentDetectorAndroidSettings {
       this.resolution,
       this.enableGoogleServices,
       this.useEmulator,
-      this.useRoot});
+      this.useRoot,
+      this.useDeveloperMode,
+      this.useAdb});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -37,6 +41,8 @@ class DocumentDetectorAndroidSettings {
     map["enableGoogleServices"] = enableGoogleServices;
     map["useEmulator"] = useEmulator;
     map["useRoot"] = useRoot;
+    map["useDeveloperMode"] = useDeveloperMode;
+    map["useAdb"] = useAdb;
 
     if (captureStages != null) {
       List<Map<String, dynamic>> stagesMap = [];

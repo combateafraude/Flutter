@@ -332,6 +332,16 @@ public class DocumentDetectorPlugin
                 Boolean useRoot = (Boolean) androidSettings.get("useRoot");
                 mDocumentDetectorBuilder.setUseRoot(useRoot);
             }
+
+            if(androidSettings.get("useDeveloperMode") != null){
+                Boolean useDeveloperMode = (Boolean) androidSettings.get("useDeveloperMode");
+                mDocumentDetectorBuilder.setUseDeveloperMode(useDeveloperMode);
+            }
+
+            if(androidSettings.get("useAdb") != null){
+                Boolean useAdb = (Boolean) androidSettings.get("useAdb");
+                mDocumentDetectorBuilder.setUseAdb(useAdb);
+            }
     
             if(androidSettings.get("enableSwitchCameraButton") != null){
                 boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
