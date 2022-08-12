@@ -14,6 +14,7 @@ import 'package:document_detector/result/capture.dart';
 import 'package:document_detector/result/document_detector_failure.dart';
 import 'package:document_detector/result/document_detector_result.dart';
 import 'package:document_detector/result/document_detector_success.dart';
+import 'package:document_detector/upload_settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:document_detector/document_detector.dart';
@@ -73,9 +74,9 @@ class _MyAppState extends State<MyApp> {
         unsupportedDocumentMessage: "Ops, esse documento não é suportado");
 
     DocumentDetectorIosSettings iosSettings = new DocumentDetectorIosSettings(
-      resolution: IosResolution.HD1280x720,
-      compressQuality: 1
-    );
+        resolution: IosResolution.HD1280x720, compressQuality: 1);
+
+    List<String> formats = ["PDF", "PNG"];
 
     documentDetector.setIosSettings(iosSettings);
 
