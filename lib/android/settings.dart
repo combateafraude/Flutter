@@ -8,6 +8,8 @@ class FaceAuthenticatorAndroidSettings {
   bool? enableRootDevices;
   bool? enableBrightnessIncrease;
   bool? enableSwitchCameraButton;
+  bool? useDeveloperMode;
+  bool? useAdb;
 
   FaceAuthenticatorAndroidSettings(
       {this.customization,
@@ -15,7 +17,9 @@ class FaceAuthenticatorAndroidSettings {
       this.enableEmulator,
       this.enableRootDevices,
       this.enableBrightnessIncrease,
-      this.enableSwitchCameraButton});
+      this.enableSwitchCameraButton,
+      this.useDeveloperMode,
+      this.useAdb});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -26,6 +30,8 @@ class FaceAuthenticatorAndroidSettings {
     map["enableRootDevices"] = enableRootDevices;
     map["enableBrightnessIncrease"] = enableBrightnessIncrease;
     map["enableSwitchCameraButton"] = enableSwitchCameraButton;
+    map["useDeveloperMode"] = useDeveloperMode;
+    map["useAdb"] = useAdb;
 
     return map;
   }
