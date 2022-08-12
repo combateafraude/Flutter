@@ -231,6 +231,16 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 mPassiveFaceLivenessBuilder.setUseRoot(useRoot);
             }
 
+            if(androidSettings.get("useDeveloperMode") != null){
+                Boolean useDeveloperMode = (Boolean) androidSettings.get("useDeveloperMode");
+                mPassiveFaceLivenessBuilder.setUseDeveloperMode(useDeveloperMode);
+            }
+
+            if(androidSettings.get("useAdb") != null){
+                Boolean useAdb = (Boolean) androidSettings.get("useAdb");
+                mPassiveFaceLivenessBuilder.setUseAdb(useAdb);
+            }
+
             if(androidSettings.get("enableBrightnessIncrease") != null){
                 boolean enableBrightnessIncrease = (boolean) androidSettings.get("enableBrightnessIncrease");
                 mPassiveFaceLivenessBuilder.enableBrightnessIncrease(enableBrightnessIncrease);
