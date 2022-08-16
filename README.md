@@ -56,16 +56,25 @@ Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runne
 
 Para habilitar texto e voz em Português, em seu projeto, no diretório ROOTPROJECT/ios, abra o arquivo .xcworkspace no Xcode e adicione em Project > Info > Localizations o idioma Portuguese (Brazil).
 
-### Flutter
+## Flutter
 
 Adicione o plugin no seu arquivo `ROOT_PROJECT/pubspec.yaml`:
 
+#### Estável
 ```yml
 dependencies:  
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
       ref: passive-face-liveness-v4.25.0
+```
+#### Release Candidate
+```yml
+dependencies:  
+  passive_face_liveness:
+    git:
+      url: https://github.com/combateafraude/Flutter.git
+      ref: passive-face-liveness-v4.27.0-rc01
 ```
 
 ## Utilização
@@ -85,6 +94,20 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
   // O usuário simplesmente fechou o SDK, sem nenhum resultado
 }
 ```
+## Desativando validações de segurança para teste
+Estamos constantemente realizando ações para tornar o produto cada vez mais seguro, mitigando uma série de ataques observados ao processo de captura e, consequentemente, reduzindo o maior número de possíveis fraudes de identidade. O SDK possui alguns bloqueios que podem impedir a execução em certos contextos. Para desabilitá-los, você pode utilizar os métodos conforme o exemplo abaixo:
+``` dart
+PassiveFaceLivenessAndroidSettings androidSettings =
+        PassiveFaceLivenessAndroidSettings(
+          emulatorSettings: true,
+          rootSettings: true,
+          useDeveloperMode: true,
+          useAdb: true,
+        );
+
+passiveFaceLiveness.setAndroidSettings(androidSettings);
+```
+> <b>Atenção!</b> Desabilitar as validações de segurança são recomendadas <b>apenas para ambiente de testes. </b>Para publicação do seu aplicativo em produção, recomendamos utilizar as configurações padrão.
 
 ### Customizações gerais
 
@@ -180,8 +203,10 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 | `int showButtonTime`<br><br>Altera o tempo para a exibição do botão de captura manual. O padrão é `20000` milisegundos |
 | `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
 | `bool enableGoogleServices`<br><br>Permite habilitar/desabilitar recursos do SDK que consomem GoogleServices no SDK, não recomendamos desabilitar os serviços por conta da perda de segurança. O padrão é `True` |
-| `bool emulatorSettings`<br><br>Permite habilitar/desabilitar o uso de dispositivos emulados no SDK, recomendamos desabilitar o uso dos emuladores por questões de segurança. O padrão é `False` |
-| `bool rootSettings`<br><br>Permite habilitar/desabilitar o uso de dispositivos com root no SDK, recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `False` |
+| `bool emulatorSettings`<br><br>Permite habilitar/desabilitar o uso de dispositivos emulados no SDK. Recomendamos desabilitar o uso dos emuladores por questões de segurança. O padrão é `False` |
+| `bool rootSettings`<br><br>Permite habilitar/desabilitar o uso de dispositivos com root no SDK. Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `False` |
+| `bool useDeveloperMode`<br><br>Permite habilitar/desabilitar o uso de dispositivos com o modo de desenvolvedor Android ativado. Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `False` |
+| `bool useAdb`<br><br>Permite habilitar/desabilitar o uso do modo de depuração Android Debug Bridge (ADB). Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `False` |
 | `bool enableBrightnessIncrease`<br><br>Habilita/desabilita o incremento de brilho do dispositivo do dispositivo na abertura do SDK |
 
 | PassiveFaceLivenessCustomizationAndroid constructor |
