@@ -78,6 +78,21 @@ dependencies:
       ref: document-detector-v5.22.0
 ```
 
+## Desativando validações de segurança para teste
+Estamos constantemente realizando ações para tornar o produto cada vez mais seguro, mitigando uma série de ataques observados ao processo de captura e, consequentemente, reduzindo o maior número de possíveis fraudes de identidade. O SDK possui alguns bloqueios que podem impedir a execução em certos contextos. Para desabilitá-los, você pode utilizar os métodos conforme o exemplo abaixo:
+``` dart
+DocumentDetectorAndroidSettings androidSettings =
+        DocumentDetectorAndroidSettings(
+          emulatorSettings: true,
+          rootSettings: true,
+          useDeveloperMode: true,
+          useAdb: true,
+        );
+
+documentDetector.setAndroidSettings(androidSettings);
+```
+> <b>Atenção!</b> Desabilitar as validações de segurança são recomendadas <b>apenas para ambiente de testes. </b>Para publicação do seu aplicativo em produção, recomendamos utilizar as configurações padrão.
+
 ## Utilização
 
 ```dart
