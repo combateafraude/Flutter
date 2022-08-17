@@ -119,6 +119,14 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
                 boolean enableRootDevices = (boolean) androidSettings.get("enableRootDevices");
                 mFaceAuthenticatorBuilder.setUseRoot(enableRootDevices);
             }
+            if(androidSettings.get("useDeveloperMode") != null){
+                Boolean useDeveloperMode = (Boolean) androidSettings.get("useDeveloperMode");
+                mFaceAuthenticatorBuilder.setUseDeveloperMode(useDeveloperMode);
+            }
+            if(androidSettings.get("useAdb") != null){
+                Boolean useAdb = (Boolean) androidSettings.get("useAdb");
+                mFaceAuthenticatorBuilder.setUseAdb(useAdb);
+            }            
             if(androidSettings.get("enableBrightnessIncrease") != null){
                 boolean enableBrightnessIncrease = (boolean) androidSettings.get("enableBrightnessIncrease");
                 mFaceAuthenticatorBuilder.enableBrightnessIncrease(enableBrightnessIncrease);

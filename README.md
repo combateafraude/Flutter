@@ -61,7 +61,7 @@ dependencies:
   face_authenticator:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: face-authenticator-compatible-v4.7.0
+      ref: face-authenticator-compatible-v4.8.0
 ```
 
 ## Utilização
@@ -105,6 +105,8 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 | `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
 | `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
 | `bool enableBrightnessIncrease`<br><br>Habilita/desabilita o incremento de brilho do dispositivo do dispositivo na abertura do SDK |
+| `bool useDeveloperMode`<br><br>Permite habilitar/desabilitar o uso de dispositivos com o modo de desenvolvedor Android ativado. Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `False` |
+| `bool useAdb`<br><br>Permite habilitar/desabilitar o uso do modo de depuração Android Debug Bridge (ADB). Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `False` |
 
 | FaceAuthenticatorCustomizationAndroid constructor |
 | --------- |
