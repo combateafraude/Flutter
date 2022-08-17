@@ -331,6 +331,16 @@ public class DocumentDetectorPlugin
                 boolean enableRootDevices = (boolean) androidSettings.get("enableRootDevices");
                 mDocumentDetectorBuilder.setUseRoot(enableRootDevices);
             }
+
+            if(androidSettings.get("useDeveloperMode") != null){
+                Boolean useDeveloperMode = (Boolean) androidSettings.get("useDeveloperMode");
+                mDocumentDetectorBuilder.setUseDeveloperMode(useDeveloperMode);
+            }
+
+            if(androidSettings.get("useAdb") != null){
+                Boolean useAdb = (Boolean) androidSettings.get("useAdb");
+                mDocumentDetectorBuilder.setUseAdb(useAdb);
+            }
     
             String resolution = (String) androidSettings.get("resolution");
             if(resolution != null){

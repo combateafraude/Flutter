@@ -201,6 +201,8 @@ documentDetector.setShowPreview(showPreview);
 | `bool enableGoogleServices`<br><br>Permite habilitar/desabilitar recursos do SDK que consomem GoogleServices no SDK, não recomendamos desabilitar os serviços por conta da perda de segurança. O padrão é `True` |
 | `bool enableEmulator`<br><br>Permite o uso de emulador quando `true` |
 | `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
+| `bool useDeveloperMode`<br><br>Permite habilitar/desabilitar o uso de dispositivos com o modo de desenvolvedor Android ativado. Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `False` |
+| `bool useAdb`<br><br>Permite habilitar/desabilitar o uso do modo de depuração Android Debug Bridge (ADB). Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `False` |
 
 
 | CaptureStage constructor |
