@@ -217,17 +217,26 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
             }
 
             if(androidSettings.get("enableEmulator") != null){
-                    boolean enableEmulator = (boolean) androidSettings.get("enableEmulator");
-                    mPassiveFaceLivenessBuilder.setUseEmulator(enableEmulator);
-                }
-                if(androidSettings.get("enableRootDevices") != null){
-                    boolean enableRootDevices = (boolean) androidSettings.get("enableRootDevices");
-                    mPassiveFaceLivenessBuilder.setUseRoot(enableRootDevices);
-                }
-                if(androidSettings.get("enableBrightnessIncrease") != null){
-                    boolean enableBrightnessIncrease = (boolean) androidSettings.get("enableBrightnessIncrease");
-                    mPassiveFaceLivenessBuilder.enableBrightnessIncrease(enableBrightnessIncrease);
-                }
+                boolean enableEmulator = (boolean) androidSettings.get("enableEmulator");
+                mPassiveFaceLivenessBuilder.setUseEmulator(enableEmulator);
+            }
+            if(androidSettings.get("enableRootDevices") != null){
+                boolean enableRootDevices = (boolean) androidSettings.get("enableRootDevices");
+                mPassiveFaceLivenessBuilder.setUseRoot(enableRootDevices);
+            }
+            if(androidSettings.get("enableBrightnessIncrease") != null){
+                boolean enableBrightnessIncrease = (boolean) androidSettings.get("enableBrightnessIncrease");
+                mPassiveFaceLivenessBuilder.enableBrightnessIncrease(enableBrightnessIncrease);
+            }
+            if(androidSettings.get("useDeveloperMode") != null){
+                Boolean useDeveloperMode = (Boolean) androidSettings.get("useDeveloperMode");
+                mPassiveFaceLivenessBuilder.setUseDeveloperMode(useDeveloperMode);
+            }
+            if(androidSettings.get("useAdb") != null){
+                Boolean useAdb = (Boolean) androidSettings.get("useAdb");
+                mPassiveFaceLivenessBuilder.setUseAdb(useAdb);
+            }
+
         }
 
         //VideoCapture
