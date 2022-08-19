@@ -142,7 +142,8 @@ class PassiveFaceLiveness {
           capturePath: resultMap["capturePath"],
           imageUrl: resultMap["imageUrl"],
           signedResponse: resultMap["signedResponse"],
-          trackingId: resultMap["trackingId"]);
+          trackingId: resultMap["trackingId"],
+          lensFacing: resultMap["lensFacing"]);
     } else {
       return new PassiveFaceLivenessFailure(
           resultMap["message"], resultMap["type"]);
