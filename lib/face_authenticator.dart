@@ -67,10 +67,9 @@ class FaceAuthenticator {
     this.stage = stage;
   }
 
-  void setUseOpenEyeValidation(
-      bool useOpenEyeValidation, double? openEyesThreshold) {
-    this.useOpenEyeValidation = useOpenEyeValidation;
-    this.openEyesThreshold = openEyesThreshold;
+  void setUseOpenEyeValidation(bool enable, double? threshold) {
+    this.useOpenEyeValidation = enable;
+    this.openEyesThreshold = threshold;
   }
 
   Future<FaceAuthenticatorResult> start() async {

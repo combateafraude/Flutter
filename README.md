@@ -63,7 +63,7 @@ dependencies:
   face_authenticator:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: face-authenticator-v3.8.0
+      ref: face-authenticator-v3.9.0
 ```
 
 ## Utilização
