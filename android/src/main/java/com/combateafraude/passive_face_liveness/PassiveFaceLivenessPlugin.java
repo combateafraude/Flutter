@@ -94,7 +94,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
         Boolean useOpenEyeValidation = (Boolean) argumentsMap.get("useOpenEyeValidation");
         if(useOpenEyeValidation != null){
             Double openEyesThreshold = (Double) argumentsMap.get("openEyesThreshold");
-            mPassiveFaceLivenessBuilder.setUseOpenEyeValidation(useOpenEyeValidation, openEyesThreshold);
+            mPassiveFaceLivenessBuilder.setEyesClosedSettings(useOpenEyeValidation, openEyesThreshold);
         } 
 
         HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
