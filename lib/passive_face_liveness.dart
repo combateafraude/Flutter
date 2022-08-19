@@ -35,6 +35,8 @@ class PassiveFaceLiveness {
   VideoCapture? videoCapture;
   String? stage;
   String? expireTime;
+  bool? useOpenEyeValidation;
+  double? openEyesThreshold;
 
   PassiveFaceLiveness({required this.mobileToken});
 
@@ -98,6 +100,11 @@ class PassiveFaceLiveness {
     this.expireTime = expireTime;
   }
 
+  void setEyesClosedSettings(bool enable, double? threshold) {
+    this.useOpenEyeValidation = enable;
+    this.openEyesThreshold = threshold;
+  }
+
   Future<PassiveFaceLivenessResult> start() async {
     Map<String, dynamic> params = new Map();
 
@@ -119,6 +126,8 @@ class PassiveFaceLiveness {
     params["videoCapture"] = videoCapture?.asMap();
     params["stage"] = stage;
     params["expireTime"] = expireTime;
+    params["useOpenEyeValidation"] = useOpenEyeValidation;
+    params["openEyesThreshold"] = openEyesThreshold;
 
     Map<dynamic, dynamic> resultMap =
         await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)
@@ -133,7 +142,8 @@ class PassiveFaceLiveness {
           capturePath: resultMap["capturePath"],
           imageUrl: resultMap["imageUrl"],
           signedResponse: resultMap["signedResponse"],
-          trackingId: resultMap["trackingId"]);
+          trackingId: resultMap["trackingId"],
+          lensFacing: resultMap["lensFacing"]);
     } else {
       return new PassiveFaceLivenessFailure(
           resultMap["message"], resultMap["type"]);
