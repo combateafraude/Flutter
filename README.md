@@ -87,6 +87,7 @@ DocumentDetectorAndroidSettings androidSettings =
           rootSettings: true,
           useDeveloperMode: true,
           useAdb: true,
+          useDebug: true,
         );
 
 documentDetector.setAndroidSettings(androidSettings);
@@ -228,6 +229,7 @@ documentDetector.setMessageSettings(messageSettings);
 | `bool enableGoogleServices`<br><br>Permite habilitar/desabilitar recursos do SDK que consomem GoogleServices no SDK, não recomendamos desabilitar os serviços por conta da perda de segurança. O padrão é `True` |
 | `bool enableEmulator`<br><br>Permite o uso de emulador quando `true` |
 | `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
+ `bool useDebug`<br><br>Habilita/desabilita o uso do app em modo depuração. O padrão é `false` |
 
 
 | CaptureStage constructor |
