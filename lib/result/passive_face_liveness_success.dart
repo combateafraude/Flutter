@@ -6,11 +6,13 @@ class PassiveFaceLivenessSuccess extends PassiveFaceLivenessResult {
   String? imageUrl;
   String? signedResponse;
   String? trackingId;
+  int? lensFacing;
 
   PassiveFaceLivenessSuccess(
       {this.imagePath,
       this.capturePath,
       this.imageUrl,
       this.signedResponse,
-      this.trackingId});
+      this.trackingId,
+      this.lensFacing});
 }

@@ -91,6 +91,12 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
             mPassiveFaceLivenessBuilder.setGetImageUrlExpireTime(expireTime);
         }
 
+        Boolean useOpenEyeValidation = (Boolean) argumentsMap.get("useOpenEyeValidation");
+        if(useOpenEyeValidation != null){
+            Double openEyesThreshold = (Double) argumentsMap.get("openEyesThreshold");
+            mPassiveFaceLivenessBuilder.setUseOpenEyeValidation(useOpenEyeValidation, openEyesThreshold);
+        } 
+
         HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
         if (showPreview != null) {
             String title = (String) showPreview.get("title");
@@ -130,6 +136,8 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
             String sensorLuminosityMessage = (String) messageSettingsParam.get("sensorLuminosityMessage");
             String sensorOrientationMessage = (String) messageSettingsParam.get("sensorOrientationMessage");
             String sensorStabilityMessage = (String) messageSettingsParam.get("sensorStabilityMessage");
+            String captureProcessingErrorMessage = (String) messageSettingsParam.get("captureProcessingErrorMessage");
+
 
             MessageSettings messageSettings = new MessageSettings(
                 stepName,
@@ -148,7 +156,8 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 notCenterZMessage,
                 sensorLuminosityMessage,
                 sensorOrientationMessage,
-                sensorStabilityMessage
+                sensorStabilityMessage,
+                captureProcessingErrorMessage
             );
 
             mPassiveFaceLivenessBuilder.setMessageSettings(messageSettings);
@@ -241,6 +250,11 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 mPassiveFaceLivenessBuilder.setUseAdb(useAdb);
             }
 
+            if(androidSettings.get("useDebug") != null){
+                Boolean useDebug = (Boolean) androidSettings.get("useDebug");
+                mPassiveFaceLivenessBuilder.setUseDebug(useDebug);
+            }
+
             if(androidSettings.get("enableBrightnessIncrease") != null){
                 boolean enableBrightnessIncrease = (boolean) androidSettings.get("enableBrightnessIncrease");
                 mPassiveFaceLivenessBuilder.enableBrightnessIncrease(enableBrightnessIncrease);
@@ -322,6 +336,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
         responseMap.put("imageUrl", mPassiveFaceLivenessResult.getImageUrl());
         responseMap.put("signedResponse", mPassiveFaceLivenessResult.getSignedResponse());
         responseMap.put("trackingId", mPassiveFaceLivenessResult.getTrackingId());
+        responseMap.put("lensFacing", mPassiveFaceLivenessResult.getLensFacing());
         return responseMap;
     }
 

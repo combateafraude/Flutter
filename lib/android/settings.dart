@@ -13,6 +13,7 @@ class PassiveFaceLivenessAndroidSettings {
   bool? enableBrightnessIncrease;
   bool? useDeveloperMode;
   bool? useAdb;
+  bool? useDebug;
 
   PassiveFaceLivenessAndroidSettings(
       {this.customization,
@@ -24,7 +25,8 @@ class PassiveFaceLivenessAndroidSettings {
       this.rootSettings,
       this.enableBrightnessIncrease,
       this.useDeveloperMode,
-      this.useAdb});
+      this.useAdb,
+      this.useDebug});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -39,6 +41,7 @@ class PassiveFaceLivenessAndroidSettings {
     map["enableBrightnessIncrease"] = enableBrightnessIncrease;
     map["useDeveloperMode"] = useDeveloperMode;
     map["useAdb"] = useAdb;
+    map["useDebug"] = useDebug;
 
     return map;
   }
