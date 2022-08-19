@@ -124,6 +124,10 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
                 Boolean useAdb = (Boolean) androidSettings.get("useAdb");
                 mFaceAuthenticatorBuilder.setUseAdb(useAdb);
             }
+            if(androidSettings.get("useDebug") != null){
+                Boolean useDebug = (Boolean) androidSettings.get("useDebug");
+                mFaceAuthenticatorBuilder.setUseDebug(useDebug);
+            }
             if(androidSettings.get("enableRootDevices") != null){
                 boolean enableRootDevices = (boolean) androidSettings.get("enableRootDevices");
                 mFaceAuthenticatorBuilder.setUseRoot(enableRootDevices);
@@ -187,6 +191,16 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
             mFaceAuthenticatorBuilder.setStage(CafStage.valueOf(stage));
         }
 
+        Boolean useOpenEyeValidation = (Boolean) argumentsMap.get("useOpenEyeValidation");
+        if(useOpenEyeValidation != null){
+            Double openEyesThreshold = (Double) argumentsMap.get("openEyesThreshold");
+            if(openEyesThreshold != null){
+                mFaceAuthenticatorBuilder.setUseOpenEyeValidation(useOpenEyeValidation, openEyesThreshold);
+            }else{
+                mFaceAuthenticatorBuilder.setUseOpenEyeValidation(useOpenEyeValidation);
+            }
+        } 
+
         Intent mIntent = new Intent(context, FaceAuthenticatorActivity.class);
         mIntent.putExtra(FaceAuthenticator.PARAMETER_NAME, mFaceAuthenticatorBuilder.build());
         activity.startActivityForResult(mIntent, REQUEST_CODE);
@@ -204,6 +218,7 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
         responseMap.put("authenticated", mFaceAuthenticatorResult.isAuthenticated());
         responseMap.put("signedResponse", mFaceAuthenticatorResult.getSignedResponse());
         responseMap.put("trackingId", mFaceAuthenticatorResult.getTrackingId());
+        responseMap.put("lensFacing", mPassiveFaceLivenessResult.getLensFacing());
         return responseMap;
     }
 

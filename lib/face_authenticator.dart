@@ -27,6 +27,8 @@ class FaceAuthenticator {
   ImageCapture? imageCapture;
   VideoCapture? videoCapture;
   String? stage;
+  bool? useOpenEyeValidation;
+  double? openEyesThreshold;
 
   FaceAuthenticator({required this.mobileToken});
 
@@ -65,6 +67,12 @@ class FaceAuthenticator {
     this.stage = stage;
   }
 
+  void setUseOpenEyeValidation(
+      bool useOpenEyeValidation, double? openEyesThreshold) {
+    this.useOpenEyeValidation = useOpenEyeValidation;
+    this.openEyesThreshold = openEyesThreshold;
+  }
+
   Future<FaceAuthenticatorResult> start() async {
     Map<String, dynamic> params = new Map();
 
@@ -79,6 +87,8 @@ class FaceAuthenticator {
     params["imageCapture"] = imageCapture?.asMap();
     params["videoCapture"] = videoCapture?.asMap();
     params["stage"] = stage;
+    params["useOpenEyeValidation"] = useOpenEyeValidation;
+    params["openEyesThreshold"] = openEyesThreshold;
 
     Map<dynamic, dynamic> resultMap =
         await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)
