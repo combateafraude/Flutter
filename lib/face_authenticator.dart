@@ -67,7 +67,7 @@ class FaceAuthenticator {
     this.stage = stage;
   }
 
-  void setUseOpenEyeValidation(bool enable, double? threshold) {
+  void setEyesClosedSettings(bool enable, double? threshold) {
     this.useOpenEyeValidation = enable;
     this.openEyesThreshold = threshold;
   }
