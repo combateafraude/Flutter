@@ -100,10 +100,9 @@ class PassiveFaceLiveness {
     this.expireTime = expireTime;
   }
 
-  void setUseOpenEyeValidation(
-      bool useOpenEyeValidation, double? openEyesThreshold) {
-    this.useOpenEyeValidation = useOpenEyeValidation;
-    this.openEyesThreshold = openEyesThreshold;
+  void setUseOpenEyeValidation(bool enable, double? threshold) {
+    this.useOpenEyeValidation = enable;
+    this.openEyesThreshold = threshold;
   }
 
   Future<PassiveFaceLivenessResult> start() async {
