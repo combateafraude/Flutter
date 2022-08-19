@@ -195,9 +195,9 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
         if(useOpenEyeValidation != null){
             Double openEyesThreshold = (Double) argumentsMap.get("openEyesThreshold");
             if(openEyesThreshold != null){
-                mFaceAuthenticatorBuilder.setUseOpenEyeValidation(useOpenEyeValidation, openEyesThreshold);
+                mFaceAuthenticatorBuilder.setEyesClosedSettings(useOpenEyeValidation, openEyesThreshold);
             }else{
-                mFaceAuthenticatorBuilder.setUseOpenEyeValidation(useOpenEyeValidation);
+                mFaceAuthenticatorBuilder.setEyesClosedSettings(useOpenEyeValidation);
             }
         } 
 
@@ -218,7 +218,7 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
         responseMap.put("authenticated", mFaceAuthenticatorResult.isAuthenticated());
         responseMap.put("signedResponse", mFaceAuthenticatorResult.getSignedResponse());
         responseMap.put("trackingId", mFaceAuthenticatorResult.getTrackingId());
-        responseMap.put("lensFacing", mPassiveFaceLivenessResult.getLensFacing());
+        responseMap.put("lensFacing", mFaceAuthenticatorResult.getLensFacing());
         return responseMap;
     }
 
