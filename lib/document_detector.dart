@@ -134,7 +134,8 @@ class DocumentDetector {
             captureRaw["imagePath"],
             captureRaw["imageUrl"],
             captureRaw["label"],
-            captureRaw["quality"]));
+            captureRaw["quality"],
+            captureRaw["lensFacing"]));
       }
       return new DocumentDetectorSuccess(
           captureList, resultMap["type"], resultMap["trackingId"]);
