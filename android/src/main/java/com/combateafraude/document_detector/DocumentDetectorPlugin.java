@@ -343,6 +343,11 @@ public class DocumentDetectorPlugin
                 mDocumentDetectorBuilder.setUseAdb(useAdb);
             }
     
+            if(androidSettings.get("useDebug") != null){
+                Boolean useDebug = (Boolean) androidSettings.get("useDebug");
+                mPassiveFaceLivenessBuilder.setUseDebug(useDebug);
+            }
+            
             if(androidSettings.get("enableSwitchCameraButton") != null){
                 boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
                 mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
@@ -446,6 +451,7 @@ public class DocumentDetectorPlugin
                 captureResponse.put("imageUrl", capture.getImageUrl());
                 captureResponse.put("label", capture.getLabel());
                 captureResponse.put("quality", capture.getQuality());
+                captureResponse.put("lensFacing", capture.getLensFacing());
                 captures.add(captureResponse);
             }
         }
