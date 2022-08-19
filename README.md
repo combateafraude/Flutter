@@ -87,8 +87,6 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 
 ### Customizações gerais
 
-### Customizações gerais
-
 | FaceAuthenticator |
 | --------- |
 | `.setPeopleId(String peopleId)`<br><br>CPF do usuário que irá se autenticar |

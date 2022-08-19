@@ -110,13 +110,13 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
             if let videoCapture = arguments["videoCapture"] as? [String: Any] ?? nil {
                 if let use = videoCapture["use"] as? Bool ?? nil {
                     if(use){
-                        if let time = videoCapture["time"] as? TimeInterval ?? nil {
-                            faceAuthenticatorBuilder.setVideoCaptureSettings(time: time)
-                        }else{
-                            faceAuthenticatorBuilder.setVideoCaptureSettings(time: 3)
-                        }
+                        faceAuthenticatorBuilder.setVideoCaptureSettings(time: videoCapture["time"] as? TimeInterval ?? 3)
                     }
                 }
+            }
+            
+            if let useOpenEyeValidation = arguments["useOpenEyeValidation"] as? Bool ?? nil {
+                faceAuthenticatorBuilder.setEyesClosedSettings(threshold: arguments["openEyesThreshold"] as? Double ?? 0.5, isEnable: useOpenEyeValidation)
             }
 
             let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
@@ -142,6 +142,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
             response["authenticated"] = results.authenticated
             response["signedResponse"] = results.signedResponse
             response["trackingId"] = results.trackingId
+            response["lensFacing"] = results.lensFacing
 
             flutterResult!(response)
         }
