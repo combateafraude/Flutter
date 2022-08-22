@@ -24,6 +24,8 @@ class FaceAuthenticator {
   FaceAuthenticatorIosSettings iosSettings;
   ImageCapture imageCapture;
   VideoCapture videoCapture;
+  bool useOpenEyeValidation;
+  double openEyesThreshold;
 
   FaceAuthenticator({@required this.mobileToken});
 
@@ -57,6 +59,11 @@ class FaceAuthenticator {
     this.iosSettings = iosSettings;
   }
 
+  void setEyesClosedSettings(bool enable, {double threshold}) {
+    this.useOpenEyeValidation = enable;
+    this.openEyesThreshold = threshold;
+  }
+
   Future<FaceAuthenticatorResult> start() async {
     Map<String, dynamic> params = new Map();
 
@@ -70,6 +77,8 @@ class FaceAuthenticator {
     params["iosSettings"] = iosSettings?.asMap();
     params["imageCapture"] = imageCapture?.asMap();
     params["videoCapture"] = videoCapture?.asMap();
+    params["useOpenEyeValidation"] = useOpenEyeValidation;
+    params["openEyesThreshold"] = openEyesThreshold;
 
     Map<dynamic, dynamic> resultMap =
         await _channel.invokeMethod('start', params);
@@ -78,8 +87,11 @@ class FaceAuthenticator {
     if (success == null) {
       return new FaceAuthenticatorClosed();
     } else if (success == true) {
-      return new FaceAuthenticatorSuccess(resultMap["authenticated"],
-          resultMap["signedResponse"], resultMap["trackingId"]);
+      return new FaceAuthenticatorSuccess(
+          resultMap["authenticated"],
+          resultMap["signedResponse"],
+          resultMap["trackingId"],
+          resultMap["lensFacing"]);
     } else if (success == false) {
       return new FaceAuthenticatorFailure(
           resultMap["message"], resultMap["type"]);

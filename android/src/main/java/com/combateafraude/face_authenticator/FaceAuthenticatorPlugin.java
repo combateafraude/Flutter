@@ -127,6 +127,10 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
                 Boolean useAdb = (Boolean) androidSettings.get("useAdb");
                 mFaceAuthenticatorBuilder.setUseAdb(useAdb);
             }            
+            if(androidSettings.get("useDebug") != null){
+                Boolean useDebug = (Boolean) androidSettings.get("useDebug");
+                mFaceAuthenticatorBuilder.setUseDebug(useDebug);
+            }
             if(androidSettings.get("enableBrightnessIncrease") != null){
                 boolean enableBrightnessIncrease = (boolean) androidSettings.get("enableBrightnessIncrease");
                 mFaceAuthenticatorBuilder.enableBrightnessIncrease(enableBrightnessIncrease);
@@ -183,6 +187,16 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
         Intent mIntent = new Intent(context, FaceAuthenticatorActivity.class);
         mIntent.putExtra(FaceAuthenticator.PARAMETER_NAME, mFaceAuthenticatorBuilder.build());
         activity.startActivityForResult(mIntent, REQUEST_CODE);
+
+        Boolean useOpenEyeValidation = (Boolean) argumentsMap.get("useOpenEyeValidation");
+        if(useOpenEyeValidation != null){
+            Double openEyesThreshold = (Double) argumentsMap.get("openEyesThreshold");
+            if(openEyesThreshold != null){
+                mFaceAuthenticatorBuilder.setEyesClosedSettings(useOpenEyeValidation, openEyesThreshold);
+            }else{
+                mFaceAuthenticatorBuilder.setEyesClosedSettings(useOpenEyeValidation);
+            }
+        } 
     }
 
     private Integer getResourceId(@Nullable String resourceName, String resourceType) {
@@ -197,6 +211,7 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
         responseMap.put("authenticated", mFaceAuthenticatorResult.isAuthenticated());
         responseMap.put("signedResponse", mFaceAuthenticatorResult.getSignedResponse());
         responseMap.put("trackingId", mFaceAuthenticatorResult.getTrackingId());
+        responseMap.put("lensFacing", mFaceAuthenticatorResult.getLensFacing());
         return responseMap;
     }
 
