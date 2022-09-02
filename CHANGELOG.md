@@ -1,0 +1,1 @@
+Confira em https://docs.combateafraude.com/docs/mobile/flutter/release-notes/
