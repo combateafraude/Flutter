@@ -141,7 +141,7 @@ class DocumentDetector {
           captureList, resultMap["type"], resultMap["trackingId"]);
     } else {
       return new DocumentDetectorFailure(
-          resultMap["message"], resultMap["type"]);
+          resultMap["message"], resultMap["type"], resultMap["code"]);
     }
   }
 }

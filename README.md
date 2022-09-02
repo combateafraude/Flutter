@@ -75,7 +75,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v5.22.0
+      ref: document-detector-v5.23.0
 ```
 
 ## Desativando validações de segurança para teste
@@ -230,6 +230,9 @@ documentDetector.setMessageSettings(messageSettings);
 | `bool enableEmulator`<br><br>Permite o uso de emulador quando `true` |
 | `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
  `bool useDebug`<br><br>Habilita/desabilita o uso do app em modo depuração. O padrão é `false` |
+ `bool useDeveloperMode`<br><br>Permite habilitar/desabilitar o uso de dispositivos com o modo de desenvolvedor Android ativado. Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `false` |
+ `bool useDAdb`<br><br>Permite habilitar/desabilitar o uso do modo de depuração Android Debug Bridge (ADB). Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `false` |
+
 
 
 | CaptureStage constructor |
