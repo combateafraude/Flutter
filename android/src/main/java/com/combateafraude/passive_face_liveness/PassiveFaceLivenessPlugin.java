@@ -344,6 +344,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
         HashMap<String, Object> responseMap = new HashMap<>();
         responseMap.put("success", Boolean.FALSE);
         responseMap.put("message", sdkFailure.getMessage());
+        responseMap.put("code", sdkFailure.getCode());
         responseMap.put("type", sdkFailure.getClass().getSimpleName());
         return responseMap;
     }
