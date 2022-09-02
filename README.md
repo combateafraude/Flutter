@@ -103,6 +103,7 @@ PassiveFaceLivenessAndroidSettings androidSettings =
           rootSettings: true,
           useDeveloperMode: true,
           useAdb: true,
+          useDebug: true,
         );
 
 passiveFaceLiveness.setAndroidSettings(androidSettings);
@@ -125,6 +126,8 @@ passiveFaceLiveness.setAndroidSettings(androidSettings);
 | `.setCurrentStepDoneDelay(bool showDelay, int delay)`<br><br> Aplica delay na activity após a finalização de cada etapa. Esse método pode ser utilizado para exibir uma mensagem de sucesso na própria tela após a captura, por exemplo. O padrão é `false` |
 | `.setAndroidSettings(PassiveFaceLivenessAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(PassiveFaceLivenessIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
+| `.setEyesClosedSettings(bool enable, double threshold)`<br><br> Permite customizar a validação de olhos abertos no SDK |
+| `.setCaptureProcessingErrorMessage(@NonNull @StringRes Integer message)`<br><br> Permite customizar a mensagem exibida quando ocorre um problema no processamento ou erro na response da API. |
 
 | ImageCapture constructor |
 | --------- |
@@ -169,7 +172,8 @@ passiveFaceLiveness.setShowPreview(showPreview);
 | `String verifyingLivenessMessage`<br><br>Padrão: "Verificando selfie…" |
 | `String invalidFaceMessage`<br><br>Padrão: "Ops, rosto inválido. Por favor, tente novamente" |
 | `String? sensorStabilityMessage`<br><br>Padrão: "Mantenha o celular parado"|;
-| `String? sensorLuminosityMessage (somente para Android)`<br><br>Padrão: "Ambiente muito escuro"|;
+| `String? captureProcessingErrorMessage` <br><br>Padrão: "Ops, tivemos um problema ao processar sua imagem. Tente novamente."|
+| `String multipleFaceDetectedMessage`<br><br>Padrão: "Mais de um rosto detectado" |<br><br>Padrão: "Ambiente muito escuro"|;
 | `String? sensorOrientationMessage (somente para Android)`<br><br>Padrão: "Celular não está na vertical"|;
 | `String eyesClosedMessage (somente para Android)`<br><br>Padrão: "Seus olhos estão fechados" |
 | `String notCenterXMessage (somente para Android)`<br><br>Padrão: "Centralize seu rosto na vertical" |
