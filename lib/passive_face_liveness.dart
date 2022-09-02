@@ -135,7 +135,7 @@ class PassiveFaceLiveness {
           resultMap["trackingId"]);
     } else {
       return new PassiveFaceLivenessFailure(
-          resultMap["message"], resultMap["type"]);
+          resultMap["message"], resultMap["type"], resultMap["code"]);
     }
   }
 }

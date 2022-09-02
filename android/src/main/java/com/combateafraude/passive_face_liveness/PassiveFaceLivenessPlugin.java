@@ -143,7 +143,8 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 notCenterZMessage,
                 sensorLuminosityMessage,
                 sensorOrientationMessage,
-                sensorStabilityMessage
+                sensorStabilityMessage,
+                ""
             );
 
             mPassiveFaceLivenessBuilder.setMessageSettings(messageSettings);
@@ -236,6 +237,10 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 Boolean useAdb = (Boolean) androidSettings.get("useAdb");
                 mPassiveFaceLivenessBuilder.setUseAdb(useAdb);
             }
+            if(androidSettings.get("useDebug") != null){
+                Boolean useDebug = (Boolean) androidSettings.get("useDebug");
+                mPassiveFaceLivenessBuilder.setUseDebug(useDebug);
+            }
 
         }
 
@@ -320,6 +325,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
         HashMap<String, Object> responseMap = new HashMap<>();
         responseMap.put("success", Boolean.FALSE);
         responseMap.put("message", sdkFailure.getMessage());
+        responseMap.put("code", sdkFailure.getCode());
         responseMap.put("type", sdkFailure.getClass().getSimpleName());
         return responseMap;
     }
