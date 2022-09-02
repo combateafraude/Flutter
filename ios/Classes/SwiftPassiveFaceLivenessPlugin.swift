@@ -48,7 +48,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         }
         
         if let hasSound = arguments["sound"] as? Bool ?? nil {
-            passiveFaceLivenessBuilder.enableSound(enableSound: hasSound)
+            passiveFaceLivenessBuilder.enableSound(hasSound)
         }
         
         if let requestTimeout = arguments["requestTimeout"] as? TimeInterval ?? nil {
@@ -208,6 +208,10 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             passiveFaceLivenessBuilder.setStage(stage: getStageByString(stage: stage))
         }
         
+        if let useOpenEyeValidation = arguments["useOpenEyeValidation"] as? Bool ?? nil {
+            passiveFaceLivenessBuilder.setEyesClosedSettings(threshold: arguments["openEyesThreshold"] as? Double ?? 0.5, isEnable: useOpenEyeValidation)
+        }
+        
         //passiveFaceLivenessBuilder.setOverlay(overlay: PassiveFaceLivenessOverlay())
         
         let controller = UIApplication.shared.keyWindow!.rootViewController!
@@ -300,6 +304,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         response["imageUrl"] = results.imageUrl
         response["signedResponse"] = results.signedResponse
         response["trackingId"] = results.trackingId
+        response["lensFacing"] = results.lensFacing
         
         flutterResult!(response)
     }
