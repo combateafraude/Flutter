@@ -95,6 +95,7 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
 | `.setAndroidSettings(FaceAuthenticatorAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(FaceAuthenticatorIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
+| `.setEyesClosedSettings(bool enable, double threshold)`<br><br> Permite customizar a validação de olhos abertos no SDK |
 
 #### Android
 
@@ -107,6 +108,7 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 | `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
 | `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
 | `bool enableBrightnessIncrease`<br><br>Habilita/desabilita o incremento de brilho do dispositivo do dispositivo na abertura do SDK |
+ `bool useDebug`<br><br>Habilita/desabilita o uso do app em modo depuração. O padrão é `false` |
 
 
 | FaceAuthenticatorCustomizationAndroid constructor |
