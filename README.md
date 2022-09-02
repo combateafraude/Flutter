@@ -66,7 +66,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-v4.27.0
+      ref: passive-face-liveness-v4.28.0
 ```
 #### Release Candidate
 ```yml
@@ -207,6 +207,7 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 | `bool rootSettings`<br><br>Permite habilitar/desabilitar o uso de dispositivos com root no SDK. Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `False` |
 | `bool useDeveloperMode`<br><br>Permite habilitar/desabilitar o uso de dispositivos com o modo de desenvolvedor Android ativado. Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `False` |
 | `bool useAdb`<br><br>Permite habilitar/desabilitar o uso do modo de depuração Android Debug Bridge (ADB). Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `False` |
+| `bool useAdb`<br><br>Habilita/desabilita o uso do app em modo depuração. O padrão é `False` |
 | `bool enableBrightnessIncrease`<br><br>Habilita/desabilita o incremento de brilho do dispositivo do dispositivo na abertura do SDK |
 
 | PassiveFaceLivenessCustomizationAndroid constructor |

@@ -146,7 +146,7 @@ class PassiveFaceLiveness {
           lensFacing: resultMap["lensFacing"]);
     } else {
       return new PassiveFaceLivenessFailure(
-          resultMap["message"], resultMap["type"]);
+          resultMap["message"], resultMap["type"], resultMap["code"]);
     }
   }
 }
