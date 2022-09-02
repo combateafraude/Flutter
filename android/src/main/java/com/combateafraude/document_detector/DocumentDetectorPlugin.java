@@ -341,6 +341,11 @@ public class DocumentDetectorPlugin
                 Boolean useAdb = (Boolean) androidSettings.get("useAdb");
                 mDocumentDetectorBuilder.setUseAdb(useAdb);
             }
+
+            if(androidSettings.get("useDebug") != null){
+                Boolean useDebug = (Boolean) androidSettings.get("useDebug");
+                mDocumentDetectorBuilder.setUseDebug(useDebug);
+            }
     
             String resolution = (String) androidSettings.get("resolution");
             if(resolution != null){
@@ -456,6 +461,7 @@ public class DocumentDetectorPlugin
         HashMap<String, Object> responseMap = new HashMap<>();
         responseMap.put("success", Boolean.FALSE);
         responseMap.put("message", sdkFailure.getMessage());
+        responseMap.put("code", sdkFailure.getCode());
         responseMap.put("type", sdkFailure.getClass().getSimpleName());
         return responseMap;
     }
