@@ -58,12 +58,21 @@ Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runne
 
 Adicione o plugin no seu arquivo `ROOT_PROJECT/pubspec.yaml`:
 
+#### Estável
 ```yml
 dependencies:  
   face_authenticator:
     git:
       url: https://github.com/combateafraude/Flutter.git
       ref: face-authenticator-v3.9.0
+```
+#### Release Candidate
+```yml
+dependencies:  
+  passive_face_liveness:
+    git:
+      url: https://github.com/combateafraude/Flutter.git
+      ref: face-authenticator-v3.11.0-rc01
 ```
 
 ## Utilização

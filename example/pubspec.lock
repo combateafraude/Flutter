@@ -56,7 +56,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "3.9.0"
+    version: "3.11.0-rc01"
   fake_async:
     dependency: transitive
     description:
