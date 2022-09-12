@@ -23,4 +23,4 @@ flutter:
         package: com.combateafraude.passive_face_liveness_compatible
         pluginClass: PassiveFaceLivenessCompatiblePlugin
       ios:
-        pluginClass: PassiveFaceLivenessPlugin
+        pluginClass: PassiveFaceLivenessCompatiblePlugin

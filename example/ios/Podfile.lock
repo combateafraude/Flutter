@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - passive_face_liveness (4.8.0):
+  - passive_face_liveness_compatible (4.27.0):
     - Flutter
     - PassiveFaceLiveness (= 5.17.0)
   - PassiveFaceLiveness (5.17.0):
@@ -13,7 +13,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - passive_face_liveness (from `.symlinks/plugins/passive_face_liveness/ios`)
+  - passive_face_liveness_compatible (from `.symlinks/plugins/passive_face_liveness_compatible/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
 
 SPEC REPOS:
@@ -25,14 +25,14 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  passive_face_liveness:
-    :path: ".symlinks/plugins/passive_face_liveness/ios"
+  passive_face_liveness_compatible:
+    :path: ".symlinks/plugins/passive_face_liveness_compatible/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  passive_face_liveness: a98c9d8c498aae0c322754ad853954321c69cf2e
+  passive_face_liveness_compatible: 1a7e7b8f72dff9e829e6bd6d72cc3e231653a9ee
   PassiveFaceLiveness: 53cab5a00c1864b5b32448b0559a748fb2ac0c35
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
   Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341

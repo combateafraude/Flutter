@@ -2,13 +2,13 @@ import Flutter
 import UIKit
 import PassiveFaceLiveness
 
-public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFaceLivenessControllerDelegate {
+public class SwiftPassiveFaceLivenessCompatiblePlugin: NSObject, FlutterPlugin, PassiveFaceLivenessControllerDelegate {
     
     var flutterResult: FlutterResult?
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "passive_face_liveness", binaryMessenger: registrar.messenger())
-        let instance = SwiftPassiveFaceLivenessPlugin()
+        let instance = SwiftPassiveFaceLivenessCompatiblePlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
     
