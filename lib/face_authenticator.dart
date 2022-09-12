@@ -1,5 +1,5 @@
-import 'package:face_authenticator/android/image_capture.dart';
-import 'package:face_authenticator/android/video_capture.dart';
+import 'package:face_authenticator_compatible/android/image_capture.dart';
+import 'package:face_authenticator_compatible/android/video_capture.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 

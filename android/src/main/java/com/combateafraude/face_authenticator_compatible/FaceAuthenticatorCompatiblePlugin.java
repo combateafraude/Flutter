@@ -1,4 +1,4 @@
-package com.combateafraude.face_authenticator;
+package com.combateafraude.face_authenticator_compatible;
 
 import android.app.Activity;
 import android.content.Context;
@@ -34,7 +34,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 import static android.app.Activity.RESULT_OK;
 
 @SuppressWarnings("unchecked")
-public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
+public class FaceAuthenticatorCompatiblePlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
 
     private static final int REQUEST_CODE = 1003;
 

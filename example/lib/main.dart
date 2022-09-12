@@ -1,9 +1,9 @@
-import 'package:face_authenticator/android/video_capture.dart';
-import 'package:face_authenticator/face_authenticator.dart';
-import 'package:face_authenticator/ios/settings.dart';
-import 'package:face_authenticator/result/face_authenticator_failure.dart';
-import 'package:face_authenticator/result/face_authenticator_result.dart';
-import 'package:face_authenticator/result/face_authenticator_success.dart';
+import 'package:face_authenticator_compatible/android/video_capture.dart';
+import 'package:face_authenticator_compatible/face_authenticator.dart';
+import 'package:face_authenticator_compatible/ios/settings.dart';
+import 'package:face_authenticator_compatible/result/face_authenticator_failure.dart';
+import 'package:face_authenticator_compatible/result/face_authenticator_result.dart';
+import 'package:face_authenticator_compatible/result/face_authenticator_success.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -43,7 +43,6 @@ class _MyAppState extends State<MyApp> {
 
     FaceAuthenticator faceAuthenticator =
         new FaceAuthenticator(mobileToken: mobileToken);
-
 
     faceAuthenticator.setPeopleId(peopleId);
 
