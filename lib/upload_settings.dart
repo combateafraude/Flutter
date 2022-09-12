@@ -1,4 +1,4 @@
-import 'package:document_detector/file_format.dart';
+import 'package:document_detector_compatible/file_format.dart';
 import 'package:flutter/cupertino.dart';
 
 class UploadSettings {

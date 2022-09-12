@@ -1,4 +1,4 @@
-package com.combateafraude.document_detector;
+package com.combateafraude.document_detector_compatible;
 
 import android.app.Activity;
 import android.content.Context;
@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 @SuppressWarnings("unchecked")
-public class DocumentDetectorPlugin
+public class DocumentDetectorCompatiblePlugin
         implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
 
     private static final int REQUEST_CODE = 1001;

@@ -1,4 +1,4 @@
-import 'package:document_detector/android/resolution.dart';
+import 'package:document_detector_compatible/android/resolution.dart';
 
 import 'capture_stage/capture_stage.dart';
 import 'customization.dart';

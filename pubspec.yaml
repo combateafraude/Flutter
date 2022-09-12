@@ -1,4 +1,4 @@
-name: document_detector
+name: document_detector_compatible
 description: Flutter plugin cross-platform for Combate à Fraude's DocumentDetector.
 version: 5.23.0
 author: Combate à Fraude
@@ -20,10 +20,10 @@ flutter:
     plugin:
         platforms:
             android:
-                package: com.combateafraude.document_detector
-                pluginClass: DocumentDetectorPlugin
+                package: com.combateafraude.document_detector_compatible
+                pluginClass: DocumentDetectorCompatiblePlugin
             ios:
-                pluginClass: DocumentDetectorPlugin
+                pluginClass: DocumentDetectorCompatiblePlugin
 
     # To add assets to your plugin package, add an assets section, like this:
     # assets:

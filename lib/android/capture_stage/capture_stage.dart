@@ -1,6 +1,6 @@
-import 'package:document_detector/android/capture_stage/capture_mode.dart';
-import 'package:document_detector/android/capture_stage/detection_settings.dart';
-import 'package:document_detector/android/capture_stage/quality_settings.dart';
+import 'package:document_detector_compatible/android/capture_stage/capture_mode.dart';
+import 'package:document_detector_compatible/android/capture_stage/detection_settings.dart';
+import 'package:document_detector_compatible/android/capture_stage/quality_settings.dart';
 import 'package:flutter/cupertino.dart';
 
 class CaptureStage {

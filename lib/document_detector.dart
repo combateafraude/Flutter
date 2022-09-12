@@ -1,16 +1,16 @@
 import 'dart:async';
 
-import 'package:document_detector/android/android_settings.dart';
-import 'package:document_detector/document_detector_step.dart';
-import 'package:document_detector/ios/ios_settings.dart';
-import 'package:document_detector/result/capture.dart';
-import 'package:document_detector/result/document_detector_closed.dart';
-import 'package:document_detector/result/document_detector_failure.dart';
-import 'package:document_detector/result/document_detector_result.dart';
-import 'package:document_detector/result/document_detector_success.dart';
-import 'package:document_detector/show_preview.dart';
-import 'package:document_detector/message_settings.dart';
-import 'package:document_detector/upload_settings.dart';
+import 'package:document_detector_compatible/android/android_settings.dart';
+import 'package:document_detector_compatible/document_detector_step.dart';
+import 'package:document_detector_compatible/ios/ios_settings.dart';
+import 'package:document_detector_compatible/result/capture.dart';
+import 'package:document_detector_compatible/result/document_detector_closed.dart';
+import 'package:document_detector_compatible/result/document_detector_failure.dart';
+import 'package:document_detector_compatible/result/document_detector_result.dart';
+import 'package:document_detector_compatible/result/document_detector_success.dart';
+import 'package:document_detector_compatible/show_preview.dart';
+import 'package:document_detector_compatible/message_settings.dart';
+import 'package:document_detector_compatible/upload_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
