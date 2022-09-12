@@ -3,13 +3,13 @@ import UIKit
 import TensorFlowLite
 import DocumentDetector
 
-public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetectorControllerDelegate {
+public class SwiftDocumentDetectorCompatiblePlugin: NSObject, FlutterPlugin, DocumentDetectorControllerDelegate {
     
     var flutterResult: FlutterResult?
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "document_detector", binaryMessenger: registrar.messenger())
-        let instance = SwiftDocumentDetectorPlugin()
+        let instance = SwiftDocumentDetectorCompatiblePlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
     

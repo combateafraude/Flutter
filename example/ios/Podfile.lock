@@ -1,5 +1,5 @@
 PODS:
-  - document_detector (5.22.0):
+  - document_detector_compatible (5.23.0):
     - DocumentDetector (= 7.3.0)
     - Flutter
   - DocumentDetector (7.3.0):
@@ -20,7 +20,7 @@ PODS:
     - TensorFlowLiteC (= 2.4.0)
 
 DEPENDENCIES:
-  - document_detector (from `.symlinks/plugins/document_detector/ios`)
+  - document_detector_compatible (from `.symlinks/plugins/document_detector_compatible/ios`)
   - Flutter (from `Flutter`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
 
@@ -33,15 +33,15 @@ SPEC REPOS:
     - TensorFlowLiteSwift
 
 EXTERNAL SOURCES:
-  document_detector:
-    :path: ".symlinks/plugins/document_detector/ios"
+  document_detector_compatible:
+    :path: ".symlinks/plugins/document_detector_compatible/ios"
   Flutter:
     :path: Flutter
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  document_detector: e32eb1059a071514d7d360cbd20b82b20c4b9c7d
+  document_detector_compatible: f94e3209418e1a7aa2d7d2b7910abc5cae92a4fe
   DocumentDetector: 74fc21f28ad41760536a13cb6a0415f8334a48ac
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
