@@ -1,4 +1,4 @@
-import 'package:passive_face_liveness/android/sensor_stability_settings.dart';
+import 'package:passive_face_liveness_compatible/android/sensor_stability_settings.dart';
 import 'sensor_orientation_settings.dart';
 
 class SensorSettingsAndroid {

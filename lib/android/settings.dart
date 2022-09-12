@@ -1,6 +1,6 @@
-import 'package:passive_face_liveness/android/image_capture.dart';
-import 'package:passive_face_liveness/android/customization.dart';
-import 'package:passive_face_liveness/android/sensor_settings.dart';
+import 'package:passive_face_liveness_compatible/android/image_capture.dart';
+import 'package:passive_face_liveness_compatible/android/customization.dart';
+import 'package:passive_face_liveness_compatible/android/sensor_settings.dart';
 
 class PassiveFaceLivenessAndroidSettings {
   PassiveFaceLivenessCustomizationAndroid customization;

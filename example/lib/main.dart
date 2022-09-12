@@ -1,15 +1,15 @@
-import 'package:passive_face_liveness/android/image_capture.dart';
-import 'package:passive_face_liveness/android/settings.dart';
-import 'package:passive_face_liveness/android/video_capture.dart';
-import 'package:passive_face_liveness/ios/ios_resolution.dart';
-import 'package:passive_face_liveness/ios/settings.dart';
-import 'package:passive_face_liveness/show_preview.dart';
+import 'package:passive_face_liveness_compatible/android/image_capture.dart';
+import 'package:passive_face_liveness_compatible/android/settings.dart';
+import 'package:passive_face_liveness_compatible/android/video_capture.dart';
+import 'package:passive_face_liveness_compatible/ios/ios_resolution.dart';
+import 'package:passive_face_liveness_compatible/ios/settings.dart';
+import 'package:passive_face_liveness_compatible/show_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:passive_face_liveness/passive_face_liveness.dart';
-import 'package:passive_face_liveness/message_settings.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_success.dart';
+import 'package:passive_face_liveness_compatible/passive_face_liveness.dart';
+import 'package:passive_face_liveness_compatible/message_settings.dart';
+import 'package:passive_face_liveness_compatible/result/passive_face_liveness_failure.dart';
+import 'package:passive_face_liveness_compatible/result/passive_face_liveness_result.dart';
+import 'package:passive_face_liveness_compatible/result/passive_face_liveness_success.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -25,7 +25,8 @@ class _MyAppState extends State<MyApp> {
   String _result = "";
   String _description = "";
 
-  String mobileToken = "";
+  String mobileToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1ZmMxM2U5MDE2YTgxODAwMDczNzNlMWYifQ._jdY1z1N1dfaFIq88Qk0akEgOk-taH2OxoW3oT1eLl0";
   @override
   void initState() {
     super.initState();

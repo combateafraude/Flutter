@@ -1,4 +1,4 @@
-name: passive_face_liveness
+name: passive_face_liveness_compatible
 description: Flutter plugin cross-platform (iOS, Android) for Combate à Fraude's PassiveFaceLiveness (https://github.com/combateafraude).
 version: 4.27.0
 author: Combate à Fraude
@@ -20,7 +20,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.combateafraude.passive_face_liveness
-        pluginClass: PassiveFaceLivenessPlugin
+        package: com.combateafraude.passive_face_liveness_compatible
+        pluginClass: PassiveFaceLivenessCompatiblePlugin
       ios:
         pluginClass: PassiveFaceLivenessPlugin

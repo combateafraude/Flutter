@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:passive_face_liveness/android/image_capture.dart';
-import 'package:passive_face_liveness/android/settings.dart';
-import 'package:passive_face_liveness/android/video_capture.dart';
-import 'package:passive_face_liveness/ios/settings.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_closed.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_success.dart';
-import 'package:passive_face_liveness/show_preview.dart';
-import 'package:passive_face_liveness/message_settings.dart';
+import 'package:passive_face_liveness_compatible/android/image_capture.dart';
+import 'package:passive_face_liveness_compatible/android/settings.dart';
+import 'package:passive_face_liveness_compatible/android/video_capture.dart';
+import 'package:passive_face_liveness_compatible/ios/settings.dart';
+import 'package:passive_face_liveness_compatible/result/passive_face_liveness_closed.dart';
+import 'package:passive_face_liveness_compatible/result/passive_face_liveness_failure.dart';
+import 'package:passive_face_liveness_compatible/result/passive_face_liveness_result.dart';
+import 'package:passive_face_liveness_compatible/result/passive_face_liveness_success.dart';
+import 'package:passive_face_liveness_compatible/show_preview.dart';
+import 'package:passive_face_liveness_compatible/message_settings.dart';
 
 class PassiveFaceLiveness {
   static const MethodChannel _channel =

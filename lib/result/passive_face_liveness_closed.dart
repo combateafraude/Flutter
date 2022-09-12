@@ -1,5 +1,3 @@
-import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
+import 'package:passive_face_liveness_compatible/result/passive_face_liveness_result.dart';
 
-class PassiveFaceLivenessClosed extends PassiveFaceLivenessResult {
-
-}
+class PassiveFaceLivenessClosed extends PassiveFaceLivenessResult {}

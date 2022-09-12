@@ -1,4 +1,4 @@
-package com.combateafraude.passive_face_liveness;
+package com.combateafraude.passive_face_liveness_compatible;
 
 import android.app.Activity;
 import android.content.Context;
@@ -35,7 +35,7 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
 
 @SuppressWarnings("unchecked")
-public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
+public class PassiveFaceLivenessCompatiblePlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
 
     private static final int REQUEST_CODE = 1002;
 
