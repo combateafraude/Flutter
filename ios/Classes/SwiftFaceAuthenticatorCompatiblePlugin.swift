@@ -5,13 +5,13 @@ import FaceAuthenticator
 let MESSAGE_CHANNEL = "com.combateafraude.face_authenticator/message"
 let ERROR_CODE = "FACE_AUTHENTICATOR_SDK_ERROR"
 
-public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenticatorControllerDelegate {
+public class SwiftFaceAuthenticatorCompatiblePlugin: NSObject, FlutterPlugin, FaceAuthenticatorControllerDelegate {
 
     var flutterResult: FlutterResult?
 
         public static func register(with registrar: FlutterPluginRegistrar) {
             let channel = FlutterMethodChannel(name: "face_authenticator", binaryMessenger: registrar.messenger())
-            let instance = SwiftFaceAuthenticatorPlugin()
+            let instance = SwiftFaceAuthenticatorCompatiblePlugin()
             registrar.addMethodCallDelegate(instance, channel: channel)
         }
 
