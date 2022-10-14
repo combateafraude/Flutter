@@ -64,12 +64,12 @@ dependencies:
   face_authenticator:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: face-authenticator-v3.9.0
+      ref: face-authenticator-v3.10.0
 ```
 #### Release Candidate
 ```yml
 dependencies:  
-  passive_face_liveness:
+  face_authenticator:
     git:
       url: https://github.com/combateafraude/Flutter.git
       ref: face-authenticator-v3.11.0-rc01

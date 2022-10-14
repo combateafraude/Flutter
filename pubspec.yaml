@@ -1,6 +1,6 @@
 name: face_authenticator
 description: Flutter plugin cross-platform (iOS, Android) for Combate à Fraude's FaceAuthenticator (https://github.com/combateafraude).
-version: 3.11.0-rc01
+version: 3.10.0
 author: Combate à Fraude
 homepage: https://www.combateafraude.com/
 
