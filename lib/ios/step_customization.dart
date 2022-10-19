@@ -1,10 +1,10 @@
 class DocumentDetectorStepCustomizationIos {
-  String stepLabel;
-  String illustration;
-  String audioName;
+  String? stepLabel;
+  String? illustration;
+  String? audioName;
 
-  DocumentDetectorStepCustomizationIos(
-      this.stepLabel, this.illustration, this.audioName);
+  DocumentDetectorStepCustomizationIos({
+      this.stepLabel, this.illustration, this.audioName});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();

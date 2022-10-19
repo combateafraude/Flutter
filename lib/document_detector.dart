@@ -9,6 +9,8 @@ import 'package:document_detector/result/document_detector_failure.dart';
 import 'package:document_detector/result/document_detector_result.dart';
 import 'package:document_detector/result/document_detector_success.dart';
 import 'package:document_detector/show_preview.dart';
+import 'package:document_detector/message_settings.dart';
+import 'package:document_detector/upload_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -17,21 +19,23 @@ class DocumentDetector {
       const MethodChannel('document_detector');
 
   String mobileToken;
-  String peopleId;
-  bool useAnalytics;
-  List<DocumentDetectorStep> documentDetectorSteps;
-  bool popup;
-  bool sound;
-  int requestTimeout;
-  ShowPreview showPreview;
-  DocumentDetectorAndroidSettings androidSettings;
-  DocumentDetectorIosSettings iosSettings;
-  bool showDelay;
-  int delay;
-  bool autoDetection;
+  String? peopleId;
+  bool? useAnalytics;
+  late List<DocumentDetectorStep> documentDetectorSteps;
+  bool? popup;
+  bool? sound;
+  int? requestTimeout;
+  ShowPreview? showPreview;
+  DocumentDetectorAndroidSettings? androidSettings;
+  DocumentDetectorIosSettings? iosSettings;
+  bool? showDelay;
+  int? delay;
+  bool? autoDetection;
+  MessageSettings? messageSettings;
+  String? expireTime;
+  UploadSettings? uploadSettings;
 
-
-  DocumentDetector({@required this.mobileToken});
+  DocumentDetector({required this.mobileToken});
 
   void setDocumentFlow(List<DocumentDetectorStep> documentDetectorSteps) {
     this.documentDetectorSteps = documentDetectorSteps;
@@ -61,13 +65,17 @@ class DocumentDetector {
     this.showPreview = showPreview;
   }
 
-  void setAutoDetection(bool enable){
+  void setAutoDetection(bool enable) {
     this.autoDetection = enable;
   }
 
-  void setCurrentStepDoneDelay(bool showDelay, int delay){
+  void setCurrentStepDoneDelay(bool showDelay, int delay) {
     this.showDelay = showDelay;
     this.delay = delay;
+  }
+
+  void setMessageSettings(MessageSettings messageSettings) {
+    this.messageSettings = messageSettings;
   }
 
   void setAndroidSettings(DocumentDetectorAndroidSettings androidSettings) {
@@ -76,6 +84,14 @@ class DocumentDetector {
 
   void setIosSettings(DocumentDetectorIosSettings iosSettings) {
     this.iosSettings = iosSettings;
+  }
+
+  void setGetImageUrlExpireTime(String expireTime) {
+    this.expireTime = expireTime;
+  }
+
+  void setUploadSettings(UploadSettings settings) {
+    this.uploadSettings = settings;
   }
 
   Future<DocumentDetectorResult> start() async {
@@ -93,34 +109,39 @@ class DocumentDetector {
     params["showDelay"] = showDelay;
     params["delay"] = delay;
     params["autoDetection"] = autoDetection;
+    params["messageSettings"] = messageSettings?.asMap();
+    params["expireTime"] = expireTime;
+    params["uploadSettings"] = uploadSettings?.asMap();
 
     List<Map<String, dynamic>> stepsMap = [];
     for (var step in documentDetectorSteps) {
-      stepsMap.add(step.asMap());
+      stepsMap.add(step.asMap() as Map<String, dynamic>);
     }
     params["documentSteps"] = stepsMap;
 
     Map<dynamic, dynamic> resultMap =
-        await _channel.invokeMethod('start', params);
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)
+            as Map<dynamic, dynamic>;
 
-    bool success = resultMap["success"];
+    bool? success = resultMap["success"];
     if (success == null) {
       return new DocumentDetectorClosed();
     } else if (success == true) {
       List<dynamic> capturesRaw = resultMap["captures"];
-      List<Capture> captureList = new List();
+      var captureList = <Capture>[];
       for (dynamic captureRaw in capturesRaw) {
         captureList.add(new Capture(
             captureRaw["imagePath"],
             captureRaw["imageUrl"],
             captureRaw["label"],
-            captureRaw["quality"]));
+            captureRaw["quality"],
+            captureRaw["lensFacing"]));
       }
       return new DocumentDetectorSuccess(
           captureList, resultMap["type"], resultMap["trackingId"]);
-    } else if (success == false) {
+    } else {
       return new DocumentDetectorFailure(
-          resultMap["message"], resultMap["type"]);
+          resultMap["message"], resultMap["type"], resultMap["code"]);
     }
   }
 }

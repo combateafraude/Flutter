@@ -2,6 +2,10 @@ import 'package:document_detector/android/android_settings.dart';
 import 'package:document_detector/android/capture_stage/capture_mode.dart';
 import 'package:document_detector/android/capture_stage/capture_stage.dart';
 import 'package:document_detector/android/customization.dart';
+import 'package:document_detector/android/maskType.dart';
+import 'package:document_detector/android/resolution.dart';
+import 'package:document_detector/ios/ios_resolution.dart';
+import 'package:document_detector/message_settings.dart';
 import 'package:document_detector/show_preview.dart';
 import 'package:document_detector/document_detector_step.dart';
 import 'package:document_detector/document_type.dart';
@@ -10,6 +14,7 @@ import 'package:document_detector/result/capture.dart';
 import 'package:document_detector/result/document_detector_failure.dart';
 import 'package:document_detector/result/document_detector_result.dart';
 import 'package:document_detector/result/document_detector_success.dart';
+import 'package:document_detector/upload_settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:document_detector/document_detector.dart';
@@ -50,26 +55,36 @@ class _MyAppState extends State<MyApp> {
     DocumentDetector documentDetector =
         new DocumentDetector(mobileToken: mobileToken);
 
-    ShowPreview showPreview = new ShowPreview(
-        show: true,
-        title: "A foto ficou boa?",
-        subTitle:
-            "Veja se todas informações estão legíveis e os documentos sem reflexos",
-        confirmLabel: "Sim, ficou boa!",
-        retryLabel: "Tirar novamente");
+    DocumentDetectorIosSettings documentDetectorIosSettings =
+        new DocumentDetectorIosSettings(
+            enableManualCapture: true, timeEnableManualCapture: 15000);
 
-    DocumentDetectorAndroidSettings androidSettings =
-        new DocumentDetectorAndroidSettings();
+    DocumentDetectorAndroidSettings detectorAndroidSettings =
+        new DocumentDetectorAndroidSettings(
+            enableSwitchCameraButton: false,
+            compressQuality: 50,
+            resolution: Resolution.QUAD_HD);
 
-    documentDetector.setShowPreview(showPreview);
+    DocumentDetectorCustomizationAndroid documentDetectorCustomizationAndroid =
+        new DocumentDetectorCustomizationAndroid(maskType: MaskType.DETAILED);
 
-    documentDetector.setAndroidSettings(androidSettings);
+    MessageSettings messageSettings = new MessageSettings(
+        openDocumentWrongMessage: "Feche o documento",
+        showOpenDocumentMessage: true,
+        unsupportedDocumentMessage: "Ops, esse documento não é suportado");
+
+    DocumentDetectorIosSettings iosSettings = new DocumentDetectorIosSettings(
+        resolution: IosResolution.HD1280x720, compressQuality: 1);
+
+    List<String> formats = ["PDF", "PNG"];
+
+    documentDetector.setIosSettings(iosSettings);
+
+    documentDetector.setMessageSettings(messageSettings);
 
     documentDetector.setDocumentFlow(documentSteps);
 
-    documentDetector.setAutoDetection(true);
-
-    documentDetector.setCurrentStepDoneDelay(true, 2000);
+    documentDetector.setAndroidSettings(detectorAndroidSettings);
 
     // Put the others parameters here
 

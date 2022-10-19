@@ -2,7 +2,7 @@
 
 Plugin que chama os SDKs nativos em [Android](https://docs.combateafraude.com/docs/mobile/android/document-detector/) e [iOS](https://docs.combateafraude.com/docs/mobile/ios/document-detector/). Caso tenha alguma dúvida, envie um email para o nosso [Head of Mobile](mailto:daniel.seitenfus@combateafraude.com)
 
-Atualmente, os documentos suportados são RG, CNH, RNE e CRLV. Caso tenha alguma sugestão de outro documento, contate-nos!
+Atualmente, os documentos suportados são RG, CNH, RNE, CRLV, CTPS, Passaporte. Caso tenha alguma sugestão de outro documento, contate-nos!
 
 # Políticas de privacidade e termos e condições de uso
 
@@ -13,9 +13,12 @@ Ao utilizar nosso plugin, certifique-se que você concorda com nossas [Política
 | Configuração mínima | Versão |
 | ------------------- | ------ |
 | Flutter             | 1.12+  |
+| Dart                | 2.12+  |
 | Android API         | 21+    |
+| Compile SDK Version | 30+    |
 | iOS                 | 11.0+  |
-| Swift               | 5      |
+
+Caso você utilize Dart em uma versão abaixo de 2.12, confira a versão compatível [aqui](https://github.com/combateafraude/Flutter/tree/document-detector-compatible).
 
 ## Configurações
 
@@ -50,13 +53,18 @@ source 'https://github.com/combateafraude/iOS.git'
 source 'https://cdn.cocoapods.org/' # ou 'https://github.com/CocoaPods/Specs' se o CDN estiver fora do ar
 ```
 
-Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runner/Info.plist`:
+Por último, adicione as permissões no arquivo `ROOT_PROJECT/ios/Runner/Info.plist`:
 
 ```
 <key>NSCameraUsageDescription</key>
 <string>To read the documents</string>
+
+// Obrigatória somente para o fluxo de upload de documento
+<key>NSPhotoLibraryUsageDescription</key>
+	<string>To select images</string>
 ```
 
+Para habilitar texto e voz em Português, em seu projeto, no diretório ROOTPROJECT/ios, abra o arquivo .xcworkspace no Xcode e adicione em Project > Info > Localizations o idioma Portuguese (Brazil).
 
 ### Flutter
 
@@ -67,8 +75,24 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-nosentry-v4.2.0
+      ref: document-detector-nosentry-v5.23.5
 ```
+
+## Desativando validações de segurança para teste
+Estamos constantemente realizando ações para tornar o produto cada vez mais seguro, mitigando uma série de ataques observados ao processo de captura e, consequentemente, reduzindo o maior número de possíveis fraudes de identidade. O SDK possui alguns bloqueios que podem impedir a execução em certos contextos. Para desabilitá-los, você pode utilizar os métodos conforme o exemplo abaixo:
+``` dart
+DocumentDetectorAndroidSettings androidSettings =
+        DocumentDetectorAndroidSettings(
+          emulatorSettings: true,
+          rootSettings: true,
+          useDeveloperMode: true,
+          useAdb: true,
+          useDebug: true,
+        );
+
+documentDetector.setAndroidSettings(androidSettings);
+```
+> <b>Atenção!</b> Desabilitar as validações de segurança são recomendadas <b>apenas para ambiente de testes. </b>Para publicação do seu aplicativo em produção, recomendamos utilizar as configurações padrão.
 
 ## Utilização
 
@@ -100,8 +124,13 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
 | `.setShowPreview(ShowPreview showPreview)`<br><br> Preview para verificação da qualidade da foto |
+| `.setAutoDetection(bool enable)`<br><br>Habilita/desabilita a autodetecção e verificações de sensores. Utilize `false` para desabilitar todas as verificações no dispositivo. Assim, todas validações serão executadas no backend, após a captura. O padrão é `true`|
+| `.setCurrentStepDoneDelay(bool showDelay, int delay)`<br><br> Aplica delay na activity após a finalização de cada etapa. Esse método pode ser utilizado para exibir uma mensagem de sucesso na própria tela após a captura, por exemplo. O padrão é `false`|
+| `.setMessageSettings(MessageSettings messageSettings)`<br><br> Permite personalizar mensagens exibidas no balão de "status" durante o processo de captura e análise. |
+| `.setGetImageUrlExpireTime(String expireTime)`<br><br> Define o tempo de duração da URL da imagem no servidor até ser expirada. Espera receber um intervalo de tempo entre "30m" à "30d". O padrão é `3h` |
 | `.setAndroidSettings(DocumentDetectorAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(DocumentDetectorIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
+| `.setUploadSettings(UploadSettings uploadSettings)`<br><br>Define as configurações para o upload de documentos. Ativando esta opção, o fluxo do SDK irá solicitar que o usuário envie os arquivos do documento ao invés de realizar a captura com a câmera do dispositivo. Esta opção também inclui as verificações de qualidade do documento. Por padrão, esta opção de fluxo não está habilitada |
 
 | DocumentDetectorStep constructor |
 | --------- |
@@ -109,13 +138,77 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `DocumentDetectorStepCustomizationAndroid android`<br><br>Customizações visuais do respectivo passo aplicados em Android |
 | `DocumentDetectorStepCustomizationIos ios`<br><br>Customizações visuais do respectivo passo aplicados em iOS |
 
+| UploadSettings constructor|
+| --------- |
+| `bool compress`<br><br>Habilita/desabilita a compressão do arquivo antes de realizar o upload. O padrão é `true` |
+| `int maxFileSize`<br><br>Define o tamanho máximo em KB do arquivo para upload. O limite padrão é 20000 KB (20MB) |
+| `List<String> fileFormats`<br><br>Define o(os) formatos de arquivos que serão aceitos para upload. Por padrão são aceitos: .PDF , .JPG, .JPEG, .PNG, .HEIF |
+| `String activityLayout`<br><br>Define o layout de plano de fundo do upload de documentos |
+| `String popUpLayout`<br><br>Define o layout do popup de solicitação do documento para upload |
+
 | ShowPreview |
 | --------- |
-| `bool show`<br><br>Habilita/Desabilita preview |
-| `String title`<br><br>Título |
-| `String subTitle`<br><br>Subtítulo |
-| `String confirmLabel`<br><br>Texto do botão de confirmação |
-| `String retryLabel`<br><br>Texto do botão de capturar novamente |
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, modifique a String com a mensagem que deseja utilizar.|
+| `bool show`<br><br>Habilita/Desabilita preview
+| `String title`<br><br>Título
+| `String subTitle`<br><br> Subtítulo
+| `String confirmLabel`<br><br>Texto do botão de confirmação
+| `String retryLabel`<br><br>Texto do botão de capturar novamente
+
+| Exemplo de uso |
+```dart
+ShowPreview showPreview = new ShowPreview(
+        show: true,
+        title: "A foto ficou boa?",
+        subtitle: "Veja se a foto está nítida",
+        confirmLabel: "Sim, ficou boa!",
+        retryLabel: "Tirar novamente");
+
+documentDetector.setShowPreview(showPreview);
+```
+
+| MessageSettings |
+| --------- |
+<b>Como Modificar: </b> Caso deseje modificar o texto selecionado, modifique a String com a mensagem que deseja utilizar.| 
+| `String? fitTheDocumentMessage`<br><br>Padrão: "Encaixe o documento na marcação"|
+| `String? holdItMessage (somente para Android)`<br><br>Padrão: "Segure assim"|
+| `String? verifyingQuality`<br><br>Padrão: "Verificando qualidade…"|
+| `String? lowQualityDocument`<br><br>Padrão: "Ops, não foi possível ler as informações. Por favor, tente novamente"|
+| `String? uploadingImage`<br><br>Padrão: "Enviando imagem…"|
+| `boolean? showOpenDocumentMessage`<br><br>Padrão: `true`|
+| `String? openDocumentWrongMessage`<br><br>Padrão: "Esse é o {'document'} aberto, você deve fecha-lo"|
+| `String? documentNotFoundMessage`<br><br>Padrão: "Não encontramos um documento"|;
+| `String? sensorLuminosityMessage`<br><br>Padrão: "Ambiente muito escuro"|;
+| `String? sensorOrientationMessage`<br><br>Padrão: "Celular não está na vertical"|;
+| `String? sensorStabilityMessage`<br><br>Padrão: "Mantenha o celular parado"|;
+| `String? unsupportedDocumentMessage`<br><br>Padrão: "Ops, parece que este documento não é suportado. Contate-nos!"|
+| `String? popupDocumentSubtitleMessage`<br><br>Padrão: "Posicione o documento em uma mesa, centralize-o na marcação e aguarde a captura automática."|
+| `String? setPositiveButtonMessage`<br><br>Padrão: "Ok, entendi!"|
+| `String? wrongDocumentMessage_RG_FRONT (somente para Android)`<br><br>Padrão: "Ops, esta é a frente do RG"|
+| `String? wrongDocumentMessage_RG_BACK (somente para Android)`<br><br>Padrão: "Ops, este é o verso do RG"|
+| `String? wrongDocumentMessage_RG_FULL (somente para Android)`<br><br>Padrão: "Ops, este é o RG aberto"|
+| `String? wrongDocumentMessage_CNH_FRONT (somente para Android)`<br><br>Padrão: "Ops, esta é a frente da CNH"|
+| `String? wrongDocumentMessage_CNH_BACK (somente para Android)`<br><br>Padrão: "Ops, este é o verso da CNH"|
+| `String? wrongDocumentMessage_CNH_FULL (somente para Android)`<br><br>Padrão: "Ops, esta é a CNH aberta"|
+| `String? wrongDocumentMessage_CRLV (somente para Android)`<br><br>Padrão: "Ops, este é o CRLV"|
+| `String? wrongDocumentMessage_RNE_FRONT (somente para Android)`<br><br>Padrão: "Ops, esta é a frente do RNE"|
+| `String? wrongDocumentMessage_RNE_BACK (somente para Android)`<br><br>Padrão: "Ops, este é o verso do RNE"|
+
+
+| Exemplo de uso |
+| --------- |
+```dart
+ MessageSettings messageSettings = new MessageSettings(
+      fitTheDocumentMessageResIdName: "Mensagem de exemplo",
+      holdItMessageResIdName:"Mensagem de exemplo",
+      verifyingQualityMessageResIdName: "Mensagem de exemplo"
+      lowQualityDocumentMessageResIdName:"Mensagem de exemplo" ,
+      uploadingImageMessageResIdName:"Mensagem de exemplo",
+      openDocumentWrongMessage: "Mensagem de exemplo",
+      showOpenDocumentMessage: true);
+documentDetector.setMessageSettings(messageSettings);
+```
+
 
 #### Android
 
@@ -130,6 +223,17 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `DocumentDetectorCustomizationAndroid customization`<br><br>Customização do layout em Android da activity |
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
 | `List<CaptureStage> captureStages`<br><br>Array de estágios para cada captura. Esse parâmetro é útil caso você deseje modificar a maneira com qual o DocumentDetector é executado, como configurações de detecção, captura automática ou manual, verificar a qualidade da foto, etc |
+| `Integer compressQuality`<br><br>Permite configurar a qualidade no processo de compressão. Por padrão, todas capturas passam por compressão. O método espera como parâmetro valores entre 50 e 100, sendo 100 a compressão com melhor qualidade (recomendado). O padrão é 100 |
+| `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
+| `Resolution resolution`<br><br>Permite configurar a resolução de captura. O método espera como parâmetro uma Resolution que fornece as opções HD, FULL_HD, QUAD_HD e ULTRA_HD. O padrão é `Resolution.ULTRA_HD` |
+| `bool enableGoogleServices`<br><br>Permite habilitar/desabilitar recursos do SDK que consomem GoogleServices no SDK, não recomendamos desabilitar os serviços por conta da perda de segurança. O padrão é `True` |
+| `bool enableEmulator`<br><br>Permite o uso de emulador quando `true` |
+| `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
+ `bool useDebug`<br><br>Habilita/desabilita o uso do app em modo depuração. O padrão é `false` |
+ `bool useDeveloperMode`<br><br>Permite habilitar/desabilitar o uso de dispositivos com o modo de desenvolvedor Android ativado. Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `false` |
+ `bool useDAdb`<br><br>Permite habilitar/desabilitar o uso do modo de depuração Android Debug Bridge (ADB). Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `false` |
+
+
 
 | CaptureStage constructor |
 | --------- |
@@ -146,6 +250,8 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `String greenMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara verde padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_green_mask.png` e parametrize "my_custom_green_mask" |
 | `String redMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara vermelha padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_red_mask.png` e parametrize "my_custom_red_mask" |
 | `String whiteMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara branca padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_white_mask.png` e parametrize "my_custom_white_mask" |
+| `MaskType maskType`<br><br>Define o tipo de máscara utilizada nas capturas. Existem três tipos: `MaskType.DEFAULT`, com o padrão pontilhado no formato do documento; `MaskType.DETAILED`, que apresenta uma ilustração do documento solicitado, junto com a máscara pontilhada; `MaskType.NONE`, que remove totalmente a máscara. O padrão é `MaskType.DEFAULT` |
+
 
 | SensorSettingsAndroid constructor |
 | --------- |
@@ -155,17 +261,14 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 
 | SensorLuminositySettingsAndroid constructor |
 | --------- |
-| `String messageResourceIdName`<br><br>Nome do string resource à ser mostrado quando o ambiente estiver escuro. A mensagem padrão é "Ambiente muito escuro". Por exemplo, caso deseje mostrar a String "Teste", crie uma String em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml` com o nome `R.string.my_custom_luminosity_string` e valor "Teste" e parametrize "my_custom_luminosity_string" |
 | `int luminosityThreshold`<br><br>Limiar inferior entre luminosidade aceitável/não aceitável, em lx. O padrão é `5` lx |
 
 | SensorOrientationSettingsAndroid constructor |
 | --------- |
-| `String messageResourceIdName`<br><br>Nome do string resource à ser mostrado quando o celular não estiver na horizontal. A mensagem padrão é "Celular não está na horizontal". Por exemplo, caso deseje mostrar a String "Teste", crie uma String em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml` com o nome `R.string.my_custom_orientation_string` e valor "Teste" e parametrize "my_custom_orientation_string" |
 | `double orientationThreshold`<br><br>Limiar inferior entre orientação correta/incorreta, em variação de m/s² da orientação totalmente horizontal. O padrão é `3` m/s² |
 
 | SensorStabilitySettingsAndroid constructor |
 | --------- |
-| `String messageResourceIdName`<br><br>Nome do string resource à ser mostrado quando o celular não estiver estável. A mensagem padrão é "Mantenha o celular parado". Por exemplo, caso deseje mostrar a String "Teste", crie uma String em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml` com o nome `R.string.my_custom_stability_string` e valor "Teste" e parametrize "my_custom_stability_string" |
 | `int stabilityStabledMillis`<br><br>Quantos milissegundos o celular deve se manter no limiar correto para ser considerado estável. O padrão é `2000` ms |
 | `double stabilityThreshold`<br><br>Limiar inferior entre estável/instável, em variação de m/s² entre as últimas duas coletas do sensor. O padrão é `0.5` m/s² |
 
@@ -178,6 +281,22 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `double qualityThreshold`<br><br>Limiar de aceitação da qualidade, entre 1.0 e 5.0. 1.8 é o recomendado para um futuro OCR |
 | `DocumentDetectorCustomizationIos customization`<br><br>Customização visual do DocumentDetector |
 | `SensorSettingsIos sensorSettings`<br><br>Configurações personalizadas dos sensores em iOS, null para desabilitar |
+| `Bool enableManualCapture`<br><br>Habilita modo de captura manual |
+| `double timeEnableManualCapture`<br><br>Tempo para habilitar o botão de captura manual |
+| `double compressQuality`<br><br>Permite configurar a qualidade no processo de compressão. Por padrão, todas capturas passam por compressão. O método espera como parâmetro valores entre 0 e 1.0, sendo 1.0 a compressão com melhor qualidade (recomendado).O padrão é 1.0 |
+| `String resolution`<br><br>Permite configurar a resolução de captura. O método espera como parâmetro uma `String IosResolution` (O padrão é `hd1280x720`), que possui as seguintes opções:|
+
+| Resolution | Descrição |
+| :--: | :--: |
+| `low` |Especifica as configurações de captura adequadas para vídeo de saída e taxas de bits de áudio adequadas para compartilhamento em 3G|
+| `medium` | Especifica as configurações de captura adequadas para as taxas de bits de áudio e vídeo de saída adequadas para compartilhamento via WiFi|
+| `high` | Especifica as configurações de captura adequadas para saída de áudio e vídeo de alta qualidade |
+| `photo` | Especifica as configurações de captura adequadas para saída de qualidade de foto de alta resolução |
+| `inputPriority` | Especifica as configurações de captura adequadas para saída de qualidade de foto de alta resolução |
+| `hd1280x720` | Especifica as configurações de captura adequadas para saída de vídeo com qualidade de 720p (1280 x 720 pixels)|
+| `hd1920x1080` | Configurações de captura adequadas para saída de vídeo com qualidade 1080p (1920 x 1080 pixels)|
+| `hd4K3840x2160` | Configurações de captura adequadas para saída de vídeo com qualidade 2160p (3840 x 2160 pixels) |
+|
 
 | DocumentDetectorCustomizationIos constructor |
 | --------- |
@@ -188,6 +307,8 @@ if (documentDetectorResult is DocumentDetectorSuccess) {
 | `String closeImageName`<br><br>Nome da imagem à substituir o botão de fechar o SDK. Lembre de adicionar a imagem em `Assets Catalog Document` no seu projeto do XCode |
 | `bool showStepLabel`<br><br>Flag que indica se deseja mostrar o label do passo atual |
 | `bool showStatusLabel`<br><br>Flag que indica se deseja mostrar o label do status atual |
+| `double? buttonSize`<br><br>Valor que define o tamanho do botão de "fechar" o SDK |
+| `String? buttonContentMode`<br><br>Atributo que define o content mode do botão de "fechar" o SDK. Escolha entre [esses valores](https://docs.combateafraude.com/docs/mobile/flutter/release-notes/#27-de-maio-de-2022). |
 
 | SensorSettingsIos constructor |
 | --------- |
@@ -246,3 +367,9 @@ Os tipos de falha existentes são:
 - `SecurityReason`: quando o dispositivo não é seguro para executar o SDK. Se esta falha ocorrer, avise-nos;
 - `StorageReason`: quando o dispositivo não possui espaço suficiente para a captura de alguma foto. Pode ocorrer em produção;
 - `LibraryReason`: quando alguma falha interna impossibilitou a execução do SDK. Pode ocorrer devico à erros de configuração do projeto, não deve ocorrer em produção;
+
+### Customizando view iOS
+
+Para customização iOS, é necessário que os plugins Flutter estejam adicionados localmente no projeto. A customizção é realizada nativamente com a abordagem ViewCode.
+
+[Clique aqui](https://github.com/combateafraude/Flutter/tree/ios-customization-example) e acesse um exemplo com um guia para utilização desse recurso.

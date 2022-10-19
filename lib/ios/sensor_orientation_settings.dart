@@ -1,6 +1,6 @@
 class SensorOrientationSettingsIos {
-  String message;
-  double orientationThreshold;
+  String? message;
+  double? orientationThreshold;
 
   SensorOrientationSettingsIos(
   {this.message, this.orientationThreshold});
@@ -8,7 +8,6 @@ class SensorOrientationSettingsIos {
   Map asMap(){
     Map<String, dynamic> map = new Map();
 
-    map["message"] = message;
     map["orientationThreshold"] = orientationThreshold;
 
     return map;

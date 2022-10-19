@@ -23,7 +23,8 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 21
@@ -45,6 +46,6 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk.nosentry:document-detector:6.7.6'
+        implementation 'com.combateafraude.sdk:document-detector:6.37.0'
     }
 }

@@ -8,5 +8,9 @@ enum DocumentType {
   CRLV,
   RNE_FRONT,
   RNE_BACK,
+  PASSPORT,
+  CTPS_FRONT,
+  CTPS_BACK,
+  ANY,
   OTHERS
 }

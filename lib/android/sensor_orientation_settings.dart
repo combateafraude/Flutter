@@ -1,6 +1,6 @@
 class SensorOrientationSettingsAndroid {
-  String messageResourceIdName;
-  double orientationThreshold;
+  String? messageResourceIdName;
+  double? orientationThreshold;
 
   SensorOrientationSettingsAndroid(
   {this.messageResourceIdName, this.orientationThreshold});
