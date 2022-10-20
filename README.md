@@ -1,7 +1,5 @@
 # [DocumentDetector](https://docs.combateafraude.com/docs/mobile/introduction/home/#documentdetector) - Flutter Plugin
 
-Plugin que chama os SDKs nativos em [Android](https://docs.combateafraude.com/docs/mobile/android/document-detector/) e [iOS](https://docs.combateafraude.com/docs/mobile/ios/document-detector/). Caso tenha alguma dúvida, envie um email para o nosso [Head of Mobile](mailto:daniel.seitenfus@combateafraude.com)
-
 Atualmente, os documentos suportados são RG, CNH, RNE, CRLV, CTPS, Passaporte. Caso tenha alguma sugestão de outro documento, contate-nos!
 
 # Políticas de privacidade e termos e condições de uso
