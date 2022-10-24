@@ -71,16 +71,22 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
         PassiveFaceLiveness.Builder mPassiveFaceLivenessBuilder = new PassiveFaceLiveness.Builder(mobileToken);
 
         // People ID
-        String peopleId = (String) argumentsMap.get("peopleId");
-        mPassiveFaceLivenessBuilder.setPersonId(peopleId);
+        if(argumentsMap.get("peopleId") != null){
+            String peopleId = (String) argumentsMap.get("peopleId");
+            mPassiveFaceLivenessBuilder.setPersonId(peopleId);
+        }
 
         // Person Name
-        String personName = (String) argumentsMap.get("personName");
-        mPassiveFaceLivenessBuilder.setPersonName(personName);
+        if(argumentsMap.get("personName") != null){
+            String personName = (String) argumentsMap.get("personName");
+            mPassiveFaceLivenessBuilder.setPersonName(personName);
+        }
 
         // Person CPF
-        String personCPF = (String) argumentsMap.get("personCPF");
-        mPassiveFaceLivenessBuilder.setPersonCPF(personCPF);
+        if(argumentsMap.get("personCPF") != null){
+            String personCPF = (String) argumentsMap.get("personCPF");
+            mPassiveFaceLivenessBuilder.setPersonCPF(personCPF);
+        }
 
         // Use Analytics
         Boolean useAnalytics = (Boolean) argumentsMap.get("useAnalytics");
