@@ -32,7 +32,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
         passiveFaceLivenessBuilder.enableMultiLanguage(false)
         
         if let peopleId = arguments["peopleId"] as? String ?? nil {
-            passiveFaceLivenessBuilder.setPersonId(personId: peopleId)
+            passiveFaceLivenessBuilder.setPersonId(peopleId)
         }
         
         if let personName = arguments["personName"] as? String ?? nil{
