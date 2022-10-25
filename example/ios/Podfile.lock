@@ -1,15 +1,15 @@
 PODS:
-  - face_authenticator_compatible (4.7.0):
-    - FaceAuthenticator (= 5.1.0)
+  - face_authenticator_compatible (4.8.5):
+    - FaceAuthenticator (= 5.10.0)
     - Flutter
-  - FaceAuthenticator (5.1.0):
-    - Sentry (= 7.1.3)
+  - FaceAuthenticator (5.10.0):
+    - Sentry (= 7.11.0)
   - Flutter (1.0.0)
   - "permission_handler (5.0.1+1)":
     - Flutter
-  - Sentry (7.1.3):
-    - Sentry/Core (= 7.1.3)
-  - Sentry/Core (7.1.3)
+  - Sentry (7.11.0):
+    - Sentry/Core (= 7.11.0)
+  - Sentry/Core (7.11.0)
 
 DEPENDENCIES:
   - face_authenticator_compatible (from `.symlinks/plugins/face_authenticator_compatible/ios`)
@@ -31,12 +31,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  face_authenticator_compatible: d54c1ea0b56ec37f1dc03788c7a473233c63a028
-  FaceAuthenticator: 6ecbe6fb6cb1491b8570aef41518d4aecf47adbe
-  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  face_authenticator_compatible: 842bf7e566fb5251c2cfa7d31b4b3c9a75a4d56a
+  FaceAuthenticator: 2342d5b4ba87e7a78d4f5d948e11152d4313cd68
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
-  Sentry: 6d963d64804dd06d96e778be729613f481394312
+  Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
 
-PODFILE CHECKSUM: f2192c2fcbc0794d63357f6f1694d253ec7677b5
+PODFILE CHECKSUM: d109ab4c53b5c0fc3dacc6974f628603d4568643
 
 COCOAPODS: 1.11.3

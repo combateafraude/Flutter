@@ -1,3 +1,4 @@
+import 'package:face_authenticator_compatible/android/settings.dart';
 import 'package:face_authenticator_compatible/android/video_capture.dart';
 import 'package:face_authenticator_compatible/face_authenticator.dart';
 import 'package:face_authenticator_compatible/ios/settings.dart';
@@ -21,8 +22,9 @@ class _MyAppState extends State<MyApp> {
   String _result = "";
   String _description = "";
 
-  String mobileToken = "";
-  String peopleId = "";
+  String mobileToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1ZmMxM2U5MDE2YTgxODAwMDczNzNlMWYifQ._jdY1z1N1dfaFIq88Qk0akEgOk-taH2OxoW3oT1eLl0";
+  String peopleId = "03892606064";
 
   @override
   void initState() {
@@ -43,6 +45,9 @@ class _MyAppState extends State<MyApp> {
 
     FaceAuthenticator faceAuthenticator =
         new FaceAuthenticator(mobileToken: mobileToken);
+
+    faceAuthenticator.setAndroidSettings(FaceAuthenticatorAndroidSettings(
+        useAdb: true, useDebug: true, useDeveloperMode: true));
 
     faceAuthenticator.setPeopleId(peopleId);
 
@@ -96,7 +101,7 @@ class _MyAppState extends State<MyApp> {
                   children: [
                     Row(
                       children: [
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text('Start FaceAuthenticator'),
                           onPressed: () async {
                             startFaceAuthenticator();

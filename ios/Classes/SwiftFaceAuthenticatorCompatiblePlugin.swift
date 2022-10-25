@@ -33,7 +33,7 @@ public class SwiftFaceAuthenticatorCompatiblePlugin: NSObject, FlutterPlugin, Fa
             let peopleId = arguments["peopleId"] as! String
 
             var faceAuthenticatorBuilder = FaceAuthenticatorSdk.Builder(mobileToken: mobileToken)
-            faceAuthenticatorBuilder.setPersonId(peopleId)
+            faceAuthenticatorBuilder.setPeopleId(peopleId)
 
             if let useAnalytics = arguments["useAnalytics"] as? Bool ?? nil {
                 faceAuthenticatorBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)

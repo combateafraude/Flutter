@@ -9,9 +9,11 @@ Ao utilizar nosso plugin, certifique-se que você concorda com nossas [Política
 | Configuração mínima | Versão |
 | ------------------- | ------ |
 | Flutter             | 1.12+  |
+| Dart                | 2.12+  |
 | Android API         | 21+    |
 | iOS                 | 11.0+  |
-| Swift               | 5      |
+
+Caso você utilize Dart em uma versão abaixo de 2.12, confira a versão compatível [aqui](https://github.com/combateafraude/Flutter/tree/face-authenticator-compatible).
 
 ## Configurações
 
@@ -54,12 +56,13 @@ Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runne
 
 Adicione o plugin no seu arquivo `ROOT_PROJECT/pubspec.yaml`:
 
+#### Estável
 ```yml
 dependencies:  
   face_authenticator:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: face-authenticator-compatible-v4.8.0
+      ref: face-authenticator-compatible-v4.8.5
 ```
 
 ## Utilização
@@ -91,6 +94,7 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
 | `.setAndroidSettings(FaceAuthenticatorAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(FaceAuthenticatorIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
+| `.setEyesClosedSettings(bool enable, double threshold)`<br><br> Permite customizar a validação de olhos abertos no SDK |
 
 #### Android
 
@@ -103,8 +107,8 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 | `bool enableRootDevices`<br><br>Permite o uso de dispositivos root quando `true` |
 | `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
 | `bool enableBrightnessIncrease`<br><br>Habilita/desabilita o incremento de brilho do dispositivo do dispositivo na abertura do SDK |
-| `bool useDeveloperMode`<br><br>Permite habilitar/desabilitar o uso de dispositivos com o modo de desenvolvedor Android ativado. Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `False` |
-| `bool useAdb`<br><br>Permite habilitar/desabilitar o uso do modo de depuração Android Debug Bridge (ADB). Recomendamos desabilitar o uso desses dispositivos por questões de segurança. O padrão é `False` |
+ `bool useDebug`<br><br>Habilita/desabilita o uso do app em modo depuração. O padrão é `false` |
+
 
 | FaceAuthenticatorCustomizationAndroid constructor |
 | --------- |
@@ -113,11 +117,6 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 | `String greenMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara verde padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_green_mask.png` e parametrize "my_custom_green_mask" |
 | `String redMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara vermelha padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_red_mask.png` e parametrize "my_custom_red_mask" |
 | `String whiteMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara branca padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_white_mask.png` e parametrize "my_custom_white_mask" |
-
-| CaptureSettings constructor |
-| --------- |
-| `int beforePictureMillis`<br><br>Duração em milissegundos entre a primeira detecção do rosto e a efetiva captura da foto |
-| `int afterPictureMillis`<br><br>Duração em milissegundos entre a captura da foto e o envio para o servidor para o mantimento do rosto e dos sensores válidos |
 
 
 | SensorSettingsAndroid constructor |
@@ -180,5 +179,4 @@ Os tipos de falha existentes são:
 - `SecurityReason`: quando o dispositivo não é seguro para executar o SDK. Se esta falha ocorrer, avise-nos;
 - `StorageReason`: quando o dispositivo não possui espaço suficiente para a captura de alguma foto. Pode ocorrer em produção;
 - `LibraryReason`: quando alguma falha interna impossibilitou a execução do SDK. Pode ocorrer devico à erros de configuração do projeto, não deve ocorrer em produção;
-- `InvalidFaceReason`: quando alguma não existe um registro facial para o peopleId informado.
 
