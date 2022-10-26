@@ -247,14 +247,14 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             }
         }
         
-        /*if let uploadSettingsParam = arguments["uploadSettings"] as? [String: Any] ?? nil {
+        if let uploadSettingsParam = arguments["uploadSettings"] as? [String: Any] ?? nil {
             let compress = uploadSettingsParam["compress"] as? Bool ?? true
             let fileFormatsParam = uploadSettingsParam["fileFormats"] as? [String] ?? nil
             let fileFormats = getFileFormatsArrayByStringArray(fileFormatsParam: fileFormatsParam) ?? [.jpeg, .png, .pdf]
             let maxFileSize = uploadSettingsParam["maxFileSize"] as? Int ?? 10000000
             
             _ = documentDetectorBuilder.setUploadSettings(uploadSettings: UploadSettings(enable: true, compress: compress, fileFormats: fileFormats, maximumFileSize: maxFileSize))
-        }*/
+        }
         
 
         //documentDetectorBuilder.setOverlay(overlay: DocumentDetectorOverlay())
@@ -296,7 +296,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         return nil
     }
     
-    /*func getFileFormatsArrayByStringArray(fileFormatsParam: [String]?) -> [FileFormat]? {
+    func getFileFormatsArrayByStringArray(fileFormatsParam: [String]?) -> [FileFormat]? {
         
         var fileFormats: [FileFormat]? = nil
         
@@ -308,9 +308,9 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         }
         
         return fileFormats
-    }*/
+    }
     
-    /*func getFileFormatByString(fileFormatString: String) -> FileFormat {
+    func getFileFormatByString(fileFormatString: String) -> FileFormat {
         if(fileFormatString == "PNG"){
             return .png
         }else if(fileFormatString == "JPG" || fileFormatString == "JPEG"){
@@ -320,7 +320,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         }
         
         return .jpeg
-    }*/
+    }
     
     func getResolutionByString(resolution: String) -> Resolution {
             if(resolution == "LOW"){
@@ -378,8 +378,8 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             return Document.CTPS_FRONT
         case "CTPS_BACK":
             return Document.CTPS_BACK
-        //case "ANY":
-         //   return Document.ANY
+        case "ANY":
+            return Document.ANY
         default:
             return Document.OTHERS
         }
