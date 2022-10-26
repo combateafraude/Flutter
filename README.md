@@ -73,7 +73,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v5.23.5
+      ref: document-detector-v5.24.0
 ```
 
 ## Desativando validações de segurança para teste
