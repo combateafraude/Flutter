@@ -32,7 +32,7 @@ public class SwiftPassiveFaceLivenessCompatiblePlugin: NSObject, FlutterPlugin, 
         passiveFaceLivenessBuilder.enableMultiLanguage(false)
         
         if let peopleId = arguments["peopleId"] as? String ?? nil {
-            passiveFaceLivenessBuilder.setPersonId(personId: peopleId)
+            passiveFaceLivenessBuilder.setPersonId(peopleId)
         }
         
         if let personName = arguments["personName"] as? String ?? nil{
@@ -48,7 +48,7 @@ public class SwiftPassiveFaceLivenessCompatiblePlugin: NSObject, FlutterPlugin, 
         }
         
         if let hasSound = arguments["sound"] as? Bool ?? nil {
-            passiveFaceLivenessBuilder.enableSound(enableSound: hasSound)
+            passiveFaceLivenessBuilder.enableSound(hasSound)
         }
         
         if let requestTimeout = arguments["requestTimeout"] as? TimeInterval ?? nil {

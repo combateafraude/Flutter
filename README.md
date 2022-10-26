@@ -64,7 +64,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-compatible-v4.27.0
+      ref: passive-face-liveness-compatible-v4.28.0
 ```
 
 ## Utilização
