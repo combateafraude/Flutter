@@ -34,6 +34,17 @@ android {
     }
 
 }
+
+//Para realizar a customização de layout do SDK faça a importação das seguintes bibliotecas
+dependencies {
+    implementation "androidx.camera:camera-view:1.2.0-alpha02"
+    implementation 'com.combateafraude.sdk:face-authenticator:5.8.10'
+    //SDK Android nativo que o plugin implementa
+
+//bibliotecas de design que irá utilizar em seu layout (estas são utilizadas em nosso template de exemplo para customização)
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+}
 ```
 
 ### iOS
@@ -121,7 +132,7 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 | FaceAuthenticatorCustomizationAndroid constructor |
 | --------- |
 | `String styleResIdName`<br><br>Nome do style resource que define as cores do SDK. Por exemplo, caso deseje mudar as cores do SDK, crie um style em `ROOT_PROJECT/android/app/src/main/res/values/styles.xml` com o nome `R.style.my_custom_style` seguindo o [template](https://gist.github.com/kikogassen/4b57db7139034ea2e85ea798eb88d248) e parametrize "my_custom_style" |
-| `String layoutResIdName`<br><br>Nome do layout resource que substituirá o layout padrão do SDK. Por exemplo, caso deseje mudar o layout do SDK, crie um layout em `ROOT_PROJECT/android/app/src/main/res/layout/my_custom_layout.xml` seguindo o [template](https://gist.github.com/kikogassen/63a45e15501140fd0149b17ec824115a) e parametrize "my_custom_layout" |
+| `String layoutResIdName`<br><br>Nome do layout resource que substituirá o layout padrão do SDK. Por exemplo, caso deseje mudar o layout do SDK, crie um layout em `ROOT_PROJECT/android/app/src/main/res/layout/my_custom_layout.xml` seguindo o [template](https://gist.github.com/kikogassen/63a45e15501140fd0149b17ec824115a) e parametrize "my_custom_layout". Verifique as importações das bibliotecas mencionadas [aqui](#android) |
 | `String greenMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara verde padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_green_mask.png` e parametrize "my_custom_green_mask" |
 | `String redMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara vermelha padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_red_mask.png` e parametrize "my_custom_red_mask" |
 | `String whiteMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara branca padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_white_mask.png` e parametrize "my_custom_white_mask" |
