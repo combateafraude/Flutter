@@ -2,8 +2,8 @@ PODS:
   - Flutter (1.0.0)
   - passive_face_liveness (4.29.5):
     - Flutter
-    - PassiveFaceLivenessNoSentry (= 5.24.0)
-  - PassiveFaceLivenessNoSentry (5.24.0)
+    - PassiveFaceLivenessNoSentry (= 5.25.0)
+  - PassiveFaceLivenessNoSentry (5.25.0)
   - "permission_handler (5.0.1+1)":
     - Flutter
 
@@ -25,9 +25,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  passive_face_liveness: d8ad2e2b9944da8c34a90271ae3d067fc0cc8763
-  PassiveFaceLivenessNoSentry: e736f0229abe71c3ec90c68b213516c505f9b325
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  passive_face_liveness: c202c901fe03f5773c74850c6c2c35e1ed409e6c
+  PassiveFaceLivenessNoSentry: 3f3f15ff6ade0871b25fe79a819b2a5b134957f2
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
 
 PODFILE CHECKSUM: 48ed8943beec15aeee7d28a74e100b515836e362
