@@ -93,7 +93,7 @@ class _MyAppState extends State<MyApp> {
                   children: [
                     Row(
                       children: [
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text('Start FaceAuthenticator'),
                           onPressed: () async {
                             startFaceAuthenticator();
