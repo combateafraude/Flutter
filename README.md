@@ -21,7 +21,7 @@ Caso você utilize Dart em uma versão abaixo de 2.12, confira a versão compat�
 
 No arquivo `ROOT_PROJECT/android/app/build.gradle`, adicione:
 
-``` gradle
+```gradle
 android {
 
     ...
@@ -95,6 +95,24 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 }
 ```
 
+## Desativando validações de segurança para teste
+
+Estamos constantemente realizando ações para tornar o produto cada vez mais seguro, mitigando uma série de ataques observados ao processo de captura e, consequentemente, reduzindo o maior número de possíveis fraudes de identidade. O SDK possui alguns bloqueios que podem impedir a execução em certos contextos. Para desabilitá-los, você pode utilizar os métodos conforme o exemplo abaixo:
+
+```dart
+PassiveFaceLivenessAndroidSettings androidSettings =
+        PassiveFaceLivenessAndroidSettings(
+          emulatorSettings: true,
+          rootSettings: true,
+          useDeveloperMode: true,
+          useAdb: true,
+          useDebug: true,
+        );
+
+passiveFaceLiveness.setAndroidSettings(androidSettings);
+```
+>Atenção! Desabilitar as validações de segurança são recomendadas apenas para ambiente de testes. Para publicação do seu aplicativo em produção, recomendamos utilizar as configurações padrão.
+
 ### Customizações gerais
 
 | FaceAuthenticator |
@@ -162,6 +180,12 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 | --------- |
 | `String message`<br><br>String à ser mostrada quando o celular não estiver estável |
 | `double stabilityThreshold`<br><br>Limiar inferior entre estável/instável, em variação de m/s² entre as últimas duas coletas do sensor. O padrão é `0.3` m/s² |
+
+### Customizando view iOS
+
+Para customização iOS, é necessário que os plugins Flutter estejam adicionados localmente no projeto. A customizção é realizada nativamente com a abordagem ViewCode.
+
+[Clique aqui](https://github.com/combateafraude/Flutter/tree/ios-customization-example) e acesse o exemplo com um guia para utilização desse recurso.
 
 ### Coletando o resultado
 
