@@ -70,12 +70,22 @@ Para habilitar texto e voz em Português, em seu projeto, no diretório ROOTPROJ
 
 Adicione o plugin no seu arquivo `ROOT_PROJECT/pubspec.yaml`:
 
+## Estáveis
 ```yml
 dependencies:  
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
       ref: passive-face-liveness-compatible-v4.29.0
+```
+
+## Release candidate
+```yml
+dependencies:  
+  passive_face_liveness:
+    git:
+      url: https://github.com/combateafraude/Flutter.git
+      ref: passive-face-liveness-compatible-v5.0.0-rc01
 ```
 
 ## Utilização

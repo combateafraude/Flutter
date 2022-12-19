@@ -244,8 +244,6 @@ public class SwiftPassiveFaceLivenessCompatiblePlugin: NSObject, FlutterPlugin, 
     public func getStageByString(stage: String) -> CAFStage {
         if(stage == "BETA"){
             return .BETA
-        }else if(stage == "OTHER"){
-            return .OTHER
         }else{
             return .PROD
         }

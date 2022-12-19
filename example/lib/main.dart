@@ -1,6 +1,7 @@
 import 'package:passive_face_liveness_compatible/android/image_capture.dart';
 import 'package:passive_face_liveness_compatible/android/settings.dart';
 import 'package:passive_face_liveness_compatible/android/video_capture.dart';
+import 'package:passive_face_liveness_compatible/caf_stage.dart';
 import 'package:passive_face_liveness_compatible/ios/ios_resolution.dart';
 import 'package:passive_face_liveness_compatible/ios/settings.dart';
 import 'package:passive_face_liveness_compatible/show_preview.dart';
@@ -109,7 +110,7 @@ class _MyAppState extends State<MyApp> {
                   children: [
                     Row(
                       children: [
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text('Start PassiveFaceLiveness'),
                           onPressed: () async {
                             startPassiveFaceLiveness();
