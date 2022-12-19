@@ -1,5 +1,6 @@
 import 'package:passive_face_liveness/android/settings.dart';
 import 'package:passive_face_liveness/android/video_capture.dart';
+import 'package:passive_face_liveness/caf_stage.dart';
 import 'package:passive_face_liveness/ios/ios_resolution.dart';
 import 'package:passive_face_liveness/ios/settings.dart';
 import 'package:passive_face_liveness/show_preview.dart';
@@ -49,9 +50,9 @@ class _MyAppState extends State<MyApp> {
         new PassiveFaceLivenessAndroidSettings(
             showButtonTime: 25000, enableSwitchCameraButton: true);
 
-    passiveFaceLiveness.setCaptureMode(videoCapture: VideoCapture(use: true, time: 3));
-
-    PassiveFaceLivenessIosSettings iosSettings = new PassiveFaceLivenessIosSettings(resolution: IosResolution.HD1280x720, compressionQuality: 1);
+    PassiveFaceLivenessIosSettings iosSettings =
+        new PassiveFaceLivenessIosSettings(
+            resolution: IosResolution.HD1280x720, compressionQuality: 1);
 
     passiveFaceLiveness.setIosSettings(iosSettings);
 
@@ -106,7 +107,7 @@ class _MyAppState extends State<MyApp> {
                   children: [
                     Row(
                       children: [
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text('Start PassiveFaceLiveness'),
                           onPressed: () async {
                             startPassiveFaceLiveness();

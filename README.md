@@ -78,6 +78,15 @@ dependencies:
       ref: passive-face-liveness-v4.30.0
 ```
 
+#### Release Candidate
+```yml
+dependencies:  
+  passive_face_liveness:
+    git:
+      url: https://github.com/combateafraude/Flutter.git
+      ref: passive-face-liveness-v5.0.0-rc01
+```
+
 ## Utilização
 
 ```dart
