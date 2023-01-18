@@ -1,6 +1,5 @@
 import Flutter
 import UIKit
-import TensorFlowLite
 import DocumentDetector
 
 public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetectorControllerDelegate {
