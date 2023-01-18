@@ -86,6 +86,8 @@ class _MyAppState extends State<MyApp> {
 
     documentDetector.setAndroidSettings(detectorAndroidSettings);
 
+    documentDetector.setShowPreview(new ShowPreview(show: true));
+
     // Put the others parameters here
 
     try {
