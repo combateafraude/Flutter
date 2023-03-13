@@ -44,7 +44,7 @@ android {
 //Para realizar a customização de layout do SDK faça a importação das seguintes bibliotecas
 dependencies {
     implementation "androidx.camera:camera-view:1.2.0-alpha02"
-    implementation 'com.combateafraude.sdk:document-detector:6.37.0'
+    implementation 'com.combateafraude.sdk:document-detector:6.39.0'
     //SDK Android nativo que o plugin implementa
 
 //bibliotecas de design que irá utilizar em seu layout (estas são utilizadas em nosso template de exemplo para customização)
@@ -84,7 +84,7 @@ dependencies:
   document_detector:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: document-detector-v5.26.0-rc01
+      ref: document-detector-v5.26.0
 ```
 
 ## Desativando validações de segurança para teste
