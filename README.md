@@ -38,7 +38,7 @@ android {
 //Para realizar a customização de layout do SDK faça a importação das seguintes bibliotecas
 dependencies {
     implementation "androidx.camera:camera-view:1.2.0-alpha02"
-    implementation 'com.combateafraude.sdk:passive-face-liveness:5.25.11'
+    implementation 'com.combateafraude.sdk:passive-face-liveness:6.0.0-rc02'
     //SDK Android nativo que o plugin implementa
 
 //bibliotecas de design que irá utilizar em seu layout (estas são utilizadas em nosso template de exemplo para customização)
@@ -84,7 +84,7 @@ dependencies:
   passive_face_liveness:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: passive-face-liveness-v5.0.0-rc01
+      ref: passive-face-liveness-v5.0.0-rc02
 ```
 
 ## Utilização
