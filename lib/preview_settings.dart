@@ -1,12 +1,11 @@
-@Deprecated("Use PreviewSettings class.")
-class ShowPreview {
+class PreviewSettings {
   String? title;
   String? subTitle;
   String? confirmLabel;
   String? retryLabel;
   bool? show;
 
-  ShowPreview(
+  PreviewSettings(
       {this.show,
       this.title,
       this.subTitle,
