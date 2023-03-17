@@ -111,6 +111,25 @@ public class PassiveFaceLivenessCompatiblePlugin implements FlutterPlugin, Metho
             mPassiveFaceLivenessBuilder.setPreviewSettings(previewSettings);
         }
 
+        HashMap<String, Object> previewSettingsHashMap = (HashMap<String, Object>) argumentsMap.get("previewSettings");
+        if (previewSettingsHashMap != null) {
+            String title = (String) previewSettingsHashMap.get("title");
+            String subTitle = (String) previewSettingsHashMap.get("subTitle");
+            String confirmLabel = (String) previewSettingsHashMap.get("confirmLabel");
+            String retryLabel = (String) previewSettingsHashMap.get("retryLabel");
+            boolean show = (boolean) previewSettingsHashMap.get("show");
+
+            PreviewSettings previewSettings = new PreviewSettings(
+                    true,
+                    title,
+                    subTitle,
+                    confirmLabel,
+                    retryLabel
+            );
+
+            mPassiveFaceLivenessBuilder.setPreviewSettings(previewSettings);
+        }
+
         HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
         if (messageSettingsParam != null) {
             String stepName = (String) messageSettingsParam.get("stepName");

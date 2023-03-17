@@ -4,6 +4,7 @@ import 'package:passive_face_liveness_compatible/android/video_capture.dart';
 import 'package:passive_face_liveness_compatible/caf_stage.dart';
 import 'package:passive_face_liveness_compatible/ios/ios_resolution.dart';
 import 'package:passive_face_liveness_compatible/ios/settings.dart';
+import 'package:passive_face_liveness_compatible/preview_settings.dart';
 import 'package:passive_face_liveness_compatible/show_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:passive_face_liveness_compatible/passive_face_liveness.dart';
@@ -25,8 +26,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _result = "";
   String _description = "";
+  String mobileToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1ZmMxM2U5MDE2YTgxODAwMDczNzNlMWYifQ._jdY1z1N1dfaFIq88Qk0akEgOk-taH2OxoW3oT1eLl0";
 
-  String mobileToken = "";
   @override
   void initState() {
     super.initState();
@@ -49,9 +51,11 @@ class _MyAppState extends State<MyApp> {
 
     PassiveFaceLivenessAndroidSettings passiveFaceLivenessAndroidSettings =
         new PassiveFaceLivenessAndroidSettings(
-            showButtonTime: 25000, enableSwitchCameraButton: true);
+            manualCaptureTime: 25000, enableSwitchCameraButton: true);
 
     passiveFaceLiveness.setCaptureMode(imageCapture: ImageCapture(use: true));
+
+    passiveFaceLiveness.setPreviewSettings(new PreviewSettings(show: true));
 
     PassiveFaceLivenessIosSettings iosSettings =
         new PassiveFaceLivenessIosSettings(

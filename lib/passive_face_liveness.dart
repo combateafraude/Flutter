@@ -6,6 +6,7 @@ import 'package:passive_face_liveness_compatible/android/image_capture.dart';
 import 'package:passive_face_liveness_compatible/android/settings.dart';
 import 'package:passive_face_liveness_compatible/android/video_capture.dart';
 import 'package:passive_face_liveness_compatible/ios/settings.dart';
+import 'package:passive_face_liveness_compatible/preview_settings.dart';
 import 'package:passive_face_liveness_compatible/result/passive_face_liveness_closed.dart';
 import 'package:passive_face_liveness_compatible/result/passive_face_liveness_failure.dart';
 import 'package:passive_face_liveness_compatible/result/passive_face_liveness_result.dart';
@@ -25,6 +26,7 @@ class PassiveFaceLiveness {
   String sound;
   bool enableSound;
   int requestTimeout;
+  PreviewSettings previewSettings;
   ShowPreview showPreview;
   PassiveFaceLivenessAndroidSettings androidSettings;
   PassiveFaceLivenessIosSettings iosSettings;
@@ -60,8 +62,14 @@ class PassiveFaceLiveness {
     this.requestTimeout = requestTimeout;
   }
 
+  @Deprecated(
+      "Use the .setPreviewSettings(PreviewSettings previewSettings) method.")
   void setShowPreview(ShowPreview showPreview) {
     this.showPreview = showPreview;
+  }
+
+  void setPreviewSettings(PreviewSettings previewSettings) {
+    this.previewSettings = previewSettings;
   }
 
   void setMessageSettings(MessageSettings messageSettings) {
@@ -81,6 +89,7 @@ class PassiveFaceLiveness {
     this.delay = delay;
   }
 
+  @Deprecated("Use the .setPeopleId(String peopleId) method")
   void setPersonCPF(String personCPF) {
     this.personCPF = personCPF;
   }
@@ -109,6 +118,7 @@ class PassiveFaceLiveness {
     params["enableSound"] = enableSound;
     params["requestTimeout"] = requestTimeout;
     params["showPreview"] = showPreview?.asMap();
+    params["previewSettings"] = previewSettings?.asMap();
     params["androidSettings"] = androidSettings?.asMap();
     params["iosSettings"] = iosSettings?.asMap();
     params["showDelay"] = showDelay;
