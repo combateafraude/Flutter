@@ -49,9 +49,12 @@ class _MyAppState extends State<MyApp> {
         new PassiveFaceLivenessAndroidSettings(
             showButtonTime: 25000, enableSwitchCameraButton: true);
 
-    passiveFaceLiveness.setCaptureMode(videoCapture: VideoCapture(use: true, time: 3));
+    passiveFaceLiveness.setCaptureMode(
+        videoCapture: VideoCapture(use: true, time: 3));
 
-    PassiveFaceLivenessIosSettings iosSettings = new PassiveFaceLivenessIosSettings(resolution: IosResolution.HD1280x720, compressionQuality: 1);
+    PassiveFaceLivenessIosSettings iosSettings =
+        new PassiveFaceLivenessIosSettings(
+            resolution: IosResolution.HD1280x720, compressionQuality: 1);
 
     passiveFaceLiveness.setIosSettings(iosSettings);
 
@@ -106,7 +109,7 @@ class _MyAppState extends State<MyApp> {
                   children: [
                     Row(
                       children: [
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text('Start PassiveFaceLiveness'),
                           onPressed: () async {
                             startPassiveFaceLiveness();
