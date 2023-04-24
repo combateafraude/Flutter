@@ -55,15 +55,12 @@ class _MyAppState extends State<MyApp> {
     DocumentDetector documentDetector =
         new DocumentDetector(mobileToken: mobileToken);
 
-    DocumentDetectorIosSettings documentDetectorIosSettings =
-        new DocumentDetectorIosSettings(
-            enableManualCapture: true, timeEnableManualCapture: 15000);
+    DocumentDetectorIosSettings iosSettings = new DocumentDetectorIosSettings(
+        enableManualCapture: true, timeEnableManualCapture: 15000);
 
-    DocumentDetectorAndroidSettings detectorAndroidSettings =
+    DocumentDetectorAndroidSettings androidSettings =
         new DocumentDetectorAndroidSettings(
-            enableSwitchCameraButton: false,
-            compressQuality: 50,
-            resolution: Resolution.QUAD_HD);
+            useAdb: true, useDebug: true, useDeveloperMode: true);
 
     DocumentDetectorCustomizationAndroid documentDetectorCustomizationAndroid =
         new DocumentDetectorCustomizationAndroid(maskType: MaskType.DETAILED);
@@ -73,9 +70,6 @@ class _MyAppState extends State<MyApp> {
         showOpenDocumentMessage: true,
         unsupportedDocumentMessage: "Ops, esse documento não é suportado");
 
-    DocumentDetectorIosSettings iosSettings = new DocumentDetectorIosSettings(
-        resolution: IosResolution.HD1280x720, compressQuality: 1);
-
     List<String> formats = ["PDF", "PNG"];
 
     documentDetector.setIosSettings(iosSettings);
@@ -84,7 +78,7 @@ class _MyAppState extends State<MyApp> {
 
     documentDetector.setDocumentFlow(documentSteps);
 
-    documentDetector.setAndroidSettings(detectorAndroidSettings);
+    documentDetector.setAndroidSettings(androidSettings);
 
     documentDetector.setShowPreview(new ShowPreview(show: true));
 
