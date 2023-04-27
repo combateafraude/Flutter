@@ -1,15 +1,11 @@
 PODS:
-  - document_detector (5.26.0-rc01):
-    - DocumentDetector (= 7.12.0-rc02)
+  - document_detector (5.26.3):
+    - DocumentDetectorNoSentry (= 7.12.2)
     - Flutter
-  - DocumentDetector (7.12.0-rc02):
-    - Sentry (= 7.11.0)
+  - DocumentDetectorNoSentry (7.12.2)
   - Flutter (1.0.0)
   - permission_handler (5.0.0):
     - Flutter
-  - Sentry (7.11.0):
-    - Sentry/Core (= 7.11.0)
-  - Sentry/Core (7.11.0)
 
 DEPENDENCIES:
   - document_detector (from `.symlinks/plugins/document_detector/ios`)
@@ -18,9 +14,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/combateafraude/iOS.git:
-    - DocumentDetector
-  trunk:
-    - Sentry
+    - DocumentDetectorNoSentry
 
 EXTERNAL SOURCES:
   document_detector:
@@ -31,12 +25,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  document_detector: 2b6354b418a687fc73af607ab299b0817f7614b5
-  DocumentDetector: 92063ed33ee1684d9cd6ecedc1b503b5ff3e8e94
+  document_detector: a5bcb8fe623c1e54460d9d4b8c315fdc38f162fb
+  DocumentDetectorNoSentry: 1f210851d0920b946c90fe3487616baff0323a59
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   permission_handler: c136c8d87d3438c7fad2754fe144e5f712c536b2
-  Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
 
 PODFILE CHECKSUM: 48ed8943beec15aeee7d28a74e100b515836e362
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0
