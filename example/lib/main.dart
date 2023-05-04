@@ -1,133 +1,80 @@
-import 'package:passive_face_liveness/android/settings.dart';
-import 'package:passive_face_liveness/ios/ios_resolution.dart';
-import 'package:passive_face_liveness/ios/settings.dart';
+import 'dart:convert';
+
+import 'package:face_liveness/face_liveness_result.dart';
 import 'package:flutter/material.dart';
-import 'package:passive_face_liveness/passive_face_liveness.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_success.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'dart:async';
+
+import 'package:flutter/services.dart';
+import 'package:face_liveness/face_liveness.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  String _result = "";
-  String _description = "";
-  String mobileToken = "";
+  String _faceLivenessResult = 'Unknown';
+  Image? _selfie;
+  final _faceLivenessPlugin = FaceLiveness("", "", "", "");
 
   @override
   void initState() {
     super.initState();
-
-    requestPermissions();
+    initPlatformState();
   }
 
-  void requestPermissions() async {
-    await [
-      Permission.camera,
-    ].request();
-  }
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    String faceLivenessResult;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    // We also handle the message potentially returning null.
+    try {
+      FaceLivenessResult result = await _faceLivenessPlugin.start();
+      String responseMessage = result.responseMessage ?? '';
+      String image = result.image ?? '';
+      _selfie = Image.memory(base64Decode(image));
+      String sessionId = result.sessionId ?? '';
 
-  void startPassiveFaceLiveness() async {
-    String result = "";
-    String description = "";
-
-    PassiveFaceLiveness passiveFaceLiveness =
-        new PassiveFaceLiveness(mobileToken: mobileToken);
-
-    PassiveFaceLivenessAndroidSettings passiveFaceLivenessAndroidSettings =
-        new PassiveFaceLivenessAndroidSettings(
-            manualCaptureTime: 25000, enableSwitchCameraButton: true);
-
-    PassiveFaceLivenessIosSettings iosSettings =
-        new PassiveFaceLivenessIosSettings(
-            resolution: IosResolution.HD1280x720, compressionQuality: 1);
-
-    passiveFaceLiveness.setIosSettings(iosSettings);
-
-    passiveFaceLiveness.setAndroidSettings(passiveFaceLivenessAndroidSettings);
-
-    // Put the others parameters here
-
-    PassiveFaceLivenessResult passiveFaceLivenessResult =
-        await passiveFaceLiveness.start();
-
-    if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
-      result = "Success!";
-
-      description += "\n\timagePath: " +
-          passiveFaceLivenessResult.imagePath +
-          "\n\timageUrl: " +
-          (passiveFaceLivenessResult.imageUrl != null
-              ? passiveFaceLivenessResult.imageUrl.split("?")[0] + "..."
-              : "null") +
-          "\n\tsignedResponse: " +
-          (passiveFaceLivenessResult.signedResponse != null
-              ? passiveFaceLivenessResult.signedResponse
-              : "null");
-    } else if (passiveFaceLivenessResult is PassiveFaceLivenessFailure) {
-      result = "Falha!";
-      description = "\tType: " +
-          passiveFaceLivenessResult.type +
-          "\n\tMessage: " +
-          passiveFaceLivenessResult.message;
-    } else {
-      result = "Closed!";
+      faceLivenessResult =
+          "responseMessage: $responseMessage\nsessionId: $sessionId";
+    } on PlatformException {
+      faceLivenessResult = 'Failed to get platform version.';
     }
 
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
     if (!mounted) return;
 
     setState(() {
-      _result = result;
-      _description = description;
+      _faceLivenessResult = faceLivenessResult;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(
-              title: const Text('PassiveFaceLiveness plugin example'),
-            ),
-            body: Container(
-                margin: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          child: Text('Start PassiveFaceLiveness'),
-                          onPressed: () async {
-                            startPassiveFaceLiveness();
-                          },
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(top: 10.0),
-                            child: Text("Result: $_result"))
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text("Description:\n$_description",
-                              overflow: TextOverflow.clip),
-                        )
-                      ],
-                    ),
-                  ],
-                ))));
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Result:\n $_faceLivenessResult\n'),
+              const SizedBox(height: 20),
+              if (_selfie != null) _selfie!
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

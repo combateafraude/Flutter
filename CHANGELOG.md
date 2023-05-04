@@ -1,1 +1,3 @@
-Confira em https://docs.combateafraude.com/docs/mobile/flutter/release-notes/
+## 0.0.1
+
+* TODO: Describe initial release.
