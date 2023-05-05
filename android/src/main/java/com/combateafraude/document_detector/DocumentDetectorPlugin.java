@@ -87,8 +87,8 @@ public class DocumentDetectorPlugin
             mDocumentDetectorBuilder.setAnalyticsSettings(useAnalytics);
 
         String expireTime = (String) argumentsMap.get("expireTime");
-        if(expireTime != null){
-         //   mDocumentDetectorBuilder.setGetImageUrlExpireTime(expireTime);
+        if (expireTime != null) {
+            // mDocumentDetectorBuilder.setGetImageUrlExpireTime(expireTime);
         }
 
         // Document steps
@@ -124,7 +124,8 @@ public class DocumentDetectorPlugin
         }
         mDocumentDetectorBuilder.setDocumentSteps(documentDetectorSteps);
 
-//Integer layoutId = getResourceId((String) customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
+        // Integer layoutId = getResourceId((String)
+        // customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
 
         // Preview
         HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
@@ -135,7 +136,8 @@ public class DocumentDetectorPlugin
             String confirmLabel = (String) showPreview.get("confirmLabel");
             String retryLabel = (String) showPreview.get("retryLabel");
 
-            mDocumentDetectorBuilder.setPreviewSettings(new PreviewSettings(show, title, subtitle, confirmLabel, retryLabel));
+            mDocumentDetectorBuilder
+                    .setPreviewSettings(new PreviewSettings(show, title, subtitle, confirmLabel, retryLabel));
         }
 
         HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
@@ -155,16 +157,24 @@ public class DocumentDetectorPlugin
             String popupDocumentSubtitleMessage = (String) messageSettingsParam.get("popupDocumentSubtitleMessage");
             String positiveButtonMessage = (String) messageSettingsParam.get("positiveButtonMessage");
 
-
-            Document.RG_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_FRONT");
-            Document.RG_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_BACK");
-            Document.RG_FULL.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_FULL");
-            Document.CNH_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_CNH_FRONT");
-            Document.CNH_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_CNH_BACK");
-            Document.CNH_FULL.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_CNH_FULL");
-            Document.CRLV.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_CRLV");
-            Document.RNE_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RNE_FRONT");
-            Document.RNE_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RNE_BACK");
+            Document.RG_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_RG_FRONT");
+            Document.RG_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_RG_BACK");
+            Document.RG_FULL.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_RG_FULL");
+            Document.CNH_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_CNH_FRONT");
+            Document.CNH_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_CNH_BACK");
+            Document.CNH_FULL.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_CNH_FULL");
+            Document.CRLV.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_CRLV");
+            Document.RNE_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_RNE_FRONT");
+            Document.RNE_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_RNE_BACK");
 
             MessageSettings messageSettings = new MessageSettings(
                     waitMessage,
@@ -197,7 +207,7 @@ public class DocumentDetectorPlugin
         }
 
         HashMap<String, Object> uploadSettingsParam = (HashMap<String, Object>) argumentsMap.get("uploadSettings");
-        if(uploadSettingsParam != null){
+        if (uploadSettingsParam != null) {
             UploadSettings uploadSettings = new UploadSettings();
 
             Integer activityLayout = getResourceId((String) uploadSettingsParam.get("activityLayout"), LAYOUT_RES);
@@ -207,31 +217,31 @@ public class DocumentDetectorPlugin
             Integer maxFileSize = (Integer) uploadSettingsParam.get("maxFileSize");
             String intent = (String) uploadSettingsParam.get("intent");
 
-            if(compress != null){
+            if (compress != null) {
                 uploadSettings.setCompress(compress);
-            }    
-            if(intent != null){
+            }
+            if (intent != null) {
                 uploadSettings.setIntent(intent);
             }
-            if(maxFileSize != null){
+            if (maxFileSize != null) {
                 uploadSettings.setMaxFileSize(maxFileSize);
             }
-            if(popUpLayout != null){
+            if (popUpLayout != null) {
                 uploadSettings.setPopUpLayout(popUpLayout);
             }
-            if(activityLayout != null){
+            if (activityLayout != null) {
                 uploadSettings.setActivityLayout(activityLayout);
             }
-            if (fileFormatsParam != null){
+            if (fileFormatsParam != null) {
                 FileFormat[] fileFormats = new FileFormat[fileFormatsParam.size()];
-                for (int i = 0; i < fileFormats.length; i++ ) {
+                for (int i = 0; i < fileFormats.length; i++) {
                     FileFormat fileFormat = FileFormat.valueOf(fileFormatsParam.get(i));
-                    if (fileFormat != null) fileFormats[i] = fileFormat;
+                    if (fileFormat != null)
+                        fileFormats[i] = fileFormat;
                 }
                 uploadSettings.setFileFormats(fileFormats);
             }
-        
-            
+
             mDocumentDetectorBuilder.setUploadSettings(uploadSettings);
         }
 
@@ -248,6 +258,8 @@ public class DocumentDetectorPlugin
                     HashMap<String, Object> stage = paramStages.get(i);
 
                     Long durationMillis = ((Number) stage.get("durationMillis")).longValue();
+                    if (durationMillis == null)
+                        durationMillis = 0;
 
                     Boolean wantSensorCheck = (Boolean) stage.get("wantSensorCheck");
                     if (wantSensorCheck == null)
@@ -291,12 +303,11 @@ public class DocumentDetectorPlugin
                 if (styleId != null)
                     mDocumentDetectorBuilder.setStyle(styleId);
 
-                
                 Integer layoutId = getResourceId((String) customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
-                if(layoutId != null){
+                if (layoutId != null) {
                     mDocumentDetectorBuilder.setLayout(layoutId);
                 }
-                
+
                 Integer greenMaskId = getResourceId((String) customizationAndroid.get("greenMaskResIdName"),
                         DRAWABLE_RES);
                 Integer whiteMaskId = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"),
@@ -307,53 +318,53 @@ public class DocumentDetectorPlugin
                 mDocumentDetectorBuilder.setMask(greenMaskId, whiteMaskId, redMaskId);
 
                 String maskType = (String) customizationAndroid.get("maskType");
-                if(maskType != null){
+                if (maskType != null) {
                     System.out.println("Mask: ");
                     mDocumentDetectorBuilder.setMask(MaskType.valueOf(maskType));
                 }
             }
 
-            if(androidSettings.get("compressQuality") != null){
+            if (androidSettings.get("compressQuality") != null) {
                 int compressQuality = (int) androidSettings.get("compressQuality");
                 mDocumentDetectorBuilder.setCompressSettings(compressQuality);
             }
-    
+
             String resolution = (String) androidSettings.get("resolution");
-                if(resolution != null){
+            if (resolution != null) {
                 mDocumentDetectorBuilder.setResolutionSettings(Resolution.valueOf(resolution));
             }
-    
-            if (androidSettings.get("useEmulator") != null){
+
+            if (androidSettings.get("useEmulator") != null) {
                 Boolean useEmulator = (Boolean) androidSettings.get("useEmulator");
                 mDocumentDetectorBuilder.setUseEmulator(useEmulator);
             }
-    
-            if(androidSettings.get("useRoot") != null){
+
+            if (androidSettings.get("useRoot") != null) {
                 Boolean useRoot = (Boolean) androidSettings.get("useRoot");
                 mDocumentDetectorBuilder.setUseRoot(useRoot);
             }
 
-            if(androidSettings.get("useDeveloperMode") != null){
+            if (androidSettings.get("useDeveloperMode") != null) {
                 Boolean useDeveloperMode = (Boolean) androidSettings.get("useDeveloperMode");
                 mDocumentDetectorBuilder.setUseDeveloperMode(useDeveloperMode);
             }
 
-            if(androidSettings.get("useAdb") != null){
+            if (androidSettings.get("useAdb") != null) {
                 Boolean useAdb = (Boolean) androidSettings.get("useAdb");
                 mDocumentDetectorBuilder.setUseAdb(useAdb);
             }
-    
-            if(androidSettings.get("useDebug") != null){
+
+            if (androidSettings.get("useDebug") != null) {
                 Boolean useDebug = (Boolean) androidSettings.get("useDebug");
                 mDocumentDetectorBuilder.setUseDebug(useDebug);
             }
-            
-            if(androidSettings.get("enableSwitchCameraButton") != null){
+
+            if (androidSettings.get("enableSwitchCameraButton") != null) {
                 boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
                 mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
             }
-    
-            if(androidSettings.get("enableGoogleServices") != null){
+
+            if (androidSettings.get("enableGoogleServices") != null) {
                 boolean enableGoogleServices = (boolean) androidSettings.get("enableGoogleServices");
                 mDocumentDetectorBuilder.enableGoogleServices(enableGoogleServices);
             }
@@ -372,7 +383,7 @@ public class DocumentDetectorPlugin
                 } else {
                     mDocumentDetectorBuilder.setLuminositySensorSettings(null);
                 }
-                
+
                 HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) sensorSettings
                         .get("sensorOrientationSettings");
                 if (sensorOrientation != null) {
@@ -391,7 +402,8 @@ public class DocumentDetectorPlugin
                     Integer stabilityStabledMillis = (Integer) sensorStability.get("stabilityStabledMillis");
                     Double stabilityThreshold = (Double) sensorStability.get("stabilityThreshold");
                     if (stabilityStabledMillis != null && stabilityThreshold != null) {
-                        mDocumentDetectorBuilder.setStabilitySensorSettings(new SensorStabilitySettings(stabilityStabledMillis, stabilityThreshold));
+                        mDocumentDetectorBuilder.setStabilitySensorSettings(
+                                new SensorStabilitySettings(stabilityStabledMillis, stabilityThreshold));
                     }
                 } else {
                     mDocumentDetectorBuilder.setStabilitySensorSettings(null);

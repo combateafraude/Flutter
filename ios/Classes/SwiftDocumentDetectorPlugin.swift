@@ -165,19 +165,19 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                 documentDetectorBuilder.setQualitySettings(verifyQuality: verifyQuality, qualityThreshold: qualityThreshold)
             }
 
-            if let sensorStability = iosSettings["sensorStability"] as? [String: Any] ?? nil {
+            if let sensorSettings = iosSettings["sensorSettings"] as? [String: Any] ?? nil {
 
-                if let sensorLuminosity = iosSettings["sensorLuminosity"] as? [String: Any] ?? nil {
+                if let sensorLuminosity = sensorSettings["sensorLuminosity"] as? [String: Any] ?? nil {
                     let luminosityThreshold = sensorLuminosity["luminosityThreshold"] as? Float ?? nil
                     documentDetectorBuilder.setLuminositySensorSettings(luminosityThreshold: luminosityThreshold)
                 }
 
-                if let sensorOrientation = iosSettings["sensorOrientation"] as? [String: Any] ?? nil {
+                if let sensorOrientation = sensorSettings["sensorOrientation"] as? [String: Any] ?? nil {
                     let orientationThreshold = sensorOrientation["orientationThreshold"] as? Double ?? nil
                     documentDetectorBuilder.setOrientationSensorSettings(orientationThreshold: orientationThreshold)
                 }
 
-                if let sensorStability = iosSettings["sensorStability"] as? [String: Any] {
+                if let sensorStability = sensorSettings["sensorStability"] as? [String: Any] {
                     let stabilityThreshold = sensorStability["stabilityThreshold"] as? Double ?? nil
                     documentDetectorBuilder.setStabilitySensorSettings(stabilityThreshold: stabilityThreshold)
                 }
