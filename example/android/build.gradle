@@ -15,6 +15,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://repo.combateafraude.com/android/release' }
         maven {
             url  ''
             name  ''
