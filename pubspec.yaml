@@ -1,4 +1,4 @@
-name: face_liveness
+name: face_authenticator_cs
 description: A new Flutter plugin project.
 version: 0.0.1
 homepage:
@@ -35,10 +35,10 @@ flutter:
   plugin:
     platforms:
       android:
-        package: caf.io.liveness.face_liveness
-        pluginClass: FaceLivenessPlugin
+        package: caf.io.faceauthenticator.face_authenticator_cs
+        pluginClass: FaceAuthenticatorCsPlugin
       ios:
-        pluginClass: FaceLivenessPlugin
+        pluginClass: FaceAuthenticatorCsPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

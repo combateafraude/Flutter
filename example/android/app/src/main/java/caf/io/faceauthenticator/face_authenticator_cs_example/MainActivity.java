@@ -1,4 +1,4 @@
-package caf.io.liveness.face_liveness_example;
+package caf.io.faceauthenticator.face_authenticator_cs_example;
 
 import io.flutter.embedding.android.FlutterActivity;
 

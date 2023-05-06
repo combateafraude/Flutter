@@ -1,4 +1,4 @@
-group 'caf.io.liveness.face_liveness'
+group 'caf.io.faceauthenticator.face_authenticator_cs'
 version '1.0'
 
 buildscript {
@@ -16,7 +16,7 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
-        mavenLocal()
+        maven { url 'https://repo.combateafraude.com/android/release' }
     }
 }
 
@@ -40,8 +40,6 @@ android {
         }
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
         implementation 'com.google.android.material:material:1.7.0'
-        implementation 'caf.io.sdk:face-liveness:0.0.2'
+        implementation 'caf.io.sdk:face-authenticator:1.0.0'
     }
 }
-
-

@@ -1,10 +1,10 @@
 import Flutter
 import UIKit
 
-public class SwiftFaceLivenessPlugin: NSObject, FlutterPlugin {
+public class SwiftFaceAuthenticatorCsPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "face_liveness", binaryMessenger: registrar.messenger())
-    let instance = SwiftFaceLivenessPlugin()
+    let channel = FlutterMethodChannel(name: "face_authenticator_cs", binaryMessenger: registrar.messenger())
+    let instance = SwiftFaceAuthenticatorCsPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 

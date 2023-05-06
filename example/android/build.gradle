@@ -15,12 +15,13 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://repo.combateafraude.com/android/release' }
         maven {
-            url  'https://pkgs.dev.azure.com/CS-Package/ID-Lab-PackagesSDK/_packaging/packages/maven/v1'
-            name  'packages'
+            url  ''
+            name  ''
             credentials {
-                username 'CS-Package'
-                password  'bawrhf6y4gsalplgwlo2qb36snpgt233spep2xggciffzudw7kca'
+                username ''
+                password  ''
             }
             authentication {
                 basic(BasicAuthentication)

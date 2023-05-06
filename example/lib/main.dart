@@ -1,11 +1,11 @@
-import 'dart:convert';
+import 'dart:ffi';
 
-import 'package:face_liveness/face_liveness_result.dart';
+import 'package:face_authenticator_cs/face_authenticator_result.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:face_liveness/face_liveness.dart';
+import 'package:face_authenticator_cs/face_authenticator_cs.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,9 +19,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _faceLivenessResult = 'Unknown';
-  Image? _selfie;
-  final _faceLivenessPlugin = FaceLiveness("", "", "", "");
+  String _faceAuthenticatorCsResult = 'Unknown';
+  final _faceAuthenticatorCsPlugin = FaceAuthenticatorCs("", "", "", "");
 
   @override
   void initState() {
@@ -31,20 +30,22 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String faceLivenessResult;
+    String faceAuthenticatorCsResult;
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      FaceLivenessResult result = await _faceLivenessPlugin.start();
+      FaceAuthenticatorCsResult result =
+          await _faceAuthenticatorCsPlugin.start();
+
+      bool isMatch = result.isMatch;
+      bool isAlive = result.isAlive;
       String responseMessage = result.responseMessage ?? '';
-      String image = result.image ?? '';
-      _selfie = Image.memory(base64Decode(image));
       String sessionId = result.sessionId ?? '';
 
-      faceLivenessResult =
-          "responseMessage: $responseMessage\nsessionId: $sessionId";
+      faceAuthenticatorCsResult =
+          "responseMessage: $responseMessage\nisMatch: $isMatch\nisAlive: $isAlive\nsessionId: $sessionId";
     } on PlatformException {
-      faceLivenessResult = 'Failed to get platform version.';
+      faceAuthenticatorCsResult = 'Failed.';
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -53,7 +54,7 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      _faceLivenessResult = faceLivenessResult;
+      _faceAuthenticatorCsResult = faceAuthenticatorCsResult;
     });
   }
 
@@ -68,9 +69,8 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Result:\n $_faceLivenessResult\n'),
+              Text('Result:\n $_faceAuthenticatorCsResult'),
               const SizedBox(height: 20),
-              if (_selfie != null) _selfie!
             ],
           ),
         ),

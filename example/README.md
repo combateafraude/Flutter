@@ -1,6 +1,6 @@
-# face_liveness_example
+# face_authenticator_cs_example
 
-Demonstrates how to use the face_liveness plugin.
+Demonstrates how to use the face_authenticator_cs plugin.
 
 ## Getting Started
 

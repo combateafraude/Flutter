@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'face_liveness_platform_interface.dart';
+import 'face_authenticator_cs_platform_interface.dart';
 
-/// An implementation of [FaceLivenessPlatform] that uses method channels.
-class MethodChannelFaceLiveness extends FaceLivenessPlatform {
+/// An implementation of [FaceAuthenticatorCsPlatform] that uses method channels.
+class MethodChannelFaceAuthenticatorCs extends FaceAuthenticatorCsPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('face_liveness');
+  final methodChannel = const MethodChannel('face_authenticator_cs');
 
   @override
   Future<String?> getPlatformVersion() async {

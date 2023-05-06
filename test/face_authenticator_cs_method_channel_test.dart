@@ -1,10 +1,10 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:face_liveness/face_liveness_method_channel.dart';
+import 'package:face_authenticator_cs/face_authenticator_cs_method_channel.dart';
 
 void main() {
-  MethodChannelFaceLiveness platform = MethodChannelFaceLiveness();
-  const MethodChannel channel = MethodChannel('face_liveness');
+  MethodChannelFaceAuthenticatorCs platform = MethodChannelFaceAuthenticatorCs();
+  const MethodChannel channel = MethodChannel('face_authenticator_cs');
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
