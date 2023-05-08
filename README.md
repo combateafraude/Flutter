@@ -48,7 +48,7 @@ Adicione o plugin no seu arquivo `./pubspec.yaml`:
 #### Estável
 ```yml
 dependencies:  
-  face_liveness:
+  face_authenticator_cs:
     git:
       url: https://github.com/combateafraude/Flutter.git
       ref: face-authenticator-cs-v1.0.0
