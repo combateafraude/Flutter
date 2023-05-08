@@ -51,7 +51,7 @@ dependencies:
   face_authenticator_cs:
     git:
       url: https://github.com/combateafraude/Flutter.git
-      ref: face-authenticator-cs-v1.0.0
+      ref: face-authenticator-cs-v0.0.1
 ```
 
 ### Exemplo
