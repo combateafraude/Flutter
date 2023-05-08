@@ -259,7 +259,7 @@ public class DocumentDetectorPlugin
 
                     Long durationMillis = ((Number) stage.get("durationMillis")).longValue();
                     if (durationMillis == null)
-                        durationMillis = 0;
+                        durationMillis = 0L;
 
                     Boolean wantSensorCheck = (Boolean) stage.get("wantSensorCheck");
                     if (wantSensorCheck == null)
