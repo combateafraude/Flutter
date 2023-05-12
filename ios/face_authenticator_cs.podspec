@@ -17,7 +17,8 @@ A new Flutter plugin project.
   s.dependency 'Flutter'
   s.platform = :ios, '13.0'
 
-  s.dependency 'ios_sdk_pfl_cs', '1.0.1'
+  s.dependency 'FaceAuthenticatorCs', '1.0.2'
+  s.dependency 'CSLivenessSDK'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }

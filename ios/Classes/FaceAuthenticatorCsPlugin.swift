@@ -1,11 +1,11 @@
 import Flutter
 import UIKit
-import ios_sdk_pfl_cs
+import FaceAuthenticatorCs
 
 let MESSAGE_CHANNEL = "com.combateafraude.face_authenticator/message"
 let ERROR_CODE = "FACE_AUTHENTICATOR_SDK_ERROR"
 
-public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthSDKDelegate {
+public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
 
     var flutterResult: FlutterResult?
 
@@ -33,22 +33,27 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthSDKD
             let personId = arguments["personId"] as! String
 
 
-            var faceAuthSDK = FaceAuthSDK.Builder()
+            let faceAuthSDK = FaceAuthSDK.Builder()
                 .setCredentials(clientId: clientId, clientSecret: clientSecret, token: token, personId: personId)
             .build()
-
-            faceAuthSDK?.delegate = self
+            
+            faceAuthSDK.delegate = self
+            
+            let controller = UIApplication.shared.keyWindow!.rootViewController!
+            
+            faceAuthSDK.startFaceAuthSDK(viewController: controller)
+            
         }
     }
 
     extension SwiftFaceAuthenticatorPlugin: FaceAuthSDKDelegate {
-    func didFinishFaceAuth(with faceAuthenticatorResult: ios_sdk_pfl_cs.FaceAuthenticatorResult) {
+        public func didFinishFaceAuth(with faceAuthenticatorResult: FaceAuthenticatorResult) {
         let response : NSMutableDictionary! = [:]
-
-            response["responseMessage"] = faceAuthenticatorResult.getResponseMessage
+            
+            response["responseMessage"] = faceAuthenticatorResult.errorMessage
             response["isMatch"] = faceAuthenticatorResult.isMatch
             response["isAlive"] = faceAuthenticatorResult.isAlive
-            response["sessionId"] = faceAuthenticatorResult.getSessionId
+            response["sessionId"] = faceAuthenticatorResult.sessionID
             flutterResult!(response)
     }
 }
