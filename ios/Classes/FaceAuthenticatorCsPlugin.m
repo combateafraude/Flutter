@@ -10,6 +10,6 @@
 
 @implementation FaceAuthenticatorCsPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  [SwiftFaceAuthenticatorCsPlugin registerWithRegistrar:registrar];
+    [SwiftFaceAuthenticatorPlugin registerWithRegistrar:registrar];
 }
 @end
