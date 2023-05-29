@@ -87,7 +87,7 @@ public class DocumentDetectorCompatiblePlugin
             mDocumentDetectorBuilder.setAnalyticsSettings(useAnalytics);
 
         String expireTime = (String) argumentsMap.get("expireTime");
-        if(expireTime != null){
+        if (expireTime != null) {
             mDocumentDetectorBuilder.setGetImageUrlExpireTime(expireTime);
         }
 
@@ -124,7 +124,8 @@ public class DocumentDetectorCompatiblePlugin
         }
         mDocumentDetectorBuilder.setDocumentSteps(documentDetectorSteps);
 
-//Integer layoutId = getResourceId((String) customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
+        // Integer layoutId = getResourceId((String)
+        // customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
 
         // Preview
         HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
@@ -135,7 +136,26 @@ public class DocumentDetectorCompatiblePlugin
             String confirmLabel = (String) showPreview.get("confirmLabel");
             String retryLabel = (String) showPreview.get("retryLabel");
 
-            mDocumentDetectorBuilder.setPreviewSettings(new PreviewSettings(show, title, subtitle, confirmLabel, retryLabel));
+            mDocumentDetectorBuilder
+                    .setPreviewSettings(new PreviewSettings(show, title, subtitle, confirmLabel, retryLabel));
+        }
+
+        HashMap<String, Object> previewSettingsHashMap = (HashMap<String, Object>) argumentsMap.get("previewSettings");
+        if (previewSettingsHashMap != null) {
+            String title = (String) previewSettingsHashMap.get("title");
+            String subTitle = (String) previewSettingsHashMap.get("subTitle");
+            String confirmLabel = (String) previewSettingsHashMap.get("confirmLabel");
+            String retryLabel = (String) previewSettingsHashMap.get("retryLabel");
+            boolean show = (boolean) previewSettingsHashMap.get("show");
+
+            PreviewSettings previewSettings = new PreviewSettings(
+                    true,
+                    title,
+                    subTitle,
+                    confirmLabel,
+                    retryLabel);
+
+            mDocumentDetectorBuilder.setPreviewSettings(previewSettings);
         }
 
         HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
@@ -155,15 +175,23 @@ public class DocumentDetectorCompatiblePlugin
             String popupDocumentSubtitleMessage = (String) messageSettingsParam.get("popupDocumentSubtitleMessage");
             String positiveButtonMessage = (String) messageSettingsParam.get("positiveButtonMessage");
 
-            Document.RG_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_FRONT");
-            Document.RG_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_BACK");
-            Document.RG_FULL.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_FULL");
-            Document.CNH_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_CNH_FRONT");
-            Document.CNH_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_CNH_BACK");
-            Document.CNH_FULL.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_CNH_FULL");
+            Document.RG_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_RG_FRONT");
+            Document.RG_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_RG_BACK");
+            Document.RG_FULL.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_RG_FULL");
+            Document.CNH_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_CNH_FRONT");
+            Document.CNH_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_CNH_BACK");
+            Document.CNH_FULL.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_CNH_FULL");
             Document.CRLV.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_CRLV");
-            Document.RNE_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RNE_FRONT");
-            Document.RNE_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RNE_BACK");
+            Document.RNE_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_RNE_FRONT");
+            Document.RNE_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam
+                    .get("wrongDocumentMessage_RNE_BACK");
 
             MessageSettings messageSettings = new MessageSettings(
                     waitMessage,
@@ -196,7 +224,7 @@ public class DocumentDetectorCompatiblePlugin
         }
 
         HashMap<String, Object> uploadSettingsParam = (HashMap<String, Object>) argumentsMap.get("uploadSettings");
-        if(uploadSettingsParam != null){
+        if (uploadSettingsParam != null) {
             UploadSettings uploadSettings = new UploadSettings();
 
             Integer activityLayout = getResourceId((String) uploadSettingsParam.get("activityLayout"), LAYOUT_RES);
@@ -206,31 +234,31 @@ public class DocumentDetectorCompatiblePlugin
             Integer maxFileSize = (Integer) uploadSettingsParam.get("maxFileSize");
             String intent = (String) uploadSettingsParam.get("intent");
 
-            if(compress != null){
+            if (compress != null) {
                 uploadSettings.setCompress(compress);
-            }    
-            if(intent != null){
+            }
+            if (intent != null) {
                 uploadSettings.setIntent(intent);
             }
-            if(maxFileSize != null){
+            if (maxFileSize != null) {
                 uploadSettings.setMaxFileSize(maxFileSize);
             }
-            if(popUpLayout != null){
+            if (popUpLayout != null) {
                 uploadSettings.setPopUpLayout(popUpLayout);
             }
-            if(activityLayout != null){
+            if (activityLayout != null) {
                 uploadSettings.setActivityLayout(activityLayout);
             }
-            if (fileFormatsParam != null){
+            if (fileFormatsParam != null) {
                 FileFormat[] fileFormats = new FileFormat[fileFormatsParam.size()];
-                for (int i = 0; i < fileFormats.length; i++ ) {
+                for (int i = 0; i < fileFormats.length; i++) {
                     FileFormat fileFormat = FileFormat.valueOf(fileFormatsParam.get(i));
-                    if (fileFormat != null) fileFormats[i] = fileFormat;
+                    if (fileFormat != null)
+                        fileFormats[i] = fileFormat;
                 }
                 uploadSettings.setFileFormats(fileFormats);
             }
-        
-            
+
             mDocumentDetectorBuilder.setUploadSettings(uploadSettings);
         }
 
@@ -290,12 +318,11 @@ public class DocumentDetectorCompatiblePlugin
                 if (styleId != null)
                     mDocumentDetectorBuilder.setStyle(styleId);
 
-                
                 Integer layoutId = getResourceId((String) customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
-                if(layoutId != null){
+                if (layoutId != null) {
                     mDocumentDetectorBuilder.setLayout(layoutId);
                 }
-                
+
                 Integer greenMaskId = getResourceId((String) customizationAndroid.get("greenMaskResIdName"),
                         DRAWABLE_RES);
                 Integer whiteMaskId = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"),
@@ -306,51 +333,51 @@ public class DocumentDetectorCompatiblePlugin
                 mDocumentDetectorBuilder.setMask(greenMaskId, whiteMaskId, redMaskId);
 
                 String maskType = (String) customizationAndroid.get("maskType");
-                if(maskType != null){
+                if (maskType != null) {
                     System.out.println("Mask: ");
                     mDocumentDetectorBuilder.setMask(MaskType.valueOf(maskType));
                 }
             }
 
-            if(androidSettings.get("enableSwitchCameraButton") != null){
+            if (androidSettings.get("enableSwitchCameraButton") != null) {
                 boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
                 mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
             }
-    
-            if(androidSettings.get("enableGoogleServices") != null){
+
+            if (androidSettings.get("enableGoogleServices") != null) {
                 boolean enableGoogleServices = (boolean) androidSettings.get("enableGoogleServices");
                 mDocumentDetectorBuilder.enableGoogleServices(enableGoogleServices);
             }
-    
-            if(androidSettings.get("enableEmulator") != null){
+
+            if (androidSettings.get("enableEmulator") != null) {
                 boolean enableEmulator = (boolean) androidSettings.get("enableEmulator");
                 mDocumentDetectorBuilder.setUseEmulator(enableEmulator);
-                
+
             }
-            if(androidSettings.get("enableRootDevices") != null){
+            if (androidSettings.get("enableRootDevices") != null) {
                 boolean enableRootDevices = (boolean) androidSettings.get("enableRootDevices");
                 mDocumentDetectorBuilder.setUseRoot(enableRootDevices);
             }
 
-            if(androidSettings.get("useDeveloperMode") != null){
+            if (androidSettings.get("useDeveloperMode") != null) {
                 Boolean useDeveloperMode = (Boolean) androidSettings.get("useDeveloperMode");
                 mDocumentDetectorBuilder.setUseDeveloperMode(useDeveloperMode);
             }
 
-            if(androidSettings.get("useAdb") != null){
+            if (androidSettings.get("useAdb") != null) {
                 Boolean useAdb = (Boolean) androidSettings.get("useAdb");
                 mDocumentDetectorBuilder.setUseAdb(useAdb);
             }
 
-            if(androidSettings.get("useDebug") != null){
+            if (androidSettings.get("useDebug") != null) {
                 Boolean useDebug = (Boolean) androidSettings.get("useDebug");
                 mDocumentDetectorBuilder.setUseDebug(useDebug);
             }
-    
+
             String resolution = (String) androidSettings.get("resolution");
-            if(resolution != null){
+            if (resolution != null) {
                 mDocumentDetectorBuilder.setResolutionSettings(Resolution.valueOf(resolution));
-            }       
+            }
 
             // Sensor settings
             HashMap<String, Object> sensorSettings = (HashMap<String, Object>) androidSettings.get("sensorSettings");
@@ -367,11 +394,11 @@ public class DocumentDetectorCompatiblePlugin
                     mDocumentDetectorBuilder.setLuminositySensorSettings(null);
                 }
 
-                if(androidSettings.get("compressQuality") != null){
+                if (androidSettings.get("compressQuality") != null) {
                     int compressQuality = (int) androidSettings.get("compressQuality");
                     mDocumentDetectorBuilder.setCompressSettings(compressQuality);
                 }
-                
+
                 HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) sensorSettings
                         .get("sensorOrientationSettings");
                 if (sensorOrientation != null) {
@@ -390,13 +417,14 @@ public class DocumentDetectorCompatiblePlugin
                     Integer stabilityStabledMillis = (Integer) sensorStability.get("stabilityStabledMillis");
                     Double stabilityThreshold = (Double) sensorStability.get("stabilityThreshold");
                     if (stabilityStabledMillis != null && stabilityThreshold != null) {
-                        mDocumentDetectorBuilder.setStabilitySensorSettings(new SensorStabilitySettings(stabilityStabledMillis, stabilityThreshold));
+                        mDocumentDetectorBuilder.setStabilitySensorSettings(
+                                new SensorStabilitySettings(stabilityStabledMillis, stabilityThreshold));
                     }
                 } else {
                     mDocumentDetectorBuilder.setStabilitySensorSettings(null);
                 }
             }
-        }         
+        }
 
         // Popup settings
         Boolean showPopup = (Boolean) argumentsMap.get("popup");

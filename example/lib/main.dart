@@ -6,7 +6,7 @@ import 'package:document_detector_compatible/android/maskType.dart';
 import 'package:document_detector_compatible/android/resolution.dart';
 import 'package:document_detector_compatible/ios/ios_resolution.dart';
 import 'package:document_detector_compatible/message_settings.dart';
-import 'package:document_detector_compatible/show_preview.dart';
+import 'package:document_detector_compatible/preview_settings.dart';
 import 'package:document_detector_compatible/document_detector_step.dart';
 import 'package:document_detector_compatible/document_type.dart';
 import 'package:document_detector_compatible/ios/ios_settings.dart';
@@ -81,6 +81,8 @@ class _MyAppState extends State<MyApp> {
     documentDetector.setIosSettings(iosSettings);
 
     documentDetector.setMessageSettings(messageSettings);
+
+    documentDetector.setPreviewSettings(new PreviewSettings(show: true));
 
     documentDetector.setDocumentFlow(documentSteps);
 

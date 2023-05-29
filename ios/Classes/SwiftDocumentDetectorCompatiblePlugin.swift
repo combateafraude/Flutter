@@ -1,6 +1,5 @@
 import Flutter
 import UIKit
-import TensorFlowLite
 import DocumentDetector
 
 public class SwiftDocumentDetectorCompatiblePlugin: NSObject, FlutterPlugin, DocumentDetectorControllerDelegate {
@@ -89,9 +88,18 @@ public class SwiftDocumentDetectorCompatiblePlugin: NSObject, FlutterPlugin, Doc
         if let showPreview = arguments["showPreview"] as? [String: Any] ?? nil {
             var show = showPreview["show"] as? Bool ?? false
             let title = showPreview["title"] as? String ?? nil
-            let subtitle = showPreview["subtitle"] as? String ?? nil
+            let subtitle = showPreview["subTitle"] as? String ?? nil
             let confirmLabel = showPreview["confirmLabel"] as? String ?? nil
             let retryLabel = showPreview["retryLabel"] as? String ?? nil
+            documentDetectorBuilder.showPreview(show, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
+        }
+
+        if let previewSettings = arguments["previewSettings"] as? [String: Any] ?? nil {
+            var show = previewSettings["show"] as? Bool ?? false
+            let title = previewSettings["title"] as? String ?? nil
+            let subtitle = previewSettings["subTitle"] as? String ?? nil
+            let confirmLabel = previewSettings["confirmLabel"] as? String ?? nil
+            let retryLabel = previewSettings["retryLabel"] as? String ?? nil
             documentDetectorBuilder.showPreview(show, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
         }
         
@@ -162,19 +170,19 @@ public class SwiftDocumentDetectorCompatiblePlugin: NSObject, FlutterPlugin, Doc
                 documentDetectorBuilder.setQualitySettings(verifyQuality: verifyQuality, qualityThreshold: qualityThreshold)
             }
             
-            if let sensorStability = iosSettings["sensorStability"] as? [String: Any] ?? nil {
+            if let sensorSettings = iosSettings["sensorSettings"] as? [String: Any] ?? nil {
                 
-                if let sensorLuminosity = iosSettings["sensorLuminosity"] as? [String: Any] ?? nil {
+                if let sensorLuminosity = sensorSettings["sensorLuminosity"] as? [String: Any] ?? nil {
                     let luminosityThreshold = sensorLuminosity["luminosityThreshold"] as? Float ?? nil
                     documentDetectorBuilder.setLuminositySensorSettings(luminosityThreshold: luminosityThreshold)
                 }
                 
-                if let sensorOrientation = iosSettings["sensorOrientation"] as? [String: Any] ?? nil {
+                if let sensorOrientation = sensorSettings["sensorOrientation"] as? [String: Any] ?? nil {
                     let orientationThreshold = sensorOrientation["orientationThreshold"] as? Double ?? nil
                     documentDetectorBuilder.setOrientationSensorSettings(orientationThreshold: orientationThreshold)
                 }
                 
-                if let sensorStability = iosSettings["sensorStability"] as? [String: Any] {
+                if let sensorStability = sensorSettings["sensorStability"] as? [String: Any] {
                     let stabilityThreshold = sensorStability["stabilityThreshold"] as? Double ?? nil
                     documentDetectorBuilder.setStabilitySensorSettings(stabilityThreshold: stabilityThreshold)
                 }
