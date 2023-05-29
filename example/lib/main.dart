@@ -3,6 +3,7 @@ import 'package:passive_face_liveness/ios/ios_resolution.dart';
 import 'package:passive_face_liveness/ios/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:passive_face_liveness/passive_face_liveness.dart';
+import 'package:passive_face_liveness/preview_settings.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_success.dart';
@@ -51,6 +52,8 @@ class _MyAppState extends State<MyApp> {
             resolution: IosResolution.HD1280x720, compressionQuality: 1);
 
     passiveFaceLiveness.setIosSettings(iosSettings);
+
+    passiveFaceLiveness.setPreviewSettings(new PreviewSettings(show: true));
 
     passiveFaceLiveness.setAndroidSettings(passiveFaceLivenessAndroidSettings);
 

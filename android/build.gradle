@@ -45,7 +45,7 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:passive-face-liveness:6.0.0-rc03'
+        implementation 'com.combateafraude.sdk:passive-face-liveness:6.0.0-rc06'
     }
 
 }
