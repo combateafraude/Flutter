@@ -97,6 +97,15 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
             let retryLabel = showPreview["retryLabel"] as? String ?? nil
             documentDetectorBuilder.showPreview(show, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
          }
+
+        if let previewSettings = arguments["previewSettings"] as? [String: Any] ?? nil {
+            let show = previewSettings["show"] as? Bool ?? false
+            let title = previewSettings["title"] as? String ?? nil
+            let subtitle = previewSettings["subtitle"] as? String ?? nil
+            let confirmLabel = previewSettings["confirmLabel"] as? String ?? nil
+            let retryLabel = previewSettings["retryLabel"] as? String ?? nil
+            documentDetectorBuilder.showPreview(show, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
+         }
         
         if let messageSettingsParam = arguments["messageSettings"] as? [String: Any] ?? nil {
             let waitMessage = messageSettingsParam["waitMessage"] as? String ?? nil

@@ -6,7 +6,7 @@ import 'package:document_detector/android/maskType.dart';
 import 'package:document_detector/android/resolution.dart';
 import 'package:document_detector/ios/ios_resolution.dart';
 import 'package:document_detector/message_settings.dart';
-import 'package:document_detector/show_preview.dart';
+import 'package:document_detector/preview_settings.dart';
 import 'package:document_detector/document_detector_step.dart';
 import 'package:document_detector/document_type.dart';
 import 'package:document_detector/ios/ios_settings.dart';
@@ -80,7 +80,7 @@ class _MyAppState extends State<MyApp> {
 
     documentDetector.setAndroidSettings(androidSettings);
 
-    documentDetector.setShowPreview(new ShowPreview(show: true));
+    documentDetector.setPreviewSettings(new PreviewSettings(show: true));
 
     // Put the others parameters here
 

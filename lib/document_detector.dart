@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:document_detector/android/android_settings.dart';
 import 'package:document_detector/document_detector_step.dart';
 import 'package:document_detector/ios/ios_settings.dart';
+import 'package:document_detector/preview_settings.dart';
 import 'package:document_detector/result/capture.dart';
 import 'package:document_detector/result/document_detector_closed.dart';
 import 'package:document_detector/result/document_detector_failure.dart';
@@ -26,6 +27,7 @@ class DocumentDetector {
   bool? sound;
   int? requestTimeout;
   ShowPreview? showPreview;
+  PreviewSettings? previewSettings;
   DocumentDetectorAndroidSettings? androidSettings;
   DocumentDetectorIosSettings? iosSettings;
   bool? showDelay;
@@ -61,8 +63,14 @@ class DocumentDetector {
     this.requestTimeout = requestTimeout;
   }
 
+  @Deprecated(
+      "Use the .setPreviewSettings(PreviewSettings previewSettings) method.")
   void setShowPreview(ShowPreview showPreview) {
     this.showPreview = showPreview;
+  }
+
+  void setPreviewSettings(PreviewSettings previewSettings) {
+    this.previewSettings = previewSettings;
   }
 
   void setAutoDetection(bool enable) {
@@ -104,6 +112,7 @@ class DocumentDetector {
     params["sound"] = sound;
     params["requestTimeout"] = requestTimeout;
     params["showPreview"] = showPreview?.asMap();
+    params["previewSettings"] = previewSettings?.asMap();
     params["androidSettings"] = androidSettings?.asMap();
     params["iosSettings"] = iosSettings?.asMap();
     params["showDelay"] = showDelay;
