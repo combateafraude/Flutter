@@ -16,6 +16,7 @@ class MessageSettings {
   String sensorLuminosityMessage;
   String sensorOrientationMessage;
   String sensorStabilityMessage;
+  String captureProcessingErrorMessage;
 
   MessageSettings(
       {this.stepName,
@@ -34,7 +35,8 @@ class MessageSettings {
       this.notCenterZMessage,
       this.sensorLuminosityMessage,
       this.sensorOrientationMessage,
-      this.sensorStabilityMessage});
+      this.sensorStabilityMessage,
+      this.captureProcessingErrorMessage});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -56,6 +58,7 @@ class MessageSettings {
     map["sensorLuminosityMessage"] = sensorLuminosityMessage;
     map["sensorOrientationMessage"] = sensorOrientationMessage;
     map["sensorStabilityMessage"] = sensorStabilityMessage;
+    map["captureProcessingErrorMessage"] = captureProcessingErrorMessage;
 
     return map;
   }

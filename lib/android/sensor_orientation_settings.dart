@@ -1,15 +1,12 @@
 class SensorOrientationAndroid {
-  String messageResourceIdName;
-  double stabilityThreshold;
+  double orientationThreshold;
 
-  SensorOrientationAndroid(
-      {this.messageResourceIdName, this.stabilityThreshold});
+  SensorOrientationAndroid({this.orientationThreshold});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
 
-    map["messageResourceIdName"] = messageResourceIdName;
-    map["stabilityThreshold"] = stabilityThreshold;
+    map["orientationThreshold"] = orientationThreshold;
 
     return map;
   }

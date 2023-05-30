@@ -67,6 +67,15 @@ public class SwiftPassiveFaceLivenessCompatiblePlugin: NSObject, FlutterPlugin, 
             let retryLabel = showPreview["retryLabel"] as? String ?? nil
             passiveFaceLivenessBuilder.showPreview(show, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
         }
+
+        if let previewSettings = arguments["previewSettings"] as? [String: Any] ?? nil {
+            let show = previewSettings["show"] as? Bool ?? false
+            let title = previewSettings["title"] as? String ?? nil
+            let subtitle = previewSettings["subTitle"] as? String ?? nil
+            let confirmLabel = previewSettings["confirmLabel"] as? String ?? nil
+            let retryLabel = previewSettings["retryLabel"] as? String ?? nil
+            passiveFaceLivenessBuilder.showPreview(show, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
+        }
         
         if let messageSettingsParam = arguments["messageSettings"] as? [String: Any] ?? nil {
             let stepName = messageSettingsParam["stepName"] as? String ?? nil
@@ -285,19 +294,14 @@ public class SwiftPassiveFaceLivenessCompatiblePlugin: NSObject, FlutterPlugin, 
         
         if let image = results.image {
             let imagePath = saveImageToDocumentsDirectory(image: image, withName: "selfie.jpg")
-            response["success"] = NSNumber(value: true)
             response["imagePath"] = imagePath
-            response["imageUrl"] = results.imageUrl
-            response["signedResponse"] = results.signedResponse
-            response["trackingId"] = results.trackingId
-            
-            flutterResult!(response)
-        }else{
+        }
             response["success"] = NSNumber(value: true)
-            response["imagePath"] = results.capturePath
+            response["CapturePath"] = results.capturePath
             response["imageUrl"] = results.imageUrl
             response["signedResponse"] = results.signedResponse
             response["trackingId"] = results.trackingId
+            response["lensFacing"] = results.lensFacing
             
             flutterResult!(response)
         }
