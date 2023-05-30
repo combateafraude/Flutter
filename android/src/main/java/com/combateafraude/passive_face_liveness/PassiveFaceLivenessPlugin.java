@@ -21,8 +21,6 @@ import com.combateafraude.passivefaceliveness.output.PassiveFaceLivenessResult;
 import com.combateafraude.passivefaceliveness.output.failure.SDKFailure;
 import com.combateafraude.passivefaceliveness.input.MaskType;
 
-
-
 import java.util.HashMap;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -35,7 +33,8 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
 
 @SuppressWarnings("unchecked")
-public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
+public class PassiveFaceLivenessPlugin
+        implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
 
     private static final int REQUEST_CODE = 1002;
 
@@ -71,37 +70,38 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
         PassiveFaceLiveness.Builder mPassiveFaceLivenessBuilder = new PassiveFaceLiveness.Builder(mobileToken);
 
         // People ID
-        if(argumentsMap.get("peopleId") != null){
+        if (argumentsMap.get("peopleId") != null) {
             String peopleId = (String) argumentsMap.get("peopleId");
             mPassiveFaceLivenessBuilder.setPersonId(peopleId);
         }
 
         // Person Name
-        if(argumentsMap.get("personName") != null){
+        if (argumentsMap.get("personName") != null) {
             String personName = (String) argumentsMap.get("personName");
             mPassiveFaceLivenessBuilder.setPersonName(personName);
         }
 
         // Person CPF
-        if(argumentsMap.get("personCPF") != null){
+        if (argumentsMap.get("personCPF") != null) {
             String personCPF = (String) argumentsMap.get("personCPF");
             mPassiveFaceLivenessBuilder.setPersonCPF(personCPF);
         }
 
         // Use Analytics
         Boolean useAnalytics = (Boolean) argumentsMap.get("useAnalytics");
-        if (useAnalytics != null) mPassiveFaceLivenessBuilder.setAnalyticsSettings(useAnalytics);
+        if (useAnalytics != null)
+            mPassiveFaceLivenessBuilder.setAnalyticsSettings(useAnalytics);
 
         String expireTime = (String) argumentsMap.get("expireTime");
-        if(expireTime != null){
+        if (expireTime != null) {
             mPassiveFaceLivenessBuilder.setGetImageUrlExpireTime(expireTime);
         }
 
         Boolean useOpenEyeValidation = (Boolean) argumentsMap.get("useOpenEyeValidation");
-        if(useOpenEyeValidation != null){
+        if (useOpenEyeValidation != null) {
             Double openEyesThreshold = (Double) argumentsMap.get("openEyesThreshold");
             mPassiveFaceLivenessBuilder.setEyesClosedSettings(useOpenEyeValidation, openEyesThreshold);
-        } 
+        }
 
         HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
         if (showPreview != null) {
@@ -111,15 +111,20 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
             String retryLabel = (String) showPreview.get("retryLabel");
             boolean show = (boolean) showPreview.get("show");
 
-            PreviewSettings previewSettings = new PreviewSettings(
-                    true,
-                    title,
-                    subTitle,
-                    confirmLabel,
-                    retryLabel
-            );
+            mPassiveFaceLivenessBuilder
+                    .setPreviewSettings(new PreviewSettings(show, title, subTitle, confirmLabel, retryLabel));
+        }
 
-            mPassiveFaceLivenessBuilder.setPreviewSettings(previewSettings);
+        HashMap<String, Object> previewSettings = (HashMap<String, Object>) argumentsMap.get("previewSettings");
+        if (previewSettings != null) {
+            String title = (String) previewSettings.get("title");
+            String subTitle = (String) previewSettings.get("subTitle");
+            String confirmLabel = (String) previewSettings.get("confirmLabel");
+            String retryLabel = (String) previewSettings.get("retryLabel");
+            boolean show = (boolean) previewSettings.get("show");
+
+            mPassiveFaceLivenessBuilder
+                    .setPreviewSettings(new PreviewSettings(show, title, subTitle, confirmLabel, retryLabel));
         }
 
         HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
@@ -144,52 +149,52 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
             String sensorStabilityMessage = (String) messageSettingsParam.get("sensorStabilityMessage");
             String captureProcessingErrorMessage = (String) messageSettingsParam.get("captureProcessingErrorMessage");
 
-
             MessageSettings messageSettings = new MessageSettings(
-                stepName,
-                waitMessage,
-                faceNotFoundMessage,
-                faceTooFarMessage,
-                faceTooCloseMessage,
-                faceNotFittedMessage,
-                multipleFaceDetectedMessage,
-                verifyingLivenessMessage,
-                holdItMessage,
-                invalidFaceMessage,
-                eyesClosedMessage,
-                notCenterXMessage,
-                notCenterYMessage,
-                notCenterZMessage,
-                sensorLuminosityMessage,
-                sensorOrientationMessage,
-                sensorStabilityMessage,
-                captureProcessingErrorMessage
-            );
+                    stepName,
+                    waitMessage,
+                    faceNotFoundMessage,
+                    faceTooFarMessage,
+                    faceTooCloseMessage,
+                    faceNotFittedMessage,
+                    multipleFaceDetectedMessage,
+                    verifyingLivenessMessage,
+                    holdItMessage,
+                    invalidFaceMessage,
+                    eyesClosedMessage,
+                    notCenterXMessage,
+                    notCenterYMessage,
+                    notCenterZMessage,
+                    sensorLuminosityMessage,
+                    sensorOrientationMessage,
+                    sensorStabilityMessage,
+                    captureProcessingErrorMessage);
 
             mPassiveFaceLivenessBuilder.setMessageSettings(messageSettings);
         }
-
 
         // Android specific settings
         HashMap<String, Object> androidSettings = (HashMap<String, Object>) argumentsMap.get("androidSettings");
         if (androidSettings != null) {
 
             // Layout customization
-            HashMap<String, Object> customizationAndroid = (HashMap<String, Object>) androidSettings.get("customization");
+            HashMap<String, Object> customizationAndroid = (HashMap<String, Object>) androidSettings
+                    .get("customization");
             if (customizationAndroid != null) {
                 Integer styleId = getResourceId((String) customizationAndroid.get("styleResIdName"), STYLE_RES);
-                if (styleId != null) mPassiveFaceLivenessBuilder.setStyle(styleId);
+                if (styleId != null)
+                    mPassiveFaceLivenessBuilder.setStyle(styleId);
 
                 Integer layoutId = getResourceId((String) customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
-                Integer greenMask = getResourceId((String) customizationAndroid.get("greenMaskResIdName"), DRAWABLE_RES);
-                Integer whiteMask = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"), DRAWABLE_RES);
+                Integer greenMask = getResourceId((String) customizationAndroid.get("greenMaskResIdName"),
+                        DRAWABLE_RES);
+                Integer whiteMask = getResourceId((String) customizationAndroid.get("whiteMaskResIdName"),
+                        DRAWABLE_RES);
                 Integer redMask = getResourceId((String) customizationAndroid.get("redMaskResIdName"), DRAWABLE_RES);
                 mPassiveFaceLivenessBuilder.setLayout(layoutId);
                 mPassiveFaceLivenessBuilder.setMask(greenMask, whiteMask, redMask);
 
-
                 String mask = (String) customizationAndroid.get("maskType");
-                if(mask != null){
+                if (mask != null) {
                     mPassiveFaceLivenessBuilder.setMask(MaskType.valueOf(mask));
                 }
             }
@@ -197,118 +202,122 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
             // Sensor settings
             HashMap<String, Object> sensorSettings = (HashMap<String, Object>) androidSettings.get("sensorSettings");
             if (sensorSettings != null) {
-                HashMap<String, Object> sensorStability = (HashMap<String, Object>) sensorSettings.get("sensorStabilitySettings");
+                HashMap<String, Object> sensorStability = (HashMap<String, Object>) sensorSettings
+                        .get("sensorStabilitySettings");
                 if (sensorStability != null) {
-                    Integer sensorMessageId = getResourceId((String) sensorStability.get("messageResourceIdName"), STRING_RES);
                     Integer stabilityStabledMillis = (Integer) sensorStability.get("stabilityStabledMillis");
                     Double stabilityThreshold = (Double) sensorStability.get("stabilityThreshold");
-                    if (sensorMessageId != null && stabilityStabledMillis != null && stabilityThreshold != null) {
-                        mPassiveFaceLivenessBuilder.setStabilitySensorSettings(new SensorStabilitySettings(stabilityStabledMillis, stabilityThreshold));
+                    if (stabilityStabledMillis != null && stabilityThreshold != null) {
+                        mPassiveFaceLivenessBuilder.setStabilitySensorSettings(
+                                new SensorStabilitySettings(stabilityStabledMillis, stabilityThreshold));
                     }
                 } else {
                     mPassiveFaceLivenessBuilder.setStabilitySensorSettings(null);
                 }
-          
-            HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) androidSettings.get("sensorOrientationAndroid");
-            if(sensorOrientation != null){
-                Integer messageResourceIdName = (Integer) sensorOrientation.get("messageResourceIdName");
-                Double stabilityThreshold = (Double) sensorOrientation.get("stabilityThreshold");
-                if (messageResourceIdName != null && stabilityThreshold != null){
-                    SensorOrientationSettings sensorOrientationSettings = new SensorOrientationSettings(stabilityThreshold);
-                    mPassiveFaceLivenessBuilder.setOrientationSensorSettings(sensorOrientationSettings);
+
+                HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) sensorSettings
+                        .get("sensorOrientationAndroid");
+                if (sensorOrientation != null) {
+                    Double orientationThreshold = (Double) sensorOrientation.get("orientationThreshold");
+                    if (orientationThreshold != null) {
+                        mPassiveFaceLivenessBuilder
+                                .setOrientationSensorSettings(new SensorOrientationSettings(orientationThreshold));
+                    }
                 }
-            }
-                
+
             }
 
-            if (androidSettings.get("showButtonTime") != null){
+            if (androidSettings.get("showButtonTime") != null) {
                 int showButtonTime = (int) androidSettings.get("showButtonTime");
                 mPassiveFaceLivenessBuilder.setShowButtonTime(showButtonTime);
             }
 
-            if (androidSettings.get("enableSwitchCameraButton") != null){
+            if (androidSettings.get("enableSwitchCameraButton") != null) {
                 boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
                 mPassiveFaceLivenessBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
             }
 
-            if (androidSettings.get("enableGoogleServices") != null){
+            if (androidSettings.get("enableGoogleServices") != null) {
                 boolean enableGoogleServices = (boolean) androidSettings.get("enableGoogleServices");
                 mPassiveFaceLivenessBuilder.enableGoogleServices(enableGoogleServices);
             }
 
-            if (androidSettings.get("useEmulator") != null){
+            if (androidSettings.get("useEmulator") != null) {
                 boolean useEmulator = (boolean) androidSettings.get("useEmulator");
                 mPassiveFaceLivenessBuilder.setUseEmulator(useEmulator);
             }
 
-            if (androidSettings.get("useRoot") != null){
+            if (androidSettings.get("useRoot") != null) {
                 boolean useRoot = (boolean) androidSettings.get("useRoot");
                 mPassiveFaceLivenessBuilder.setUseRoot(useRoot);
             }
 
-            if(androidSettings.get("useDeveloperMode") != null){
+            if (androidSettings.get("useDeveloperMode") != null) {
                 Boolean useDeveloperMode = (Boolean) androidSettings.get("useDeveloperMode");
                 mPassiveFaceLivenessBuilder.setUseDeveloperMode(useDeveloperMode);
             }
 
-            if(androidSettings.get("useAdb") != null){
+            if (androidSettings.get("useAdb") != null) {
                 Boolean useAdb = (Boolean) androidSettings.get("useAdb");
                 mPassiveFaceLivenessBuilder.setUseAdb(useAdb);
             }
 
-            if(androidSettings.get("useDebug") != null){
+            if (androidSettings.get("useDebug") != null) {
                 Boolean useDebug = (Boolean) androidSettings.get("useDebug");
                 mPassiveFaceLivenessBuilder.setUseDebug(useDebug);
             }
 
-            if(androidSettings.get("enableBrightnessIncrease") != null){
+            if (androidSettings.get("enableBrightnessIncrease") != null) {
                 boolean enableBrightnessIncrease = (boolean) androidSettings.get("enableBrightnessIncrease");
                 mPassiveFaceLivenessBuilder.enableBrightnessIncrease(enableBrightnessIncrease);
             }
         }
 
-        //VideoCapture
+        // VideoCapture
         HashMap<String, Object> videoCapture = (HashMap<String, Object>) argumentsMap.get("videoCapture");
-        if(videoCapture != null){
+        if (videoCapture != null) {
             boolean use = (Boolean) videoCapture.get("use");
             Integer time = (Integer) videoCapture.get("time");
 
-            if(use){
-                if(time != null){
+            if (use) {
+                if (time != null) {
                     mPassiveFaceLivenessBuilder.setCaptureSettings(new VideoCapture(time));
-                }else{
+                } else {
                     mPassiveFaceLivenessBuilder.setCaptureSettings(new VideoCapture());
                 }
-            }       
+            }
         }
 
-        //ImageCapture
+        // ImageCapture
         HashMap<String, Object> imageCapture = (HashMap<String, Object>) argumentsMap.get("imageCapture");
-        if(imageCapture != null){
+        if (imageCapture != null) {
             boolean use = (Boolean) imageCapture.get("use");
             Integer afterPictureMillis = (Integer) imageCapture.get("afterPictureMillis");
             Integer beforePictureMillis = (Integer) imageCapture.get("beforePictureMillis");
 
-            if(use){
-                if(afterPictureMillis != null && beforePictureMillis != null){
-                    mPassiveFaceLivenessBuilder.setCaptureSettings(new ImageCapture(afterPictureMillis, beforePictureMillis));
-                }else{
+            if (use) {
+                if (afterPictureMillis != null && beforePictureMillis != null) {
+                    mPassiveFaceLivenessBuilder
+                            .setCaptureSettings(new ImageCapture(afterPictureMillis, beforePictureMillis));
+                } else {
                     mPassiveFaceLivenessBuilder.setCaptureSettings(new ImageCapture());
                 }
-            } 
+            }
         }
 
         // Sound settings
         Boolean enableSound = (Boolean) argumentsMap.get("enableSound");
-        if (enableSound != null) mPassiveFaceLivenessBuilder.setAudioSettings(enableSound);
+        if (enableSound != null)
+            mPassiveFaceLivenessBuilder.setAudioSettings(enableSound);
 
         Integer soundResId = getResourceId((String) argumentsMap.get("sound"), RAW_RES);
-        if (soundResId != null) mPassiveFaceLivenessBuilder.setAudioSettings(soundResId);
+        if (soundResId != null)
+            mPassiveFaceLivenessBuilder.setAudioSettings(soundResId);
 
-        //CurrentStepDoneDelay
+        // CurrentStepDoneDelay
         Boolean showDelay = (Boolean) argumentsMap.get("showDelay");
-        if(showDelay != null){
-            if(argumentsMap.get("delay") != null) {
+        if (showDelay != null) {
+            if (argumentsMap.get("delay") != null) {
                 int delay = (int) argumentsMap.get("delay");
                 mPassiveFaceLivenessBuilder.setCurrentStepDoneDelay(showDelay, delay);
             }
@@ -316,10 +325,11 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
 
         // Network settings
         Integer requestTimeout = (Integer) argumentsMap.get("requestTimeout");
-        if (requestTimeout != null) mPassiveFaceLivenessBuilder.setNetworkSettings(requestTimeout);
+        if (requestTimeout != null)
+            mPassiveFaceLivenessBuilder.setNetworkSettings(requestTimeout);
 
         String stage = (String) argumentsMap.get("stage");
-        if(stage != null){
+        if (stage != null) {
             mPassiveFaceLivenessBuilder.setStage(CafStage.valueOf(stage));
         }
 
@@ -329,7 +339,8 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
     }
 
     private Integer getResourceId(@Nullable String resourceName, String resourceType) {
-        if (resourceName == null || activity == null) return null;
+        if (resourceName == null || activity == null)
+            return null;
         int resId = activity.getResources().getIdentifier(resourceName, resourceType, activity.getPackageName());
         return resId == 0 ? null : resId;
     }
@@ -365,7 +376,8 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
     public synchronized boolean onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK && data != null) {
-                PassiveFaceLivenessResult mPassiveFaceLivenessResult = (PassiveFaceLivenessResult) data.getSerializableExtra(PassiveFaceLivenessResult.PARAMETER_NAME);
+                PassiveFaceLivenessResult mPassiveFaceLivenessResult = (PassiveFaceLivenessResult) data
+                        .getSerializableExtra(PassiveFaceLivenessResult.PARAMETER_NAME);
                 if (mPassiveFaceLivenessResult.wasSuccessful()) {
                     if (result != null) {
                         result.success(getSucessResponseMap(mPassiveFaceLivenessResult));

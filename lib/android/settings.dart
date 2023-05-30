@@ -6,6 +6,7 @@ class PassiveFaceLivenessAndroidSettings {
   PassiveFaceLivenessCustomizationAndroid? customization;
   SensorSettingsAndroid? sensorSettings;
   int? showButtonTime;
+  int? manualCaptureTime;
   bool? enableSwitchCameraButton;
   bool? enableGoogleServices;
   bool? emulatorSettings;
@@ -18,7 +19,8 @@ class PassiveFaceLivenessAndroidSettings {
   PassiveFaceLivenessAndroidSettings(
       {this.customization,
       this.sensorSettings,
-      this.showButtonTime,
+      @Deprecated("Use manualCaptureTime parameter.") this.showButtonTime,
+      this.manualCaptureTime,
       this.enableSwitchCameraButton,
       this.enableGoogleServices,
       this.emulatorSettings,
@@ -34,6 +36,7 @@ class PassiveFaceLivenessAndroidSettings {
     map["customization"] = customization?.asMap();
     map["sensorSettings"] = sensorSettings?.asMap();
     map["showButtonTime"] = showButtonTime;
+    map["showButtonTime"] = manualCaptureTime;
     map["enableSwitchCameraButton"] = enableSwitchCameraButton;
     map["enableGoogleServices"] = enableGoogleServices;
     map["useEmulator"] = emulatorSettings;

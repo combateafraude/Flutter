@@ -71,6 +71,15 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             let retryLabel = showPreview["retryLabel"] as? String ?? nil
             passiveFaceLivenessBuilder.showPreview(show, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
         }
+
+        if let previewSettings = arguments["previewSettings"] as? [String: Any] ?? nil {
+            let show = previewSettings["show"] as? Bool ?? false
+            let title = previewSettings["title"] as? String ?? nil
+            let subtitle = previewSettings["subTitle"] as? String ?? nil
+            let confirmLabel = previewSettings["confirmLabel"] as? String ?? nil
+            let retryLabel = previewSettings["retryLabel"] as? String ?? nil
+            passiveFaceLivenessBuilder.showPreview(show, title: title, subtitle: subtitle, confirmLabel: confirmLabel, retryLabel: retryLabel)
+        }
         
         if let messageSettingsParam = arguments["messageSettings"] as? [String: Any] ?? nil {
             let stepName = messageSettingsParam["stepName"] as? String ?? nil
@@ -165,7 +174,6 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, PassiveFac
             
             if let sensorStability = iosSettings["sensorStability"] as? [String: Any] ?? nil {
                 if let sensorStability = sensorStability["sensorStability"] as? [String: Any] ?? nil {
-                    let message = sensorStability["message"] as? String ?? nil
                     let stabilityThreshold = sensorStability["stabilityThreshold"] as? Double ?? nil
                     passiveFaceLivenessBuilder.setStabilitySensorSettings(stabilityThreshold: stabilityThreshold)
                 }

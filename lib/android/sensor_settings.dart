@@ -5,7 +5,8 @@ class SensorSettingsAndroid {
   SensorStabilitySettingsAndroid? sensorStabilitySettings;
   SensorOrientationAndroid? sensorOrientationAndroid;
 
-  SensorSettingsAndroid({this.sensorStabilitySettings});
+  SensorSettingsAndroid(
+      {this.sensorStabilitySettings, this.sensorOrientationAndroid});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
