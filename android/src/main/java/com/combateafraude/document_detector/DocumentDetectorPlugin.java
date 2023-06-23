@@ -140,6 +140,18 @@ public class DocumentDetectorPlugin
                     .setPreviewSettings(new PreviewSettings(show, title, subtitle, confirmLabel, retryLabel));
         }
 
+        HashMap<String, Object> previewSettings = (HashMap<String, Object>) argumentsMap.get("previewSettings");
+        if (previewSettings != null) {
+            boolean show = (boolean) previewSettings.get("show");
+            String title = (String) previewSettings.get("title");
+            String subtitle = (String) previewSettings.get("subtitle");
+            String confirmLabel = (String) previewSettings.get("confirmLabel");
+            String retryLabel = (String) previewSettings.get("retryLabel");
+
+            mDocumentDetectorBuilder
+                    .setPreviewSettings(new PreviewSettings(show, title, subtitle, confirmLabel, retryLabel));
+        }
+
         HashMap<String, Object> messageSettingsParam = (HashMap<String, Object>) argumentsMap.get("messageSettings");
         if (messageSettingsParam != null) {
             String waitMessage = (String) messageSettingsParam.get("waitMessage");
