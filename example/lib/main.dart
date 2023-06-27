@@ -1,9 +1,4 @@
-import 'package:passive_face_liveness/android/settings.dart';
-import 'package:passive_face_liveness/ios/ios_resolution.dart';
-import 'package:passive_face_liveness/ios/settings.dart';
 import 'package:flutter/material.dart';
-import 'package:passive_face_liveness/passive_face_liveness.dart';
-import 'package:passive_face_liveness/preview_settings.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_success.dart';
@@ -43,20 +38,6 @@ class _MyAppState extends State<MyApp> {
     PassiveFaceLiveness passiveFaceLiveness =
         new PassiveFaceLiveness(mobileToken: mobileToken);
 
-    PassiveFaceLivenessAndroidSettings passiveFaceLivenessAndroidSettings =
-        new PassiveFaceLivenessAndroidSettings(
-            manualCaptureTime: 25000, enableSwitchCameraButton: true);
-
-    PassiveFaceLivenessIosSettings iosSettings =
-        new PassiveFaceLivenessIosSettings(
-            resolution: IosResolution.HD1280x720, compressionQuality: 1);
-
-    passiveFaceLiveness.setIosSettings(iosSettings);
-
-    passiveFaceLiveness.setPreviewSettings(new PreviewSettings(show: true));
-
-    passiveFaceLiveness.setAndroidSettings(passiveFaceLivenessAndroidSettings);
-
     // Put the others parameters here
 
     PassiveFaceLivenessResult passiveFaceLivenessResult =
@@ -65,22 +46,14 @@ class _MyAppState extends State<MyApp> {
     if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
       result = "Success!";
 
-      description += "\n\timagePath: " +
-          passiveFaceLivenessResult.imagePath +
+      description += "\n\timageUrl: " +
+          passiveFaceLivenessResult.imageUrl +
           "\n\timageUrl: " +
-          (passiveFaceLivenessResult.imageUrl != null
-              ? passiveFaceLivenessResult.imageUrl.split("?")[0] + "..."
-              : "null") +
-          "\n\tsignedResponse: " +
-          (passiveFaceLivenessResult.signedResponse != null
-              ? passiveFaceLivenessResult.signedResponse
-              : "null");
+          "\n\isAlive: " + passiveFaceLivenessResult.isAlive;
     } else if (passiveFaceLivenessResult is PassiveFaceLivenessFailure) {
       result = "Falha!";
-      description = "\tType: " +
-          passiveFaceLivenessResult.type +
-          "\n\tMessage: " +
-          passiveFaceLivenessResult.message;
+      description = "Message: " +
+          passiveFaceLivenessResult.errorMessage;
     } else {
       result = "Closed!";
     }
