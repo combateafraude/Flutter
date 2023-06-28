@@ -1,6 +1,6 @@
 import Flutter
 import UIKit
-import PassiveFaceLiveness
+import FaceLivenessIproov
 
 public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin {
     
@@ -27,19 +27,23 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin {
         
         let mobileToken = arguments["mobileToken"] as! String
 
-        let peopleId = arguments["peopleId"] as! String 
+        let peopleId = arguments["peopleId"] as! String
         
-        var faceLiveness = FaceAuthSDK.FaceLivenessSDK.Build()
+        var stageCaf = CAFStage.PROD
+        if let stage = arguments["stage"] as? String ?? nil {
+            stageCaf = getStageByString(stage: stage)
+        }
+        
+        var faceLiveness = FaceLivenessSDK.Build()
             .setCredentials(mobileToken: mobileToken, personId: peopleId)
-            if let stage = arguments["stage"] as? String ?? nil {
-                faceLiveness.setStage(stage: getStageByString(stage: stage))
-            }
+            .setStage(stage: stageCaf)
             .build()
         
-        faceLiveness?.delegate = self
+        faceLiveness.delegate = self
         
+        let controller = UIApplication.shared.keyWindow!.rootViewController!
         
-        faceLiveness.startSDK(viewController: self)
+        faceLiveness.startSDK(viewController: controller)
     }
         
     public func getStageByString(stage: String) -> CAFStage {
@@ -52,8 +56,8 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin {
     
 }
 
-extension ViewController: FaceLivenessDelegate {
-    func didFinishLiveness(with faceLivenesResult: FaceLivenessIproov.FaceLivenessResult) {
+extension SwiftPassiveFaceLivenessPlugin: FaceLivenessDelegate {
+    public func didFinishLiveness(with faceLivenesResult: FaceLivenessIproov.FaceLivenessResult) {
 
         let response : NSMutableDictionary! = [:]
 
@@ -71,7 +75,7 @@ extension ViewController: FaceLivenessDelegate {
         flutterResult!(response)
     }
     
-    func startLoadingScreen() {
+    public func startLoadingScreen() {
         print("StartLoadScreen")
     }
     

@@ -1,42 +1,44 @@
 PODS:
+  - FaceLivenessIproov (1.3.0):
+    - iProov (= 10.3.0)
   - Flutter (1.0.0)
-  - passive_face_liveness (5.0.0-rc01):
+  - iProov (10.3.0):
+    - Starscream (~> 4.0)
+  - passive_face_liveness (5.0.0-rc06):
+    - FaceLivenessIproov (= 1.3.0)
     - Flutter
-    - PassiveFaceLiveness (= 6.0.0-rc02)
-  - PassiveFaceLiveness (6.0.0-rc02):
-    - Sentry (= 7.11.0)
-  - "permission_handler (5.0.1+1)":
+  - permission_handler_apple (9.1.0):
     - Flutter
-  - Sentry (7.11.0):
-    - Sentry/Core (= 7.11.0)
-  - Sentry/Core (7.11.0)
+  - Starscream (4.0.4)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - passive_face_liveness (from `.symlinks/plugins/passive_face_liveness/ios`)
-  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
 
 SPEC REPOS:
-  https://github.com/combateafraude/iOS.git:
-    - PassiveFaceLiveness
+  https://github.com/combateafraude/iOS:
+    - FaceLivenessIproov
   trunk:
-    - Sentry
+    - iProov
+    - Starscream
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   passive_face_liveness:
     :path: ".symlinks/plugins/passive_face_liveness/ios"
-  permission_handler:
-    :path: ".symlinks/plugins/permission_handler/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
 
 SPEC CHECKSUMS:
+  FaceLivenessIproov: 2f3742da45a629809a13c2f1f9b0019520f1aebc
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  passive_face_liveness: 1ef48aef3e095d94830cf66f0876b2db8bed069c
-  PassiveFaceLiveness: cdb1e38e53600a7315ecabb20b1bda0227bcd4c0
-  permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
-  Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
+  iProov: 4f50623887ec2be48f841b157c94ba85099a9d1d
+  passive_face_liveness: be28328ab2495fde11f16f263fb233c1a3f8b4ec
+  permission_handler_apple: 8f116445eff3c0e7c65ad60f5fef5490aa94b4e4
+  Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
 
-PODFILE CHECKSUM: 48ed8943beec15aeee7d28a74e100b515836e362
+PODFILE CHECKSUM: 37a96cfd8f45a47243556f709ba46edce9885ebc
 
 COCOAPODS: 1.11.3

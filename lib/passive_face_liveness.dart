@@ -7,7 +7,6 @@ import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart'
 import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_success.dart';
 
-
 class PassiveFaceLiveness {
   static const MethodChannel _channel =
       const MethodChannel('passive_face_liveness');
@@ -17,12 +16,7 @@ class PassiveFaceLiveness {
 
   String? stage;
 
-  PassiveFaceLiveness({required this.mobileToken});
-
-
-  void setPeopleId(String peopleId) {
-    this.peopleId = peopleId;
-  }
+  PassiveFaceLiveness({required this.mobileToken, this.peopleId});
 
   void setStage(String stage) {
     this.stage = stage;
@@ -48,8 +42,7 @@ class PassiveFaceLiveness {
           isAlive: resultMap["isAlive"],
           token: resultMap["token"]);
     } else {
-      return new PassiveFaceLivenessFailure(
-          resultMap["errorMessage"]);
+      return new PassiveFaceLivenessFailure(resultMap["errorMessage"]);
     }
   }
 }

@@ -6,6 +6,13 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
+import io.flutter.plugin.common.MethodCall;
+import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.PluginRegistry;
+
 import com.caf.facelivenessiproov.input.CAFStage;
 import com.caf.facelivenessiproov.input.FaceLiveness;
 import com.caf.facelivenessiproov.input.VerifyLivenessListener;
@@ -13,30 +20,21 @@ import com.caf.facelivenessiproov.output.FaceLivenessResult;
 
 import java.util.HashMap;
 
-import io.flutter.embedding.engine.plugins.FlutterPlugin;
-import io.flutter.embedding.engine.plugins.activity.ActivityAware;
-import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
-import io.flutter.plugin.common.MethodCall;
-import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
-import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry;
-
 @SuppressWarnings("unchecked")
-public class PassiveFaceLivenessPlugin
-        implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
+public class FaceLivenessPlugin
+        implements FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
 
     private static final int REQUEST_CODE = 1002;
 
 
     private MethodChannel channel;
-    private Result result;
+    MethodChannel.Result result;
     private Activity activity;
     private ActivityPluginBinding activityBinding;
     private Context context;
 
     @Override
-    public synchronized void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+    public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         if (call.method.equals("start")) {
             this.result = result;
             start(call);
@@ -52,47 +50,47 @@ public class PassiveFaceLivenessPlugin
         // Mobile token
         String mobileToken = (String) argumentsMap.get("mobileToken");
 
-    
+        //PersonID
         String personId = (String) argumentsMap.get("personId");
-            
 
-        FaceLiveness faceLiveness = new FaceLiveness.Builder(mobileToken);
+        //Stage
+        CAFStage cafStage = CAFStage.PROD;
+        String flutterStage = (String) argumentsMap.get("stage");
+        if (flutterStage != null) {
+            cafStage = CAFStage.valueOf(flutterStage);
+        }
 
-            //stage
-            String stage = (String) argumentsMap.get("stage");
-            if (stage != null) {
-                faceLiveness.setStage(CafStage.valueOf(stage));
-            }
-
-            faceLiveness.build();
+        FaceLiveness faceLiveness = new FaceLiveness.Builder("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI2Mjg2YmU5Mzg2NDJmZDAwMDk4NWE1OWUiLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.muHfkGn9ToDyt9cT_z6vHPNLH0GfDNJJ2WtnnsrqFpU")
+                .setStage(cafStage)
+                .build();
 
 
-            faceLiveness.startSDK(context, personId, new VerifyLivenessListener() {
-            @Override
-            public void onSuccess(FaceLivenessResult result) {
-                result.success(getSucessResponseMap(result));
-            }
+        faceLiveness.startSDK(context, "03892606064", new VerifyLivenessListener() {
+        @Override
+        public void onSuccess(FaceLivenessResult result) {
+            getSucessResponseMap(result);
+        }
 
-            @Override
-            public void onError(FaceLivenessResult result) {
-                result.success(getFailureResponseMap(result.errorMessage));
-            }
+        @Override
+        public void onError(FaceLivenessResult result) {
+            getFailureResponseMap(result);
+        }
 
-            @Override
-            public void onCancel(FaceLivenessResult result) {
-                result.success(getClosedResponseMap());
-            }
+        @Override
+        public void onCancel(FaceLivenessResult result) {
+            getClosedResponseMap();
+        }
 
-            @Override
-            public void onLoading() {
-                
-            }
+        @Override
+        public void onLoading() {
 
-            @Override
-            public void onLoaded() {
-                
-            }
-        });
+        }
+
+        @Override
+        public void onLoaded() {
+
+        }
+    });
 
     }
 
@@ -103,20 +101,20 @@ public class PassiveFaceLivenessPlugin
         return resId == 0 ? null : resId;
     }
 
-    private HashMap<String, Object> getSucessResponseMap(PassiveFaceLivenessResult result) {
+    private HashMap<String, Object> getSucessResponseMap(FaceLivenessResult result) {
         HashMap<String, Object> responseMap = new HashMap<>();
         responseMap.put("success", Boolean.TRUE);
-        responseMap.put("imageUrl", result.getImageUrl());
-        responseMap.put("isAlive", result.isAlive());
-        responseMap.put("token", result.getToken());
+        responseMap.put("imageUrl", result.imageUrl);
+        responseMap.put("isAlive", result.isAlive);
+        responseMap.put("token", result.token);
 
         return responseMap;
     }
 
-    private HashMap<String, Object> getFailureResponseMap(SDKFailure sdkFailure) {
+    private HashMap<String, Object> getFailureResponseMap(FaceLivenessResult result) {
         HashMap<String, Object> responseMap = new HashMap<>();
         responseMap.put("success", Boolean.FALSE);
-        responseMap.put("errorMessage", result.getErrorMessage());
+        responseMap.put("errorMessage", result.errorMessage);
         return responseMap;
     }
 
@@ -129,7 +127,7 @@ public class PassiveFaceLivenessPlugin
     @Override
     public synchronized void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         this.context = flutterPluginBinding.getApplicationContext();
-        this.channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "new_passive_face_liveness");
+        this.channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "passive_face_liveness");
         this.channel.setMethodCallHandler(this);
     }
 
@@ -162,4 +160,11 @@ public class PassiveFaceLivenessPlugin
         this.activityBinding.removeActivityResultListener(this);
         this.activityBinding = null;
     }
+
+    @Override
+    public boolean onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        return false;
+    }
+
+
 }
