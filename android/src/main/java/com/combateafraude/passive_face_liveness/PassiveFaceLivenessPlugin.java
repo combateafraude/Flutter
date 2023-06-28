@@ -58,11 +58,11 @@ public class PassiveFaceLivenessPlugin
 
         FaceLiveness faceLiveness = new FaceLiveness.Builder(mobileToken);
 
-                //stage
-                String stage = (String) argumentsMap.get("stage");
-                if (stage != null) {
-                    faceLiveness.setStage(CafStage.valueOf(stage));
-                }
+            //stage
+            String stage = (String) argumentsMap.get("stage");
+            if (stage != null) {
+                faceLiveness.setStage(CafStage.valueOf(stage));
+            }
 
             faceLiveness.build();
 
