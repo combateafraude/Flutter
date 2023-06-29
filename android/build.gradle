@@ -46,7 +46,7 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:face-liveness-iproov:0.0.6.1'
+        implementation 'com.combateafraude.sdk:new-face-liveness:1.0.0'
     }
 
 }

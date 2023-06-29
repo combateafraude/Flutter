@@ -21,12 +21,10 @@ import com.caf.facelivenessiproov.output.FaceLivenessResult;
 import java.util.HashMap;
 
 @SuppressWarnings("unchecked")
-public class FaceLivenessPlugin
+public class PassiveFaceLivenessPlugin
         implements FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
 
     private static final int REQUEST_CODE = 1002;
-
-
     private MethodChannel channel;
     MethodChannel.Result result;
     private Activity activity;
@@ -60,12 +58,12 @@ public class FaceLivenessPlugin
             cafStage = CAFStage.valueOf(flutterStage);
         }
 
-        FaceLiveness faceLiveness = new FaceLiveness.Builder("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI2Mjg2YmU5Mzg2NDJmZDAwMDk4NWE1OWUiLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.muHfkGn9ToDyt9cT_z6vHPNLH0GfDNJJ2WtnnsrqFpU")
+        FaceLiveness faceLiveness = new FaceLiveness.Builder(mobileToken)
                 .setStage(cafStage)
                 .build();
 
 
-        faceLiveness.startSDK(context, "03892606064", new VerifyLivenessListener() {
+        faceLiveness.startSDK(context, personId, new VerifyLivenessListener() {
         @Override
         public void onSuccess(FaceLivenessResult result) {
             getSucessResponseMap(result);
