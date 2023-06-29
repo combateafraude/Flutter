@@ -1,11 +1,11 @@
 import Flutter
 import UIKit
-import FaceAuthenticator
+import FaceAuthenticatorIproov
 
 let MESSAGE_CHANNEL = "com.combateafraude.face_authenticator/message"
 let ERROR_CODE = "FACE_AUTHENTICATOR_SDK_ERROR"
 
-public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenticatorControllerDelegate {
+public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
 
     var flutterResult: FlutterResult?
 
@@ -32,165 +32,33 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FaceAuthenti
 
             let peopleId = arguments["peopleId"] as! String
 
-            var faceAuthenticatorBuilder = FaceAuthenticatorSdk.Builder(mobileToken: mobileToken)
-            faceAuthenticatorBuilder.setPeopleId(peopleId)
+            let stage = arguments["stage"] as? String
 
-            if let useAnalytics = arguments["useAnalytics"] as? Bool ?? nil {
-                faceAuthenticatorBuilder.setAnalyticsSettings(useAnalytics: useAnalytics)
-            }
-
-            if let hasSound = arguments["sound"] as? Bool ?? nil {
-                faceAuthenticatorBuilder.enableSound(hasSound: hasSound)
-            }
-
-            if let requestTimeout = arguments["requestTimeout"] as? TimeInterval ?? nil {
-                faceAuthenticatorBuilder.setNetworkSettings(requestTimeout: requestTimeout)
-            }
-
-            if let iosSettings = arguments["iosSettings"] as? [String: Any] ?? nil {
-
-                if let customization = iosSettings["customization"] as? [String: Any] ?? nil {
-
-                    let layout = FaceAuthenticatorLayout()
-
-                    if let colorHex = customization["colorHex"] as? String ?? nil {
-                        faceAuthenticatorBuilder.setColorTheme(color: UIColor.init(hexString: colorHex))
-                    }
-
-                    if let showStepLabel = customization["showStepLabel"] as? Bool ?? nil {
-                        faceAuthenticatorBuilder.showStepLabel(show: showStepLabel)
-                    }
-
-                    if let showStatusLabel = customization["showStatusLabel"] as? Bool ?? nil {
-                        faceAuthenticatorBuilder.showStatusLabel(show: showStatusLabel)
-                    }
-
-                    if let closeImageName = customization["closeImageName"] as? String ?? nil {
-                        layout.closeImage = UIImage(named: closeImageName)
-                    }
-
-                    var greenMask : UIImage?
-                    if let greenMaskImageName = customization["greenMaskImageName"] as? String ?? nil {
-                        greenMask = UIImage(named: greenMaskImageName)
-                    }
-
-                    var whiteMask : UIImage?
-                    if let whiteMaskImageName = customization["whiteMaskImageName"] as? String ?? nil {
-                        whiteMask = UIImage(named: whiteMaskImageName)
-                    }
-
-                    var redMask : UIImage?
-                    if let redMaskImageName = customization["redMaskImageName"] as? String ?? nil {
-                        redMask = UIImage(named: redMaskImageName)
-                    }
-
-                    layout.changeMaskImages(
-                        greenMask: greenMask,
-                        whiteMask: whiteMask,
-                        redMask: redMask)
-
-
-                    faceAuthenticatorBuilder.setLayout(layout: layout)
-                }
-
-                if let sensorStability = iosSettings["sensorStability"] as? [String: Any] ?? nil {
-                    if let sensorStability = sensorStability["sensorStability"] as? [String: Any] ?? nil {
-                        let message = sensorStability["message"] as? String ?? nil
-                        let stabilityThreshold = sensorStability["stabilityThreshold"] as? Double ?? nil
-                        faceAuthenticatorBuilder.setStabilitySensorSettings(message: message, stabilityThreshold: stabilityThreshold)
-                    }
-                }
-
-            }
+            var faceAuthenticatorBuilder = FaceAuthSDK.Builder()
+                .setCredentials(token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI2Mjg2YmU5Mzg2NDJmZDAwMDk4NWE1OWUiLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.muHfkGn9ToDyt9cT_z6vHPNLH0GfDNJJ2WtnnsrqFpU", 
+                                personId: "12597217604")
+                .setStage(stage: getStageByString(stage: stage) ?? .PROD)
+                .build()
             
-            if let stage = arguments["stage"] as? String ?? nil {
-                faceAuthenticatorBuilder.setStage(stage: getStageByString(stage: stage))
-            }
-            
-            if let videoCapture = arguments["videoCapture"] as? [String: Any] ?? nil {
-                if let use = videoCapture["use"] as? Bool ?? nil {
-                    if(use){
-                        faceAuthenticatorBuilder.setVideoCaptureSettings(time: videoCapture["time"] as? TimeInterval ?? 3)
-                    }
-                }
-            }
-            
-            if let useOpenEyeValidation = arguments["useOpenEyeValidation"] as? Bool ?? nil {
-                faceAuthenticatorBuilder.setEyesClosedSettings(threshold: arguments["openEyesThreshold"] as? Double ?? 0.5, isEnable: useOpenEyeValidation)
-            }
 
             let controller = UIApplication.shared.keyWindow!.rootViewController as! FlutterViewController
 
-            let scannerVC = FaceAuthenticatorController(faceAuthenticator: faceAuthenticatorBuilder.build())
-            scannerVC.faceAuthenticatorDelegate = self
-            controller.present(scannerVC, animated: true, completion: nil)
+            faceAuthenticatorBuilder?.startFaceAuthSDK(viewController: controller)
         }
-    public func getStageByString(stage: String) -> CAFStage {
+
+        public func getStageByString(stage: String) -> CAFStage {
             if(stage == "BETA"){
                 return .BETA
-            }else if(stage == "OTHER"){
-                return .OTHER
+            }else if(stage == "DEV"){
+                return .DEV
             }else{
                 return .PROD
             }
         }
-
-        public func faceAuthenticatorController(_ faceAuthenticatorController: FaceAuthenticatorController, didFinishWithResults results: FaceAuthenticatorResult) {
-            let response : NSMutableDictionary! = [:]
-
-            response["success"] = NSNumber(value: true)
-            response["authenticated"] = results.authenticated
-            response["signedResponse"] = results.signedResponse
-            response["trackingId"] = results.trackingId
-            response["lensFacing"] = results.lensFacing
-
-            flutterResult!(response)
-        }
-
-        public func faceAuthenticatorControllerDidCancel(_ faceAuthenticatorController: FaceAuthenticatorController) {
-            let response : NSMutableDictionary! = [:]
-
-            response["success"] = nil
-
-            flutterResult!(response)
-        }
-
-        public func faceAuthenticatorController(_ faceAuthenticatorController: FaceAuthenticatorController, didFailWithError error: FaceAuthenticatorFailure) {
-            let response : NSMutableDictionary! = [:]
-
-            response["success"] = NSNumber(value: false)
-            response["message"] = error.message
-            response["type"] = String(describing: type(of: error))
-
-            flutterResult!(response)
-        }
     }
 
-    extension UIColor {
-        convenience init(hexString: String, alpha: CGFloat = 1.0) {
-            let hexString: String = hexString.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-            let scanner = Scanner(string: hexString)
-            if (hexString.hasPrefix("#")) {
-                scanner.scanLocation = 1
-            }
-            var color: UInt32 = 0
-            scanner.scanHexInt32(&color)
-            let mask = 0x000000FF
-            let r = Int(color >> 16) & mask
-            let g = Int(color >> 8) & mask
-            let b = Int(color) & mask
-            let red   = CGFloat(r) / 255.0
-            let green = CGFloat(g) / 255.0
-            let blue  = CGFloat(b) / 255.0
-            self.init(red:red, green:green, blue:blue, alpha:alpha)
-        }
-        func toHexString() -> String {
-            var r:CGFloat = 0
-            var g:CGFloat = 0
-            var b:CGFloat = 0
-            var a:CGFloat = 0
-            getRed(&r, green: &g, blue: &b, alpha: &a)
-            let rgb:Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
-            return String(format:"#%06x", rgb)
-        }
+    extension SwiftFaceAuthenticatorPlugin: FaceAuthSDKDelegate {
+    func didFinishFaceAuth(with faceAuthenticatorResult: FaceAuthenticatorResult) {
+        print(faceAuthenticatorResult)
     }
+}
