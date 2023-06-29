@@ -1,9 +1,7 @@
 import 'face_authenticator_result.dart';
 
 class FaceAuthenticatorFailure extends FaceAuthenticatorResult {
+  String? errorMessage;
 
-  String? message;
-  String? type;
-
-  FaceAuthenticatorFailure(this.message, this.type);
+  FaceAuthenticatorFailure(this.errorMessage);
 }

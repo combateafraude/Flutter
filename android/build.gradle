@@ -17,13 +17,14 @@ rootProject.allprojects {
         google()
         jcenter()
         maven { url "https://repo.combateafraude.com/android/release" }
+        maven { url 'https://raw.githubusercontent.com/iProov/android/master/maven/' }
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 21
@@ -45,6 +46,9 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:face-authenticator:5.8.13'
+        implementation 'androidx.appcompat:appcompat:1.4.1'
+        implementation 'com.google.android.material:material:1.6.0'
+
+        implementation 'com.combateafraude.sdk:new-face-authenticator:1.0.0.1'
     }
 }

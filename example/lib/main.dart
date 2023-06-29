@@ -40,8 +40,7 @@ class _MyAppState extends State<MyApp> {
     String description = "";
 
     FaceAuthenticator faceAuthenticator =
-        new FaceAuthenticator(mobileToken: mobileToken);
-    faceAuthenticator.setPeopleId(peopleId);
+        new FaceAuthenticator(mobileToken: mobileToken, peopleId: peopleId);
 
     // Put the others parameters here
 
@@ -52,24 +51,16 @@ class _MyAppState extends State<MyApp> {
       if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
         result = "Success!";
 
-        description += "\n\tauthenticated: " +
-            (faceAuthenticatorResult.authenticated ? "true" : "false") +
-            "\n\tsignedResponse: " +
-            (faceAuthenticatorResult.signedResponse != null
-                ? faceAuthenticatorResult.signedResponse
-                : "null");
+        description += "isMatch: " + faceAuthenticatorResult.isAlive.toString();
       } else if (faceAuthenticatorResult is FaceAuthenticatorFailure) {
         result = "Falha!";
-        description = "\tType: " +
-            faceAuthenticatorResult.type +
-            "\n\tMessage: " +
-            faceAuthenticatorResult.message;
+        description = "Error Message: " + faceAuthenticatorResult.errorMessage!;
       } else {
         result = "Closed!";
       }
     } on PlatformException catch (err) {
       result = "Excpection!";
-      description = err.message;
+      description = err.message!;
     }
 
     if (!mounted) return;
