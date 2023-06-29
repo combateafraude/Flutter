@@ -12,11 +12,11 @@ class FaceAuthenticator {
       const MethodChannel('face_authenticator');
 
   String mobileToken;
-  String? peopleId;
+  String? personId;
 
   String? stage;
 
-  FaceAuthenticator({required this.mobileToken, this.peopleId});
+  FaceAuthenticator({required this.mobileToken, this.personId});
 
   void setStage(String stage) {
     this.stage = stage;
@@ -26,7 +26,7 @@ class FaceAuthenticator {
     Map<String, dynamic> params = new Map();
 
     params["mobileToken"] = mobileToken;
-    params["peopleId"] = peopleId;
+    params["personId"] = personId;
     params["stage"] = stage;
 
     Map<dynamic, dynamic> resultMap =
