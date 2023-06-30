@@ -27,16 +27,16 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin {
         
         let mobileToken = arguments["mobileToken"] as! String
 
-        let peopleId = arguments["peopleId"] as! String
+        let peopleId = arguments["personId"] as! String
         
         var stageCaf = CAFStage.PROD
-        if let stage = arguments["stage"] as? String ?? nil {
-            stageCaf = getStageByString(stage: stage)
+        if arguments["stage"] != nil {
+            stageCaf = getStageByString(stage: arguments["stage"] as! String)
         }
         
         var faceLiveness = FaceLivenessSDK.Build()
             .setCredentials(mobileToken: mobileToken, personId: peopleId)
-            .setStage(stage: stageCaf)
+            .setStage(stage: .DEV)
             .build()
         
         faceLiveness.delegate = self

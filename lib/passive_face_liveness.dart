@@ -26,7 +26,7 @@ class PassiveFaceLiveness {
     Map<String, dynamic> params = new Map();
 
     params["mobileToken"] = mobileToken;
-    params["peopleId"] = peopleId;
+    params["personId"] = peopleId;
     params["stage"] = stage;
 
     Map<dynamic, dynamic> resultMap =
