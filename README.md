@@ -12,5 +12,7 @@ Este repositório contém documentações e publicações dos plugins Flutter pa
 | SDK | Objetivo | Demonstração |
 | :--: | :--: | :--: |
 | [DocumentDetector](https://github.com/combateafraude/Flutter/tree/document-detector) | SDK responsável por capturar uma RG, CNH e outros documentos genéricos de identificação com qualidade e garantia para a extração dos dados documentais | [Demonstração](https://youtu.be/QZrxPC65aPk) |
-| [PassiveFaceLiveness](https://github.com/combateafraude/Flutter/tree/passive-face-liveness) | Câmera inteligente que captura uma selfie confiável do seu usuário utilizando inteligência artificial. É capaz de detectar e reprovar fotos de foto e gravações | [Demonstração](https://youtu.be/HrEt-DVkCJE) |
-| [FaceAuthenticator](https://github.com/combateafraude/Flutter/tree/face-authenticator) | Facematch com prova de vida do usuário do seu app | [Demonstração](https://youtu.be/tuA_oUcFLYg) |
+| [PassiveFaceLiveness(Deprecated)](https://github.com/combateafraude/Flutter/tree/passive-face-liveness) | Câmera inteligente que captura uma selfie confiável do seu usuário utilizando inteligência artificial. É capaz de detectar e reprovar fotos de foto e gravações | [Demonstração](https://youtu.be/HrEt-DVkCJE) |
+| [FaceAuthenticator(Deprecated)](https://github.com/combateafraude/Flutter/tree/face-authenticator) | Facematch com prova de vida do usuário do seu app | [Demonstração](https://youtu.be/tuA_oUcFLYg) |
+| [FaceAuthenticator]([https://github.com/combateafraude/Flutter/tree/face-authenticator](https://github.com/combateafraude/ios-sdk-face-authenticator-iproov)) | Facematch com prova de vida do usuário do seu app |
+| [PassiveFaceLiveness]([https://github.com/combateafraude/Flutter/tree/passive-face-liveness](https://github.com/combateafraude/ios-sdk-face-liveness-iproov)) | Câmera inteligente que captura uma selfie confiável do seu usuário utilizando inteligência artificial. É capaz de detectar e reprovar fotos de foto e gravações |
