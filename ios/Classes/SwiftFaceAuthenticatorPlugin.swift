@@ -27,20 +27,20 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
         
         let mobileToken = arguments["mobileToken"] as! String
         
-        let peopleId = arguments["peopleId"] as! String
+        let peopleId = arguments["personId"] as? String ?? ""
         
         let stage = getStageByString(stage: arguments["stage"] as! String)
         
         var faceAuthenticatorBuilder = FaceAuthSDK.Builder()
-            .setCredentials(token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI2Mjg2YmU5Mzg2NDJmZDAwMDk4NWE1OWUiLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.muHfkGn9ToDyt9cT_z6vHPNLH0GfDNJJ2WtnnsrqFpU",
-                            personId: "12597217604")
-            .setStage(stage: getStageByString(stage: stage))
+            .setCredentials(token: mobileToken,
+                            personId: peopleId)
+            .setStage(stage: .DEV)
             .build()
         
         
         let controller = UIApplication.shared.keyWindow!.rootViewController
         
-        faceAuthenticatorBuilder?.startFaceAuthSDK(viewController: controller)
+        faceAuthenticatorBuilder.startFaceAuthSDK(viewController: controller!)
     }
     
     public func getStageByString(stage: String) -> CAFStage {
@@ -55,7 +55,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
 }
 
 extension SwiftFaceAuthenticatorPlugin: FaceAuthSDKDelegate {
-    func didFinishFaceAuth(with faceAuthenticatorResult: FaceAuthenticatorResult) {
+    public func didFinishFaceAuth(with faceAuthenticatorResult: FaceAuthenticatorResult) {
         print(faceAuthenticatorResult)
     }
 }
