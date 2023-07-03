@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:passive_face_liveness/caf_stage.dart';
+import 'package:passive_face_liveness/passive_face_liveness.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
 import 'package:passive_face_liveness/result/passive_face_liveness_success.dart';
@@ -36,7 +38,9 @@ class _MyAppState extends State<MyApp> {
     String description = "";
 
     PassiveFaceLiveness passiveFaceLiveness =
-        new PassiveFaceLiveness(mobileToken: mobileToken);
+        new PassiveFaceLiveness(mobileToken: mobileToken, peopleId: "");
+
+    passiveFaceLiveness.setStage(CafStage.DEV);
 
     // Put the others parameters here
 
@@ -47,13 +51,13 @@ class _MyAppState extends State<MyApp> {
       result = "Success!";
 
       description += "\n\timageUrl: " +
-          passiveFaceLivenessResult.imageUrl +
+          passiveFaceLivenessResult.imageUrl! +
           "\n\timageUrl: " +
-          "\n\isAlive: " + passiveFaceLivenessResult.isAlive;
+          "\n\isAlive: " +
+          passiveFaceLivenessResult.isAlive.toString();
     } else if (passiveFaceLivenessResult is PassiveFaceLivenessFailure) {
       result = "Falha!";
-      description = "Message: " +
-          passiveFaceLivenessResult.errorMessage;
+      description = "Message: " + passiveFaceLivenessResult.errorMessage!;
     } else {
       result = "Closed!";
     }
