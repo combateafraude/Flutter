@@ -1,8 +1,8 @@
-import 'package:face_authenticator/caf_stage.dart';
-import 'package:face_authenticator/face_authenticator.dart';
-import 'package:face_authenticator/result/face_authenticator_failure.dart';
-import 'package:face_authenticator/result/face_authenticator_result.dart';
-import 'package:face_authenticator/result/face_authenticator_success.dart';
+import 'package:new_face_authenticator/caf_stage.dart';
+import 'package:new_face_authenticator/face_authenticator.dart';
+import 'package:new_face_authenticator/result/face_authenticator_failure.dart';
+import 'package:new_face_authenticator/result/face_authenticator_result.dart';
+import 'package:new_face_authenticator/result/face_authenticator_success.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';

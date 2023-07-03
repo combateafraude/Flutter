@@ -128,13 +128,13 @@
       "languageVersion": "2.14"
     },
     {
-      "name": "face_authenticator",
+      "name": "new_face_authenticator",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2023-06-30T16:56:48.371420Z",
+  "generated": "2023-07-03T19:19:44.106175Z",
   "generator": "pub",
   "generatorVersion": "3.0.5"
 }
