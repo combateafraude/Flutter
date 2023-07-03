@@ -1,3 +1,4 @@
+import 'package:face_authenticator/caf_stage.dart';
 import 'package:face_authenticator/face_authenticator.dart';
 import 'package:face_authenticator/result/face_authenticator_failure.dart';
 import 'package:face_authenticator/result/face_authenticator_result.dart';
@@ -40,8 +41,9 @@ class _MyAppState extends State<MyApp> {
     String description = "";
 
     FaceAuthenticator faceAuthenticator =
-        new FaceAuthenticator(mobileToken: mobileToken, peopleId: peopleId);
+        new FaceAuthenticator(mobileToken: mobileToken, personId: peopleId);
 
+    faceAuthenticator.setStage(CafStage.DEV);
     // Put the others parameters here
 
     try {
