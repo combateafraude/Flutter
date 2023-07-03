@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_closed.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_failure.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_result.dart';
-import 'package:passive_face_liveness/result/passive_face_liveness_success.dart';
+import 'package:new_face_liveness/result/passive_face_liveness_closed.dart';
+import 'package:new_face_liveness/result/passive_face_liveness_failure.dart';
+import 'package:new_face_liveness/result/passive_face_liveness_result.dart';
+import 'package:new_face_liveness/result/passive_face_liveness_success.dart';
 
 class PassiveFaceLiveness {
   static const MethodChannel _channel =

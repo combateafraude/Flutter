@@ -1,3 +1,1 @@
-abstract class PassiveFaceLivenessResult {
-
-}
+abstract class PassiveFaceLivenessResult {}
