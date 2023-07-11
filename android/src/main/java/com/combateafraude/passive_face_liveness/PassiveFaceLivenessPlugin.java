@@ -102,9 +102,7 @@ public class PassiveFaceLivenessPlugin
     private HashMap<String, Object> getSucessResponseMap(FaceLivenessResult result) {
         HashMap<String, Object> responseMap = new HashMap<>();
         responseMap.put("success", Boolean.TRUE);
-        responseMap.put("imageUrl", result.imageUrl);
-        responseMap.put("isAlive", result.isAlive);
-        responseMap.put("token", result.token);
+        responseMap.put("signedResponse", result.getSignedResponse());
 
         return responseMap;
     }
@@ -112,7 +110,7 @@ public class PassiveFaceLivenessPlugin
     private HashMap<String, Object> getFailureResponseMap(FaceLivenessResult result) {
         HashMap<String, Object> responseMap = new HashMap<>();
         responseMap.put("success", Boolean.FALSE);
-        responseMap.put("errorMessage", result.errorMessage);
+        responseMap.put("errorMessage", result.getErrorMessage());
         return responseMap;
     }
 

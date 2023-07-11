@@ -38,9 +38,7 @@ class PassiveFaceLiveness {
       return new PassiveFaceLivenessClosed();
     } else if (success == true) {
       return new PassiveFaceLivenessSuccess(
-          imageUrl: resultMap["imageUrl"],
-          isAlive: resultMap["isAlive"],
-          token: resultMap["token"]);
+          signedResponse: resultMap["signedResponse"]);
     } else {
       return new PassiveFaceLivenessFailure(resultMap["errorMessage"]);
     }

@@ -50,11 +50,8 @@ class _MyAppState extends State<MyApp> {
     if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
       result = "Success!";
 
-      description += "\n\timageUrl: " +
-          passiveFaceLivenessResult.imageUrl! +
-          "\n\timageUrl: " +
-          "\n\isAlive: " +
-          passiveFaceLivenessResult.isAlive.toString();
+      description +=
+          "\n\signedResponse: " + passiveFaceLivenessResult.signedResponse!;
     } else if (passiveFaceLivenessResult is PassiveFaceLivenessFailure) {
       result = "Falha!";
       description = "Message: " + passiveFaceLivenessResult.errorMessage!;

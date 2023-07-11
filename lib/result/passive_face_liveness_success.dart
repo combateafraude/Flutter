@@ -1,9 +1,7 @@
 import 'package:new_face_liveness/result/passive_face_liveness_result.dart';
 
 class PassiveFaceLivenessSuccess extends PassiveFaceLivenessResult {
-  String? imageUrl;
-  bool? isAlive;
-  String? token;
+  String? signedResponse;
 
-  PassiveFaceLivenessSuccess({this.imageUrl, this.isAlive, this.token});
+  PassiveFaceLivenessSuccess({this.signedResponse});
 }
