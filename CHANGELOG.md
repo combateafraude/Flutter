@@ -1,3 +1,7 @@
-#### 03 de julho de 2023 
+#### July 17 2023 
+*  **1.1.0**
+  * **New**: Using new Liveness on the authenticator.
+
+#### July 03 2023 
 *  **1.0.0**
-  * **Novo**: Hello World!!, first publish version.
+  * **New**: Hello World!!, first publish version.

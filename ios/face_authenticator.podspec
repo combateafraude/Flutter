@@ -3,9 +3,9 @@
 # Run `pod lib lint face_authenticator.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'face_authenticator'
+  s.name             = 'new_face_authenticator'
   s.summary          = 'Flutter plugin for Combate à Fraudes FaceAuthenticator'
-  s.version          = '3.12.0'
+  s.version          = '1.1.0'
   s.homepage         = 'https://www.combateafraude.com/'
   s.license          = { :file => 'LICENSE', :type => 'MIT' }
   s.author           = { 'ti@combateafraude.com' => 'ti@combateafraude.com' }
@@ -18,5 +18,5 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
 
   s.dependency 'Flutter'
-  s.dependency 'FaceAuthenticatorIproov', '1.1.0'
+  s.dependency 'FaceAuth', '1.5.0'
 end
