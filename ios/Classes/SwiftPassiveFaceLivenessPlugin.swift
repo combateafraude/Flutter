@@ -63,13 +63,10 @@ extension SwiftPassiveFaceLivenessPlugin: FaceLivenessDelegate {
 
         if faceLivenesResult.errorMessage != nil {
             response["success"] = NSNumber(value: false)
-            response["isAlive"] = faceLivenesResult.isAlive
             response["errorMessage"] = faceLivenesResult.errorMessage
         } else {
             response["success"] = NSNumber(value: true)
-            response["imageUrl"] = faceLivenesResult.imageUrl
-            response["isAlive"] = faceLivenesResult.isAlive
-            response["token"] = faceLivenesResult.token
+            response["signedResponse"] = faceLivenesResult.signedResponse
         }
 
         flutterResult!(response)
