@@ -66,21 +66,21 @@ class _MyAppState extends State<MyApp> {
       result = "Success!";
 
       description += "\n\timagePath: " +
-          passiveFaceLivenessResult.imagePath +
+          passiveFaceLivenessResult.imagePath! +
           "\n\timageUrl: " +
           (passiveFaceLivenessResult.imageUrl != null
-              ? passiveFaceLivenessResult.imageUrl.split("?")[0] + "..."
+              ? passiveFaceLivenessResult.imageUrl!.split("?")[0] + "..."
               : "null") +
           "\n\tsignedResponse: " +
           (passiveFaceLivenessResult.signedResponse != null
-              ? passiveFaceLivenessResult.signedResponse
+              ? passiveFaceLivenessResult.signedResponse!
               : "null");
     } else if (passiveFaceLivenessResult is PassiveFaceLivenessFailure) {
       result = "Falha!";
       description = "\tType: " +
-          passiveFaceLivenessResult.type +
+          passiveFaceLivenessResult.type! +
           "\n\tMessage: " +
-          passiveFaceLivenessResult.message;
+          passiveFaceLivenessResult.message!;
     } else {
       result = "Closed!";
     }
