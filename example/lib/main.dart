@@ -92,32 +92,32 @@ class _MyAppState extends State<MyApp> {
         result = "Success!";
         description = "Type: " +
             (documentDetectorResult.type != null
-                ? documentDetectorResult.type
+                ? documentDetectorResult.type!
                 : "null");
         for (Capture capture in documentDetectorResult.captures) {
           description += "\n\n\tCapture:\n\timagePath: " +
-              capture.imagePath +
+              capture.imagePath! +
               "\n\timageUrl: " +
               (capture.imageUrl != null
-                  ? capture.imageUrl.split("?")[0] + "..."
+                  ? capture.imageUrl!.split("?")[0] + "..."
                   : "null") +
               "\n\tlabel: " +
-              (capture.label != null ? capture.label : "null") +
+              (capture.label != null ? capture.label! : "null") +
               "\n\tquality: " +
               (capture.quality != null ? capture.quality.toString() : "null");
         }
       } else if (documentDetectorResult is DocumentDetectorFailure) {
         result = "Falha!";
         description = "\tType: " +
-            documentDetectorResult.type +
+            documentDetectorResult.type! +
             "\n\tMessage: " +
-            documentDetectorResult.message;
+            documentDetectorResult.message!;
       } else {
         result = "Closed!";
       }
     } on PlatformException catch (err) {
       result = "Excpection!";
-      description = err.message;
+      description = err.message!;
     }
 
     if (!mounted) return;
