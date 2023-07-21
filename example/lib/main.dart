@@ -53,23 +53,23 @@ class _MyAppState extends State<MyApp> {
         result = "Success!";
 
         description += "\n\tauthenticated: " +
-            (faceAuthenticatorResult.authenticated ? "true" : "false") +
+            (faceAuthenticatorResult.authenticated! ? "true" : "false") +
             "\n\tsignedResponse: " +
             (faceAuthenticatorResult.signedResponse != null
-                ? faceAuthenticatorResult.signedResponse
+                ? faceAuthenticatorResult.signedResponse!
                 : "null");
       } else if (faceAuthenticatorResult is FaceAuthenticatorFailure) {
         result = "Falha!";
         description = "\tType: " +
-            faceAuthenticatorResult.type +
+            faceAuthenticatorResult.type! +
             "\n\tMessage: " +
-            faceAuthenticatorResult.message;
+            faceAuthenticatorResult.message!;
       } else {
         result = "Closed!";
       }
     } on PlatformException catch (err) {
       result = "Excpection!";
-      description = err.message;
+      description = err.message!;
     }
 
     if (!mounted) return;
