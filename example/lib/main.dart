@@ -6,6 +6,7 @@ import 'package:document_detector/android/maskType.dart';
 import 'package:document_detector/android/resolution.dart';
 import 'package:document_detector/ios/ios_resolution.dart';
 import 'package:document_detector/message_settings.dart';
+import 'package:document_detector/preview-settings.dart';
 import 'package:document_detector/show_preview.dart';
 import 'package:document_detector/document_detector_step.dart';
 import 'package:document_detector/document_type.dart';
@@ -86,7 +87,7 @@ class _MyAppState extends State<MyApp> {
 
     documentDetector.setAndroidSettings(detectorAndroidSettings);
 
-    documentDetector.setShowPreview(new ShowPreview(show: true));
+    documentDetector.setPreviewSettings(new PreviewSettings(show: true));
 
     // Put the others parameters here
 
@@ -98,32 +99,32 @@ class _MyAppState extends State<MyApp> {
         result = "Success!";
         description = "Type: " +
             (documentDetectorResult.type != null
-                ? documentDetectorResult.type
+                ? documentDetectorResult.type!
                 : "null");
         for (Capture capture in documentDetectorResult.captures) {
           description += "\n\n\tCapture:\n\timagePath: " +
-              capture.imagePath +
+              capture.imagePath! +
               "\n\timageUrl: " +
               (capture.imageUrl != null
-                  ? capture.imageUrl.split("?")[0] + "..."
+                  ? capture.imageUrl!.split("?")[0] + "..."
                   : "null") +
               "\n\tlabel: " +
-              (capture.label != null ? capture.label : "null") +
+              (capture.label != null ? capture.label! : "null") +
               "\n\tquality: " +
               (capture.quality != null ? capture.quality.toString() : "null");
         }
       } else if (documentDetectorResult is DocumentDetectorFailure) {
         result = "Falha!";
         description = "\tType: " +
-            documentDetectorResult.type +
+            documentDetectorResult.type! +
             "\n\tMessage: " +
-            documentDetectorResult.message;
+            documentDetectorResult.message!;
       } else {
         result = "Closed!";
       }
     } on PlatformException catch (err) {
       result = "Excpection!";
-      description = err.message;
+      description = err.message!;
     }
 
     if (!mounted) return;
