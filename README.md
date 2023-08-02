@@ -80,9 +80,7 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 
 | Campo |
 | --------- |
-| `String imageUrl`<br><br> URL da imagem armazenada temporariamente nos servidores da CAF.|
-| `bool isAlive`<br><br> Retorno do Liveness, use este retorno para validar se o usuário foi aprovado ou não pelos serviços da caf. |
-| `String userId`<br><br> Identificador interno do usuário. |
+| `String signedResponse`<br><br> Signed response from the CAF server confirming that the captured selfie has a real face. This parameter is used to get an extra layer of security, checking that the signature of the response is not broken, or caused by request interception. If it is broken, there is a strong indication of request interception.|
 
 #### PassiveFaceLivenessFailure
 
