@@ -65,18 +65,18 @@ public class PassiveFaceLivenessPlugin
 
         faceLiveness.startSDK(context, personId, new VerifyLivenessListener() {
         @Override
-        public void onSuccess(FaceLivenessResult result) {
-            getSucessResponseMap(result);
+        public void onSuccess(FaceLivenessResult faceLivenessResult) {
+            result.success(getSucessResponseMap(faceLivenessResult));
         }
 
         @Override
-        public void onError(FaceLivenessResult result) {
-            getFailureResponseMap(result);
+        public void onError(FaceLivenessResult faceLivenessResult) {
+            result.success(getFailureResponseMap(faceLivenessResult));
         }
 
         @Override
-        public void onCancel(FaceLivenessResult result) {
-            getClosedResponseMap();
+        public void onCancel(FaceLivenessResult faceLivenessResult) {
+            result.success(getClosedResponseMap());
         }
 
         @Override
