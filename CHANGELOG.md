@@ -1,3 +1,7 @@
+#### 02 de agosto de 2023 
+*  **1.1.1**
+  * **Fix**: Fix on the android return of the SDK, it was returning null results in some scenarios.
+
 #### 17 de julho de 2023 
 *  **1.1.0**
   * **Mudança**: Now the SDK's return a signed respose in case of success, you must access the parameter `signedResponse` in the `PassiveFaceLivenessSuccess` object.
