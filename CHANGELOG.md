@@ -1,4 +1,8 @@
 #### 02 de agosto de 2023 
+*  **1.1.2**
+  * **Fix**: Fix Documentation erros.
+
+#### 02 de agosto de 2023 
 *  **1.1.1**
   * **Fix**: Fix on the android return of the SDK, it was returning null results in some scenarios.
 
