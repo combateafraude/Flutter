@@ -73,17 +73,18 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
         faceAuthenticator.authenticate(context, personId, new VerifyAuthenticationListener() {
             @Override
             public void onSuccess(FaceAuthenticatorResult faceAuthenticatorResult) {
-                getSucessResponseMap(faceAuthenticatorResult);
+                result.success(getSucessResponseMap(faceAuthenticatorResult));
+                
             }
 
             @Override
             public void onError(FaceAuthenticatorResult faceAuthenticatorResult) {
-                getFailureResponseMap(faceAuthenticatorResult);
+                result.success(getFailureResponseMap(faceAuthenticatorResult));
             }
 
             @Override
             public void onCancel(FaceAuthenticatorResult faceAuthenticatorResult) {
-                getClosedResponseMap();
+                result.success(getClosedResponseMap());
             }
 
             @Override
