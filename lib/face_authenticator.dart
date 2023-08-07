@@ -12,11 +12,11 @@ class FaceAuthenticator {
       const MethodChannel('face_authenticator');
 
   String mobileToken;
-  String? personId;
+  String personId;
 
-  String? stage;
+  String stage = "PROD";
 
-  FaceAuthenticator({required this.mobileToken, this.personId});
+  FaceAuthenticator({required this.mobileToken, required this.personId});
 
   void setStage(String stage) {
     this.stage = stage;
@@ -38,9 +38,7 @@ class FaceAuthenticator {
       return new FaceAuthenticatorClosed();
     } else if (success == true) {
       return new FaceAuthenticatorSuccess(
-          isAlive: resultMap["isAlive"],
-          isMatch: resultMap["isMatch"],
-          userId: resultMap["userId"]);
+          resultMap["isAlive"], resultMap["isMatch"], resultMap["userId"], "");
     } else {
       return new FaceAuthenticatorFailure(resultMap["errorMessage"]);
     }

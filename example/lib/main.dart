@@ -1,10 +1,10 @@
-import 'package:new_face_authenticator/caf_stage.dart';
-import 'package:new_face_authenticator/face_authenticator.dart';
-import 'package:new_face_authenticator/result/face_authenticator_failure.dart';
-import 'package:new_face_authenticator/result/face_authenticator_result.dart';
-import 'package:new_face_authenticator/result/face_authenticator_success.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:new_face_authenticator_compatible/caf_stage.dart';
+import 'package:new_face_authenticator_compatible/face_authenticator.dart';
+import 'package:new_face_authenticator_compatible/result/face_authenticator_failure.dart';
+import 'package:new_face_authenticator_compatible/result/face_authenticator_result.dart';
+import 'package:new_face_authenticator_compatible/result/face_authenticator_success.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
     FaceAuthenticator faceAuthenticator =
         new FaceAuthenticator(mobileToken: mobileToken, personId: peopleId);
 
-    faceAuthenticator.setStage(CafStage.DEV);
+    //faceAuthenticator.setStage(CafStage.DEV);
     // Put the others parameters here
 
     try {

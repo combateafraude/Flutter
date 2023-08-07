@@ -99,7 +99,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
-  new_face_authenticator:
+  new_face_authenticator_compatible:
     dependency: "direct main"
     description:
       path: ".."
