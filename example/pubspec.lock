@@ -99,7 +99,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
-  new_face_liveness:
+  new_face_liveness_compatible:
     dependency: "direct main"
     description:
       path: ".."

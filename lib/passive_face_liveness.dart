@@ -2,21 +2,22 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:new_face_liveness/result/passive_face_liveness_closed.dart';
-import 'package:new_face_liveness/result/passive_face_liveness_failure.dart';
-import 'package:new_face_liveness/result/passive_face_liveness_result.dart';
-import 'package:new_face_liveness/result/passive_face_liveness_success.dart';
+import 'package:new_face_liveness_compatible/result/passive_face_liveness_closed.dart';
+import 'package:new_face_liveness_compatible/result/passive_face_liveness_failure.dart';
+
+import 'package:new_face_liveness_compatible/result/passive_face_liveness_result.dart';
+import 'package:new_face_liveness_compatible/result/passive_face_liveness_success.dart';
 
 class PassiveFaceLiveness {
   static const MethodChannel _channel =
       const MethodChannel('passive_face_liveness');
 
   String mobileToken;
-  String? peopleId;
+  String peopleId;
 
-  String? stage;
+  String stage = "PROD";
 
-  PassiveFaceLiveness({required this.mobileToken, this.peopleId});
+  PassiveFaceLiveness({required this.mobileToken, required this.peopleId});
 
   void setStage(String stage) {
     this.stage = stage;
@@ -37,8 +38,7 @@ class PassiveFaceLiveness {
     if (success == null) {
       return new PassiveFaceLivenessClosed();
     } else if (success == true) {
-      return new PassiveFaceLivenessSuccess(
-          signedResponse: resultMap["signedResponse"]);
+      return new PassiveFaceLivenessSuccess(resultMap["signedResponse"]);
     } else {
       return new PassiveFaceLivenessFailure(resultMap["errorMessage"]);
     }

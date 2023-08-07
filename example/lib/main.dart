@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:new_face_liveness/caf_stage.dart';
-import 'package:new_face_liveness/passive_face_liveness.dart';
-import 'package:new_face_liveness/result/passive_face_liveness_failure.dart';
-import 'package:new_face_liveness/result/passive_face_liveness_result.dart';
-import 'package:new_face_liveness/result/passive_face_liveness_success.dart';
+import 'package:new_face_liveness_compatible/caf_stage.dart';
+import 'package:new_face_liveness_compatible/passive_face_liveness.dart';
+import 'package:new_face_liveness_compatible/result/passive_face_liveness_failure.dart';
+import 'package:new_face_liveness_compatible/result/passive_face_liveness_result.dart';
+import 'package:new_face_liveness_compatible/result/passive_face_liveness_success.dart';
+
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -38,9 +39,9 @@ class _MyAppState extends State<MyApp> {
     String description = "";
 
     PassiveFaceLiveness passiveFaceLiveness =
-        new PassiveFaceLiveness(mobileToken: mobileToken, peopleId: "");
+        new PassiveFaceLiveness(mobileToken: mobileToken, peopleId: '');
 
-    passiveFaceLiveness.setStage(CafStage.DEV);
+    //passiveFaceLiveness.setStage(CafStage.DEV);
 
     // Put the others parameters here
 
@@ -51,10 +52,10 @@ class _MyAppState extends State<MyApp> {
       result = "Success!";
 
       description +=
-          "\n\signedResponse: " + passiveFaceLivenessResult.signedResponse!;
+          "\n\signedResponse: " + passiveFaceLivenessResult.signedResponse;
     } else if (passiveFaceLivenessResult is PassiveFaceLivenessFailure) {
       result = "Falha!";
-      description = "Message: " + passiveFaceLivenessResult.errorMessage!;
+      description = "Message: " + passiveFaceLivenessResult.errorMessage;
     } else {
       result = "Closed!";
     }
