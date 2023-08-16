@@ -1,48 +1,48 @@
 PODS:
-  - face_authenticator (3.12.0):
-    - FaceAuthenticatorIproov (= 1.1.0)
-    - Flutter
-  - FaceAuthenticatorIproov (1.1.0):
-    - FaceLivenessIproov (= 1.3.0)
-  - FaceLivenessIproov (1.3.0):
+  - FaceAuth (2.1.0):
+    - FaceLiveness (= 1.5.0)
+  - FaceLiveness (1.5.0):
     - iProov (= 10.3.0)
   - Flutter (1.0.0)
   - iProov (10.3.0):
     - Starscream (~> 4.0)
+  - new_face_authenticator (1.2.0):
+    - FaceAuth (= 2.1.0)
+    - Flutter
   - permission_handler_apple (9.1.1):
     - Flutter
   - Starscream (4.0.4)
 
 DEPENDENCIES:
-  - face_authenticator (from `.symlinks/plugins/face_authenticator/ios`)
   - Flutter (from `Flutter`)
+  - new_face_authenticator (from `.symlinks/plugins/new_face_authenticator/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
 
 SPEC REPOS:
-  https://github.com/combateafraude/iOS:
-    - FaceAuthenticatorIproov
-    - FaceLivenessIproov
+  https://github.com/combateafraude/iOS.git:
+    - FaceAuth
+    - FaceLiveness
   trunk:
     - iProov
     - Starscream
 
 EXTERNAL SOURCES:
-  face_authenticator:
-    :path: ".symlinks/plugins/face_authenticator/ios"
   Flutter:
     :path: Flutter
+  new_face_authenticator:
+    :path: ".symlinks/plugins/new_face_authenticator/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
 
 SPEC CHECKSUMS:
-  face_authenticator: 0c596bd322fdf46f638022890e2d19e7bfb011cf
-  FaceAuthenticatorIproov: e3dd309d5192de049117c8ada96a4d38ce11fc54
-  FaceLivenessIproov: 2f3742da45a629809a13c2f1f9b0019520f1aebc
+  FaceAuth: 5a9c5f58359c29b0be86eefe0406fb9b6bc01c5c
+  FaceLiveness: 5d08c0d56724f93063761926c456081238d31681
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   iProov: 4f50623887ec2be48f841b157c94ba85099a9d1d
+  new_face_authenticator: c3762b4685c96c6768fdaa2e5fd9a7812a10b0d8
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
 
 PODFILE CHECKSUM: 8fde8468cf874f5e5678e8761c43eed7abc0f591
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1

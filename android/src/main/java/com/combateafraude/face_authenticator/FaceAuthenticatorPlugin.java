@@ -12,6 +12,7 @@ import java.util.HashMap;
 import input.CafStage;
 import input.FaceAuthenticator;
 import input.VerifyAuthenticationListener;
+import input.iproov.Filter;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -23,15 +24,8 @@ import io.flutter.plugin.common.PluginRegistry;
 import output.FaceAuthenticatorResult;
 
 @SuppressWarnings("unchecked")
-public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
-
-    private static final int REQUEST_CODE = 1003;
-
-    private static final String DRAWABLE_RES = "drawable";
-    private static final String STYLE_RES = "style";
-    private static final String STRING_RES = "string";
-    private static final String RAW_RES = "raw";
-    private static final String LAYOUT_RES = "layout";
+public class FaceAuthenticatorPlugin
+        implements FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
 
     private MethodChannel channel;
     private Result result;
@@ -56,25 +50,35 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
         // Mobile token
         String mobileToken = (String) argumentsMap.get("mobileToken");
 
-        //PersonID
+        // PersonID
         String personId = (String) argumentsMap.get("personId");
 
-        //Stage
-        CafStage cafStage = CafStage.PROD;
-        String flutterStage = (String) argumentsMap.get("stage");
-        if (flutterStage != null) {
-            cafStage = CafStage.valueOf(flutterStage);
+        FaceAuthenticator.Builder mFaceAuthBuilder = new FaceAuthenticator.Builder(mobileToken);
+
+        // Stage
+        String stage = (String) argumentsMap.get("stage");
+        if (stage != null) {
+            mFaceAuthBuilder.setStage(CafStage.valueOf(stage));
         }
 
-        FaceAuthenticator faceAuthenticator = new FaceAuthenticator.Builder(mobileToken)
-                .setStage(cafStage)
-                .build();
+        // Filter
+        String filter = (String) argumentsMap.get("filter");
+        if (filter != null) {
+            mFaceAuthBuilder.setFilter(Filter.valueOf(filter));
+        }
 
-        faceAuthenticator.authenticate(context, personId, new VerifyAuthenticationListener() {
+        // Enable Screenshot
+        Boolean enableScreenshot = (Boolean) argumentsMap.get("enableScreenshot");
+        if (enableScreenshot != null) {
+            mFaceAuthBuilder.setEnableScreenshots(enableScreenshot);
+        }
+
+        // FaceAuthenticator build
+        mFaceAuthBuilder.build().authenticate(context, personId, new VerifyAuthenticationListener() {
             @Override
             public void onSuccess(FaceAuthenticatorResult faceAuthenticatorResult) {
                 result.success(getSucessResponseMap(faceAuthenticatorResult));
-                
+
             }
 
             @Override
@@ -99,18 +103,10 @@ public class FaceAuthenticatorPlugin implements FlutterPlugin, MethodCallHandler
         });
     }
 
-    private Integer getResourceId(@Nullable String resourceName, String resourceType) {
-        if (resourceName == null || activity == null) return null;
-        int resId = activity.getResources().getIdentifier(resourceName, resourceType, activity.getPackageName());
-        return resId == 0 ? null : resId;
-    }
-
     private HashMap<String, Object> getSucessResponseMap(FaceAuthenticatorResult result) {
         HashMap<String, Object> responseMap = new HashMap<>();
         responseMap.put("success", Boolean.TRUE);
-        responseMap.put("isAlive", result.isAlive());
-        responseMap.put("isAlive", result.isMatch());
-        responseMap.put("userId", result.getUserId());
+        responseMap.put("signedResponse", result.getSignedResponse());
 
         return responseMap;
     }

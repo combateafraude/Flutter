@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:new_face_authenticator_compatible/caf_stage.dart';
+import 'package:new_face_authenticator_compatible/camera_filter.dart';
 import 'package:new_face_authenticator_compatible/face_authenticator.dart';
 import 'package:new_face_authenticator_compatible/result/face_authenticator_failure.dart';
 import 'package:new_face_authenticator_compatible/result/face_authenticator_result.dart';
@@ -41,10 +42,13 @@ class _MyAppState extends State<MyApp> {
     String description = "";
 
     FaceAuthenticator faceAuthenticator =
-        new FaceAuthenticator(mobileToken: mobileToken, personId: peopleId);
+        FaceAuthenticator(mobileToken: mobileToken, personId: peopleId);
 
-    //faceAuthenticator.setStage(CafStage.DEV);
-    // Put the others parameters here
+    faceAuthenticator.setStage(CafStage.DEV);
+
+    faceAuthenticator.setCameraFilter(CameraFilter.NATURAL);
+
+    faceAuthenticator.setEnableScreenshots(true);
 
     try {
       FaceAuthenticatorResult faceAuthenticatorResult =
@@ -53,10 +57,11 @@ class _MyAppState extends State<MyApp> {
       if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
         result = "Success!";
 
-        description += "isMatch: " + faceAuthenticatorResult.isAlive.toString();
+        description =
+            "authenticated: ${faceAuthenticatorResult.signedResponse}";
       } else if (faceAuthenticatorResult is FaceAuthenticatorFailure) {
         result = "Falha!";
-        description = "Error Message: " + faceAuthenticatorResult.errorMessage!;
+        description = "Error Message: ${faceAuthenticatorResult.errorMessage}";
       } else {
         result = "Closed!";
       }
