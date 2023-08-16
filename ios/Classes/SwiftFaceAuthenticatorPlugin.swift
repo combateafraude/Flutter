@@ -1,6 +1,7 @@
 import Flutter
 import UIKit
-import FaceAuthenticatorIproov
+import FaceAuthenticator
+import FaceLiveness
 
 public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
     
@@ -27,23 +28,29 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
         
         let mobileToken = arguments["mobileToken"] as! String
         
-        let peopleId = arguments["personId"] as? String ?? ""
+        let personId = arguments["personId"] as! String
+
+        let mFaceAuthBuilder = FaceAuthSDK.Builder()
+            .setCredentials(token: mobileToken, personId: personId)
+
+        //Stage
+        if let stage = arguments["stage"] as? String ?? nil {
+            mFaceAuthBuilder.setStage(stage: getStageByString(stage: stage))
+        }
+
+        //Camera Filter
+        if let filter = arguments["filter"] as? String ?? nil {
+            mFaceAuthBuilder.setFilter(filter: getFilterByString(filter: filter))
+        }
         
-        let stage = getStageByString(stage: arguments["stage"] as! String)
-        
-        var faceAuthenticatorBuilder = FaceAuthSDK.Builder()
-            .setCredentials(token: mobileToken,
-                            personId: peopleId)
-            .setStage(stage: .DEV)
-            .build()
-        
+        //FaceAuthenticator Build
         
         let controller = UIApplication.shared.keyWindow!.rootViewController
         
-        faceAuthenticatorBuilder.startFaceAuthSDK(viewController: controller!)
+        mFaceAuthBuilder.build().startFaceAuthSDK(viewController: controller!)
     }
     
-    public func getStageByString(stage: String) -> CAFStage {
+    public func getStageByString(stage: String) -> FaceLiveness.CAFStage {
         if(stage == "BETA"){
             return .BETA
         }else if(stage == "DEV"){
@@ -52,10 +59,33 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
             return .PROD
         }
     }
+    
+    public func getFilterByString(filter: String) -> FaceLiveness.Filter {
+        if(filter == "NATURAL"){
+            return .natural
+        } else {
+            return .lineDrawing
+        }
+        
+    }
 }
 
 extension SwiftFaceAuthenticatorPlugin: FaceAuthSDKDelegate {
     public func didFinishFaceAuth(with faceAuthenticatorResult: FaceAuthenticatorResult) {
-        print(faceAuthenticatorResult)
+        let response : NSMutableDictionary! = [:]
+        
+        response["success"] = nil
+        
+        if faceAuthenticatorResult.errorMessage != nil {
+            response["success"] = NSNumber(value: false)
+            response["errorMessage"] = faceAuthenticatorResult.errorMessage
+        }
+        
+        if faceAuthenticatorResult.signedResponse != nil {
+            response["success"] = NSNumber(value: true)
+            response["signedResponse"] = faceAuthenticatorResult.signedResponse
+        }
+        
+        flutterResult!(response)
     }
 }
