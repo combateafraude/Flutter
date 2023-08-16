@@ -60,7 +60,7 @@ Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runne
 ## Utilização
 
 ```dart
-FaceAuthenticator faceAuthenticator = new FaceAuthenticator(mobileToken: mobileToken);
+FaceAuthenticator faceAuthenticator = new FaceAuthenticator(mobileToken: mobileToken, personId: 'CPF');
 
 // Outros parâmetros de customização
 
@@ -75,15 +75,35 @@ if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
 }
 ```
 
+### FaceAuthenticator methods
 
-#### FaceAuthenticatorSuccess
+| Parameter | Required |
+| --------- | -------- |
+| <p><strong><code>.setStage(String stage)</code></strong></p><p>Used to redirect the SDK to the desired environment in caf api.</p> | No |
+| <p><strong><code>.setFilter(String filter)</code></strong></p><p>Used to change the SDK camera filter. It has the following options: **CameraFilter.NATURAL** or **CameraFilter.LINE_DRAWING**</p> | No, the default is **CameraFilter.LINE_DRAWING** |
+| <p><strong><code>.setEnableScreenshots(bool enable)</code></strong></p><p>Used to enable screenshots during the SDK scan.</p> | No, the default is **false** |
 
-| Campo |
+### Enums
+
+#### CafStage
+| Description | Values |
+| ----------- | ----- |
+| Used to set the SDK stage on `.setStage(String stage)` method. | `CafStage.PROD`, `CafStage.BETA` |
+
+#### CameraFilter
+| Description | Values |
+| ----------- | ----- |
+| Used to set the SDK's camera filter | `CameraFilter.NATURAL`, `CameraFilter.LINE_DRAWING`  |
+
+
+### FaceAuthenticatorSuccess
+
+| Field |
 | --------- |
 | `String signedResponse`<br><br> Signed response from the CAF server confirming that the captured selfie has a real face. This parameter is used to get an extra layer of security, checking that the signature of the response is not broken, or caused by request interception. If it is broken, there is a strong indication of request interception.|
 
-#### FaceAuthenticatorFailure
+### FaceAuthenticatorFailure
 
-| Campo |
+| Fiel |
 | --------- |
 | `String errorMessage`<br><br>Mensagem explicando o motivo da falha do SDK.|
