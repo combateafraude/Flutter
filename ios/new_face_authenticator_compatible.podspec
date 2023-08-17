@@ -3,7 +3,7 @@
 # Run `pod lib lint face_authenticator.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'new_face_authenticator'
+  s.name             = 'new_face_authenticator_compatible'
   s.summary          = 'Flutter plugin for Combate à Fraudes FaceAuthenticator'
   s.version          = '1.2.0'
   s.homepage         = 'https://www.combateafraude.com/'

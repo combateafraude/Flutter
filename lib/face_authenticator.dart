@@ -14,9 +14,9 @@ class FaceAuthenticator {
   String mobileToken;
   String personId;
 
-  String? stage;
-  String? filter;
-  bool? enableScreenshot;
+  String stage;
+  String filter;
+  bool enableScreenshot;
 
   FaceAuthenticator({required this.mobileToken, required this.personId});
 
@@ -46,7 +46,7 @@ class FaceAuthenticator {
         await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)
             as Map<dynamic, dynamic>;
 
-    bool? success = resultMap["success"];
+    bool success = resultMap["success"];
     if (success == null) {
       return new FaceAuthenticatorClosed();
     } else if (success == true) {
