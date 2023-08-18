@@ -60,30 +60,48 @@ Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runne
 ## Utilização
 
 ```dart
-PassiveFaceLiveness passiveFaceLiveness = new PassiveFaceLiveness(mobileToken: mobileToken);
+PassiveFaceLiveness passiveFaceLiveness = new PassiveFaceLiveness(mobileToken: mobileToken, personId: 'CPF');
 
-// Outros parâmetros de customização
+// Your SDK customization parameters
 
 PassiveFaceLivenessResult passiveFaceLivenessResult = await passiveFaceLiveness.start();
 
 if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
-  // O SDK foi encerrado com sucesso e a selfie foi capturada
+  // SDK finished with success, selfie picture registered
 } else if (passiveFaceLivenessResult is PassiveFaceLivenessFailure) {
-  // O SDK foi encerrado devido à alguma falha e a selfie não foi capturada
+  // SDK finished with failure and selfie picture not registered
 } else {
-  // O usuário simplesmente fechou o SDK, sem nenhum resultado
+  // User closed the SDK
 }
 ```
+### PassiveFaceLiveness methods
 
+| Parameter | Required |
+| --------- | -------- |
+| <p><strong><code>.setStage(String stage)</code></strong></p><p>Used to redirect the SDK to the desired environment in caf api.</p> | No |
+| <p><strong><code>.setFilter(String filter)</code></strong></p><p>Used to change the SDK camera filter. It has the following options: **CameraFilter.NATURAL** or **CameraFilter.LINE_DRAWING**</p> | No, the default is **CameraFilter.LINE_DRAWING** |
+| <p><strong><code>.setEnableScreenshots(bool enable)</code></strong></p><p>Used to enable screenshots during the SDK scan.</p> | No, the default is **false** |
+
+### Enums
+
+#### CafStage
+| Description | Values |
+| ----------- | ----- |
+| Used to set the SDK stage on `.setStage(String stage)` method. | `CafStage.PROD`, `CafStage.BETA` |
+
+#### CameraFilter
+| Description | Values |
+| ----------- | ----- |
+| Used to set the SDK's camera filter | `CameraFilter.NATURAL`, `CameraFilter.LINE_DRAWING`  |
 
 #### PassiveFaceLivenessSuccess
 
-| Campo |
+| Field |
 | --------- |
 | `String signedResponse`<br><br> Signed response from the CAF server confirming that the captured selfie has a real face. This parameter is used to get an extra layer of security, checking that the signature of the response is not broken, or caused by request interception. If it is broken, there is a strong indication of request interception.|
 
 #### PassiveFaceLivenessFailure
 
-| Campo |
+| Field |
 | --------- |
-| `String errorMessage`<br><br>Mensagem explicando o motivo da falha do SDK.|
+| `String errorMessage`<br><br>Error message returned by the SDK.|

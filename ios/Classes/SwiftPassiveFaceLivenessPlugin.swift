@@ -1,6 +1,6 @@
 import Flutter
 import UIKit
-import FaceLivenessIproov
+import FaceLiveness
 
 public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin {
     
@@ -29,42 +29,63 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin {
 
         let peopleId = arguments["personId"] as! String
         
-        var stageCaf = CAFStage.PROD
-        if arguments["stage"] != nil {
-            stageCaf = getStageByString(stage: arguments["stage"] as! String)
+        let mFaceLivenessBuilder = FaceLivenessSDK.Build()
+            .setCredentials(mobileToken: mobileToken, personId: peopleId)
+        
+        //Stage
+         if let stage = arguments["stage"] as? String ?? nil {
+            mFaceLivenessBuilder.setStage(stage: getStageByString(stage: stage))
+        }
+
+        //Camera Filter
+        if let filter = arguments["filter"] as? String ?? nil {
+            mFaceLivenessBuilder.setFilter(filter: getFilterByString(filter: filter))
         }
         
-        var faceLiveness = FaceLivenessSDK.Build()
-            .setCredentials(mobileToken: mobileToken, personId: peopleId)
-            .setStage(stage: .DEV)
-            .build()
+        let controller = UIApplication.shared.keyWindow!.rootViewController
+
+        //FaceLiveness Build
+        let faceLiveness = mFaceLivenessBuilder.build()
         
         faceLiveness.delegate = self
-        
-        let controller = UIApplication.shared.keyWindow!.rootViewController!
-        
-        faceLiveness.startSDK(viewController: controller)
+        faceLiveness.startSDK(viewController: controller!)
+
     }
         
     public func getStageByString(stage: String) -> CAFStage {
-        if(stage == "BETA"){
+        if (stage == "BETA") {
             return .BETA
-        }else{
+        } else if (stage == "DEV") {
+            return .DEV
+        } else {
             return .PROD
         }
+    }
+
+    public func getFilterByString(filter: String) -> Filter {
+        if(filter == "NATURAL"){
+            return .natural
+        } else {
+            return .lineDrawing
+        }
+        
     }
     
 }
 
 extension SwiftPassiveFaceLivenessPlugin: FaceLivenessDelegate {
-    public func didFinishLiveness(with faceLivenesResult: FaceLivenessIproov.FaceLivenessResult) {
+    public func didFinishLiveness(with faceLivenesResult: FaceLivenessResult) {
 
         let response : NSMutableDictionary! = [:]
+
+        response["success"] = nil
 
         if faceLivenesResult.errorMessage != nil {
             response["success"] = NSNumber(value: false)
             response["errorMessage"] = faceLivenesResult.errorMessage
-        } else {
+        }
+        
+        if faceLivenesResult.signedResponse != nil {
             response["success"] = NSNumber(value: true)
             response["signedResponse"] = faceLivenesResult.signedResponse
         }
@@ -75,6 +96,5 @@ extension SwiftPassiveFaceLivenessPlugin: FaceLivenessDelegate {
     public func startLoadingScreen() {
         print("StartLoadScreen")
     }
-    
 }
 
