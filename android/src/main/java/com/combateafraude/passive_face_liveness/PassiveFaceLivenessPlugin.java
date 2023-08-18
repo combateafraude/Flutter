@@ -14,7 +14,7 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
 
 import com.caf.facelivenessiproov.input.CAFStage;
-import com.caf.facelivenessiproov.input.Filter;
+import com.caf.facelivenessiproov.input.iproov.Filter;
 import com.caf.facelivenessiproov.input.FaceLiveness;
 import com.caf.facelivenessiproov.input.VerifyLivenessListener;
 import com.caf.facelivenessiproov.output.FaceLivenessResult;
@@ -57,7 +57,7 @@ public class PassiveFaceLivenessPlugin
         // Stage
         String stage = (String) argumentsMap.get("stage");
         if (stage != null) {
-            mFaceLivenessBuilder.setStage(CafStage.valueOf(stage));
+            mFaceLivenessBuilder.setStage(CAFStage.valueOf(stage));
         }
 
         // Filter
