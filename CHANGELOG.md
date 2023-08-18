@@ -1,4 +1,8 @@
 #### August, 18 2023
+*  **1.2.1**
+  * **Fix**: Android SDK customizations.
+
+#### August, 18 2023
 *  **1.2.0**
   * **new**: New method .setCameraFilter(String filter) to change the SDK camera filter type - Android & iOS
   * **new**: New method .setEnableScreenshots(bool enable) to enable screenshots during the SDK scan - Android
