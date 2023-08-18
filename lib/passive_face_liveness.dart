@@ -15,12 +15,23 @@ class PassiveFaceLiveness {
   String mobileToken;
   String peopleId;
 
-  String stage = "PROD";
+  String stage;
+  String filter;
+  bool enableScreenshot;
 
-  PassiveFaceLiveness({required this.mobileToken, required this.peopleId});
+  PassiveFaceLiveness({@required this.mobileToken, @required this.peopleId});
 
   void setStage(String stage) {
     this.stage = stage;
+  }
+
+  void setCameraFilter(String filter) {
+    this.filter = filter;
+  }
+
+  /// This feature works only for Android right now
+  void setEnableScreenshots(bool enable) {
+    this.enableScreenshot = enable;
   }
 
   Future<PassiveFaceLivenessResult> start() async {
@@ -29,12 +40,15 @@ class PassiveFaceLiveness {
     params["mobileToken"] = mobileToken;
     params["personId"] = peopleId;
     params["stage"] = stage;
+    params["filter"] = filter;
+    params["enableScreenshot"] = enableScreenshot;
 
     Map<dynamic, dynamic> resultMap =
         await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)
             as Map<dynamic, dynamic>;
 
-    bool? success = resultMap["success"];
+    bool success = resultMap["success"];
+
     if (success == null) {
       return new PassiveFaceLivenessClosed();
     } else if (success == true) {

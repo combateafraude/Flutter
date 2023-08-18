@@ -14,6 +14,7 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
 
 import com.caf.facelivenessiproov.input.CAFStage;
+import com.caf.facelivenessiproov.input.iproov.Filter;
 import com.caf.facelivenessiproov.input.FaceLiveness;
 import com.caf.facelivenessiproov.input.VerifyLivenessListener;
 import com.caf.facelivenessiproov.output.FaceLivenessResult;
@@ -22,9 +23,9 @@ import java.util.HashMap;
 
 @SuppressWarnings("unchecked")
 public class PassiveFaceLivenessPlugin
-        implements FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
+        implements FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware,
+        PluginRegistry.ActivityResultListener {
 
-    private static final int REQUEST_CODE = 1002;
     private MethodChannel channel;
     MethodChannel.Result result;
     private Activity activity;
@@ -48,47 +49,56 @@ public class PassiveFaceLivenessPlugin
         // Mobile token
         String mobileToken = (String) argumentsMap.get("mobileToken");
 
-        //PersonID
+        // PersonID
         String personId = (String) argumentsMap.get("personId");
 
-        //Stage
-        CAFStage cafStage = CAFStage.PROD;
-        String flutterStage = (String) argumentsMap.get("stage");
-        if (flutterStage != null) {
-            cafStage = CAFStage.valueOf(flutterStage);
+        FaceLiveness.Builder mFaceLivenessBuilder = new FaceLiveness.Builder(mobileToken);
+
+        // Stage
+        String stage = (String) argumentsMap.get("stage");
+        if (stage != null) {
+            mFaceLivenessBuilder.setStage(CAFStage.valueOf(stage));
         }
 
-        FaceLiveness faceLiveness = new FaceLiveness.Builder(mobileToken)
-                .setStage(cafStage)
-                .build();
-
-
-        faceLiveness.startSDK(context, personId, new VerifyLivenessListener() {
-        @Override
-        public void onSuccess(FaceLivenessResult faceLivenessResult) {
-            result.success(getSucessResponseMap(faceLivenessResult));
+        // Filter
+        String filter = (String) argumentsMap.get("filter");
+        if (filter != null) {
+            mFaceLivenessBuilder.setFilter(Filter.valueOf(filter));
         }
 
-        @Override
-        public void onError(FaceLivenessResult faceLivenessResult) {
-            result.success(getFailureResponseMap(faceLivenessResult));
+        // Enable Screenshot
+        Boolean enableScreenshot = (Boolean) argumentsMap.get("enableScreenshot");
+        if (enableScreenshot != null) {
+            mFaceLivenessBuilder.setEnableScreenshots(enableScreenshot);
         }
 
-        @Override
-        public void onCancel(FaceLivenessResult faceLivenessResult) {
-            result.success(getClosedResponseMap());
-        }
+        // FaceLiveness build
+        mFaceLivenessBuilder.build().startSDK(context, personId, new VerifyLivenessListener() {
+            @Override
+            public void onSuccess(FaceLivenessResult faceLivenessResult) {
+                result.success(getSucessResponseMap(faceLivenessResult));
+            }
 
-        @Override
-        public void onLoading() {
+            @Override
+            public void onError(FaceLivenessResult faceLivenessResult) {
+                result.success(getFailureResponseMap(faceLivenessResult));
+            }
 
-        }
+            @Override
+            public void onCancel(FaceLivenessResult faceLivenessResult) {
+                result.success(getClosedResponseMap());
+            }
 
-        @Override
-        public void onLoaded() {
+            @Override
+            public void onLoading() {
 
-        }
-    });
+            }
+
+            @Override
+            public void onLoaded() {
+
+            }
+        });
 
     }
 
@@ -161,6 +171,5 @@ public class PassiveFaceLivenessPlugin
     public boolean onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         return false;
     }
-
 
 }
