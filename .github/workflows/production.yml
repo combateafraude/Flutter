@@ -1,0 +1,52 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Publish to OnePub
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      # Note: This workflow uses the latest stable version of the Dart SDK.
+      # You can specify other versions if desired, see documentation here:
+      # https://github.com/dart-lang/setup-dart/blob/main/README.md
+      # - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@v1
+
+
+      - name: Pubspec File
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "%Env%"
+          replace: "nyuvuhnofl"
+          include: "**pubspec.yaml"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Configure OnePub
+        run: flutter pub global activate onepub
+
+      - name: Configure OnePub Token / Import OnePub
+        env: 
+          ONEPUB_TOKEN: ${{ secrets.ONEPUB_TOKEN_PROD }}
+        run: |
+          echo $ONEPUB_TOKEN_PROD
+          onepub import
+
+      - name: Publish
+        run: flutter pub publish -f
+
