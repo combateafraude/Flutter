@@ -6,8 +6,8 @@
 name: Publish to OnePub
 
 on:
-  release:
-    types: [created]
+  push:
+    branches: [ "document-detector" ]
 
 jobs:
   build:
