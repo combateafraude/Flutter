@@ -18,7 +18,7 @@ class FaceAuthenticator {
   String filter;
   bool enableScreenshot;
 
-  FaceAuthenticator({required this.mobileToken, required this.personId});
+  FaceAuthenticator({@required this.mobileToken, @required this.personId});
 
   void setStage(String stage) {
     this.stage = stage;

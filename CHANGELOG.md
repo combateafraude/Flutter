@@ -1,3 +1,7 @@
+#### August 25, 2023 
+*  **1.2.1**
+  * **Fix**: Starscream update.
+
 #### August 17, 2023 
 *  **1.2.0**
   * **new**: New method `.setCameraFilter(String filter)` to change the SDK camera filter type - Android & iOS
