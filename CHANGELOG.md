@@ -1,3 +1,7 @@
+#### August, 25 2023
+* **1.2.2**
+  * **Fix**: Starscream update.
+
 #### August, 18 2023
 *  **1.2.1**
   * **Fix**: Android SDK customizations.

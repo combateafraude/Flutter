@@ -1,6 +1,6 @@
 name: new_face_liveness
 description: Flutter plugin cross-platform (iOS, Android) for Combate à Fraude's PassiveFaceLiveness (https://github.com/combateafraude).
-version: 1.2.1
+version: 1.2.2
 homepage: https://www.combateafraude.com/
 
 environment:
