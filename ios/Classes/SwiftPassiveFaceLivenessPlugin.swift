@@ -92,9 +92,5 @@ extension SwiftPassiveFaceLivenessPlugin: FaceLivenessDelegate {
 
         flutterResult!(response)
     }
-    
-    public func startLoadingScreen() {
-        print("StartLoadScreen")
-    }
 }
 

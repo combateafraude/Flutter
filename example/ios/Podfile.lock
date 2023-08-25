@@ -1,20 +1,20 @@
 PODS:
-  - FaceLiveness (1.5.0):
-    - iProov (= 10.3.0)
+  - FaceLiveness (2.5.0):
+    - iProov (= 10.3.1)
   - Flutter (1.0.0)
-  - iProov (10.3.0):
-    - Starscream (~> 4.0)
-  - new_face_liveness (1.2.0):
-    - FaceLiveness (= 1.5.0)
+  - iProov (10.3.1):
+    - Starscream (= 4.0.4)
+  - new_face_liveness_compatible (1.2.2):
+    - FaceLiveness (= 2.5.0)
     - Flutter
-  - permission_handler_apple (9.1.0):
+  - "permission_handler (5.0.1+1)":
     - Flutter
   - Starscream (4.0.4)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - new_face_liveness (from `.symlinks/plugins/new_face_liveness/ios`)
-  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - new_face_liveness_compatible (from `.symlinks/plugins/new_face_liveness_compatible/ios`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
 
 SPEC REPOS:
   https://github.com/combateafraude/iOS.git:
@@ -26,17 +26,17 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  new_face_liveness:
-    :path: ".symlinks/plugins/new_face_liveness/ios"
-  permission_handler_apple:
-    :path: ".symlinks/plugins/permission_handler_apple/ios"
+  new_face_liveness_compatible:
+    :path: ".symlinks/plugins/new_face_liveness_compatible/ios"
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  FaceLiveness: 5d08c0d56724f93063761926c456081238d31681
+  FaceLiveness: 18ae0fffac0de042e09bcc1096ea69e719b6811e
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  iProov: 4f50623887ec2be48f841b157c94ba85099a9d1d
-  new_face_liveness: 28b7558e3de4d1a15f536baee77e80a51a31e666
-  permission_handler_apple: 8f116445eff3c0e7c65ad60f5fef5490aa94b4e4
+  iProov: d6054523a5578386f183499d72621129e199a5c1
+  new_face_liveness_compatible: ab593189209858474441c74ae44001d0acd27477
+  permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
 
 PODFILE CHECKSUM: 78ae2a93f0e294c3c1e7dc37492fea21277f7364
