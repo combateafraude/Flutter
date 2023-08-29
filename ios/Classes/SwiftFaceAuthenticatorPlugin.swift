@@ -47,7 +47,10 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
         
         let controller = UIApplication.shared.keyWindow!.rootViewController
         
-        mFaceAuthBuilder.build().startFaceAuthSDK(viewController: controller!)
+        let faceAuth = mFaceAuthBuilder.build()
+        faceAuth.delegate = self
+        
+        faceAuth.startFaceAuthSDK(viewController: controller!)
     }
     
     public func getStageByString(stage: String) -> FaceLiveness.CAFStage {

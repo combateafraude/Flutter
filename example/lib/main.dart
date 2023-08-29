@@ -44,7 +44,7 @@ class _MyAppState extends State<MyApp> {
     FaceAuthenticator faceAuthenticator =
         FaceAuthenticator(mobileToken: mobileToken, personId: peopleId);
 
-    faceAuthenticator.setStage(CafStage.DEV);
+    faceAuthenticator.setStage(CafStage.BETA);
 
     faceAuthenticator.setCameraFilter(CameraFilter.NATURAL);
 
@@ -67,7 +67,7 @@ class _MyAppState extends State<MyApp> {
       }
     } on PlatformException catch (err) {
       result = "Excpection!";
-      description = err.message!;
+      description = err.message;
     }
 
     if (!mounted) return;

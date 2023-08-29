@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 
@@ -77,18 +80,32 @@ public class FaceAuthenticatorPlugin
         mFaceAuthBuilder.build().authenticate(context, personId, new VerifyAuthenticationListener() {
             @Override
             public void onSuccess(FaceAuthenticatorResult faceAuthenticatorResult) {
-                result.success(getSucessResponseMap(faceAuthenticatorResult));
-
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        result.success(getSucessResponseMap(faceAuthenticatorResult));
+                    }
+                });
             }
 
             @Override
             public void onError(FaceAuthenticatorResult faceAuthenticatorResult) {
-                result.success(getFailureResponseMap(faceAuthenticatorResult));
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        result.success(getFailureResponseMap(faceAuthenticatorResult));
+                    }
+                });
             }
 
             @Override
             public void onCancel(FaceAuthenticatorResult faceAuthenticatorResult) {
-                result.success(getClosedResponseMap());
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        result.success(getClosedResponseMap());
+                    }
+                });
             }
 
             @Override
