@@ -20,6 +20,7 @@ class _MyAppState extends State<MyApp> {
   String _result = "";
   String _description = "";
   String mobileToken = "";
+  String peopleId = "";
 
   @override
   void initState() {
@@ -39,9 +40,9 @@ class _MyAppState extends State<MyApp> {
     String description = "";
 
     PassiveFaceLiveness passiveFaceLiveness =
-        new PassiveFaceLiveness(mobileToken: mobileToken, peopleId: '');
+        new PassiveFaceLiveness(mobileToken: mobileToken, peopleId: peopleId);
 
-    //passiveFaceLiveness.setStage(CafStage.DEV);
+    passiveFaceLiveness.setStage(CafStage.BETA);
 
     // Put the others parameters here
 

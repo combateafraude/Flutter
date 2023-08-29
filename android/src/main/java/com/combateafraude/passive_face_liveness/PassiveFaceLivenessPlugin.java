@@ -4,8 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -76,17 +80,32 @@ public class PassiveFaceLivenessPlugin
         mFaceLivenessBuilder.build().startSDK(context, personId, new VerifyLivenessListener() {
             @Override
             public void onSuccess(FaceLivenessResult faceLivenessResult) {
-                result.success(getSucessResponseMap(faceLivenessResult));
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        result.success(getSucessResponseMap(faceLivenessResult));
+                    }
+                });
             }
 
             @Override
             public void onError(FaceLivenessResult faceLivenessResult) {
-                result.success(getFailureResponseMap(faceLivenessResult));
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        result.success(getFailureResponseMap(faceLivenessResult));
+                    }
+                });
             }
 
             @Override
             public void onCancel(FaceLivenessResult faceLivenessResult) {
-                result.success(getClosedResponseMap());
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        result.success(getClosedResponseMap());
+                    }
+                });
             }
 
             @Override
