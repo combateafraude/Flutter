@@ -4,7 +4,7 @@ version '1.0'
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -15,7 +15,7 @@ buildscript {
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url "https://repo.combateafraude.com/android/release" }
     }
 }
@@ -45,7 +45,7 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:passive-face-liveness:6.0.0-rc07'
+        implementation 'com.combateafraude.sdk.ps:passive-face-liveness:6.0.0'
     }
 
 }
