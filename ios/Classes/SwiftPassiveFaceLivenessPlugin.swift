@@ -31,6 +31,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin {
         
         let mFaceLivenessBuilder = FaceLivenessSDK.Build()
             .setCredentials(mobileToken: mobileToken, personId: peopleId)
+            .setLoadingScreen(withLoading: true)
         
         //Stage
          if let stage = arguments["stage"] as? String ?? nil {
@@ -77,20 +78,57 @@ extension SwiftPassiveFaceLivenessPlugin: FaceLivenessDelegate {
     public func didFinishLiveness(with faceLivenesResult: FaceLivenessResult) {
 
         let response : NSMutableDictionary! = [:]
-
-        response["success"] = nil
-
-        if faceLivenesResult.errorMessage != nil {
-            response["success"] = NSNumber(value: false)
-            response["errorMessage"] = faceLivenesResult.errorMessage
-        }
+        response["event"] = NSString(string: "success")
         
-        if faceLivenesResult.signedResponse != nil {
-            response["success"] = NSNumber(value: true)
-            response["signedResponse"] = faceLivenesResult.signedResponse
-        }
+        response["signedResponse"] = faceLivenesResult.signedResponse
 
         flutterResult!(response)
+    }
+    
+    public func didFinishWithFail(with faceLivenessFailResult: FaceLiveness.FaceLivenessFailResult) {
+        
+        let response : NSMutableDictionary! = [:]
+        response["event"] = NSString(string: "failure")
+        
+        response["signedResponse"] = faceLivenessFailResult.signedResponse
+        response["errorType"] = String(describing: faceLivenessFailResult.failType)
+        response["errorMessage"] = faceLivenessFailResult.description
+        response["code"] = faceLivenessFailResult.code
+
+        flutterResult!(response)
+    }
+    
+    public func didFinishWithCancelled(with faceLivenessResult: FaceLiveness.FaceLivenessResult) {
+        
+        let response : NSMutableDictionary! = [:]
+        response["event"] = NSString(string: "cancelled")
+        
+        flutterResult!(response)
+    }
+    
+    public func didFinishWithError(with faceLivenessErrorResult: FaceLiveness.FaceLivenessErrorResult) {
+        
+        let response : NSMutableDictionary! = [:]
+        response["event"] = NSString(string: "error")
+        
+        response["errorType"] = String(describing: faceLivenessErrorResult.errorType)
+        response["errorMessage"] = faceLivenessErrorResult.description
+        response["code"] = faceLivenessErrorResult.code
+        
+        flutterResult!(response)
+    }
+    
+    //TODO: Figure out how to handle these events to Flutter side while SDK continues running
+    public func openLoadingScreenStartSDK() {
+    }
+    
+    public func closeLoadingScreenStartSDK() {
+    }
+    
+    public func openLoadingScreenValidation() {
+    }
+    
+    public func closeLoadingScreenValidation() {
     }
 }
 

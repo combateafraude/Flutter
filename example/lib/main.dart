@@ -19,6 +19,7 @@ class _MyAppState extends State<MyApp> {
   String _result = "";
   String _description = "";
   String mobileToken = "";
+  String personId = "";
 
   @override
   void initState() {
@@ -38,9 +39,9 @@ class _MyAppState extends State<MyApp> {
     String description = "";
 
     PassiveFaceLiveness passiveFaceLiveness =
-        new PassiveFaceLiveness(mobileToken: mobileToken, peopleId: "");
+        new PassiveFaceLiveness(mobileToken: mobileToken, peopleId: personId);
 
-    passiveFaceLiveness.setStage(CafStage.DEV);
+    passiveFaceLiveness.setStage(CafStage.BETA);
 
     // Put the others parameters here
 
@@ -54,7 +55,8 @@ class _MyAppState extends State<MyApp> {
           "\n\signedResponse: " + passiveFaceLivenessResult.signedResponse!;
     } else if (passiveFaceLivenessResult is PassiveFaceLivenessFailure) {
       result = "Falha!";
-      description = "Message: " + passiveFaceLivenessResult.errorMessage!;
+      description =
+          "ErrorMessage: ${passiveFaceLivenessResult.errorMessage} \nErrorType: ${passiveFaceLivenessResult.errorType} \nCode: ${passiveFaceLivenessResult.code} \nResponse:${passiveFaceLivenessResult.signedResponse}";
     } else {
       result = "Closed!";
     }
