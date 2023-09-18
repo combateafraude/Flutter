@@ -44,17 +44,29 @@ class PassiveFaceLiveness {
     params["enableScreenshot"] = enableScreenshot;
 
     Map<dynamic, dynamic> resultMap =
-        await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)
-            as Map<dynamic, dynamic>;
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params);
 
-    bool success = resultMap["success"];
+    String event = resultMap["event"];
 
-    if (success == null) {
-      return new PassiveFaceLivenessClosed();
-    } else if (success == true) {
-      return new PassiveFaceLivenessSuccess(resultMap["signedResponse"]);
-    } else {
-      return new PassiveFaceLivenessFailure(resultMap["errorMessage"]);
+    switch (event) {
+      case 'success':
+        return new PassiveFaceLivenessSuccess(
+            signedResponse: resultMap["signedResponse"]);
+      case 'failure':
+        return new PassiveFaceLivenessFailure(
+            signedResponse: resultMap["signedResponse"],
+            errorType: resultMap["errorType"],
+            errorMessage: resultMap["errorMessage"],
+            code: resultMap["code"]);
+      case 'error':
+        return new PassiveFaceLivenessFailure(
+            errorType: resultMap["errorType"],
+            errorMessage: resultMap["errorMessage"],
+            code: resultMap["code"]);
+      case 'cancelled':
+        return new PassiveFaceLivenessClosed();
+      default:
+        throw 'Something unexpected happened';
     }
   }
 }

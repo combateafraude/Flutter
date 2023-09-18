@@ -22,6 +22,8 @@ import com.caf.facelivenessiproov.input.iproov.Filter;
 import com.caf.facelivenessiproov.input.FaceLiveness;
 import com.caf.facelivenessiproov.input.VerifyLivenessListener;
 import com.caf.facelivenessiproov.output.FaceLivenessResult;
+import com.caf.facelivenessiproov.output.failure.NetworkReason;
+import com.caf.facelivenessiproov.output.failure.ServerReason;
 
 import java.util.HashMap;
 
@@ -56,7 +58,8 @@ public class PassiveFaceLivenessPlugin
         // PersonID
         String personId = (String) argumentsMap.get("personId");
 
-        FaceLiveness.Builder mFaceLivenessBuilder = new FaceLiveness.Builder(mobileToken);
+        FaceLiveness.Builder mFaceLivenessBuilder = new FaceLiveness.Builder(mobileToken)
+                .setLoadingScreen(true);
 
         // Stage
         String stage = (String) argumentsMap.get("stage");
@@ -77,7 +80,7 @@ public class PassiveFaceLivenessPlugin
         }
 
         // FaceLiveness build
-        mFaceLivenessBuilder.build().startSDK(context, personId, new VerifyLivenessListener() {
+        mFaceLivenessBuilder.build().startSDK(activity, personId, new VerifyLivenessListener() {
             @Override
             public void onSuccess(FaceLivenessResult faceLivenessResult) {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -90,12 +93,21 @@ public class PassiveFaceLivenessPlugin
 
             @Override
             public void onError(FaceLivenessResult faceLivenessResult) {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        result.success(getFailureResponseMap(faceLivenessResult));
-                    }
-                });
+                if (faceLivenessResult.getSdkFailure() != null){
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.success(getErrorResponseMap(faceLivenessResult));
+                        }
+                    });
+                } else {
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.success(getFailureResponseMap(faceLivenessResult));
+                        }
+                    });
+                }
             }
 
             @Override
@@ -110,12 +122,10 @@ public class PassiveFaceLivenessPlugin
 
             @Override
             public void onLoading() {
-
             }
 
             @Override
             public void onLoaded() {
-
             }
         });
 
@@ -130,22 +140,41 @@ public class PassiveFaceLivenessPlugin
 
     private HashMap<String, Object> getSucessResponseMap(FaceLivenessResult result) {
         HashMap<String, Object> responseMap = new HashMap<>();
-        responseMap.put("success", Boolean.TRUE);
+        responseMap.put("event", "success");
         responseMap.put("signedResponse", result.getSignedResponse());
+
+        return responseMap;
+    }
+
+    private HashMap<String, Object> getErrorResponseMap(FaceLivenessResult result) {
+
+        HashMap<String, Object> responseMap = new HashMap<>();
+        responseMap.put("event", "error");
+
+        if (result.getSdkFailure() instanceof ServerReason) {
+            responseMap.put("errorType", "ServerReason");
+            responseMap.put("errorMessage", result.getSdkFailure().getMessage());
+            responseMap.put("code", ((ServerReason) result.getSdkFailure()).getCode());
+        } else if (result.getSdkFailure() instanceof NetworkReason) {
+            responseMap.put("errorType", "NetworkReason");
+            responseMap.put("errorMessage", result.getSdkFailure().getMessage());
+        }
 
         return responseMap;
     }
 
     private HashMap<String, Object> getFailureResponseMap(FaceLivenessResult result) {
         HashMap<String, Object> responseMap = new HashMap<>();
-        responseMap.put("success", Boolean.FALSE);
+        responseMap.put("event", "failure");
         responseMap.put("errorMessage", result.getErrorMessage());
+
         return responseMap;
     }
 
     private HashMap<String, Object> getClosedResponseMap() {
         HashMap<String, Object> responseMap = new HashMap<>();
-        responseMap.put("success", null);
+        responseMap.put("event", "cancelled");
+
         return responseMap;
     }
 

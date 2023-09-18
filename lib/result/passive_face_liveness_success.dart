@@ -3,5 +3,5 @@ import 'package:new_face_liveness_compatible/result/passive_face_liveness_result
 class PassiveFaceLivenessSuccess extends PassiveFaceLivenessResult {
   String signedResponse;
 
-  PassiveFaceLivenessSuccess(this.signedResponse);
+  PassiveFaceLivenessSuccess({this.signedResponse});
 }

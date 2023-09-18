@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:new_face_liveness_compatible/camera_filter.dart';
 import 'package:new_face_liveness_compatible/caf_stage.dart';
 import 'package:new_face_liveness_compatible/passive_face_liveness.dart';
+import 'package:new_face_liveness_compatible/result/passive_face_liveness_closed.dart';
 import 'package:new_face_liveness_compatible/result/passive_face_liveness_failure.dart';
 import 'package:new_face_liveness_compatible/result/passive_face_liveness_result.dart';
 import 'package:new_face_liveness_compatible/result/passive_face_liveness_success.dart';
@@ -44,6 +46,8 @@ class _MyAppState extends State<MyApp> {
 
     passiveFaceLiveness.setStage(CafStage.BETA);
 
+    passiveFaceLiveness.setCameraFilter(CameraFilter.NATURAL);
+
     // Put the others parameters here
 
     PassiveFaceLivenessResult passiveFaceLivenessResult =
@@ -56,9 +60,10 @@ class _MyAppState extends State<MyApp> {
           "\n\signedResponse: " + passiveFaceLivenessResult.signedResponse;
     } else if (passiveFaceLivenessResult is PassiveFaceLivenessFailure) {
       result = "Falha!";
-      description = "Message: " + passiveFaceLivenessResult.errorMessage;
-    } else {
-      result = "Closed!";
+      description =
+          "ErrorMessage: ${passiveFaceLivenessResult.errorMessage} \nErrorType: ${passiveFaceLivenessResult.errorType} \nCode: ${passiveFaceLivenessResult.code} \nResponse:${passiveFaceLivenessResult.signedResponse}";
+    } else if (passiveFaceLivenessResult is PassiveFaceLivenessClosed) {
+      result = "User closed!";
     }
 
     if (!mounted) return;

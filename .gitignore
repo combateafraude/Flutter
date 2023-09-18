@@ -43,6 +43,7 @@ doc/api/
 .project
 .settings/
 .vscode/
+.fvm/flutter_sdk
 
 # Flutter repo-specific
 /bin/cache/
