@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:new_face_authenticator_compatible/caf_stage.dart';
 import 'package:new_face_authenticator_compatible/camera_filter.dart';
 import 'package:new_face_authenticator_compatible/face_authenticator.dart';
+import 'package:new_face_authenticator_compatible/result/face_authenticator_closed.dart';
 import 'package:new_face_authenticator_compatible/result/face_authenticator_failure.dart';
 import 'package:new_face_authenticator_compatible/result/face_authenticator_result.dart';
 import 'package:new_face_authenticator_compatible/result/face_authenticator_success.dart';
@@ -61,9 +62,10 @@ class _MyAppState extends State<MyApp> {
             "authenticated: ${faceAuthenticatorResult.signedResponse}";
       } else if (faceAuthenticatorResult is FaceAuthenticatorFailure) {
         result = "Falha!";
-        description = "Error Message: ${faceAuthenticatorResult.errorMessage}";
-      } else {
-        result = "Closed!";
+        description =
+            "Error Type: ${faceAuthenticatorResult.errorType} \nError Message: ${faceAuthenticatorResult.errorMessage} \nCode: ${faceAuthenticatorResult.code} \nSignRes: ${faceAuthenticatorResult.signedResponse}";
+      } else if (faceAuthenticatorResult is FaceAuthenticatorClosed) {
+        result = "User closed!";
       }
     } on PlatformException catch (err) {
       result = "Excpection!";

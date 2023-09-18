@@ -25,6 +25,8 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
 import output.FaceAuthenticatorResult;
+import output.failure.NetworkReason;
+import output.failure.ServerReason;
 
 @SuppressWarnings("unchecked")
 public class FaceAuthenticatorPlugin
@@ -56,7 +58,8 @@ public class FaceAuthenticatorPlugin
         // PersonID
         String personId = (String) argumentsMap.get("personId");
 
-        FaceAuthenticator.Builder mFaceAuthBuilder = new FaceAuthenticator.Builder(mobileToken);
+        FaceAuthenticator.Builder mFaceAuthBuilder = new FaceAuthenticator.Builder(mobileToken)
+                .setLoadingScreen(true);
 
         // Stage
         String stage = (String) argumentsMap.get("stage");
@@ -77,7 +80,7 @@ public class FaceAuthenticatorPlugin
         }
 
         // FaceAuthenticator build
-        mFaceAuthBuilder.build().authenticate(context, personId, new VerifyAuthenticationListener() {
+        mFaceAuthBuilder.build().authenticate(activity, personId, new VerifyAuthenticationListener() {
             @Override
             public void onSuccess(FaceAuthenticatorResult faceAuthenticatorResult) {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -90,12 +93,20 @@ public class FaceAuthenticatorPlugin
 
             @Override
             public void onError(FaceAuthenticatorResult faceAuthenticatorResult) {
+                if (faceAuthenticatorResult.getSdkFailure() != null){
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        result.success(getFailureResponseMap(faceAuthenticatorResult));
+                        result.success(getErrorResponseMap(faceAuthenticatorResult));
                     }
-                });
+                });} else {
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.success(getFailureResponseMap(faceAuthenticatorResult));
+                        }
+                    });
+                }
             }
 
             @Override
@@ -110,34 +121,52 @@ public class FaceAuthenticatorPlugin
 
             @Override
             public void onLoading() {
-
             }
 
             @Override
             public void onLoaded() {
-
             }
         });
     }
 
     private HashMap<String, Object> getSucessResponseMap(FaceAuthenticatorResult result) {
         HashMap<String, Object> responseMap = new HashMap<>();
-        responseMap.put("success", Boolean.TRUE);
+        responseMap.put("event", "success");
+
         responseMap.put("signedResponse", result.getSignedResponse());
+
+        return responseMap;
+    }
+
+    private HashMap<String, Object> getErrorResponseMap(FaceAuthenticatorResult result) {
+        HashMap<String, Object> responseMap = new HashMap<>();
+        responseMap.put("event", "error");
+
+        if (result.getSdkFailure() instanceof ServerReason) {
+            responseMap.put("errorType", "ServerReason");
+            responseMap.put("errorMessage", result.getSdkFailure().getMessage());
+            responseMap.put("code", ((ServerReason) result.getSdkFailure()).getCode());
+        } else if (result.getSdkFailure() instanceof NetworkReason) {
+            responseMap.put("errorType", "NetworkReason");
+            responseMap.put("errorMessage", result.getSdkFailure().getMessage());
+        }
 
         return responseMap;
     }
 
     private HashMap<String, Object> getFailureResponseMap(FaceAuthenticatorResult result) {
         HashMap<String, Object> responseMap = new HashMap<>();
-        responseMap.put("success", Boolean.FALSE);
+        responseMap.put("event", "failure");
+
         responseMap.put("errorMessage", result.getErrorMessage());
+
         return responseMap;
     }
 
     private HashMap<String, Object> getClosedResponseMap() {
         HashMap<String, Object> responseMap = new HashMap<>();
-        responseMap.put("success", null);
+        responseMap.put("event", "cancelled");
+
         return responseMap;
     }
 

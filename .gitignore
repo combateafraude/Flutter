@@ -1,3 +1,4 @@
 .idea/workspace.xml
 add_to_app/
 .dart_tool/
+.fvm/flutter_sdk
