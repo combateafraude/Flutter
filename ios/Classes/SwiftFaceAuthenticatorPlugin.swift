@@ -32,6 +32,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
 
         let mFaceAuthBuilder = FaceAuthSDK.Builder()
             .setCredentials(token: mobileToken, personId: personId)
+            .setLoading(withLoading: true)
 
         //Stage
         if let stage = arguments["stage"] as? String ?? nil {
@@ -46,8 +47,11 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
         //FaceAuthenticator Build
         
         let controller = UIApplication.shared.keyWindow!.rootViewController
+
+        let faceAuth = mFaceAuthBuilder.build()
+        faceAuth.delegate = self
         
-        mFaceAuthBuilder.build().startFaceAuthSDK(viewController: controller!)
+        faceAuth.startFaceAuthSDK(viewController: controller!)
     }
     
     public func getStageByString(stage: String) -> FaceLiveness.CAFStage {
@@ -71,21 +75,58 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
 }
 
 extension SwiftFaceAuthenticatorPlugin: FaceAuthSDKDelegate {
-    public func didFinishFaceAuth(with faceAuthenticatorResult: FaceAuthenticatorResult) {
+    public func didFinishSuccess(with faceAuthenticatorResult: FaceAuthenticator.FaceAuthenticatorResult) {
+        
         let response : NSMutableDictionary! = [:]
+        response["event"] = NSString(string: "success")
         
-        response["success"] = nil
-        
-        if faceAuthenticatorResult.errorMessage != nil {
-            response["success"] = NSNumber(value: false)
-            response["errorMessage"] = faceAuthenticatorResult.errorMessage
-        }
-        
-        if faceAuthenticatorResult.signedResponse != nil {
-            response["success"] = NSNumber(value: true)
-            response["signedResponse"] = faceAuthenticatorResult.signedResponse
-        }
+        response["signedResponse"] = faceAuthenticatorResult.signedResponse
         
         flutterResult!(response)
+    }
+    
+    public func didFinishWithError(with faceAuthenticatorErrorResult: FaceAuthenticator.FaceAuthenticatorErrorResult) {
+        
+        let response : NSMutableDictionary! = [:]
+        response["event"] = NSString(string: "error")
+        
+        response["errorType"] = String(describing: faceAuthenticatorErrorResult.errorType)
+        response["errorMessage"] = faceAuthenticatorErrorResult.description
+        response["code"] = faceAuthenticatorErrorResult.code
+        
+        flutterResult!(response)
+    }
+    
+    public func didFinishWithCancell(with faceAuthenticatorResult: FaceAuthenticator.FaceAuthenticatorResult) {
+        let response : NSMutableDictionary! = [:]
+        response["event"] = NSString(string: "cancelled")
+        
+        flutterResult!(response)
+    }
+    
+    public func didFinishWithFail(with faceAuthenticatorResult: FaceAuthenticator.FaceAuthenticatorFailResult) {
+        
+        let response : NSMutableDictionary! = [:]
+        response["event"] = NSString(string: "failure")
+        
+        response["signedResponse"] = faceAuthenticatorResult.signedResponse
+        response["errorType"] = String(describing: faceAuthenticatorResult.errorType)
+        response["errorMessage"] = faceAuthenticatorResult.description
+        response["code"] = faceAuthenticatorResult.code
+        
+        flutterResult!(response)
+    }
+    
+    //TODO: Figure out how to send this events to Flutter side without stopping the SDK
+    public func openLoadingScreenStartSDK() {
+    }
+    
+    public func closeLoadingScreenStartSDK() {
+    }
+    
+    public func openLoadingScreenValidation() {
+    }
+    
+    public func closeLoadingScreenValidation() {
     }
 }

@@ -13,6 +13,7 @@ import input.CafStage;
 import input.FaceAuthenticator;
 import input.VerifyAuthenticationListener;
 import input.iproov.Filter;
+import output.failure.*;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -53,7 +54,8 @@ public class FaceAuthenticatorPlugin
         // PersonID
         String personId = (String) argumentsMap.get("personId");
 
-        FaceAuthenticator.Builder mFaceAuthBuilder = new FaceAuthenticator.Builder(mobileToken);
+        FaceAuthenticator.Builder mFaceAuthBuilder = new FaceAuthenticator.Builder(mobileToken)
+                .setLoadingScreen(true);
 
         // Stage
         String stage = (String) argumentsMap.get("stage");
@@ -74,7 +76,7 @@ public class FaceAuthenticatorPlugin
         }
 
         // FaceAuthenticator build
-        mFaceAuthBuilder.build().authenticate(context, personId, new VerifyAuthenticationListener() {
+        mFaceAuthBuilder.build().authenticate(activity, personId, new VerifyAuthenticationListener() {
             @Override
             public void onSuccess(FaceAuthenticatorResult faceAuthenticatorResult) {
                 result.success(getSucessResponseMap(faceAuthenticatorResult));
@@ -83,7 +85,11 @@ public class FaceAuthenticatorPlugin
 
             @Override
             public void onError(FaceAuthenticatorResult faceAuthenticatorResult) {
-                result.success(getFailureResponseMap(faceAuthenticatorResult));
+                if (faceAuthenticatorResult.getSdkFailure() != null){
+                    result.success(getErrorResponseMap(faceAuthenticatorResult));
+                } else {
+                    result.success(getFailureResponseMap(faceAuthenticatorResult));
+                }
             }
 
             @Override
@@ -93,34 +99,52 @@ public class FaceAuthenticatorPlugin
 
             @Override
             public void onLoading() {
-
             }
 
             @Override
             public void onLoaded() {
-
             }
         });
     }
 
     private HashMap<String, Object> getSucessResponseMap(FaceAuthenticatorResult result) {
         HashMap<String, Object> responseMap = new HashMap<>();
-        responseMap.put("success", Boolean.TRUE);
+        responseMap.put("event", "success");
+
         responseMap.put("signedResponse", result.getSignedResponse());
+
+        return responseMap;
+    }
+
+    private HashMap<String, Object> getErrorResponseMap(FaceAuthenticatorResult result) {
+        HashMap<String, Object> responseMap = new HashMap<>();
+        responseMap.put("event", "error");
+
+        if (result.getSdkFailure() instanceof ServerReason) {
+            responseMap.put("errorType", "ServerReason");
+            responseMap.put("errorMessage", result.getSdkFailure().getMessage());
+            responseMap.put("code", ((ServerReason) result.getSdkFailure()).getCode());
+        } else if (result.getSdkFailure() instanceof NetworkReason) {
+            responseMap.put("errorType", "NetworkReason");
+            responseMap.put("errorMessage", result.getSdkFailure().getMessage());
+        }
 
         return responseMap;
     }
 
     private HashMap<String, Object> getFailureResponseMap(FaceAuthenticatorResult result) {
         HashMap<String, Object> responseMap = new HashMap<>();
-        responseMap.put("success", Boolean.FALSE);
+        responseMap.put("event", "failure");
+
         responseMap.put("errorMessage", result.getErrorMessage());
+
         return responseMap;
     }
 
     private HashMap<String, Object> getClosedResponseMap() {
         HashMap<String, Object> responseMap = new HashMap<>();
-        responseMap.put("success", null);
+        responseMap.put("event", "cancelled");
+
         return responseMap;
     }
 

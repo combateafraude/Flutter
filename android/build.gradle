@@ -5,6 +5,7 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -16,6 +17,7 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
         maven { url "https://repo.combateafraude.com/android/release" }
         maven { url 'https://raw.githubusercontent.com/iProov/android/master/maven/' }
     }
@@ -49,6 +51,6 @@ android {
         implementation 'androidx.appcompat:appcompat:1.4.1'
         implementation 'com.google.android.material:material:1.6.0'
 
-        implementation 'com.combateafraude.sdk:new-face-authenticator:1.3.0'
+        implementation 'com.combateafraude.sdk:new-face-authenticator:1.6.1'
     }
 }

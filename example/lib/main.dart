@@ -1,6 +1,7 @@
 import 'package:new_face_authenticator/caf_stage.dart';
 import 'package:new_face_authenticator/camera_filter.dart';
 import 'package:new_face_authenticator/face_authenticator.dart';
+import 'package:new_face_authenticator/result/face_authenticator_closed.dart';
 import 'package:new_face_authenticator/result/face_authenticator_failure.dart';
 import 'package:new_face_authenticator/result/face_authenticator_result.dart';
 import 'package:new_face_authenticator/result/face_authenticator_success.dart';
@@ -44,7 +45,7 @@ class _MyAppState extends State<MyApp> {
     FaceAuthenticator faceAuthenticator =
         FaceAuthenticator(mobileToken: mobileToken, personId: peopleId);
 
-    faceAuthenticator.setStage(CafStage.DEV);
+    faceAuthenticator.setStage(CafStage.PROD);
 
     faceAuthenticator.setCameraFilter(CameraFilter.NATURAL);
 
@@ -56,14 +57,14 @@ class _MyAppState extends State<MyApp> {
 
       if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
         result = "Success!";
-
         description =
             "authenticated: ${faceAuthenticatorResult.signedResponse}";
       } else if (faceAuthenticatorResult is FaceAuthenticatorFailure) {
         result = "Falha!";
-        description = "Error Message: ${faceAuthenticatorResult.errorMessage}";
-      } else {
-        result = "Closed!";
+        description =
+            "Error Type: ${faceAuthenticatorResult.errorType} \nError Message: ${faceAuthenticatorResult.errorMessage} \nCode: ${faceAuthenticatorResult.code} \nSignRes: ${faceAuthenticatorResult.signedResponse}";
+      } else if (faceAuthenticatorResult is FaceAuthenticatorClosed) {
+        result = "Usuário fechou!";
       }
     } on PlatformException catch (err) {
       result = "Excpection!";

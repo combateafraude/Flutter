@@ -46,13 +46,29 @@ class FaceAuthenticator {
         await _channel.invokeMethod<Map<dynamic, dynamic>>('start', params)
             as Map<dynamic, dynamic>;
 
-    bool? success = resultMap["success"];
-    if (success == null) {
-      return new FaceAuthenticatorClosed();
-    } else if (success == true) {
-      return new FaceAuthenticatorSuccess(resultMap["signedResponse"]);
-    } else {
-      return new FaceAuthenticatorFailure(resultMap["errorMessage"]);
+    String? event = resultMap["event"];
+
+    switch (event) {
+      case 'success':
+        return new FaceAuthenticatorSuccess(
+            signedResponse: resultMap["signedResponse"]);
+      case 'failure':
+        return new FaceAuthenticatorFailure(
+            //EVENTO DE FALHA DE CAPTURA
+            signedResponse: resultMap["signedResponse"],
+            errorType: resultMap["errorType"],
+            errorMessage: resultMap["errorMessage"],
+            code: resultMap["code"]);
+      case 'error':
+        return new FaceAuthenticatorFailure(
+            //EVENTO DE ERRO
+            errorType: resultMap["errorType"],
+            errorMessage: resultMap["errorMessage"],
+            code: resultMap["code"]);
+      case 'cancelled':
+        return new FaceAuthenticatorClosed();
+      default:
+        throw 'Something unexpected happened';
     }
   }
 }
