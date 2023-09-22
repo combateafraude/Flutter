@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.combateafraude.documentdetector.DocumentDetectorActivity;
 import com.combateafraude.documentdetector.input.CaptureMode;
+import com.combateafraude.documentdetector.input.CafStage;
 import com.combateafraude.documentdetector.input.CaptureStage;
 import com.combateafraude.documentdetector.input.DetectionSettings;
 import com.combateafraude.documentdetector.input.Document;
@@ -453,6 +454,12 @@ public class DocumentDetectorCompatiblePlugin
                 int delay = (int) argumentsMap.get("delay");
                 mDocumentDetectorBuilder.setCurrentStepDoneDelay(showDelay, delay);
             }
+        }
+
+        // CafStage
+        String stage = (String) argumentsMap.get("stage");
+        if (stage != null) {
+            mDocumentDetectorBuilder.setStage(CafStage.valueOf(stage));
         }
 
         Intent mIntent = new Intent(context, DocumentDetectorActivity.class);

@@ -261,6 +261,10 @@ public class SwiftDocumentDetectorCompatiblePlugin: NSObject, FlutterPlugin, Doc
             
             _ = documentDetectorBuilder.setUploadSettings(uploadSettings: UploadSettings(enable: true, compress: compress, fileFormats: fileFormats, maximumFileSize: maxFileSize))
         }
+
+        if let stage = arguments["stage"] as? String ?? nil {
+            passiveFaceLivenessBuilder.setStage(stage: getStageByString(stage: stage))
+        }
         
         //documentDetectorBuilder.setOverlay(overlay: DocumentDetectorOverlay())
         
@@ -269,6 +273,14 @@ public class SwiftDocumentDetectorCompatiblePlugin: NSObject, FlutterPlugin, Doc
         let scannerVC = DocumentDetectorController(documentDetector: documentDetectorBuilder.build())
         scannerVC.documentDetectorDelegate = self
         controller.present(scannerVC, animated: true, completion: nil)
+    }
+
+    public func getStageByString(stage: String) -> CAFStage {
+        if(stage == "BETA"){
+            return .BETA
+        }else{
+            return .PROD
+        }
     }
     
     func getContentModeByString(_ contentModeParam: String) -> UIView.ContentMode? {

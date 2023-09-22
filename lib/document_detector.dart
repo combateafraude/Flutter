@@ -36,6 +36,7 @@ class DocumentDetector {
   MessageSettings messageSettings;
   String expireTime;
   UploadSettings uploadSettings;
+  String stage;
 
   DocumentDetector({@required this.mobileToken});
 
@@ -102,6 +103,10 @@ class DocumentDetector {
     this.iosSettings = iosSettings;
   }
 
+  void setStage(String stage) {
+    this.stage = stage;
+  }
+
   Future<DocumentDetectorResult> start() async {
     Map<String, dynamic> params = new Map();
 
@@ -121,6 +126,7 @@ class DocumentDetector {
     params["messageSettings"] = messageSettings?.asMap();
     params["expireTime"] = expireTime;
     params["uploadSettings"] = uploadSettings?.asMap();
+    params["stage"] = stage;
 
     List<Map<String, dynamic>> stepsMap = [];
     for (var step in documentDetectorSteps) {

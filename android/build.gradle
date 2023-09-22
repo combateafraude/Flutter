@@ -4,7 +4,7 @@ version '1.0'
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -15,7 +15,7 @@ buildscript {
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url "https://repo.combateafraude.com/android/release"}
     }
 }
@@ -46,6 +46,6 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:document-detector:6.39.6'
+        implementation 'com.combateafraude.sdk:document-detector:7.1.0'
     }
 }
