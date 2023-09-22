@@ -256,7 +256,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
         }
 
         if let stage = arguments["stage"] as? String ?? nil {
-            passiveFaceLivenessBuilder.setStage(stage: getStageByString(stage: stage))
+            documentDetectorBuilder.setStage(stage: getStageByString(stage: stage))
         }
         
         if let uploadSettingsParam = arguments["uploadSettings"] as? [String: Any] ?? nil {
