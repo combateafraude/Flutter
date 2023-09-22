@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'document_detector_compatible'
-  s.version          = '6.1.1'
+  s.version          = '6.1.2'
   s.summary          = 'Flutter plugin for DocumentDetector'
   s.homepage         = 'https://www.combateafraude.com/'
   s.license          = { :file => 'LICENSE', :type => 'MIT' }

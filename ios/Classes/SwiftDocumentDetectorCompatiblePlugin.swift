@@ -263,7 +263,7 @@ public class SwiftDocumentDetectorCompatiblePlugin: NSObject, FlutterPlugin, Doc
         }
 
         if let stage = arguments["stage"] as? String ?? nil {
-            passiveFaceLivenessBuilder.setStage(stage: getStageByString(stage: stage))
+            documentDetectorBuilder.setStage(stage: getStageByString(stage: stage))
         }
         
         //documentDetectorBuilder.setOverlay(overlay: DocumentDetectorOverlay())
