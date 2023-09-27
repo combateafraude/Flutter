@@ -46,7 +46,7 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:new-face-liveness:1.5.1'
+        implementation 'com.combateafraude.sdk.ps:new-face-liveness:1.5.1'
     }
 
 }
