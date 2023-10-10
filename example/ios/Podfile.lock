@@ -1,13 +1,13 @@
 PODS:
-  - FaceLiveness (3.1.2):
+  - FaceLiveness (3.1.4):
     - iProov (= 10.3.1)
   - Flutter (1.0.0)
   - iProov (10.3.1):
     - Starscream (= 4.0.4)
-  - new_face_liveness (2.0.0):
-    - FaceLiveness (= 3.1.2)
+  - new_face_liveness (2.0.1):
+    - FaceLiveness (= 3.1.4)
     - Flutter
-  - permission_handler_apple (9.1.0):
+  - permission_handler_apple (9.1.1):
     - Flutter
   - Starscream (4.0.4)
 
@@ -32,13 +32,13 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
 
 SPEC CHECKSUMS:
-  FaceLiveness: f699ad81784a411d457d876a6510f1bc264504ad
+  FaceLiveness: 95b845aede67e1d91c0c40568d7b5063794820ad
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   iProov: d6054523a5578386f183499d72621129e199a5c1
-  new_face_liveness: de74b230607bf1b43c01c68e93ac3671cabe5bb5
-  permission_handler_apple: 8f116445eff3c0e7c65ad60f5fef5490aa94b4e4
+  new_face_liveness: e6fab846c612b3c46af0e1b3030ec0b4a2a9b4e3
+  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
 
-PODFILE CHECKSUM: 78ae2a93f0e294c3c1e7dc37492fea21277f7364
+PODFILE CHECKSUM: 02a86ef953956f6975dda849d64f822333eb5a43
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.13.0

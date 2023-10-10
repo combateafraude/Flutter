@@ -1,3 +1,8 @@
+#### October, 10 2023
+
+- **2.0.1**
+  - **Fix**: Apple updates improvements
+
 #### September, 15 2023
 
 - **2.0.0**

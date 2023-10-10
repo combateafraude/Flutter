@@ -44,6 +44,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin {
         }
         
         let controller = UIApplication.shared.keyWindow!.rootViewController
+        controller?.view.isUserInteractionEnabled = false
 
         //FaceLiveness Build
         let faceLiveness = mFaceLivenessBuilder.build()
@@ -76,6 +77,8 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin {
 
 extension SwiftPassiveFaceLivenessPlugin: FaceLivenessDelegate {
     public func didFinishLiveness(with faceLivenesResult: FaceLivenessResult) {
+        let controller = UIApplication.shared.keyWindow!.rootViewController
+        controller?.view.isUserInteractionEnabled = true
 
         let response : NSMutableDictionary! = [:]
         response["event"] = NSString(string: "success")
@@ -86,6 +89,8 @@ extension SwiftPassiveFaceLivenessPlugin: FaceLivenessDelegate {
     }
     
     public func didFinishWithFail(with faceLivenessFailResult: FaceLiveness.FaceLivenessFailResult) {
+        let controller = UIApplication.shared.keyWindow!.rootViewController
+        controller?.view.isUserInteractionEnabled = true
         
         let response : NSMutableDictionary! = [:]
         response["event"] = NSString(string: "failure")
@@ -99,6 +104,8 @@ extension SwiftPassiveFaceLivenessPlugin: FaceLivenessDelegate {
     }
     
     public func didFinishWithCancelled(with faceLivenessResult: FaceLiveness.FaceLivenessResult) {
+        let controller = UIApplication.shared.keyWindow!.rootViewController
+        controller?.view.isUserInteractionEnabled = true
         
         let response : NSMutableDictionary! = [:]
         response["event"] = NSString(string: "cancelled")
@@ -107,6 +114,8 @@ extension SwiftPassiveFaceLivenessPlugin: FaceLivenessDelegate {
     }
     
     public func didFinishWithError(with faceLivenessErrorResult: FaceLiveness.FaceLivenessErrorResult) {
+        let controller = UIApplication.shared.keyWindow!.rootViewController
+        controller?.view.isUserInteractionEnabled = true
         
         let response : NSMutableDictionary! = [:]
         response["event"] = NSString(string: "error")
