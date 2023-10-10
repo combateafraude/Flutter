@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
     FaceAuthenticator faceAuthenticator =
         FaceAuthenticator(mobileToken: mobileToken, personId: peopleId);
 
-    faceAuthenticator.setStage(CafStage.PROD);
+    faceAuthenticator.setStage(CafStage.BETA);
 
     faceAuthenticator.setCameraFilter(CameraFilter.NATURAL);
 

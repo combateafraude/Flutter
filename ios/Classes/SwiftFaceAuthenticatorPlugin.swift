@@ -47,6 +47,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
         //FaceAuthenticator Build
         
         let controller = UIApplication.shared.keyWindow!.rootViewController
+        controller?.view.isUserInteractionEnabled = false
 
         let faceAuth = mFaceAuthBuilder.build()
         faceAuth.delegate = self
@@ -76,6 +77,8 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
 
 extension SwiftFaceAuthenticatorPlugin: FaceAuthSDKDelegate {
     public func didFinishSuccess(with faceAuthenticatorResult: FaceAuthenticator.FaceAuthenticatorResult) {
+        let controller = UIApplication.shared.keyWindow!.rootViewController
+        controller?.view.isUserInteractionEnabled = true
         
         let response : NSMutableDictionary! = [:]
         response["event"] = NSString(string: "success")
@@ -86,6 +89,8 @@ extension SwiftFaceAuthenticatorPlugin: FaceAuthSDKDelegate {
     }
     
     public func didFinishWithError(with faceAuthenticatorErrorResult: FaceAuthenticator.FaceAuthenticatorErrorResult) {
+        let controller = UIApplication.shared.keyWindow!.rootViewController
+        controller?.view.isUserInteractionEnabled = true
         
         let response : NSMutableDictionary! = [:]
         response["event"] = NSString(string: "error")
@@ -98,6 +103,9 @@ extension SwiftFaceAuthenticatorPlugin: FaceAuthSDKDelegate {
     }
     
     public func didFinishWithCancell(with faceAuthenticatorResult: FaceAuthenticator.FaceAuthenticatorResult) {
+        let controller = UIApplication.shared.keyWindow!.rootViewController
+        controller?.view.isUserInteractionEnabled = true
+
         let response : NSMutableDictionary! = [:]
         response["event"] = NSString(string: "cancelled")
         
@@ -105,6 +113,8 @@ extension SwiftFaceAuthenticatorPlugin: FaceAuthSDKDelegate {
     }
     
     public func didFinishWithFail(with faceAuthenticatorResult: FaceAuthenticator.FaceAuthenticatorFailResult) {
+        let controller = UIApplication.shared.keyWindow!.rootViewController
+        controller?.view.isUserInteractionEnabled = true
         
         let response : NSMutableDictionary! = [:]
         response["event"] = NSString(string: "failure")
