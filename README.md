@@ -130,4 +130,3 @@ A variável `responseMessage` conterá a String `Real` em caso de sucesso. Caso 
 | `JsonParseError` | Erro ao ler o Json |
 | `ImageCaptureFailed` | Falha na captura da imagem |
 | `CameraInitializationIssue` | Erro inesperado da câmera |
-
