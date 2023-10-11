@@ -4,6 +4,7 @@ import 'package:document_detector/android/capture_stage/capture_stage.dart';
 import 'package:document_detector/android/customization.dart';
 import 'package:document_detector/android/maskType.dart';
 import 'package:document_detector/android/resolution.dart';
+import 'package:document_detector/caf_stage.dart';
 import 'package:document_detector/ios/ios_resolution.dart';
 import 'package:document_detector/message_settings.dart';
 import 'package:document_detector/preview_settings.dart';
@@ -73,6 +74,8 @@ class _MyAppState extends State<MyApp> {
     List<String> formats = ["PDF", "PNG"];
 
     documentDetector.setIosSettings(iosSettings);
+
+    documentDetector.setStage(CafStage.BETA);
 
     documentDetector.setMessageSettings(messageSettings);
 
