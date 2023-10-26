@@ -1,3 +1,15 @@
+#### October, 26 2023
+
+- **2.0.2**
+
+  **Android**
+
+  - **Fix**: Loading screen when network error occurs
+
+  **iOS**
+
+  - **Change**: Iproov update version and Starscream removed
+
 #### October, 10 2023
 
 - **2.0.1**
@@ -13,15 +25,15 @@
 #### August 25, 2023
 
 - **1.2.1**
-- **Fix**: Starscream update.
+  - **Fix**: Starscream update.
 
 #### August 17, 2023
 
 - **1.2.0**
-- **new**: New method `.setCameraFilter(String filter)` to change the SDK camera filter type - Android & iOS
-- **new**: New method `.setEnableScreenshots(bool enable)` to enable screenshots during the SDK scan - Android
+  - **new**: New method `.setCameraFilter(String filter)` to change the SDK camera filter type - Android & iOS
+  - **new**: New method `.setEnableScreenshots(bool enable)` to enable screenshots during the SDK scan - Android
 
 #### August 7, 2023
 
 - **1.1.1**
-- **New**: Hello World!!, first publish version. This release has the version number as its official counterpart.
+  - **New**: Hello World!!, first publish version. This release has the version number as its official counterpart.
