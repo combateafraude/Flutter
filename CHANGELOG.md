@@ -1,3 +1,15 @@
+#### October, 26 2023
+
+- **2.0.2**
+
+  **Android**
+
+  - **Fix**: Loading screen when network error occurs
+
+  **iOS**
+
+  - **Change**: Iproov update version and Starscream removed
+
 #### October, 10 2023
 
 - **2.0.1**

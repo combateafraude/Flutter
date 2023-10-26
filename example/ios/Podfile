@@ -34,33 +34,5 @@ target 'Runner' do
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
-post_install do |installer|
-  fix_dt_toolchain(installer)
-  installer.pods_project.targets.each do |target|
-    flutter_additional_ios_build_settings(target)
-    if ['iProov', 'Starscream'].include? target.name
-      target.build_configurations.each do |config|
-        config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
-        if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < 10.0
-          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
-        end
-      end
-    end
-  end
-end
-
-def fix_dt_toolchain(installer)
-  return if !installer
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      xcconfig_path = config.base_configuration_reference.real_path
-      xcconfig = File.read(xcconfig_path)
-      xcconfig_mod = xcconfig.gsub(/DT_TOOLCHAIN_DIR/, "TOOLCHAIN_DIR")
-      File.open(xcconfig_path, "w") { |file| file << xcconfig_mod }
-    end
-  end
-end
-
-
 source 'https://github.com/combateafraude/iOS.git'
 source 'https://cdn.cocoapods.org/'
