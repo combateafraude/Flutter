@@ -1,0 +1,44 @@
+PODS:
+  - FaceAuth (3.1.7):
+    - FaceLiveness (= 3.1.5)
+  - FaceLiveness (3.1.5):
+    - iProov (= 11.0.0)
+  - Flutter (1.0.0)
+  - iProov (11.0.0)
+  - new_face_authenticator_compatible (2.0.3):
+    - FaceAuth (= 3.1.7)
+    - Flutter
+  - "permission_handler (5.0.1+1)":
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - new_face_authenticator_compatible (from `.symlinks/plugins/new_face_authenticator_compatible/ios`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+
+SPEC REPOS:
+  https://github.com/combateafraude/iOS.git:
+    - FaceAuth
+    - FaceLiveness
+  trunk:
+    - iProov
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  new_face_authenticator_compatible:
+    :path: ".symlinks/plugins/new_face_authenticator_compatible/ios"
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
+
+SPEC CHECKSUMS:
+  FaceAuth: 48eb110b9c76a37c38f540ef7bd3759cedb32fdf
+  FaceLiveness: 5ce36530cbde39490a5bed4176e314cf84f0508f
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  iProov: d22923b04dd1f78395979aeacd5e7d59e19465f8
+  new_face_authenticator_compatible: da4451004734fe5df63ca07c96d933fa4bf1a751
+  permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
+
+PODFILE CHECKSUM: 70506de79fd1673b6f41aa7d752bb80269b27244
+
+COCOAPODS: 1.13.0
