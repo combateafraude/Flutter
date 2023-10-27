@@ -1,3 +1,11 @@
+#### October, 27 2023
+
+- **2.0.3**
+
+  **Android**
+
+  - **Fix**: Loading screen activity
+
 #### October, 26 2023
 
 - **2.0.2**
