@@ -1,14 +1,16 @@
-group 'com.combateafraude.passive_face_liveness'
+group 'com.caf.face_liveness'
 version '1.0'
 
 buildscript {
+    ext.kotlin_version = '1.7.10'
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -22,9 +24,14 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 33
+    if (project.android.hasProperty("namespace")) {
+        namespace 'com.caf.face_liveness'
+    }
+
+    compileSdk 33
 
     defaultConfig {
         minSdkVersion 21
@@ -37,8 +44,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    aaptOptions {
-        noCompress "tflite"
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
     }
 
     lintOptions {

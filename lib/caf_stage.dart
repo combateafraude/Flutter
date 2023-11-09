@@ -1,5 +1,5 @@
 class CafStage {
-  static final String PROD = "PROD";
-  static final String BETA = "BETA";
-  static final String DEV = "DEV";
+  static final String prod = "PROD";
+  static final String beta = "BETA";
+  static final String dev = "DEV";
 }

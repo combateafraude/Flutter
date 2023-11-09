@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  bmprogresshud:
+    dependency: "direct main"
+    description:
+      name: bmprogresshud
+      sha256: "0c4a055f441d8bcd7634e46b54acaf7c2e40d5c2aa3c73b61cad9ee482e9a00a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -105,7 +113,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.0.3"
+    version: "2.1.0"
   path:
     dependency: transitive
     description:
