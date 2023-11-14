@@ -1,73 +1,72 @@
-#### October, 27 2023
+# Release Notes
 
-- **2.0.3**
+## Version 3.0.0 (November, 9 2023)
 
-  **Android**
+### :wrench: Refactoring
 
-  - **Fix**: Loading screen activity
+#### :warning: **Breaking Changes** :warning:
 
-#### October, 26 2023
+- **Android & iOS Native Bridge**: The Android bridge has been refactored with Kotlin for enhanced performance and compatibility.
 
-- **2.0.2**
+- **`PassiveFaceLiveness` to `FaceLiveness`**: We've revamped the `PassiveFaceLiveness` to a more streamlined `FaceLiveness` Dart class. This new class communicates seamlessly with the updated native bridges, ensuring a smoother integration experience.
 
-  **Android**
+- **`PassiveFaceLivenessResult` to `FaceLivenessEvent`**: To provide you with more insightful SDK events, we've transformed the `PassiveFaceLivenessResult` into `FaceLivenessEvent`. This change enhances the clarity and effectiveness of event handling.
 
-  - **Fix**: Loading screen when network error occurs
+### :bookmark_tabs: Documentation Updates
 
-  **iOS**
+- **Integration Guidelines**: The documentation has been updated to reflect the changes in the SDK. Find comprehensive details on how to seamlessly integrate your applications with the latest version, ensuring a smooth transition and optimal performance.
 
-  - **Change**: Iproov update version and Starscream removed
+## Version 2.0.3 (October, 27 2023)
 
-#### October, 10 2023
+#### Android
 
-- **2.0.1**
-  - **Fix**: Apple updates improvements
+- **Fix**: Loading screen activity
 
-#### September, 15 2023
+## Version 2.0.2 (October, 26 2023)
 
-- **2.0.0**
-  - **Change**: New parameters to `PassiveFaceLivenessFailure` object
-  - **New**: Register fail attempts
-  - **New**: Adding loading screens
+#### Android
 
-#### August, 25 2023
+- **Fix**: Loading screen when network error occurs
 
-- **1.2.2**
-  - **Fix**: Starscream update.
+#### iOS
 
-#### August, 18 2023
+- **Change**: Iproov update version and Starscream removed
 
-- **1.2.1**
+## Version 2.0.1 (October, 10 2023)
+
+- **Fix**: Apple updates improvements
+
+## Version 2.0.0 (September, 15 2023)
+
+- **Change**: New parameters to `PassiveFaceLivenessFailure` object
+- **New**: Register fail attempts
+- **New**: Adding loading screens
+
+## Version 1.2.2 (August, 25 2023)
+
+- **Fix**: Starscream update.
+
+## Version 1.2.1 (August, 18 2023)
+
 - **Fix**: Android SDK customizations.
 
-#### August, 18 2023
+## Version 1.2.0 (August, 18 2023)
 
-- **1.2.0**
 - **new**: New method .setCameraFilter(String filter) to change the SDK camera filter type - Android & iOS
 - **new**: New method .setEnableScreenshots(bool enable) to enable screenshots during the SDK scan - Android
 
-#### August, 02 2023
+## Version 1.1.2 (August, 02 2023)
 
-- **1.1.2**
 - **Fix**: Fix Documentation erros.
 
-#### August, 02 2023
+## Version 1.1.1 (August, 02 2023)
 
-02 de agosto de 2023
-
-- **1.1.1**
 - **Fix**: Fix on the android return of the SDK, it was returning null results in some scenarios.
 
-#### July, 17 2023
+## Version 1.1.0 (July, 17 2023)
 
-17 de julho de 2023
-
-- **1.1.0**
 - **Change**: Now the SDK's return a signed respose in case of success, you must access the parameter `signedResponse` in the `PassiveFaceLivenessSuccess` object.
 
-#### July, 03 2023
+## Version 1.0.0 (July, 03 2023)
 
-03 de julho de 2023
-
-- **1.0.0**
 - **New**: Hello World!!, first publish version.
