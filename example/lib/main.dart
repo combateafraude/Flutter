@@ -1,12 +1,9 @@
+import 'package:bmprogresshud/bmprogresshud.dart';
 import 'package:flutter/material.dart';
-import 'package:new_face_liveness_compatible/camera_filter.dart';
 import 'package:new_face_liveness_compatible/caf_stage.dart';
-import 'package:new_face_liveness_compatible/passive_face_liveness.dart';
-import 'package:new_face_liveness_compatible/result/passive_face_liveness_closed.dart';
-import 'package:new_face_liveness_compatible/result/passive_face_liveness_failure.dart';
-import 'package:new_face_liveness_compatible/result/passive_face_liveness_result.dart';
-import 'package:new_face_liveness_compatible/result/passive_face_liveness_success.dart';
-
+import 'package:new_face_liveness_compatible/camera_filter.dart';
+import 'package:new_face_liveness_compatible/face_liveness.dart';
+import 'package:new_face_liveness_compatible/face_liveness_events.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -19,10 +16,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  var _scanInProgress = false;
+
   String _result = "";
   String _description = "";
+
   String mobileToken = "";
-  String peopleId = "";
+  String personId = "";
 
   @override
   void initState() {
@@ -37,34 +37,46 @@ class _MyAppState extends State<MyApp> {
     ].request();
   }
 
-  void startPassiveFaceLiveness() async {
+  void startFaceLiveness() {
+    setState(() => _scanInProgress = true);
+    ProgressHud.show(ProgressHudType.loading, 'Launching SDK');
+
     String result = "";
     String description = "";
 
-    PassiveFaceLiveness passiveFaceLiveness =
-        new PassiveFaceLiveness(mobileToken: mobileToken, peopleId: peopleId);
+    FaceLiveness faceLiveness =
+        FaceLiveness(mobileToken: mobileToken, personId: personId);
 
-    passiveFaceLiveness.setStage(CafStage.BETA);
-
-    passiveFaceLiveness.setCameraFilter(CameraFilter.NATURAL);
+    faceLiveness.setStage(CafStage.beta);
+    faceLiveness.setCameraFilter(CameraFilter.natural);
 
     // Put the others parameters here
 
-    PassiveFaceLivenessResult passiveFaceLivenessResult =
-        await passiveFaceLiveness.start();
+    final stream = faceLiveness.start();
 
-    if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
-      result = "Success!";
+    stream.listen((event) {
+      if (event.isFinal) {
+        setState(() => _scanInProgress = false);
+      }
 
-      description +=
-          "\n\signedResponse: " + passiveFaceLivenessResult.signedResponse;
-    } else if (passiveFaceLivenessResult is PassiveFaceLivenessFailure) {
-      result = "Falha!";
-      description =
-          "ErrorMessage: ${passiveFaceLivenessResult.errorMessage} \nErrorType: ${passiveFaceLivenessResult.errorType} \nCode: ${passiveFaceLivenessResult.code} \nResponse:${passiveFaceLivenessResult.signedResponse}";
-    } else if (passiveFaceLivenessResult is PassiveFaceLivenessClosed) {
-      result = "User closed!";
-    }
+      if (event is FaceLivenessEventConnecting) {
+        ProgressHud.show(ProgressHudType.loading, 'Loading...');
+      } else if (event is FaceLivenessEventConnected) {
+        ProgressHud.dismiss();
+      } else if (event is FaceLivenessEventClosed) {
+        result = 'Canceled';
+        description = 'Usuário fechou o SDK';
+      } else if (event is FaceLivenessEventSuccess) {
+        ProgressHud.showAndDismiss(ProgressHudType.success, 'Success!');
+        result = 'Success!';
+        description = '\nSignedResponse: ${event.signedResponse}';
+      } else if (event is FaceLivenessEventFailure) {
+        ProgressHud.showAndDismiss(ProgressHudType.error, event.errorType);
+        result = 'Failure!';
+        description =
+            '\nError type: ${event.errorType} \nError Message: ${event.errorMessage} \nError code: ${event.code} \nResponse:${event.signedResponse}';
+      }
+    });
 
     if (!mounted) return;
 
@@ -79,39 +91,43 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         home: Scaffold(
             appBar: AppBar(
-              title: const Text('PassiveFaceLiveness plugin example'),
+              title: const Text('FaceLiveness plugin example'),
             ),
-            body: Container(
-                margin: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Row(
+            body: ProgressHud(
+                isGlobalHud: true,
+                child: Container(
+                    margin: const EdgeInsets.all(20.0),
+                    child: Column(
                       children: [
-                        ElevatedButton(
-                          child: Text('Start PassiveFaceLiveness'),
-                          onPressed: () async {
-                            startPassiveFaceLiveness();
-                          },
-                        )
+                        Row(
+                          children: [
+                            ElevatedButton(
+                              child: Text('Start PassiveFaceLiveness'),
+                              onPressed: _scanInProgress
+                                  ? null
+                                  : () {
+                                      startFaceLiveness();
+                                    },
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                                margin: EdgeInsets.only(top: 10.0),
+                                child: Text("Result: $_result"))
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text("Description:\n$_description",
+                                  overflow: TextOverflow.clip),
+                            )
+                          ],
+                        ),
                       ],
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(top: 10.0),
-                            child: Text("Result: $_result"))
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text("Description:\n$_description",
-                              overflow: TextOverflow.clip),
-                        )
-                      ],
-                    ),
-                  ],
-                ))));
+                    )))));
   }
 }
