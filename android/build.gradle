@@ -1,22 +1,22 @@
-group 'com.combateafraude.face_authenticator'
+group 'com.caf.face_authenticator'
 version '1.0'
 
 buildscript {
+    ext.kotlin_version = '1.7.10'
     repositories {
         google()
-        jcenter()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
         maven { url "https://repo.combateafraude.com/android/release" }
         maven { url 'https://raw.githubusercontent.com/iProov/android/master/maven/' }
@@ -24,9 +24,14 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 33
+    if (project.android.hasProperty("namespace")) {
+        namespace 'com.caf.face_liveness'
+    }
+
+    compileSdk 33
 
     defaultConfig {
         minSdkVersion 21
@@ -39,8 +44,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    aaptOptions {
-        noCompress "tflite"
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
     }
 
     lintOptions {

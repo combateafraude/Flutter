@@ -3,20 +3,27 @@ import UIKit
 import FaceAuthenticator
 import FaceLiveness
 
-public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
+public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
     
     var flutterResult: FlutterResult?
+    var sink: FlutterEventSink?
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "face_authenticator", binaryMessenger: registrar.messenger())
         let instance = SwiftFaceAuthenticatorPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
+        
+        FlutterEventChannel(name: "liveness_listener", binaryMessenger: registrar.messenger())
+            .setStreamHandler(instance)
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         if call.method == "start" {
             flutterResult = result;
-            start(call: call);
+            do {
+                start(call: call);
+            }
+            result(nil)
         } else {
             result(FlutterMethodNotImplemented);
         }
@@ -32,7 +39,6 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
 
         let mFaceAuthBuilder = FaceAuthSDK.Builder()
             .setCredentials(token: mobileToken, personId: personId)
-            .setLoading(withLoading: true)
 
         //Stage
         if let stage = arguments["stage"] as? String ?? nil {
@@ -44,14 +50,17 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
             mFaceAuthBuilder.setFilter(filter: getFilterByString(filter: filter))
         }
         
-        //FaceAuthenticator Build
+        // Enable SDK default loading screen
+        if let enableLoadingScreen = arguments["enableLoadingScreen"] as? Bool ?? nil {
+            mFaceAuthBuilder.setLoading(withLoading: enableLoadingScreen)
+        }
         
         let controller = UIApplication.shared.keyWindow!.rootViewController
-        controller?.view.isUserInteractionEnabled = false
-        
+
+        //FaceAuthenticator Build
         let faceAuth = mFaceAuthBuilder.build()
-        faceAuth.delegate = self
         
+        faceAuth.delegate = self
         faceAuth.startFaceAuthSDK(viewController: controller!)
     }
     
@@ -73,48 +82,33 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin {
         }
         
     }
+    
+    public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+            sink = events
+            
+            return nil
+        }
+        
+        public func onCancel(withArguments arguments: Any?) -> FlutterError? {
+            sink = nil
+            
+            return nil
+        }
+    
 }
 
 extension SwiftFaceAuthenticatorPlugin: FaceAuthSDKDelegate {
     public func didFinishSuccess(with faceAuthenticatorResult: FaceAuthenticator.FaceAuthenticatorResult) {
-        let controller = UIApplication.shared.keyWindow!.rootViewController
-        controller?.view.isUserInteractionEnabled = true
-        
         let response : NSMutableDictionary! = [:]
         response["event"] = NSString(string: "success")
         
         response["signedResponse"] = faceAuthenticatorResult.signedResponse
         
-        flutterResult!(response)
-    }
-    
-    public func didFinishWithError(with faceAuthenticatorErrorResult: FaceAuthenticator.FaceAuthenticatorErrorResult) {
-        let controller = UIApplication.shared.keyWindow!.rootViewController
-        controller?.view.isUserInteractionEnabled = true
-        
-        let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "error")
-        
-        response["errorType"] = String(describing: faceAuthenticatorErrorResult.errorType)
-        response["errorMessage"] = faceAuthenticatorErrorResult.description
-        response["code"] = faceAuthenticatorErrorResult.code
-        
-        flutterResult!(response)
-    }
-    
-    public func didFinishWithCancell(with faceAuthenticatorResult: FaceAuthenticator.FaceAuthenticatorResult) {
-        let controller = UIApplication.shared.keyWindow!.rootViewController
-        controller?.view.isUserInteractionEnabled = true
-
-        let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "cancelled")
-        
-        flutterResult!(response)
+        self.sink?(response)
+        self.sink?(FlutterEndOfEventStream)
     }
     
     public func didFinishWithFail(with faceAuthenticatorResult: FaceAuthenticator.FaceAuthenticatorFailResult) {
-        let controller = UIApplication.shared.keyWindow!.rootViewController
-        controller?.view.isUserInteractionEnabled = true
         
         let response : NSMutableDictionary! = [:]
         response["event"] = NSString(string: "failure")
@@ -124,19 +118,55 @@ extension SwiftFaceAuthenticatorPlugin: FaceAuthSDKDelegate {
         response["errorMessage"] = faceAuthenticatorResult.description
         response["code"] = faceAuthenticatorResult.code
         
-        flutterResult!(response)
+        self.sink?(response)
+        self.sink?(FlutterEndOfEventStream)
     }
     
-    //TODO: Figure out how to send this events to Flutter side without stopping the SDK
+    public func didFinishWithCancell(with faceAuthenticatorResult: FaceAuthenticator.FaceAuthenticatorResult) {
+        let response : NSMutableDictionary! = [:]
+        response["event"] = NSString(string: "canceled")
+        
+        self.sink?(response)
+        self.sink?(FlutterEndOfEventStream)
+    }
+    
+    public func didFinishWithError(with faceAuthenticatorErrorResult: FaceAuthenticator.FaceAuthenticatorErrorResult) {
+        let response : NSMutableDictionary! = [:]
+        response["event"] = NSString(string: "error")
+        
+        response["errorType"] = String(describing: faceAuthenticatorErrorResult.errorType)
+        response["errorMessage"] = faceAuthenticatorErrorResult.description
+        response["code"] = faceAuthenticatorErrorResult.code
+        
+        self.sink?(response)
+        self.sink?(FlutterEndOfEventStream)
+    }
+    
     public func openLoadingScreenStartSDK() {
+        let response : NSMutableDictionary! = [:]
+        response["event"] = NSString(string: "connecting")
+                
+        self.sink?(response)
     }
     
     public func closeLoadingScreenStartSDK() {
+        let response : NSMutableDictionary! = [:]
+        response["event"] = NSString(string: "connected")
+                
+        self.sink?(response)
     }
     
     public func openLoadingScreenValidation() {
+        let response : NSMutableDictionary! = [:]
+        response["event"] = NSString(string: "validating")
+                
+        self.sink?(response)
     }
     
     public func closeLoadingScreenValidation() {
+        let response : NSMutableDictionary! = [:]
+        response["event"] = NSString(string: "validated")
+                
+        self.sink?(response)
     }
 }
