@@ -1,12 +1,9 @@
+import 'package:bmprogresshud/bmprogresshud.dart';
+import 'package:flutter/material.dart';
 import 'package:new_face_authenticator/caf_stage.dart';
 import 'package:new_face_authenticator/camera_filter.dart';
 import 'package:new_face_authenticator/face_authenticator.dart';
-import 'package:new_face_authenticator/result/face_authenticator_closed.dart';
-import 'package:new_face_authenticator/result/face_authenticator_failure.dart';
-import 'package:new_face_authenticator/result/face_authenticator_result.dart';
-import 'package:new_face_authenticator/result/face_authenticator_success.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:new_face_authenticator/face_authenticator_events.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -19,11 +16,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  var _scanInProgress = false;
+
   String _result = "";
   String _description = "";
 
   String mobileToken = "";
-  String peopleId = "";
+  String personId = "";
 
   @override
   void initState() {
@@ -38,38 +37,44 @@ class _MyAppState extends State<MyApp> {
     ].request();
   }
 
-  void startFaceAuthenticator() async {
+  void startFaceAuth() {
+    setState(() => _scanInProgress = true);
+    ProgressHud.show(ProgressHudType.loading, 'Launching SDK');
+
     String result = "";
     String description = "";
 
-    FaceAuthenticator faceAuthenticator =
-        FaceAuthenticator(mobileToken: mobileToken, personId: peopleId);
+    FaceAuthenticator faceAuth =
+        FaceAuthenticator(mobileToken: mobileToken, personId: personId);
 
-    faceAuthenticator.setStage(CafStage.BETA);
+    faceAuth.setStage(CafStage.prod);
+    faceAuth.setCameraFilter(CameraFilter.natural);
 
-    faceAuthenticator.setCameraFilter(CameraFilter.NATURAL);
+    // Put the others parameters here
 
-    faceAuthenticator.setEnableScreenshots(true);
+    final stream = faceAuth.start();
 
-    try {
-      FaceAuthenticatorResult faceAuthenticatorResult =
-          await faceAuthenticator.start();
-
-      if (faceAuthenticatorResult is FaceAuthenticatorSuccess) {
-        result = "Success!";
-        description =
-            "authenticated: ${faceAuthenticatorResult.signedResponse}";
-      } else if (faceAuthenticatorResult is FaceAuthenticatorFailure) {
-        result = "Falha!";
-        description =
-            "Error Type: ${faceAuthenticatorResult.errorType} \nError Message: ${faceAuthenticatorResult.errorMessage} \nCode: ${faceAuthenticatorResult.code} \nSignRes: ${faceAuthenticatorResult.signedResponse}";
-      } else if (faceAuthenticatorResult is FaceAuthenticatorClosed) {
-        result = "Usuário fechou!";
+    stream.listen((event) {
+      if (event.isFinal) {
+        setState(() => _scanInProgress = false);
       }
-    } on PlatformException catch (err) {
-      result = "Excpection!";
-      description = err.message!;
-    }
+
+      if (event is FaceAuthenticatorEventConnecting) {
+        ProgressHud.show(ProgressHudType.loading, 'Loading...');
+      } else if (event is FaceAuthenticatorEventConnected) {
+        ProgressHud.dismiss();
+      } else if (event is FaceAuthenticatorEventClosed) {
+        ProgressHud.dismiss();
+        print('Canceled\nUsuário fechou o SDK');
+      } else if (event is FaceAuthenticatorEventSuccess) {
+        ProgressHud.showAndDismiss(ProgressHudType.success, 'Success!');
+        print('Success!\nSignedResponse: ${event.signedResponse}');
+      } else if (event is FaceAuthenticatorEventFailure) {
+        ProgressHud.showAndDismiss(ProgressHudType.error, event.errorMessage!);
+        print(
+            'Failure!\nError type: ${event.errorType} \nError Message: ${event.errorMessage} \nError code: ${event.code} \nResponse:${event.signedResponse}');
+      }
+    });
 
     if (!mounted) return;
 
@@ -86,37 +91,41 @@ class _MyAppState extends State<MyApp> {
             appBar: AppBar(
               title: const Text('FaceAuthenticator plugin example'),
             ),
-            body: Container(
-                margin: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Row(
+            body: ProgressHud(
+                isGlobalHud: true,
+                child: Container(
+                    margin: const EdgeInsets.all(20.0),
+                    child: Column(
                       children: [
-                        ElevatedButton(
-                          child: Text('Start FaceAuthenticator'),
-                          onPressed: () async {
-                            startFaceAuthenticator();
-                          },
-                        )
+                        Row(
+                          children: [
+                            ElevatedButton(
+                              child: Text('Start FaceAuth'),
+                              onPressed: _scanInProgress
+                                  ? null
+                                  : () {
+                                      startFaceAuth();
+                                    },
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                                margin: EdgeInsets.only(top: 10.0),
+                                child: Text("Result: $_result"))
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text("Description:\n$_description",
+                                  overflow: TextOverflow.clip),
+                            )
+                          ],
+                        ),
                       ],
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(top: 10.0),
-                            child: Text("Result: $_result"))
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text("Description:\n$_description",
-                              overflow: TextOverflow.clip),
-                        )
-                      ],
-                    ),
-                  ],
-                ))));
+                    )))));
   }
 }

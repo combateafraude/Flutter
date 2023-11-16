@@ -5,7 +5,7 @@ PODS:
     - iProov (= 11.0.0)
   - Flutter (1.0.0)
   - iProov (11.0.0)
-  - new_face_authenticator (2.0.3):
+  - new_face_authenticator (3.0.0):
     - FaceAuth (= 3.1.7)
     - Flutter
   - permission_handler_apple (9.1.1):
@@ -36,9 +36,9 @@ SPEC CHECKSUMS:
   FaceLiveness: 5ce36530cbde39490a5bed4176e314cf84f0508f
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   iProov: d22923b04dd1f78395979aeacd5e7d59e19465f8
-  new_face_authenticator: fdbf785a30d7f321a574a6a26d6596c361c67b6d
+  new_face_authenticator: 9ea6cf3ed9cf3daaf2567d405cc1434c58b06d6f
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
 
-PODFILE CHECKSUM: 70506de79fd1673b6f41aa7d752bb80269b27244
+PODFILE CHECKSUM: b6a1a680237d1b5915afe9833d7981eaa7e97a4d
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.14.2
