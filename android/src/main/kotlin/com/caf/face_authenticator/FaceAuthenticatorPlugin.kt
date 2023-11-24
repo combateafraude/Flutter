@@ -163,7 +163,7 @@ class FaceAuthenticatorPlugin: FlutterPlugin {
         methodChannel = MethodChannel(flutterPluginBinding!!.binaryMessenger, "face_authenticator")
         methodChannel.setMethodCallHandler(methodCallHandler)
 
-        eventChannel = EventChannel(flutterPluginBinding!!.binaryMessenger, "liveness_listener")
+        eventChannel = EventChannel(flutterPluginBinding!!.binaryMessenger, "face_auth_listener")
         eventChannel.setStreamHandler(object : EventChannel.StreamHandler {
             override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
                 eventSink = events
