@@ -28,7 +28,7 @@ apply plugin: 'kotlin-android'
 
 android {
     if (project.android.hasProperty("namespace")) {
-        namespace 'com.caf.face_liveness'
+        namespace 'com.caf.face_authenticator'
     }
 
     compileSdk 33

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:new_face_authenticator/face_authenticator_events.dart';
 
 const _LivenessMethodChannel = MethodChannel('face_authenticator');
-const _LivenessListenerEventChannel = EventChannel('liveness_listener');
+const _LivenessListenerEventChannel = EventChannel('face_auth_listener');
 
 class FaceAuthenticator {
   String mobileToken;

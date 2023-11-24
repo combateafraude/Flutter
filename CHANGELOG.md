@@ -1,5 +1,11 @@
 # Release Notes
 
+## Version 3.0.1 (November, 24 2023)
+
+#### Android
+
+- **Fix**: SDK namespace and `EventChannel` identification.
+
 ## Version 3.0.0 (November, 16 2023)
 
 ### :wrench: Refactoring
