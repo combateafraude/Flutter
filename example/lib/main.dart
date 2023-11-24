@@ -4,6 +4,7 @@ import 'package:document_detector/android/capture_stage/capture_stage.dart';
 import 'package:document_detector/android/customization.dart';
 import 'package:document_detector/android/maskType.dart';
 import 'package:document_detector/android/resolution.dart';
+import 'package:document_detector/caf_stages.dart';
 import 'package:document_detector/ios/ios_resolution.dart';
 import 'package:document_detector/message_settings.dart';
 import 'package:document_detector/preview-settings.dart';
@@ -35,7 +36,8 @@ class _MyAppState extends State<MyApp> {
   String _result = "";
   String _description = "";
 
-  String mobileToken = "";
+  String mobileToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI2NDUxNjJkZmYyMWU5MzAwMDgwNWRmN2YifQ.yuIsFmzVPaMbn4NzbQhAHRwJDsKgWpdl8_z32JOjaCc";
 
   @override
   void initState() {
@@ -62,9 +64,10 @@ class _MyAppState extends State<MyApp> {
 
     DocumentDetectorAndroidSettings detectorAndroidSettings =
         new DocumentDetectorAndroidSettings(
-            enableSwitchCameraButton: false,
-            compressQuality: 50,
-            resolution: Resolution.QUAD_HD);
+            useAdb: true,
+            useDebug: true,
+            useDeveloperMode: true,
+            enableSwitchCameraButton: false);
 
     DocumentDetectorCustomizationAndroid documentDetectorCustomizationAndroid =
         new DocumentDetectorCustomizationAndroid(maskType: MaskType.DETAILED);
@@ -81,13 +84,13 @@ class _MyAppState extends State<MyApp> {
 
     documentDetector.setIosSettings(iosSettings);
 
+    documentDetector.setStage(CafStage.BETA);
+
     documentDetector.setMessageSettings(messageSettings);
 
     documentDetector.setDocumentFlow(documentSteps);
 
     documentDetector.setAndroidSettings(detectorAndroidSettings);
-
-    documentDetector.setPreviewSettings(new PreviewSettings(show: true));
 
     // Put the others parameters here
 

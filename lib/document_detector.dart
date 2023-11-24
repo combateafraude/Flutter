@@ -103,7 +103,7 @@ class DocumentDetector {
     this.uploadSettings = settings;
   }
 
-  void setStage(String string) {
+  void setStage(String stage) {
     this.stage = stage;
   }
 
