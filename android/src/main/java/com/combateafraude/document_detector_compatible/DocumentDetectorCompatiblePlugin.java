@@ -390,9 +390,9 @@ public class DocumentDetectorCompatiblePlugin
                     if (luminosityThreshold != null) {
                         mDocumentDetectorBuilder.setLuminositySensorSettings(
                                 new SensorLuminositySettings(luminosityThreshold));
+                    } else {
+                        mDocumentDetectorBuilder.setLuminositySensorSettings(null);
                     }
-                } else {
-                    mDocumentDetectorBuilder.setLuminositySensorSettings(null);
                 }
 
                 if (androidSettings.get("compressQuality") != null) {
