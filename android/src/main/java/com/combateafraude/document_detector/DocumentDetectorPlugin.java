@@ -392,9 +392,9 @@ public class DocumentDetectorPlugin
                     if (luminosityThreshold != null) {
                         mDocumentDetectorBuilder.setLuminositySensorSettings(
                                 new SensorLuminositySettings(luminosityThreshold));
+                    } else {
+                        mDocumentDetectorBuilder.setLuminositySensorSettings(null);
                     }
-                } else {
-                    mDocumentDetectorBuilder.setLuminositySensorSettings(null);
                 }
 
                 HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) sensorSettings
