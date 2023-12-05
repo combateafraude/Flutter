@@ -13,7 +13,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FlutterStrea
         let instance = SwiftFaceAuthenticatorPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
         
-        FlutterEventChannel(name: "liveness_listener", binaryMessenger: registrar.messenger())
+        FlutterEventChannel(name: "face_auth_listener", binaryMessenger: registrar.messenger())
             .setStreamHandler(instance)
     }
     
