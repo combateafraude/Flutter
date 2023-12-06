@@ -1,6 +1,7 @@
 import 'package:bmprogresshud/bmprogresshud.dart';
 import 'package:flutter/material.dart';
 import 'package:new_face_liveness_compatible/caf_stage.dart';
+import 'package:new_face_liveness_compatible/caf_time.dart';
 import 'package:new_face_liveness_compatible/camera_filter.dart';
 import 'package:new_face_liveness_compatible/face_liveness.dart';
 import 'package:new_face_liveness_compatible/face_liveness_events.dart';
@@ -21,8 +22,9 @@ class _MyAppState extends State<MyApp> {
   String _result = "";
   String _description = "";
 
-  String mobileToken = "";
-  String personId = "";
+  String mobileToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI2Mjg2YmU5Mzg2NDJmZDAwMDk4NWE1OWUiLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.muHfkGn9ToDyt9cT_z6vHPNLH0GfDNJJ2WtnnsrqFpU";
+  String personId = "555";
 
   @override
   void initState() {
@@ -49,6 +51,7 @@ class _MyAppState extends State<MyApp> {
 
     faceLiveness.setStage(CafStage.beta);
     faceLiveness.setCameraFilter(CameraFilter.natural);
+    faceLiveness.setImageUrlExpirationTime(Time.threeHours);
 
     // Put the others parameters here
 

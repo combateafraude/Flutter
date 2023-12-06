@@ -15,7 +15,7 @@ class FaceLiveness {
   String filter;
   bool enableScreenshot;
   bool enableLoadingScreen;
-  String? imageUrlExpirationTime;
+  String imageUrlExpirationTime;
 
   FaceLiveness({@required this.mobileToken, @required this.personId});
 
@@ -42,6 +42,7 @@ class FaceLiveness {
     this.enableLoadingScreen = enable;
   }
 
+  // Customize the image URL expiration time
   void setImageUrlExpirationTime(String time) {
     this.imageUrlExpirationTime = time;
   }
@@ -56,7 +57,6 @@ class FaceLiveness {
     params['enableScreenshot'] = enableScreenshot;
     params['enableLoadingScreen'] = enableLoadingScreen;
     params['imageUrlExpirationTime'] = imageUrlExpirationTime;
-    
 
     _LivenessMethodChannel.invokeMethod('start', params);
 
