@@ -69,8 +69,8 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, FlutterStr
     }
 
     public func getExpirationTimeByString(time: String) -> Time {
-        if time == "thirtyDays" {
-            return .thirtyDays
+        if time == "THIRTY_DAYS" {
+            return .trirtyDays
         } else {
             return .threeHours
         }
