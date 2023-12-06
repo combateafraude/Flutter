@@ -4,7 +4,6 @@ import 'package:new_face_liveness/caf_stage.dart';
 import 'package:new_face_liveness/camera_filter.dart';
 import 'package:new_face_liveness/face_liveness.dart';
 import 'package:new_face_liveness/face_liveness_events.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,14 +26,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-
-    requestPermissions();
-  }
-
-  void requestPermissions() async {
-    await [
-      Permission.camera,
-    ].request();
   }
 
   void startFaceLiveness() {
