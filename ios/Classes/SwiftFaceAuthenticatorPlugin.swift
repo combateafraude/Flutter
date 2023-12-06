@@ -54,6 +54,10 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FlutterStrea
         if let enableLoadingScreen = arguments["enableLoadingScreen"] as? Bool ?? nil {
             mFaceAuthBuilder.setLoading(withLoading: enableLoadingScreen)
         }
+
+        if let expirationTime = arguments["imageUrlExpirationTime"] as? String ?? nil {
+            mFaceLivenessBuilder.setImageUrlExpirationTime(time: getExpirationTimeByString(time: getexpirationTime))
+        }
         
         let controller = UIApplication.shared.keyWindow!.rootViewController
 
@@ -62,6 +66,14 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FlutterStrea
         
         faceAuth.delegate = self
         faceAuth.startFaceAuthSDK(viewController: controller!)
+    }
+
+    public func getExpirationTimeByString(time: String) -> Time {
+        if time == "thirtyDays" {
+            return .thirtyDays
+        } else {
+            return .threeHours
+        }
     }
     
     public func getStageByString(stage: String) -> FaceLiveness.CAFStage {
