@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Looper
 import com.caf.facelivenessiproov.input.CAFStage
 import com.caf.facelivenessiproov.input.FaceLiveness
+import com.caf.facelivenessiproov.input.Time
 import com.caf.facelivenessiproov.input.VerifyLivenessListener
 import com.caf.facelivenessiproov.input.iproov.Filter
 import com.caf.facelivenessiproov.output.FaceLivenessResult
@@ -67,6 +68,12 @@ class FaceLivenessPlugin: FlutterPlugin {
         val enableLoadingScreen = argumentsMap["enableLoadingScreen"] as Boolean?
         if (enableLoadingScreen != null) {
             mFaceLivenessBuilder.setLoadingScreen(enableLoadingScreen)
+        }
+
+        // Customize the image URL Expiration Time
+        val imageUrlExpirationTime = argumentsMap["imageUrlExpirationTime"] as String?
+        if (imageUrlExpirationTime != null) {
+            mFaceLivenessBuilder.setImageUrlExpirationTime(Time.valueOf(imageUrlExpirationTime))
         }
 
         // FaceLiveness build
