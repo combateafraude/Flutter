@@ -55,7 +55,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, FlutterStr
         }
 
         if let expirationTime = arguments["imageUrlExpirationTime"] as? String ?? nil {
-            mFaceLivenessBuilder.setImageUrlExpirationTime(time: getExpirationTimeByString(time: getexpirationTime))
+            mFaceLivenessBuilder.setImageUrlExpirationTime(time: getExpirationTimeByString(time: expirationTime))
         }
         
         let controller = UIApplication.shared.keyWindow!.rootViewController
