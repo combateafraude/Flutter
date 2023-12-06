@@ -14,6 +14,7 @@ class FaceAuthenticator {
   String? filter;
   bool? enableScreenshot;
   bool? enableLoadingScreen;
+  String? imageUrlExpirationTime;
 
   FaceAuthenticator({required this.mobileToken, required this.personId});
 
@@ -40,6 +41,11 @@ class FaceAuthenticator {
     this.enableLoadingScreen = enable;
   }
 
+  // Customize the image URL expiration time
+  void setImageUrlExpirationTime(String time) {
+    this.imageUrlExpirationTime = time;
+  }
+
   Stream<FaceAuthenticatorEvent> start() {
     Map<String, dynamic> params = new Map();
 
@@ -49,6 +55,7 @@ class FaceAuthenticator {
     params['filter'] = filter;
     params['enableScreenshot'] = enableScreenshot;
     params['enableLoadingScreen'] = enableLoadingScreen;
+    params['imageUrlExpirationTime'] = imageUrlExpirationTime;
 
     _LivenessMethodChannel.invokeMethod('start', params);
 

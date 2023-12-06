@@ -99,6 +99,7 @@ final stream = faceAuthenticator.start();
 | <p><strong>`.setFilter(String filter)`</strong></p><p>Used to change the SDK camera filter. It has the following options: **CameraFilter.natural** or **CameraFilter.lineDrawing**</p> | No, the default is **CameraFilter.lineDrawing** |
 | <p><strong>`.setEnableScreenshots(bool enable)`</strong></p><p>Used to enable screenshots during the SDK scan.</p>                                                                      | No, the default is **false**                     |
 | <p><strong>`.setEnableLoadingScreen(bool enable)`</strong></p><p>Used to determines whether the SDK's loading screen will be implemented through client side or if will be used the default screen. If set to 'true,' the loading screen will be a standard SDK screen. If 'false,' You should provide an indeterminate progress indicator.</p>                                                                      | No, the default is **false**                     |
+| <p><strong>`.setImageUrlExpirationTime(String time)`</strong></p><p>Used to set the image URL expiration time.</p>                                                                      | No, the default is **null**                     |
 
 ### Enums
 
@@ -113,6 +114,14 @@ final stream = faceAuthenticator.start();
 | Description                         | Values                                              |
 | ----------------------------------- | --------------------------------------------------- |
 | Used to set the SDK's camera filter | `CameraFilter.natural`, `CameraFilter.lineDrawing` |
+
+#### Time
+
+| Description                         | Values                                              |
+| ----------------------------------- | --------------------------------------------------- |
+| Used to set the image URL expiration time. | `Time.threeHours`, `Time.thirtyDays` |
+
+
 
 ### FaceAuthenticatorSuccess
 
