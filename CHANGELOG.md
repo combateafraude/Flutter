@@ -1,5 +1,9 @@
 # Release Notes
 
+## Version 3.1.0 (Dezember, 6 2023)
+
+- **New**: New `.setImageUrlExpirationTime(String time)` Used to customize the image url expiration time.
+
 ## Version 3.0.0 (November, 14 2023)
 
 ### :wrench: Refactoring

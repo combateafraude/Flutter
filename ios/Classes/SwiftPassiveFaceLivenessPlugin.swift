@@ -53,6 +53,10 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, FlutterStr
         if let enableLoadingScreen = arguments["enableLoadingScreen"] as? Bool ?? nil {
             mFaceLivenessBuilder.setLoadingScreen(withLoading: enableLoadingScreen)
         }
+
+        if let expirationTime = arguments["imageUrlExpirationTime"] as? String ?? nil {
+            mFaceLivenessBuilder.setImageUrlExpirationTime(time: getExpirationTimeByString(time: getexpirationTime))
+        }
         
         let controller = UIApplication.shared.keyWindow!.rootViewController
 
@@ -62,6 +66,14 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, FlutterStr
         faceLiveness.delegate = self
         faceLiveness.startSDK(viewController: controller!)
 
+    }
+
+    public func getExpirationTimeByString(time: String) -> Time {
+        if time == "thirtyDays" {
+            return .thirtyDays
+        } else {
+            return .threeHours
+        }
     }
         
     public func getStageByString(stage: String) -> CAFStage {
