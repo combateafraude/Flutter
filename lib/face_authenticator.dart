@@ -41,7 +41,8 @@ class FaceAuthenticator {
     this.enableLoadingScreen = enable;
   }
 
-  // Customize the image URL expiration time
+  // Customize the image URL expiration time. You can set it to expire in 3h or 30 days.
+  // Set the parameter with 'Time.threeHours' or 'Time.thirtyDays' to configure this.
   void setImageUrlExpirationTime(String time) {
     this.imageUrlExpirationTime = time;
   }
