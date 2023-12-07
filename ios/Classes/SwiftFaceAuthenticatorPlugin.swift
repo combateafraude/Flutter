@@ -70,9 +70,11 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FlutterStrea
 
     public func getExpirationTimeByString(time: String) -> Time {
         if time == "THIRTY_DAYS" {
-            return .trirtyDays
-        } else {
+            return .thirtyDays
+        } if else time == "THREE_HOURS" {
             return .threeHours
+        } else {
+            return .thirtyMin
         }
     }
     
