@@ -1,14 +1,16 @@
 # Release Notes
 
-## Version 3.1.1 (December, 06 2023)
+## Version 3.1.2 (December, 07 2023)
 
-#### IOs
+#### iOS
+
 - **New**: New `.setImageUrlExpirationTime(String time)` Used to customize the image url expiration time.
 
 #### Android
 
 - **New**: New `.setImageUrlExpirationTime(String time)` Used to customize the image url expiration time.
 - **Enhancement**: Update iProov version from 8.5.0 to 9.0.2. This release includes all the features and fixes from the 9.0.2 version.
+
 ## Version 3.0.0 (November, 9 2023)
 
 ### :wrench: Refactoring

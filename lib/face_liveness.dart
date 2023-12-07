@@ -34,14 +34,15 @@ class FaceLiveness {
   }
 
   /// Determines whether the loading screen will be the SDK default implementation or if you will implement your own.
-  /// If set to 'true,' the loading screen will be a standard SDK screen.
-  /// In the case of 'false,' you should implement the loading screen on your side.
+  /// If set to 'true' the loading screen will be a standard SDK screen.
+  /// In the case of 'false' you should implement the loading screen on your side.
   /// By default the loading screen is set to 'false'.
   void setEnableLoadingScreen(bool enable) {
     this.enableLoadingScreen = enable;
   }
 
-  // Customize the image URL expiration time
+  // Customize the image URL expiration time. You can set it to expire in 3h or 30 days.
+  // Set the parameter with 'Time.threeHours' or 'Time.thirtyDays' to configure this.
   void setImageUrlExpirationTime(String time) {
     this.imageUrlExpirationTime = time;
   }
