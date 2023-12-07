@@ -4,6 +4,7 @@ import 'package:new_face_authenticator_compatible/caf_stage.dart';
 import 'package:new_face_authenticator_compatible/camera_filter.dart';
 import 'package:new_face_authenticator_compatible/face_authenticator.dart';
 import 'package:new_face_authenticator_compatible/face_authenticator_events.dart';
+import 'package:new_face_authenticator_compatible/caf_time.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -47,8 +48,9 @@ class _MyAppState extends State<MyApp> {
     FaceAuthenticator faceAuth =
         FaceAuthenticator(mobileToken: mobileToken, personId: personId);
 
-    faceAuth.setStage(CafStage.prod);
+    faceAuth.setStage(CafStage.dev);
     faceAuth.setCameraFilter(CameraFilter.natural);
+    faceAuth.setImageUrlExpirationTime(Time.threeHours);
 
     // Put the others parameters here
 

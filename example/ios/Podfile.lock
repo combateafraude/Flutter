@@ -1,12 +1,12 @@
 PODS:
-  - FaceAuth (3.1.7):
-    - FaceLiveness (= 3.1.5)
-  - FaceLiveness (3.1.5):
+  - FaceAuth (3.1.9):
+    - FaceLiveness (= 3.1.8)
+  - FaceLiveness (3.1.8):
     - iProov (= 11.0.0)
   - Flutter (1.0.0)
   - iProov (11.0.0)
-  - new_face_authenticator_compatible (3.0.0):
-    - FaceAuth (= 3.1.7)
+  - new_face_authenticator_compatible (3.1.2):
+    - FaceAuth (= 3.1.9)
     - Flutter
   - "permission_handler (5.0.1+1)":
     - Flutter
@@ -32,13 +32,13 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  FaceAuth: 48eb110b9c76a37c38f540ef7bd3759cedb32fdf
-  FaceLiveness: 5ce36530cbde39490a5bed4176e314cf84f0508f
+  FaceAuth: d1010ea65a94edd1aeeeeaa2cd1a59356a7d4fe9
+  FaceLiveness: 3647f916beefc85a4b8c4d9de4c53d0636738ee9
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   iProov: d22923b04dd1f78395979aeacd5e7d59e19465f8
-  new_face_authenticator_compatible: 6f100e40ed266c8973e92afeccb22013615f07cd
+  new_face_authenticator_compatible: e42c2c5a6da7063f1f5311988d0a3482b6a85159
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
 
 PODFILE CHECKSUM: c271af9e0fcf5b50897ebfc6ef3a78f290b4a6ae
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.14.3
