@@ -13,6 +13,7 @@ import io.flutter.plugin.common.MethodChannel
 import output.FaceAuthenticatorResult
 import output.failure.NetworkReason
 import output.failure.ServerReason
+import input.*
 
 class FaceAuthenticatorPlugin: FlutterPlugin {
 
@@ -68,6 +69,12 @@ class FaceAuthenticatorPlugin: FlutterPlugin {
             mFaceAuthenticatorBuilder.setLoadingScreen(enableLoadingScreen)
         }
 
+        // Customize the image URL Expiration Time
+        val imageUrlExpirationTime = argumentsMap["imageUrlExpirationTime"] as String?
+        if (imageUrlExpirationTime != null) {
+            mFaceAuthenticatorBuilder.setImageUrlExpirationTime(Time.valueOf(imageUrlExpirationTime))
+        }
+        
         //FaceAuth build
         mFaceAuthenticatorBuilder.build().authenticate(context, personId, object : VerifyAuthenticationListener {
             override fun onSuccess(faceAuthResult: FaceAuthenticatorResult) {

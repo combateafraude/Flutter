@@ -15,6 +15,7 @@ class FaceAuthenticator {
   String filter;
   bool enableScreenshot;
   bool enableLoadingScreen;
+  String imageUrlExpirationTime;
 
   FaceAuthenticator({@required this.mobileToken, @required this.personId});
 
@@ -39,6 +40,11 @@ class FaceAuthenticator {
   /// By default the loading screen is set to 'false'.
   void setEnableLoadingScreen(bool enable) {
     this.enableLoadingScreen = enable;
+  }
+
+  // Customize the image URL expiration time
+  void setImageUrlExpirationTime(String time) {
+    this.imageUrlExpirationTime = time;
   }
 
   Stream<FaceAuthenticatorEvent> start() {

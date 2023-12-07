@@ -1,23 +1,22 @@
-# [NewFaceAuthenticator](https://docs.caf.io/sdks/android/getting-started/faceauthenticator) - Flutter Plugin
+# NewFaceAuthenticator - Flutter Plugin
 
-## Políticas de privacidade e termos e condições de uso
+We recommend you to check [**this documentation**](https://pub.dev/packages/new_face_authenticator) in pub.dev to get more examples and extra information.
+## **Privacy Policy and Terms & Conditions of Use**
+When using our plugin, please make sure that you agree with our [**Privacy Policy**](https://en.caf.io/politicas/politicas-de-privacidade) and our [**Terms and Conditions of Use**](https://en.caf.io/politicas/termos-e-condicoes-de-uso).
+## **Pre-requirements**
 
-Ao utilizar nosso plugin, certifique-se que você concorda com nossas [Políticas de privacidade](https://www.combateafraude.com/politicas/politicas-de-privacidade) e nossos [Termos e condições de uso](https://www.combateafraude.com/politicas/termos-e-condicoes-de-uso).
-
-## Pré requisitos
-
-| Configuração mínima | Versão |
+| **Minimum configuration** | **Version** |
 | ------------------- | ------ |
 | Flutter             | 1.12+  |
 | Dart                | 2.7+   |
 | Android API         | 21+    |
 | iOS                 | 13.0+  |
 
-## Configurações
+## **Settings**
 
 ### Android
 
-No arquivo `ROOT_PROJECT/android/app/build.gradle`, adicione:
+In the file **`ROOT_PROJECT/android/app/build.gradle`**, add:
 
 ```gradle
 android {
@@ -32,37 +31,37 @@ android {
     }
 
     rootProject.allprojects {
-    repositories {
-        maven { url "https://repo.combateafraude.com/android/release" }
-        maven { url 'https://raw.githubusercontent.com/iProov/android/master/maven/' }
+        repositories {
+            maven { url "https://repo.combateafraude.com/android/release" }
+            maven { url 'https://raw.githubusercontent.com/iProov/android/master/maven/' }
+        }
     }
-}
 }
 ```
 
 ### iOS
 
-No arquivo `ROOT_PROJECT/ios/Podfile`, adicione no final do arquivo:
+In the file **`ROOT_PROJECT/ios/Podfile`**, add:
 
 ```swift
 source 'https://github.com/combateafraude/iOS.git'
 source 'https://cdn.cocoapods.org/' #
 ```
 
-Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runner/Info.plist`:
+Finally, add the camera permission to the file **`ROOT_PROJECT/ios/Runner/Info.plist`**:
 
 ```swift
 <key>NSCameraUsageDescription</key>
 <string>To capture the selfie</string>
 ```
 
-## Utilização
+## Using
 
 ```dart
 FaceAuthenticator faceAuthenticator =
         FaceAuthenticator(mobileToken: mobileToken, personId: personId);
 
-// Outros parâmetros de customização
+// Your SDK customization parameters
 
 final stream = faceAuthenticator.start();
     stream.listen((event) {
@@ -99,6 +98,7 @@ final stream = faceAuthenticator.start();
 | <p><strong>`.setFilter(String filter)`</strong></p><p>Used to change the SDK camera filter. It has the following options: **CameraFilter.natural** or **CameraFilter.lineDrawing**</p> | No, the default is **CameraFilter.lineDrawing** |
 | <p><strong>`.setEnableScreenshots(bool enable)`</strong></p><p>Used to enable screenshots during the SDK scan.</p>                                                                      | No, the default is **false**                     |
 | <p><strong>`.setEnableLoadingScreen(bool enable)`</strong></p><p>Used to determines whether the SDK's loading screen will be implemented through client side or if will be used the default screen. If set to 'true,' the loading screen will be a standard SDK screen. If 'false,' You should provide an indeterminate progress indicator.</p>                                                                      | No, the default is **false**                     |
+| <p><strong>`.setImageUrlExpirationTime(String time)`</strong></p><p>Used to set the image URL expiration time.</p>                                                                      | No, the default is **null**                     |
 
 ### Enums
 
@@ -113,6 +113,14 @@ final stream = faceAuthenticator.start();
 | Description                         | Values                                              |
 | ----------------------------------- | --------------------------------------------------- |
 | Used to set the SDK's camera filter | `CameraFilter.natural`, `CameraFilter.lineDrawing` |
+
+#### Time
+
+| Description                         | Values                                              |
+| ----------------------------------- | --------------------------------------------------- |
+| Used to set the image URL expiration time. | `Time.threeHours`, `Time.thirtyDays` |
+
+
 
 ### FaceAuthenticatorSuccess
 
@@ -156,4 +164,4 @@ The `FaceAuthenticatorFailure` object return the following parameters.
 | --------------------------------------------------------------------------------------------- |
 | <p>`String errorType`</p><p> Error type returned by the SDK. `NetworkReason` or `ServerReason`.</p> |
 | <p>`String errorMessage`</p><p>Error message returned by the SDK.</p>                               |
-| <p>`String code`</p><p>Error code returned by the SDK.</p>                                          |
+| <p>`String code`</p><p>Error code returned by the SDK.</p>    |
