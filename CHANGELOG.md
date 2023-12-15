@@ -1,5 +1,11 @@
 # Release Notes
 
+## Version 3.1.3 (December, 15 2023)
+
+#### Android
+
+- **Fix**: Loading screen activity.
+
 ## Version 3.1.2 (December, 07 2023)
 
 #### iOS
