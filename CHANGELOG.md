@@ -1,5 +1,15 @@
 # Release Notes
 
+## Version 3.1.3 (January, 08 2024)
+
+#### Android
+
+- **Fix**: Loading sreen activity.
+
+#### iOS
+
+- **Enhancement**: Update iProov version 11.0.2
+
 ## Version 3.1.2 (December, 07 2023)
 
 #### Android
