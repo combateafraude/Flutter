@@ -135,6 +135,8 @@ class FaceAuthenticatorPlugin: FlutterPlugin {
         } else if (result.sdkFailure is NetworkReason) {
             responseMap["errorType"] = "NetworkReason"
             responseMap["errorMessage"] = result.sdkFailure.message
+            responseMap["code"] = 7 //To match with the iOS NetworkReason response
+
         }
         return responseMap
     }

@@ -1,5 +1,11 @@
 # Release Notes
 
+## Version 3.1.4 (January, 11 2024)
+
+#### Android
+
+- **Enhancement**: Add `code` atribute response to the SDK failure NetworkReason case.
+
 ## Version 3.1.3 (December, 15 2023)
 
 #### Android
