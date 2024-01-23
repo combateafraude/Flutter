@@ -1,5 +1,11 @@
 # Release Notes
 
+## Version 3.1.5 (January, 23 2024)
+
+#### iOS
+
+- **Fixed**: issue with the SDK builder settings.
+
 ## Version 3.1.4 (January, 11 2024)
 
 #### Android
