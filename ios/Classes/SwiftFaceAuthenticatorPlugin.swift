@@ -56,7 +56,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FlutterStrea
         }
 
         if let expirationTime = arguments["imageUrlExpirationTime"] as? String ?? nil {
-            mFaceLivenessBuilder.setImageUrlExpirationTime(time: getExpirationTimeByString(time: expirationTime))
+            mFaceAuthBuilder.setImageUrlExpirationTime(time: getExpirationTimeByString(time: expirationTime))
         }
         
         let controller = UIApplication.shared.keyWindow!.rootViewController
