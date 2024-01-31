@@ -271,11 +271,11 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
 
         //documentDetectorBuilder.setOverlay(overlay: DocumentDetectorOverlay())
         
-        let controller = UIApplication.shared.keyWindow!.rootViewController!
+        let viewController = UIApplication.shared.currentKeyWindow?.rootViewController
 
         let scannerVC = DocumentDetectorController(documentDetector: documentDetectorBuilder.build())
         scannerVC.documentDetectorDelegate = self
-        controller.present(scannerVC, animated: true, completion: nil)
+        viewController!.present(scannerVC, animated: true, completion: nil)
     }
 
     public func getStageByString(stage: String) -> CAFStage {
@@ -493,5 +493,18 @@ extension UIColor {
         getRed(&r, green: &g, blue: &b, alpha: &a)
         let rgb:Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
         return String(format:"#%06x", rgb)
+    }
+}
+
+extension  UIApplication {
+    var currentKeyWindow: UIWindow? {
+        if #available(iOS 13.0, *) {
+            return UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+                .filter { $0.activationState == .foregroundActive }
+                .last?.windows
+                .last(where: \.isKeyWindow)
+        } else {
+            return UIApplication.shared.windows.last
+        }
     }
 }
