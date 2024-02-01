@@ -271,11 +271,20 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
 
         //documentDetectorBuilder.setOverlay(overlay: DocumentDetectorOverlay())
         
-        let viewController = UIApplication.shared.currentKeyWindow?.rootViewController
-
         let scannerVC = DocumentDetectorController(documentDetector: documentDetectorBuilder.build())
         scannerVC.documentDetectorDelegate = self
-        viewController!.present(scannerVC, animated: true, completion: nil)
+        
+        if let viewController = UIApplication.shared.currentKeyWindow?.rootViewController {
+            viewController.present(scannerVC, animated: true, completion: nil)
+        } else {
+            let response : NSMutableDictionary! = [:]
+            response["success"] = NSNumber(value: false)
+            response["message"] = "Error initializing SDK"
+            response["type"] = "Fatal Error"
+            if let flutterResult {
+                flutterResult(response)
+            }
+        }
     }
 
     public func getStageByString(stage: String) -> CAFStage {
@@ -502,7 +511,7 @@ extension  UIApplication {
             return UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
                 .filter { $0.activationState == .foregroundActive }
                 .last?.windows
-                .last(where: \.isKeyWindow)
+                .last(where: \.isKeyWindow) ?? UIApplication.shared.windows.last
         } else {
             return UIApplication.shared.windows.last
         }
