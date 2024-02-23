@@ -32,13 +32,10 @@ class _MyAppState extends State<MyApp> {
     setState(() => _scanInProgress = true);
     ProgressHud.show(ProgressHudType.loading, 'Launching SDK');
 
-    String result = "";
-    String description = "";
-
     FaceLiveness faceLiveness =
         FaceLiveness(mobileToken: mobileToken, personId: personId);
 
-    faceLiveness.setStage(CafStage.beta);
+    faceLiveness.setStage(CafStage.prod);
     faceLiveness.setCameraFilter(CameraFilter.natural);
 
     // Put the others parameters here
@@ -55,26 +52,27 @@ class _MyAppState extends State<MyApp> {
       } else if (event is FaceLivenessEventConnected) {
         ProgressHud.dismiss();
       } else if (event is FaceLivenessEventClosed) {
-        result = 'Canceled';
-        description = 'Usuário fechou o SDK';
+        setState(() {
+          _result = 'Canceled';
+          _description = 'Usuário fechou o SDK';
+        });
       } else if (event is FaceLivenessEventSuccess) {
         ProgressHud.showAndDismiss(ProgressHudType.success, 'Success!');
-        result = 'Success!';
-        description = '\nSignedResponse: ${event.signedResponse}';
+        setState(() {
+          _result = 'Success!';
+          _description = '\nSignedResponse: ${event.signedResponse}';
+        });
       } else if (event is FaceLivenessEventFailure) {
         ProgressHud.showAndDismiss(ProgressHudType.error, event.errorType!);
-        result = 'Failure!';
-        description =
-            '\nError type: ${event.errorType} \nError Message: ${event.errorMessage} \nError code: ${event.code} \nResponse:${event.signedResponse}';
+        setState(() {
+          _result = 'Failure!';
+          _description =
+              '\nError type: ${event.errorType} \nError Message: ${event.errorMessage} \nError code: ${event.code} \nResponse:${event.signedResponse}';
+        });
       }
     });
 
     if (!mounted) return;
-
-    setState(() {
-      _result = result;
-      _description = description;
-    });
   }
 
   @override

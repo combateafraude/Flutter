@@ -18,18 +18,27 @@ if (flutterRoot == null) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
+    flutterVersionCode = '3'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
+    flutterVersionName = '1.2'
 }
 
 apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
+    signingConfigs {
+        app_demo {
+            storeFile file('../../../keys/appDemo.jks')
+            storePassword 'XTs2*W34I&LH'
+            keyAlias 'appDemo'
+            keyPassword 'XTs2*W34I&LH'
+        }
+    }
+
     namespace "com.combateafraude.passive_face_liveness_example"
 
     compileSdk 33
@@ -45,18 +54,23 @@ android {
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        signingConfig signingConfigs.app_demo
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            minifyEnabled true
+            proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+            )
         }
     }
 
     //ADD opções abaixo no projto nativo
-    dataBinding.enabled = true
+    buildFeatures {
+        dataBinding true
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

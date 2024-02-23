@@ -2,14 +2,14 @@ group 'com.caf.face_liveness'
 version '1.0'
 
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = '1.9.21'
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.android.tools.build:gradle:8.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -37,7 +37,9 @@ android {
         minSdkVersion 21
     }
 
-    dataBinding.enabled = true
+    buildFeatures {
+        dataBinding = true
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -58,7 +60,7 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:new-face-liveness:1.6.1'
+        implementation 'com.combateafraude.sdk.ps:new-face-liveness:1.6.1-r8-test-3'
     }
 
 }
