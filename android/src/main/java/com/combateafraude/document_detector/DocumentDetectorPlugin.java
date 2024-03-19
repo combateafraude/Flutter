@@ -20,6 +20,7 @@ import com.combateafraude.documentdetector.input.MaskType;
 import com.combateafraude.documentdetector.input.PreviewSettings;
 import com.combateafraude.documentdetector.input.QualitySettings;
 import com.combateafraude.documentdetector.input.Resolution;
+import com.combateafraude.documentdetector.input.SdkPlatform;
 import com.combateafraude.documentdetector.input.SensorLuminositySettings;
 import com.combateafraude.documentdetector.input.SensorOrientationSettings;
 import com.combateafraude.documentdetector.input.SensorStabilitySettings;
@@ -77,6 +78,9 @@ public class DocumentDetectorPlugin
         String mobileToken = (String) argumentsMap.get("mobileToken");
 
         DocumentDetector.Builder mDocumentDetectorBuilder = new DocumentDetector.Builder(mobileToken);
+
+        // Define SDK platform for analytics info
+        mDocumentDetectorBuilder.setSdkPlatform(SdkPlatform.FLUTTER);
 
         // People ID
         String peopleId = (String) argumentsMap.get("peopleId");
