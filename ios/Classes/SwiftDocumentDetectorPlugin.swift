@@ -42,8 +42,7 @@ public class SwiftDocumentDetectorPlugin: NSObject, FlutterPlugin, DocumentDetec
                     stepLabel = iosCustomization["stepLabel"] as? String ?? nil
                     
                     if let illustrationString = iosCustomization["illustration"] as? String ?? nil {
-                        let imageURL = URL(fileURLWithPath: bundle.path(forResource: illustrationString, ofType: "png")!)
-                        illustration = UIImage(data: NSData(contentsOf: imageURL)! as Data)
+                        illustration = UIImage(named: illustrationString)
                     }
                     
                     if let audioName = iosCustomization["audioName"] as? String ?? nil {
