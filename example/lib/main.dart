@@ -63,27 +63,13 @@ class _MyAppState extends State<MyApp> {
         new DocumentDetectorAndroidSettings(
             useAdb: true, useDebug: true, useDeveloperMode: true);
 
-    DocumentDetectorCustomizationAndroid documentDetectorCustomizationAndroid =
-        new DocumentDetectorCustomizationAndroid(maskType: MaskType.DETAILED);
-
-    MessageSettings messageSettings = new MessageSettings(
-        openDocumentWrongMessage: "Feche o documento",
-        showOpenDocumentMessage: true,
-        unsupportedDocumentMessage: "Ops, esse documento não é suportado");
-
-    List<String> formats = ["PDF", "PNG"];
-
     documentDetector.setIosSettings(iosSettings);
 
     documentDetector.setStage(CafStage.BETA);
 
-    documentDetector.setMessageSettings(messageSettings);
-
     documentDetector.setDocumentFlow(documentSteps);
 
     documentDetector.setAndroidSettings(androidSettings);
-
-    documentDetector.setPreviewSettings(new PreviewSettings(show: true));
 
     // Put the others parameters here
 
