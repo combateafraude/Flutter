@@ -25,11 +25,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
 
 SPEC CHECKSUMS:
-  document_detector: e327f9f1306ef442c23079e64960f209da808dd2
+  document_detector: 941cae161fd176c5e466f21476f6cff839be9840
   DocumentDetector: e52aed9e73e0f63c64f9b35394c0131613fe7e20
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
 
 PODFILE CHECKSUM: dde9d288e4053b622e24f8931180526e717b3506
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2
