@@ -93,7 +93,7 @@ public class DocumentDetectorPlugin
 
         String expireTime = (String) argumentsMap.get("expireTime");
         if (expireTime != null) {
-            // mDocumentDetectorBuilder.setGetImageUrlExpireTime(expireTime);
+            mDocumentDetectorBuilder.setGetImageUrlExpireTime(expireTime);
         }
 
         // Document steps
