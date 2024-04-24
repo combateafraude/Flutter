@@ -1,13 +1,5 @@
 import 'package:document_detector/android/android_settings.dart';
-import 'package:document_detector/android/capture_stage/capture_mode.dart';
-import 'package:document_detector/android/capture_stage/capture_stage.dart';
-import 'package:document_detector/android/customization.dart';
-import 'package:document_detector/android/maskType.dart';
-import 'package:document_detector/android/resolution.dart';
 import 'package:document_detector/caf_stage.dart';
-import 'package:document_detector/ios/ios_resolution.dart';
-import 'package:document_detector/message_settings.dart';
-import 'package:document_detector/preview_settings.dart';
 import 'package:document_detector/document_detector_step.dart';
 import 'package:document_detector/document_type.dart';
 import 'package:document_detector/ios/ios_settings.dart';
@@ -16,6 +8,7 @@ import 'package:document_detector/result/document_detector_failure.dart';
 import 'package:document_detector/result/document_detector_result.dart';
 import 'package:document_detector/result/document_detector_success.dart';
 import 'package:document_detector/upload_settings.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:document_detector/document_detector.dart';
@@ -117,12 +110,78 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void startDocumentDetectorUploadFlow(
+      List<DocumentDetectorStep> documentSteps) async {
+    String result = "";
+    String description = "";
+
+    DocumentDetector documentDetector =
+        new DocumentDetector(mobileToken: mobileToken);
+
+    DocumentDetectorAndroidSettings androidSettings =
+        new DocumentDetectorAndroidSettings(
+            useAdb: true, useDebug: true, useDeveloperMode: true);
+
+    documentDetector.setUploadSettings(UploadSettings());
+
+    documentDetector.setStage(CafStage.BETA);
+
+    documentDetector.setDocumentFlow(documentSteps);
+
+    documentDetector.setAndroidSettings(androidSettings);
+
+    // Put the others parameters here
+
+    try {
+      DocumentDetectorResult documentDetectorResult =
+          await documentDetector.start();
+
+      if (documentDetectorResult is DocumentDetectorSuccess) {
+        result = "Success!";
+        description = "Type: " +
+            (documentDetectorResult.type != null
+                ? documentDetectorResult.type!
+                : "null");
+        for (Capture capture in documentDetectorResult.captures) {
+          description += "\n\n\tCapture:\n\timagePath: " +
+              capture.imagePath! +
+              "\n\timageUrl: " +
+              (capture.imageUrl != null
+                  ? capture.imageUrl!.split("?")[0] + "..."
+                  : "null") +
+              "\n\tlabel: " +
+              (capture.label != null ? capture.label! : "null") +
+              "\n\tquality: " +
+              (capture.quality != null ? capture.quality.toString() : "null");
+        }
+      } else if (documentDetectorResult is DocumentDetectorFailure) {
+        result = "Falha!";
+        description = "\tType: " +
+            documentDetectorResult.type! +
+            "\n\tMessage: " +
+            documentDetectorResult.message!;
+      } else {
+        result = "Closed!";
+      }
+    } on PlatformException catch (err) {
+      result = "Excpection!";
+      description = err.message!;
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      _result = result;
+      _description = description;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
             appBar: AppBar(
-              title: const Text('DocumentDetector plugin example'),
+              title: const Text('DocumentDetector SDK Flutter'),
             ),
             body: Container(
                 margin: const EdgeInsets.all(20.0),
@@ -131,7 +190,7 @@ class _MyAppState extends State<MyApp> {
                     Row(
                       children: [
                         ElevatedButton(
-                          child: Text('Start DocumentDetector for CNH'),
+                          child: Text('DocumentDetector for CNH'),
                           onPressed: () async {
                             startDocumentDetector([
                               new DocumentDetectorStep(
@@ -146,7 +205,7 @@ class _MyAppState extends State<MyApp> {
                     Row(
                       children: [
                         ElevatedButton(
-                          child: Text('Start DocumentDetector for RG'),
+                          child: Text('DocumentDetector for RG'),
                           onPressed: () async {
                             startDocumentDetector([
                               new DocumentDetectorStep(
@@ -161,13 +220,11 @@ class _MyAppState extends State<MyApp> {
                     Row(
                       children: [
                         ElevatedButton(
-                          child: Text('Start DocumentDetector for RNE'),
+                          child: Text('UploadFlow for CNH FULL'),
                           onPressed: () async {
-                            startDocumentDetector([
+                            startDocumentDetectorUploadFlow([
                               new DocumentDetectorStep(
-                                  document: DocumentType.RNE_FRONT),
-                              new DocumentDetectorStep(
-                                  document: DocumentType.RNE_BACK)
+                                  document: DocumentType.CNH_FULL)
                             ]);
                           },
                         )
