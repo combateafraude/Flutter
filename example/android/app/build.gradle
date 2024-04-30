@@ -55,7 +55,6 @@ android {
         }
     }
 
-    //ADD opções abaixo no projto nativo
     dataBinding.enabled = true
 
     compileOptions {

@@ -5,7 +5,7 @@
 Pod::Spec.new do |s|
   s.name             = 'new_face_liveness'
   s.summary          = 'Flutter plugin for FaceLiveness'
-  s.version          = '3.1.4'
+  s.version          = '4.0.0'
   s.homepage         = 'https://www.combateafraude.com/'
   s.license          = { :file => 'LICENSE', :type => 'MIT' }
   s.author           = { 'services@caf.io' => 'services@caf.io' }
@@ -18,5 +18,5 @@ Pod::Spec.new do |s|
   s.swift_version = '5.3.2'
   
   s.dependency 'Flutter'
-  s.dependency 'FaceLiveness', '3.1.8'
+  s.dependency 'FaceLiveness', '5.0.0'
 end

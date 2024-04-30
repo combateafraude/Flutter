@@ -20,6 +20,8 @@ rootProject.allprojects {
         mavenCentral()
         maven { url "https://repo.combateafraude.com/android/release" }
         maven { url 'https://raw.githubusercontent.com/iProov/android/master/maven/' }
+        maven { url 'https://maven.fpregistry.io/releases' }
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -58,7 +60,7 @@ android {
     }
 
     dependencies {
-        implementation 'com.combateafraude.sdk:new-face-liveness:1.6.1'
+        implementation 'com.combateafraude.sdk:new-face-liveness:3.0.0'
     }
 
 }
