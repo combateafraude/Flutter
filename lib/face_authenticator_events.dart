@@ -15,17 +15,10 @@ abstract class FaceAuthenticatorEvent {
         return const FaceAuthenticatorEventClosed();
       case 'success':
         return new FaceAuthenticatorEventSuccess(map['signedResponse']);
-      case 'failure':
-        return new FaceAuthenticatorEventFailure(
-            signedResponse: map["signedResponse"],
-            errorType: map["errorType"],
-            errorMessage: map["errorMessage"],
-            code: map["code"]);
       case 'error':
         return new FaceAuthenticatorEventFailure(
             errorType: map["errorType"],
-            errorMessage: map["errorMessage"],
-            code: map["code"]);
+            errorDescription: map["errorDescription"]);
     }
     throw Exception('Invalid event');
   }
@@ -75,20 +68,11 @@ class FaceAuthenticatorEventFailure implements FaceAuthenticatorEvent {
   @override
   get isFinal => true;
 
-  /// The JWT containing the information of the execution.
-  final String? signedResponse;
-
   /// The failure type which can be captured to implement a specific use case for each.
   final String? errorType;
 
   /// The reason for the failure which can be displayed directly to the user.
-  final String? errorMessage;
+  final String? errorDescription;
 
-  /// The feedback code relating to this error. For a list of possible failure codes, see:
-  /// * https://github.com/iProov/ios#handling-failures--errors
-  /// * https://github.com/iProov/android#handling-failures--errors
-  final int? code;
-
-  const FaceAuthenticatorEventFailure(
-      {this.signedResponse, this.errorType, this.errorMessage, this.code});
+  const FaceAuthenticatorEventFailure({this.errorType, this.errorDescription});
 }

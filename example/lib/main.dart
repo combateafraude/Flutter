@@ -4,7 +4,6 @@ import 'package:new_face_authenticator/caf_stage.dart';
 import 'package:new_face_authenticator/camera_filter.dart';
 import 'package:new_face_authenticator/face_authenticator.dart';
 import 'package:new_face_authenticator/face_authenticator_events.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,22 +26,15 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-
-    requestPermissions();
-  }
-
-  void requestPermissions() async {
-    await [
-      Permission.camera,
-    ].request();
   }
 
   void startFaceAuth() {
-    setState(() => _scanInProgress = true);
+    setState(() {
+      _scanInProgress = true;
+      _result = "";
+      _description = "";
+    });
     ProgressHud.show(ProgressHudType.loading, 'Launching SDK');
-
-    String result = "";
-    String description = "";
 
     FaceAuthenticator faceAuth =
         FaceAuthenticator(mobileToken: mobileToken, personId: personId);
@@ -65,23 +57,31 @@ class _MyAppState extends State<MyApp> {
         ProgressHud.dismiss();
       } else if (event is FaceAuthenticatorEventClosed) {
         ProgressHud.dismiss();
+        setState(() {
+          _result = "Canceled";
+          _description = "Usuário fechou o SDK";
+        });
         print('Canceled\nUsuário fechou o SDK');
       } else if (event is FaceAuthenticatorEventSuccess) {
         ProgressHud.showAndDismiss(ProgressHudType.success, 'Success!');
+        setState(() {
+          _result = "Success";
+          _description = "SignedResponse: ${event.signedResponse}";
+        });
         print('Success!\nSignedResponse: ${event.signedResponse}');
       } else if (event is FaceAuthenticatorEventFailure) {
-        ProgressHud.showAndDismiss(ProgressHudType.error, event.errorMessage!);
+        ProgressHud.showAndDismiss(ProgressHudType.error, event.errorType!);
+        setState(() {
+          _result = "Failure";
+          _description =
+              "Error type: ${event.errorType} \nError Message: ${event.errorDescription}";
+        });
         print(
-            'Failure!\nError type: ${event.errorType} \nError Message: ${event.errorMessage} \nError code: ${event.code} \nResponse:${event.signedResponse}');
+            'Failure!\nError type: ${event.errorType} \nError Message: ${event.errorDescription}');
       }
     });
 
     if (!mounted) return;
-
-    setState(() {
-      _result = result;
-      _description = description;
-    });
   }
 
   @override
@@ -121,7 +121,8 @@ class _MyAppState extends State<MyApp> {
                           children: [
                             Expanded(
                               child: Text("Description:\n$_description",
-                                  overflow: TextOverflow.clip),
+                                  maxLines: 15,
+                                  overflow: TextOverflow.ellipsis),
                             )
                           ],
                         ),

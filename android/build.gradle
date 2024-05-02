@@ -18,8 +18,10 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url "https://repo.combateafraude.com/android/release" }
+        maven { url 'https://repo.combateafraude.com/android/release'}
         maven { url 'https://raw.githubusercontent.com/iProov/android/master/maven/' }
+        maven { url 'https://maven.fpregistry.io/releases' }
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -58,9 +60,8 @@ android {
     }
 
     dependencies {
-        implementation 'androidx.appcompat:appcompat:1.4.1'
-        implementation 'com.google.android.material:material:1.6.0'
+        implementation 'com.combateafraude.sdk:new-face-authenticator:3.0.0'
+        implementation 'com.combateafraude.sdk:new-face-liveness:3.0.0'
 
-        implementation 'com.combateafraude.sdk:new-face-authenticator:1.7.2'
     }
 }

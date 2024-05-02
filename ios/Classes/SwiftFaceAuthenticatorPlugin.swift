@@ -1,6 +1,6 @@
 import Flutter
 import UIKit
-import FaceAuthenticator
+import FaceAuth
 import FaceLiveness
 
 public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
@@ -36,9 +36,8 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FlutterStrea
         let mobileToken = arguments["mobileToken"] as! String
         
         let personId = arguments["personId"] as! String
-
+        
         let mFaceAuthBuilder = FaceAuthSDK.Builder()
-            .setCredentials(token: mobileToken, personId: personId)
 
         //Stage
         if let stage = arguments["stage"] as? String ?? nil {
@@ -65,7 +64,7 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FlutterStrea
         let faceAuth = mFaceAuthBuilder.build()
         
         faceAuth.delegate = self
-        faceAuth.startFaceAuthSDK(viewController: controller!)
+        faceAuth.startFaceAuthSDK(viewController: controller!, mobileToken: mobileToken, personId: personId)
     }
 
     public func getExpirationTimeByString(time: String) -> Time {
@@ -110,12 +109,23 @@ public class SwiftFaceAuthenticatorPlugin: NSObject, FlutterPlugin, FlutterStrea
             return nil
         }
     
+    public enum SdkEvent: String {
+            case canceled = "canceled"
+            case connected = "connected"
+            case connecting = "connecting"
+            case error = "error"
+            case success = "success"
+            case validated = "validated"
+            case validating = "validating"
+        }
+    
 }
 
 extension SwiftFaceAuthenticatorPlugin: FaceAuthSDKDelegate {
-    public func didFinishSuccess(with faceAuthenticatorResult: FaceAuthenticator.FaceAuthenticatorResult) {
+    
+    public func didFinishSuccess(with faceAuthenticatorResult: FaceAuthenticatorResult) {
         let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "success")
+        response["event"] = SdkEvent.success.rawValue
         
         response["signedResponse"] = faceAuthenticatorResult.signedResponse
         
@@ -123,35 +133,20 @@ extension SwiftFaceAuthenticatorPlugin: FaceAuthSDKDelegate {
         self.sink?(FlutterEndOfEventStream)
     }
     
-    public func didFinishWithFail(with faceAuthenticatorResult: FaceAuthenticator.FaceAuthenticatorFailResult) {
-        
+    public func didFinishWithError(with faceAuthenticatorErrorResult: FaceAuth.FaceAuthenticatorErrorResult) {
         let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "failure")
+        response["event"] = SdkEvent.error.rawValue
         
-        response["signedResponse"] = faceAuthenticatorResult.signedResponse
-        response["errorType"] = String(describing: faceAuthenticatorResult.errorType)
-        response["errorMessage"] = faceAuthenticatorResult.description
-        response["code"] = faceAuthenticatorResult.code
+        response["errorType"] = faceAuthenticatorErrorResult.errorType?.rawValue
+        response["errorDescription"] = faceAuthenticatorErrorResult.description
         
         self.sink?(response)
         self.sink?(FlutterEndOfEventStream)
     }
     
-    public func didFinishWithCancell(with faceAuthenticatorResult: FaceAuthenticator.FaceAuthenticatorResult) {
+    public func didFinishFaceAuthWithCancelled() {
         let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "canceled")
-        
-        self.sink?(response)
-        self.sink?(FlutterEndOfEventStream)
-    }
-    
-    public func didFinishWithError(with faceAuthenticatorErrorResult: FaceAuthenticator.FaceAuthenticatorErrorResult) {
-        let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "error")
-        
-        response["errorType"] = String(describing: faceAuthenticatorErrorResult.errorType)
-        response["errorMessage"] = faceAuthenticatorErrorResult.description
-        response["code"] = faceAuthenticatorErrorResult.code
+        response["event"] = SdkEvent.canceled.rawValue
         
         self.sink?(response)
         self.sink?(FlutterEndOfEventStream)
@@ -159,28 +154,28 @@ extension SwiftFaceAuthenticatorPlugin: FaceAuthSDKDelegate {
     
     public func openLoadingScreenStartSDK() {
         let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "connecting")
+        response["event"] = SdkEvent.connecting.rawValue
                 
         self.sink?(response)
     }
     
     public func closeLoadingScreenStartSDK() {
         let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "connected")
+        response["event"] = SdkEvent.connected.rawValue
                 
         self.sink?(response)
     }
     
     public func openLoadingScreenValidation() {
         let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "validating")
+        response["event"] = SdkEvent.validating.rawValue
                 
         self.sink?(response)
     }
     
     public func closeLoadingScreenValidation() {
         let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "validated")
+        response["event"] = SdkEvent.validated.rawValue
                 
         self.sink?(response)
     }
