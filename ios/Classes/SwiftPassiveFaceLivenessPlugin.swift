@@ -8,11 +8,11 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, FlutterStr
     var sink: FlutterEventSink?
     
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "passive_face_liveness", binaryMessenger: registrar.messenger())
+        let channel = FlutterMethodChannel(name: "face_liveness", binaryMessenger: registrar.messenger())
         let instance = SwiftPassiveFaceLivenessPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
         
-        FlutterEventChannel(name: "liveness_listener", binaryMessenger: registrar.messenger())
+        FlutterEventChannel(name: "face_liveness_listener", binaryMessenger: registrar.messenger())
                     .setStreamHandler(instance)
     }
     
@@ -34,10 +34,9 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, FlutterStr
         
         let mobileToken = arguments["mobileToken"] as! String
 
-        let peopleId = arguments["personId"] as! String
+        let personId = arguments["personId"] as! String
         
         let mFaceLivenessBuilder = FaceLivenessSDK.Build()
-            .setCredentials(mobileToken: mobileToken, personId: peopleId)
         
         // Stage
          if let stage = arguments["stage"] as? String ?? nil {
@@ -64,7 +63,7 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, FlutterStr
         let faceLiveness = mFaceLivenessBuilder.build()
         
         faceLiveness.delegate = self
-        faceLiveness.startSDK(viewController: controller!)
+        faceLiveness.startSDK(viewController: controller!, mobileToken: mobileToken, personId: personId)
 
     }
 
@@ -109,80 +108,75 @@ public class SwiftPassiveFaceLivenessPlugin: NSObject, FlutterPlugin, FlutterStr
         return nil
     }
     
+    public enum SdkEvent: String {
+        case canceled = "canceled"
+        case connected = "connected"
+        case connecting = "connecting"
+        case error = "error"
+        case success = "success"
+        case validated = "validated"
+        case validating = "validating"
+    }
+    
 }
 
 extension SwiftPassiveFaceLivenessPlugin: FaceLivenessDelegate {
-    public func didFinishLiveness(with faceLivenesResult: FaceLivenessResult) {
-
+    public func didFinishLiveness(with livenessResult: LivenessResult) {
         let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "success")
+        response["event"] = SdkEvent.success.rawValue
         
-        response["signedResponse"] = faceLivenesResult.signedResponse
-
-        self.sink?(response)
-        self.sink?(FlutterEndOfEventStream)
-    }
-    
-    public func didFinishWithFail(with faceLivenessFailResult: FaceLiveness.FaceLivenessFailResult) {
-        
-        let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "failure")
-        
-        response["signedResponse"] = faceLivenessFailResult.signedResponse
-        response["errorType"] = String(describing: faceLivenessFailResult.failType)
-        response["errorMessage"] = faceLivenessFailResult.description
-        response["code"] = faceLivenessFailResult.code
+        response["signedResponse"] = livenessResult.signedResponse
 
         self.sink?(response)
         self.sink?(FlutterEndOfEventStream)
     }
     
-    public func didFinishWithCancelled(with faceLivenessResult: FaceLiveness.FaceLivenessResult) {
-        
+    public func didFinishWithError(with sdkFailure: SDKFailure) {
         let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "canceled")
+        response["event"] = SdkEvent.error.rawValue
+        
+        response["errorType"] = sdkFailure.errorType?.rawValue
+        response["errorDescription"] = sdkFailure.description
+
+        self.sink?(response)
+        self.sink?(FlutterEndOfEventStream)
+    }
+    
+    public func didFinishWithCancelled() {
+        let response : NSMutableDictionary! = [:]
+        response["event"] = SdkEvent.canceled.rawValue
         
         self.sink?(response)
         self.sink?(FlutterEndOfEventStream)
     }
     
-    public func didFinishWithError(with faceLivenessErrorResult: FaceLiveness.FaceLivenessErrorResult) {
-        
-        let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "error")
-        
-        response["errorType"] = String(describing: faceLivenessErrorResult.errorType)
-        response["errorMessage"] = faceLivenessErrorResult.description
-        response["code"] = faceLivenessErrorResult.code
-        
-        self.sink?(response)
-        self.sink?(FlutterEndOfEventStream)
+    public func onConnectionChanged(_ state: LivenessState) {
     }
     
     public func openLoadingScreenStartSDK() {
         let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "connecting")
+        response["event"] = SdkEvent.connecting.rawValue
         
         self.sink?(response)
     }
     
     public func closeLoadingScreenStartSDK() {
         let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "connected")
+        response["event"] = SdkEvent.connecting.rawValue
         
         self.sink?(response)
     }
     
     public func openLoadingScreenValidation() {
         let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "validating")
+        response["event"] = SdkEvent.validating.rawValue
         
         self.sink?(response)
     }
     
     public func closeLoadingScreenValidation() {
         let response : NSMutableDictionary! = [:]
-        response["event"] = NSString(string: "validated")
+        response["event"] = SdkEvent.validated.rawValue
         
         self.sink?(response)
     }

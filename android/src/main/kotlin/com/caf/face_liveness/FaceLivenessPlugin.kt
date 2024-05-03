@@ -8,8 +8,7 @@ import com.caf.facelivenessiproov.input.Time
 import com.caf.facelivenessiproov.input.VerifyLivenessListener
 import com.caf.facelivenessiproov.input.iproov.Filter
 import com.caf.facelivenessiproov.output.FaceLivenessResult
-import com.caf.facelivenessiproov.output.failure.NetworkReason
-import com.caf.facelivenessiproov.output.failure.ServerReason
+import com.caf.facelivenessiproov.output.failure.SDKFailure
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
@@ -25,8 +24,6 @@ class FaceLivenessPlugin: FlutterPlugin {
 
     private val methodCallHandler =
         MethodChannel.MethodCallHandler { call, result ->
-            val context: Context? = flutterPluginBinding?.applicationContext
-
             if (call.method == "start") {
                 start(call)
             } else {
@@ -85,18 +82,14 @@ class FaceLivenessPlugin: FlutterPlugin {
                 }
             }
 
-            override fun onError(faceLivenessResult: FaceLivenessResult) {
+            override fun onError(sdkFailure: SDKFailure) {
                 android.os.Handler(Looper.getMainLooper()).post {
-                    if (faceLivenessResult.sdkFailure != null) {
-                        eventSink?.success(getErrorResponseMap(faceLivenessResult))
-                    } else {
-                        eventSink?.success(getFailureResponseMap(faceLivenessResult))
-                    }
+                    eventSink?.success(getErrorResponseMap(sdkFailure))
                     eventSink?.endOfStream()
                 }
             }
 
-            override fun onCancel(faceLivenessResult: FaceLivenessResult) {
+            override fun onCancel() {
                 android.os.Handler(Looper.getMainLooper()).post {
                     eventSink?.success(getClosedResponseMap())
                     eventSink?.endOfStream()
@@ -124,26 +117,11 @@ class FaceLivenessPlugin: FlutterPlugin {
         return responseMap
     }
 
-    private fun getErrorResponseMap(result: FaceLivenessResult): HashMap<String, Any> {
+    private fun getErrorResponseMap(result: SDKFailure): HashMap<String, Any> {
         val responseMap = HashMap<String, Any>()
         responseMap["event"] = "error"
-
-        if (result.sdkFailure is ServerReason) {
-            responseMap["errorType"] = "ServerReason"
-            responseMap["errorMessage"] = result.sdkFailure.message
-            responseMap["code"] = (result.sdkFailure as ServerReason).code
-        } else if (result.sdkFailure is NetworkReason) {
-            responseMap["errorType"] = "NetworkReason"
-            responseMap["errorMessage"] = result.sdkFailure.message
-            responseMap["code"] = 7 //To match with the iOS NetworkReason response
-        }
-        return responseMap
-    }
-
-    private fun getFailureResponseMap(result: FaceLivenessResult): HashMap<String, Any> {
-        val responseMap = HashMap<String, Any>()
-        responseMap["event"] = "failure"
-        responseMap["errorMessage"] = result.errorMessage
+        responseMap["errorType"] = result.errorType.value
+        responseMap["errorDescription"] = result.description
         return responseMap
     }
 
@@ -167,12 +145,12 @@ class FaceLivenessPlugin: FlutterPlugin {
 
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        this.flutterPluginBinding = binding;
+        this.flutterPluginBinding = binding
 
-        methodChannel = MethodChannel(flutterPluginBinding!!.binaryMessenger, "passive_face_liveness");
+        methodChannel = MethodChannel(flutterPluginBinding!!.binaryMessenger, "face_liveness");
         methodChannel.setMethodCallHandler(methodCallHandler)
 
-        eventChannel = EventChannel(flutterPluginBinding!!.binaryMessenger, "liveness_listener")
+        eventChannel = EventChannel(flutterPluginBinding!!.binaryMessenger, "face_liveness_listener")
         eventChannel.setStreamHandler(object : EventChannel.StreamHandler {
             
             override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {

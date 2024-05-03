@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:new_face_liveness/face_liveness_events.dart';
 
-const _LivenessMethodChannel = MethodChannel('passive_face_liveness');
-const _LivenessListenerEventChannel = EventChannel('liveness_listener');
+const _LivenessMethodChannel = MethodChannel('face_liveness');
+const _LivenessListenerEventChannel = EventChannel('face_liveness_listener');
 
 class FaceLiveness {
   String mobileToken;

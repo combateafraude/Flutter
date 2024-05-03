@@ -29,11 +29,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   void startFaceLiveness() {
-    setState(() => _scanInProgress = true);
+    setState(() {
+      _scanInProgress = true;
+      _result = "";
+      _description = "";
+    });
     ProgressHud.show(ProgressHudType.loading, 'Launching SDK');
-
-    String result = "";
-    String description = "";
 
     FaceLiveness faceLiveness =
         FaceLiveness(mobileToken: mobileToken, personId: personId);
@@ -55,26 +56,31 @@ class _MyAppState extends State<MyApp> {
       } else if (event is FaceLivenessEventConnected) {
         ProgressHud.dismiss();
       } else if (event is FaceLivenessEventClosed) {
-        result = 'Canceled';
-        description = 'Usuário fechou o SDK';
+        setState(() {
+          _result = 'Canceled';
+          _description = 'Usuário fechou o SDK';
+        });
       } else if (event is FaceLivenessEventSuccess) {
         ProgressHud.showAndDismiss(ProgressHudType.success, 'Success!');
-        result = 'Success!';
-        description = '\nSignedResponse: ${event.signedResponse}';
+        setState(() {
+          _result = 'Success!';
+          _description = '\nSignedResponse: ${event.signedResponse}';
+        });
+        print(
+            'SDK finished with Success! \nSignedResponse: ${event.signedResponse}');
       } else if (event is FaceLivenessEventFailure) {
         ProgressHud.showAndDismiss(ProgressHudType.error, event.errorType!);
-        result = 'Failure!';
-        description =
-            '\nError type: ${event.errorType} \nError Message: ${event.errorMessage} \nError code: ${event.code} \nResponse:${event.signedResponse}';
+        setState(() {
+          _result = 'Failure!';
+          _description =
+              '\nError type: ${event.errorType} \nError Message: ${event.errorDescription}';
+        });
+        print(
+            'SDK finished with Failure! \nError type: ${event.errorType} \nError Message: ${event.errorDescription}');
       }
     });
 
     if (!mounted) return;
-
-    setState(() {
-      _result = result;
-      _description = description;
-    });
   }
 
   @override
@@ -114,7 +120,8 @@ class _MyAppState extends State<MyApp> {
                           children: [
                             Expanded(
                               child: Text("Description:\n$_description",
-                                  overflow: TextOverflow.clip),
+                                  maxLines: 15,
+                                  overflow: TextOverflow.ellipsis),
                             )
                           ],
                         ),
