@@ -23,12 +23,19 @@ class _MyAppState extends State<MyApp> {
   String mobileToken = "";
   String personId = "";
 
+  var personIdController = TextEditingController();
+  var mobileTokenController = TextEditingController();
+  bool isBeta = true;
+
   @override
   void initState() {
     super.initState();
   }
 
   void startFaceAuth() {
+    personId = personIdController.text;
+    mobileToken = mobileTokenController.text;
+
     setState(() {
       _scanInProgress = true;
       _result = "";
@@ -39,8 +46,9 @@ class _MyAppState extends State<MyApp> {
     FaceAuthenticator faceAuth =
         FaceAuthenticator(mobileToken: mobileToken, personId: personId);
 
-    faceAuth.setStage(CafStage.prod);
+    faceAuth.setStage(isBeta ? CafStage.beta : CafStage.prod);
     faceAuth.setCameraFilter(CameraFilter.natural);
+    faceAuth.setEnableScreenshots(true);
 
     // Put the others parameters here
 
@@ -73,8 +81,9 @@ class _MyAppState extends State<MyApp> {
         ProgressHud.showAndDismiss(ProgressHudType.error, event.errorType!);
         setState(() {
           _result = "Failure";
-          _description =
-              "Error type: ${event.errorType} \nError Message: ${event.errorDescription}";
+          _description = personId.isEmpty
+              ? '\nError type: ${event.errorType} \nError Message: personId is empty'
+              : '\nError type: ${event.errorType} \nError Message: ${event.errorDescription}';
         });
         print(
             'Failure!\nError type: ${event.errorType} \nError Message: ${event.errorDescription}');
@@ -89,7 +98,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         home: Scaffold(
             appBar: AppBar(
-              title: const Text('FaceAuthenticator plugin example'),
+              title: const Text('FaceAuthenticator Demo'),
             ),
             body: ProgressHud(
                 isGlobalHud: true,
@@ -97,6 +106,47 @@ class _MyAppState extends State<MyApp> {
                     margin: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: mobileTokenController,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Insert mobileToken here',
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 10.0),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: personIdController,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Insert your ID/CPF here',
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: SwitchListTile(
+                                  title: Text('Beta'),
+                                  value: isBeta,
+                                  onChanged: (bool value) {
+                                    setState(() {
+                                      isBeta = value;
+                                    });
+                                  }),
+                            )
+                          ],
+                        ),
                         Row(
                           children: [
                             ElevatedButton(
