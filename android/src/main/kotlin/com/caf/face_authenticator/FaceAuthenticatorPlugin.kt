@@ -2,18 +2,17 @@ package com.caf.face_authenticator
 
 import android.content.Context
 import android.os.Looper
-import input.CafStage
-import input.FaceAuthenticator
-import input.VerifyAuthenticationListener
-import input.iproov.Filter
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
+import input.CafStage
+import input.iproov.Filter
+import input.FaceAuthenticator
+import input.Time
 import output.FaceAuthenticatorResult
-import output.failure.NetworkReason
-import output.failure.ServerReason
-import input.*
+import input.VerifyAuthenticationListener
+import output.FaceAuthenticatorErrorResult
 
 class FaceAuthenticatorPlugin: FlutterPlugin {
 
@@ -24,8 +23,6 @@ class FaceAuthenticatorPlugin: FlutterPlugin {
     private var flutterPluginBinding: FlutterPlugin.FlutterPluginBinding? = null
 
     private val methodCallHandler = MethodChannel.MethodCallHandler { call, result ->
-        val context: Context? = flutterPluginBinding?.applicationContext
-
         if (call.method == "start") {
             start(call)
         } else {
@@ -84,18 +81,15 @@ class FaceAuthenticatorPlugin: FlutterPlugin {
                 }
             }
 
-            override fun onError(faceAuthResult: FaceAuthenticatorResult) {
+            override fun onError(sdkFailure: FaceAuthenticatorErrorResult) {
                 android.os.Handler(Looper.getMainLooper()).post {
-                    if (faceAuthResult.sdkFailure != null) {
-                        eventSink?.success(getErrorResponseMap(faceAuthResult))
-                    } else {
-                        eventSink?.success(getFailureResponseMap(faceAuthResult))
-                    }
+                    eventSink?.success(getErrorResponseMap(sdkFailure))
                     eventSink?.endOfStream()
                 }
             }
 
-            override fun onCancel(faceAuthResult: FaceAuthenticatorResult) {
+
+            override fun onCancel() {
                 android.os.Handler(Looper.getMainLooper()).post {
                     eventSink?.success(getClosedResponseMap())
                     eventSink?.endOfStream()
@@ -124,27 +118,12 @@ class FaceAuthenticatorPlugin: FlutterPlugin {
         return responseMap
     }
 
-    private fun getErrorResponseMap(result: FaceAuthenticatorResult): HashMap<String, Any> {
+    private fun getErrorResponseMap(sdkFailure: FaceAuthenticatorErrorResult): HashMap<String, Any> {
         val responseMap = HashMap<String, Any>()
         responseMap["event"] = "error"
+        responseMap["errorType"] = sdkFailure.errorType.value
+        responseMap["errorDescription"] = sdkFailure.description
 
-        if (result.sdkFailure is ServerReason) {
-            responseMap["errorType"] = "ServerReason"
-            responseMap["errorMessage"] = result.sdkFailure.message
-            responseMap["code"] = (result.sdkFailure as ServerReason).code
-        } else if (result.sdkFailure is NetworkReason) {
-            responseMap["errorType"] = "NetworkReason"
-            responseMap["errorMessage"] = result.sdkFailure.message
-            responseMap["code"] = 7 //To match with the iOS NetworkReason response
-
-        }
-        return responseMap
-    }
-
-    private fun getFailureResponseMap(result: FaceAuthenticatorResult): HashMap<String, Any> {
-        val responseMap = HashMap<String, Any>()
-        responseMap["event"] = "failure"
-        responseMap["errorMessage"] = result.errorMessage
         return responseMap
     }
 
