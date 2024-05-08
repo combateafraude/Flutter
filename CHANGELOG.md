@@ -1,5 +1,37 @@
 # Release Notes
 
+## Version 4.0.0 (May, 08 2024)
+
+#### New Feature
+
+Genuine Presence Assurance (GPA) Option: we have implemented GPA option within our SDK workflow. It introduces a refreshed user interface and focuses on fraud prevention, significantly reducing the occurrence of counterfeiting. This functionality aims to enhance security without compromising usability, providing a powerful tool to validate the genuine presence of the user.
+
+#### Breaking Changes :warning:
+
+The `FaceLivenessEventFailure` returns now only two parameters `errorType` and `errorDescription`. The `signedResponse` and `code` parameters where removed. Check the [documentation](README.md#facelivenesseventfailure) for more information.
+
+#### Android
+
+##### New Feature
+
+FingerPrintPro SDK [v2.3.2](https://github.com/fingerprintjs/fingerprintjs-pro-android-demo/releases/tag/v2.3.2), enhancing security by securely capturing the Visitor ID for each session, which is essential for fraud prevention.
+
+##### Enhancements
+
+- Updated FaceLiveness version from 1.6.1 to [3.0.0](https://docs.caf.io/sdks/android/release-notes#faceliveness-3.0.0).
+- iProov update: we have updated iProov from v9.0.2 to [v9.0.3](https://github.com/iProov/android/releases/tag/v9.0.3), improving the performance and reliability of our facial authentication features.
+
+#### iOS
+
+##### New Feature
+
+FingerPrintPro SDK [v2.2.0](https://github.com/fingerprintjs/fingerprintjs-pro-ios/releases/tag/2.2.0), enhancing security by securely capturing the Visitor ID for each session, which is essential for fraud prevention.
+
+##### Enhancements
+
+- Updated FaceLiveness from 3.1.8 to [5.0.0](https://docs.caf.io/sdks/ios/release-notes#faceliveness-5.0.0).
+- Updated IProov from v11.0.2 to [v11.0.3](https://github.com/iProov/ios/releases/tag/11.0.3), improving the performance and reliability of our facial authentication features.
+
 ## Version 3.1.4 (January, 11 2024)
 
 #### Android
