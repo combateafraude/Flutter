@@ -1,62 +1,110 @@
-# [NewFaceLiveness](https://docs.caf.io/sdks/android/getting-started/passivefaceliveness) - Flutter Plugin
+# [FaceLiveness](https://docs.caf.io/sdks/flutter/getting-started/new-passivefaceliveness)
 
-## Políticas de privacidade e termos e condições de uso
+It brings cutting-edge live facial verification and fingerprint authentication technology into your Flutter applications, offering a seamless and secure way to authenticate users.
 
-Ao utilizar nosso plugin, certifique-se que você concorda com nossas [Políticas de privacidade](https://www.combateafraude.com/politicas/politicas-de-privacidade) e nossos [Termos e condições de uso](https://www.combateafraude.com/politicas/termos-e-condicoes-de-uso).
+## Requirements
 
-## Pré requisitos
+| Flutter | Version |
+| ------- | ------- |
+| Flutter | 1.20+   |
+| Dart    | 2.15+   |
 
-| Configuração mínima | Versão |
-| ------------------- | ------ |
-| Flutter             | 1.12+  |
-| Dart                | 2.12+  |
-| Android API         | 21+    |
-| iOS                 | 13.0+  |
+| Android    | Version |
+| ---------- | ------- |
+| minSdk     | 21      |
+| compileSdk | 33      |
 
-## Configurações
+| iOS        | Version  |
+| ---------- | -------- |
+| iOS Target | 12.0     |
+| Xcode      | 14.3.1+  |
+| Swift      | 5.3.2+   |
+
+#### Sending your app to Play Store
+
+To publish your app on the *Google Play Store*, you must complete a data safety form. Since we integrate with the *FingerPrintJS SDK*, you'll need to provide the following information:
+
+| Question in Google Play Console's data safety form | Response |
+| -------------------------------------------------- | -------- |
+| Does your app collect or share any of the required user data types? | Yes. |
+| What type of data is collected? | Device or other identifiers. |
+| Is this data collected, shared, or both? | Collected. |
+| Is this data processed ephemerally? | Yes. |
+| Why is this user data collected? | Fraud Prevention, Security, and Compliance. |
+
+## Runtime permissions
 
 ### Android
 
-No arquivo `ROOT_PROJECT/android/app/build.gradle`, adicione:
+| Permission | Reason | Required |
+| ---------- | ------ | -------- |
+| `CAMERA` | Capturing the selfie in policies with facial verification | Yes |
 
-```gradle
-android {
+### iOS
 
+| Permission | Reason | Required |
+| ---------- | ------ | -------- |
+| `Privacy - Camera Usage Description` | Capturing the selfie in live facial verification policies | Yes |
+
+## Platform Configurations
+
+### Android
+
+If your version of Gradle is earlier than 7, add these lines to your `build.gradle`.
+
+```groovy
+allprojects {
+  repositories {
     ...
-
-    dataBinding.enabled = true
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    rootProject.allprojects {
-    repositories {
-        maven { url "https://repo.combateafraude.com/android/release" }
-        maven { url 'https://raw.githubusercontent.com/iProov/android/master/maven/' }
-    }
+    maven { url 'https://repo.combateafraude.com/android/release' }
+    maven { url 'https://raw.githubusercontent.com/iProov/android/master/maven/' }
+    maven { url 'https://maven.fpregistry.io/releases' }
+    maven { url 'https://jitpack.io' }
+  }
 }
+```
+
+If your version of Gradle is 7 or newer, add these lines to your `settings.gradle`.
+
+```groovy
+dependencyResolutionManagement {
+  repositories {
+    ...
+    maven { url 'https://repo.combateafraude.com/android/release' }
+    maven { url 'https://raw.githubusercontent.com/iProov/android/master/maven/' }
+    maven { url 'https://maven.fpregistry.io/releases' }
+    maven { url 'https://jitpack.io' }
+  }
+}
+```
+
+Add support for Java 8 to your `build.gradle` file. Skip this if Java 8 is enabled.
+
+```groovy
+android {
+    ...
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 ```
 
 ### iOS
 
-No arquivo `ROOT_PROJECT/ios/Podfile`, adicione no final do arquivo:
-
-```swift
-source 'https://github.com/combateafraude/iOS.git'
-source 'https://cdn.cocoapods.org/'
-```
-
-Por último, adicione a permissão de câmera no arquivo `ROOT_PROJECT/ios/Runner/Info.plist`:
+In the `info.plist` file, add the permissions below:
 
 ```swift
 <key>NSCameraUsageDescription</key>
 <string>To capture the selfie</string>
 ```
 
-## Utilização
+## Usage
+
+| Parameter | Required |
+| ---------- | -------- |
+| `mobileToken`: Usage token associated with your CAF account | Yes |
+| `personId`: User identification that registers the user's face for face matching. Currently, this value only accepts the user's CPF. | Yes |
 
 ```dart
 FaceLiveness faceLiveness =
@@ -86,99 +134,81 @@ final stream = faceLiveness.start();
         // or there was another issue with their verification/enrollment (e.g. lost internet connection).
         // You can access the following properties:
         final errorType = event.errorType
-        final errorMessage = event.errorMessage
-        final code = event.code
-        final signedResponse = event.signedResponse
+        final errorDescription = event.errorDescription
       }
     });
 ```
 
-### PassiveFaceLiveness methods
+### FaceLiveness Options
 
-| Parameter                                                                                                                                                                                          | Required                                         |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| <p><strong>`.setStage(String stage)`</strong></p><p>Used to redirect the SDK to the desired environment in caf api.</p>                                                                 | No                                               |
-| <p><strong>`.setFilter(String filter)`</strong></p><p>Used to change the SDK camera filter. It has the following options: **CameraFilter.natural** or **CameraFilter.lineDrawing**</p> | No, the default is **CameraFilter.lineDrawing** |
-| <p><strong>`.setEnableScreenshots(bool enable)`</strong></p><p>Used to enable screenshots during the SDK scan.</p>                                                                      | No, the default is **false**                     |
-| <p><strong>`.setEnableLoadingScreen(bool enable)`</strong></p><p>Used to determines whether the SDK's loading screen will be implemented through client side or if will be used the default screen. If set to 'true,' the loading screen will be a standard SDK screen. If 'false,' You should provide an indeterminate progress indicator.</p>                                                                      | No, the default is **false**                     |
-| <p><strong>`.setImageUrlExpirationTime(String time)`</strong></p><p>Used to set the image URL expiration time.</p>                                                                      | No, the default is **null**                     |
+| Option | Required | Default Value | Android | iOS |
+| ------ | -------- | ------- | ------- | --- |
+| <p>`.setStage(String stage)`</p><p>Used to redirect the SDK to the desired environment in caf api.</p> | No | `CafStage.prod` | ✅ | ✅ |
+| <p>`.setFilter(String filter)`</p><p>Set the camera filter applied to the camera preview.</p> | No | `CameraFilter.lineDrawing` | ✅ | ✅ |
+| <p>`.setEnableScreenshots(bool enable)`</p><p>Used to enable screenshots during the SDK scan.</p> | No | `false` | ✅ | ❌ |
+| <p>`.setEnableLoadingScreen(bool enable)`</p><p>Used to determines whether the SDK's loading screen will be implemented through client side or if will be used the default screen. If set to 'true,' the loading screen will be a standard SDK screen. If 'false,' You should provide an indeterminate progress indicator.</p> | No | `false` | ✅ | ✅ |
+| <p>`.setImageUrlExpirationTime(String time)`</p><p>Use to change the default image URL expiration time to retrieve the facial capture.</p> | No | 30 min | ✅ | ✅ |
 
 ### Enums
 
 #### CafStage
 
-| Description                                                    | Values                           |
-| -------------------------------------------------------------- | -------------------------------- |
-| Used to set the SDK stage on `.setStage(String stage)` method. | `CafStage.prod`, `CafStage.beta` |
+| Description | Values |
+| ----------- | ------ |
+| Used to set the SDK stage on `.setStage(String stage)` option. | `CafStage.prod`, `CafStage.beta` |
 
 #### CameraFilter
 
-| Description                         | Values                                              |
-| ----------------------------------- | --------------------------------------------------- |
-| Used to set the SDK's camera filter | `CameraFilter.natural`, `CameraFilter.lineDrawing` |
+| Description | Values |
+| ----------- | ------ |
+| Used to set the SDK's camera filter on `.setFilter(String filter)` option. | `CameraFilter.natural`, `CameraFilter.lineDrawing` |
 
 #### Time
 
-| Description                         | Values                                              |
-| ----------------------------------- | --------------------------------------------------- |
-| Used to set the image URL expiration time. | `Time.threeHours`, `Time.thirtyDays` |
+| Description | Values |
+| ----------- | ------ |
+| Used to set the image URL expiration time on `.setImageUrlExpirationTime(String time)` option. | `Time.threeHours`, `Time.thirtyDays` |
 
+## FaceLiveness Event Streaming
 
-### PassiveFaceLivenessSuccess
+### FaceLivenessEventConnecting
 
-| Field                                                                                                                                                                                                                                                                                                                                                   |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <p>`String signedResponse`</p><p> Signed response from the CAF server confirming that the captured selfie has a real face. This parameter is used to get an extra layer of security, checking that the signature of the response is not broken, or caused by request interception. If it is broken, there is a strong indication of request interception.</p> |
+The SDK is loading, you can use this event return to set an action in your app, for example, a loading indicator.
 
-#### signedResponse params
+### FaceLivenessEventConnected
 
-| **Event**  |                **Description**                    |
-| ---------- | ------------------------------------------------- |
-| `requestId`| Request identifier.                               |
-| `isAlive`  | Validation of a living person, identifies whether the user passed successfully or not.      |
-| `token`    | Request token.                                    |
-| `userId`   | User identifier provided for the request.         |
-| `imageUrl` | Temporary link to the image, generated by our API.|
-| `personId` | User identifier provided for the SDK.             |
-| `sdkVersion`| Sdk version in use.                              |
-| `iat`      | Token expiration.                                 |
+The SDK is not loading anymore, you can use this event return to set a action in your app, for example, you can stop your loading indicator.
 
-{% hint style="warning" %}
-The **isAlive** parameter is **VERY IMPORTANT**, based on this validation, the user can be guided to continue the flow or not. In case of `isAlive: true`, it  would be able to continue with the journey. If `isAlive: false`, this user is not valid and should be prevented from continuing their journey.
-{% endhint %}
+### FaceLivenessEventClosed
 
-### PassiveFaceLivenessFailure
+The execution has been cancelled by the user.
 
-#### iOS
+### FaceLivenessEventSuccess
 
-The `PassiveFaceLivenessFailure` object return the following parameters.
+| Event | Description |
+| ----- | ----------- |
+| `requestId` | Request identifier. |
+| `isAlive` | Validation of a living person, identifies whether the user passed successfully or not. |
+| `token` | Request token. |
+| `userId` | User identifier provided for the request. |
+| `imageUrl` | Temporary link to the image, generated by our API. |
+| `personId` | User identifier provided for the SDK. |
+| `sdkVersion` | Sdk version in use. |
+| `iat` | Token expiration. |
 
-| Field                                                                                                                    |
-| ------------------------------------------------------------------------------------------------------------------------ |
-| <p>`String signedResponse`</p><p> Signed response from the CAF server confirming that the captured selfie has a real face.</p> |
-| <p>`String errorType`</p><p> Error type returned by the SDK. Check the table below.</p>                                        |
-| <p>`String errorMessage`</p><p>Error message returned by the SDK.</p>                                                          |
-| <p>`String code`</p><p>Error code returned by the SDK. Check the table below.</p>                                              |
+> The `isAlive` parameter is **very important**, based on this validation, the user can be guided to continue the flow or not. In case of `isAlive: true`, it  would be able to continue with the journey. If `isAlive: false`, this user is not valid and should be prevented from continuing their journey.
 
-In case of failure, the `PassiveFaceLivenessFailure` object will also return a signedResponse containing information.
-Within the signedResponse, the parameter isAlive defines the execution of liveness, where true is approved and false is rejected.
+### FaceLivenessEventFailure
 
-| Code | Error Type                | Description                                                                                                                                                                                      |
-| ---- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 01    | `getToken`                | Error while trying to capture the execution token.                                                                                                                                               |
-| 02, 03    | `registerError`           | Error while performing the registration of the liveness execution.                                                                                                                               |
-| 05    | `cameraPermission` | The user disallowed access to the camera when prompted. You should direct the user to re-try.                                                                                                    |
-| 06    | `captureAlreadyActive`    | An existing capture is already in progress. Wait until the current capture completes before starting a new one.                                                                                  |
-| 07    | `networkError`            | An error occurred with the video streaming process. The associated string (if available) will contain further information about the error.                                                       |
-| 08    | `serverError`             | A server-side error/token invalidation occurred. The associated string (if available) will contain further information about the error.                                                          |
-| 09    | `unexpectedError`, `userTimeout`, `notSupported`        | An unexpected and unrecoverable error has occurred. The associated string will contain further information about the error. These errors should be reported to iProov for further investigation. |
+| Parameter | Description |
+| --------- | ----------- |
+| `String errorType` | Error type returned by the SDK |
+| `String errorDescription` | Error description message returned by the SDK. |
 
-#### Android
-
-The `PassiveFaceLivenessFailure` object return the following parameters.
-
-| Field                                                                                         |
-| --------------------------------------------------------------------------------------------- |
-| <p>`String errorType`</p><p> Error type returned by the SDK. `NetworkReason` or `ServerReason`.</p> |
-| <p>`String errorMessage`</p><p>Error message returned by the SDK.</p>                               |
-| <p>`String code`</p><p>Error code returned by the SDK.</p>                                          |
+| Error type cases| Description |
+|---|---|
+|`unsupportedDevice` | This error may occur if the device hardware or software does not meet the minimum requirements for facial recognition functionality. |
+|`cameraPermission`  | This error typically occurs when the user denies access to the camera or if the app lacks the necessary permissions. |
+|`networkException`  | This error may occur due to various network issues such as a lack of internet connection, server timeouts, or network congestion. |
+|`tokenException`  | This error may occur if the provided authentication token is invalid, expired, or lacks the necessary permissions to perform facial recognition tasks. |
+|`serverException` | This error is typically returned when there is an issue with the server processing the facial recognition request. This could include server-side errors, misconfigurations, or service interruptions. |
