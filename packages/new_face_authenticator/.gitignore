@@ -1,0 +1,5 @@
+add_to_app/
+.idea/
+.dart_tool/
+.vscode
+.DS_Store
