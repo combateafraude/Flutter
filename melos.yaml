@@ -1,0 +1,32 @@
+name: CAF
+repository: https://github.com/combateafraude/Flutter
+
+packages:
+  - packages/*
+
+command:
+  bootstrap:
+    # It seems so that running "pub get" in parallel has some issues (like
+    # https://github.com/dart-lang/pub/issues/3404). Disabling this feature
+    # makes the CI much more stable.
+    runPubGetInParallel: false
+
+scripts:
+  lint:
+    run: melos format:no-output && melos analyze
+    description: Lint all packages.
+
+  format:
+    exec: dart format .
+    description: Format all packages.
+
+  format:no-output:
+    exec: dart format --output none --set-exit-if-changed .
+    description: Run `dart format` for all packages and fail if any files need to be formatted.
+
+  test:
+    exec: flutter test
+    description: Run `flutter test`
+    packageFilters:
+      dirExists:
+        - test
