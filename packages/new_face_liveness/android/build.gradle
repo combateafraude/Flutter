@@ -1,0 +1,66 @@
+group 'com.caf.face_liveness'
+version '1.0'
+
+buildscript {
+    ext.kotlin_version = '1.7.10'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://repo.combateafraude.com/android/release" }
+        maven { url 'https://raw.githubusercontent.com/iProov/android/master/maven/' }
+        maven { url 'https://maven.fpregistry.io/releases' }
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    if (project.android.hasProperty("namespace")) {
+        namespace 'com.caf.face_liveness'
+    }
+
+    compileSdk 33
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+
+    dataBinding.enabled = true
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    dependencies {
+        implementation 'com.combateafraude.sdk:new-face-liveness:3.0.0'
+    }
+
+}
