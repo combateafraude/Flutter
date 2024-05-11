@@ -1,9 +1,9 @@
 name: document_detector
 description: Flutter plugin cross-platform for Combate à Fraude's DocumentDetector.
 version: 6.2.6
-author: Combate à Fraude
 homepage: https://www.combateafraude.com/
-
+repository: https://github.com/combateafraude/Flutter/tree/master/packages/document_detector
+  
 environment:
   sdk: ">=2.12.0 <4.0.0"
   flutter: ">=1.10.0"
